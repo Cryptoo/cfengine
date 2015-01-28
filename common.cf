@@ -12,6 +12,5 @@ bundle common cryptoo
   classes:
 
       "have_cryptoo" expression => fileexists("$(dist_root)");
-      "need_cryptoo" not => "have_cryptoo";
 
 }
