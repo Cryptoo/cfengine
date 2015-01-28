@@ -1,0 +1,17 @@
+bundle common cryptoo
+
+{
+
+  vars:
+
+      "dist_root" string => "/usr/cryptoo";
+      "dist_portage" string => "$(dist_root)/Documentation/etc/portage";
+      "profile_root" string => "$(dist_root)/profiles";
+      "kernel_src_dir" string => "/usr/site-local/src/linux";
+
+  classes:
+
+      "have_cryptoo" expression => fileexists("$(dist_root)");
+      "need_cryptoo" not => "have_cryptoo";
+
+}
