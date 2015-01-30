@@ -4,9 +4,13 @@ bundle agent files
 
   classes:
 
+    any::
+
       "need_cryptoo" not => "have_cryptoo";
 
   files:
+
+    any::
 
       "/etc/localtime"
         move_obstructions => "true",
@@ -115,6 +119,17 @@ bundle agent files
         create => "true",
         edit_template => "/var/cfengine/inputs/templates/cryptoo_local_repo_name.txt";
 
+      "/usr/src/linux"
+        move_obstructions => "true",
+        link_from => kernel_dir;
+
+      "/var/lib/portage/world_sets" 
+        perms => system,
+        create => "true",
+        edit_template => "/var/cfengine/inputs/templates/cryptoo_world_sets.txt";
+
+    role_master::
+
       "/usr/site-local/portage/metadata/layout.conf" 
         perms => system,
         create => "true",
@@ -125,30 +140,26 @@ bundle agent files
         create => "true",
         edit_template => "/var/cfengine/inputs/templates/cryptoo_site_local_repo_name.txt";
 
-      "/usr/src/linux"
-        move_obstructions => "true",
-        link_from => kernel_dir;
-
-      "/var/lib/portage/world_sets" 
-        perms => system,
-        create => "true",
-        edit_template => "/var/cfengine/inputs/templates/cryptoo_world_sets.txt";
-
   commands:
 
-    need_cryptoo::
+    any::
+
+      update_locale::
+        "/usr/sbin/locale-gen";
+
+      update_env::
+        "/usr/sbin/env-update";
+
+    role_master&need_cryptoo::
+
       "/usr/bin/git clone git://github.com/cryptoo/overlay /$(cryptoo.dist_root)";
-
-    update_locale::
-      "/usr/sbin/locale-gen";
-
-    update_env::
-      "/usr/sbin/env-update";
 
   methods:
 
-    "build kernel configs"
-      usebundle => kconfig("host");
+    role_master::
+
+      "build kernel configs"
+        usebundle => kconfig("host");
 }
 
 bundle edit_line PS1_always_show_full_path

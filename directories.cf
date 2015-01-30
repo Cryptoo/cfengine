@@ -4,6 +4,8 @@ bundle agent directories(root)
 
   files:
 
+    any::
+
       "$(root)etc/."
         perms => system,
         create => "true";
@@ -122,16 +124,6 @@ bundle agent directories(root)
         perms => portage,
         create => "true";
 
-      "$(root)usr/site-local/portage/metadata/." 
-        depends_on => { "user_portage" },
-        perms => portage,
-        create => "true";
-
-      "$(root)usr/site-local/portage/profiles/." 
-        depends_on => { "user_portage" },
-        perms => portage,
-        create => "true";
-
       "$(root)usr/site-local/src/."
         perms => system,
         create => "true";
@@ -160,6 +152,18 @@ bundle agent directories(root)
 
       "$(root)var/tmp/." 
         perms => system_tmp,
+        create => "true";
+
+    role_master::
+
+      "$(root)usr/site-local/portage/metadata/." 
+        depends_on => { "user_portage" },
+        perms => portage,
+        create => "true";
+
+      "$(root)usr/site-local/portage/profiles/." 
+        depends_on => { "user_portage" },
+        perms => portage,
         create => "true";
 
       "$(root)var/tmp/kernel/." 
