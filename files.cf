@@ -8,6 +8,11 @@ bundle agent files
         move_obstructions => "true",
         link_from => timezone("UTC");
 
+      "/etc/bash/bashrc"
+        perms => system,
+        create => "true",
+        edit_line => PS1_always_show_full_path;
+
       "/etc/locale.gen"
         perms => system,
         create => "false",
@@ -125,6 +130,21 @@ bundle agent files
 
     "build kernel configs"
       usebundle => kconfig("host");
+}
+
+bundle edit_line PS1_always_show_full_path
+
+{
+    replace_patterns:
+
+      "(.*PS1=.*)W(.*)"
+        replace_with => PS1_small_w;
+}
+
+body replace_with PS1_small_w
+
+{
+    replace_value => "$(match.1)w$(match.2)";
 }
 
 body link_from cryptoo_portage_env(x)

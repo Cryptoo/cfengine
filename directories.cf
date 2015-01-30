@@ -12,6 +12,10 @@ bundle agent directories
         perms => system,
         create => "true";
 
+      "/etc/bash/."
+        perms => system,
+        create => "true";
+
       "/etc/env.d/."
         perms => system,
         create => "true";
