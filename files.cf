@@ -107,6 +107,10 @@ bundle agent files
     update_env::
       "/usr/sbin/env-update";
 
+  methods:
+
+    "build kernel configs"
+      usebundle => kconfig("host");
 }
 
 body link_from cryptoo_portage_env(x)

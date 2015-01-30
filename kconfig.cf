@@ -1,4 +1,4 @@
-bundle agent kconfig
+bundle agent kconfig(target)
 
 {
 
@@ -302,158 +302,159 @@ bundle agent kconfig
       "kconfig[KVM_AMD]" string => "KVM_AMD", meta => { "enabled", "host" };
       "kconfig[VHOST_NET]" string => "VHOST_NET", meta => { "enabled", "host" };
 
-      "kconfig_host" slist => variablesmatching(".*kconfig\[.*]", "host");
+      "kconfig_target" slist => variablesmatching(".*kconfig\[.*]", "$(target)");
       "kconfig_enabled" slist => variablesmatching(".*kconfig\[.*]", "enabled");
       "kconfig_disabled" slist => variablesmatching(".*kconfig\[.*]", "disabled");
 
-      "kconfig_host_enabled" slist => intersection(kconfig_host, kconfig_enabled);
-      "kconfig_host_disabled" slist => intersection(kconfig_host, kconfig_disabled);
+      "kconfig_target_enabled" slist => intersection(kconfig_target, kconfig_enabled);
+      "kconfig_target_disabled" slist => intersection(kconfig_target, kconfig_disabled);
 
-      "kconfig_host_enabled_array[$($(kconfig_host_enabled))]" string => "$($(kconfig_host_enabled))";
-      "kconfig_host_disabled_array[$($(kconfig_host_disabled))]" string => "$($(kconfig_host_disabled))";
+      "kconfig_target_enabled_array[$($(kconfig_target_enabled))]" string => "$($(kconfig_target_enabled))";
+      "kconfig_target_disabled_array[$($(kconfig_target_disabled))]" string => "$($(kconfig_target_disabled))";
       
-      "kconfig_host_enabled_symbols" slist => getindices(kconfig_host_enabled_array);
-      "kconfig_host_disabled_symbols" slist => getindices(kconfig_host_disabled_array);
+      "kconfig_target_enabled_symbols" slist => getindices(kconfig_target_enabled_array);
+      "kconfig_target_disabled_symbols" slist => getindices(kconfig_target_disabled_array);
+      
+      "kconfig_file" string => "$(cryptoo.kernel_build_dir)/$(target)/x86_64/.config";
 
   classes:
 
       "have_kernel_src" expression => fileexists("$(cryptoo.kernel_src_dir)");
       "need_kernel_src" not => "have_kernel_src";
-      "have_host_kconfig" expression => fileexists("$(cryptoo.kernel_build_dir)/host/x86_64/.config");
-      "need_host_kconfig" not => "have_host_kconfig";
-      "need_host_kconfig_bootstrap" and => { have_cryptoo, have_kernel_src, need_host_kconfig };
-      # I *should be* enabled, but I'm actually disabled
-      "host_kconfig_disabled_$(kconfig_host_enabled_symbols)" expression => regline("# CONFIG_$(kconfig_host_enabled_symbols) is not set", "$(cryptoo.kernel_build_dir)/host/x86_64/.config");
-      # I should be disabled, and I am actually disabled
-      "host_kconfig_disabled_$(kconfig_host_disabled_symbols)" expression => regline("# CONFIG_$(kconfig_host_disabled_symbols) is not set", "$(cryptoo.kernel_build_dir)/host/x86_64/.config");
-      # I *should be* disabled, but I'm actually enabled.
-      "host_kconfig_enabled_$(kconfig_host_disabled_symbols)" expression => regline("CONFIG_$(kconfig_host_disabled_symbols)=y", "$(cryptoo.kernel_build_dir)/host/x86_64/.config");
-      # I should be enabled, and I am actually enabled
-      "host_kconfig_enabled_$(kconfig_host_enabled_symbols)" expression => regline("CONFIG_$(kconfig_host_enabled_symbols)=y", "$(cryptoo.kernel_build_dir)/host/x86_64/.config");
+      "have_target_kconfig" expression => fileexists("$(kconfig_file)");
+      "need_target_kconfig" not => "have_target_kconfig";
+      "need_target_kconfig_bootstrap" and => { have_cryptoo, have_kernel_src, need_target_kconfig };
+      "target_kconfig_disabled_$(kconfig_target_enabled_symbols)" expression => regline("# CONFIG_$(kconfig_target_enabled_symbols) is not set", "$(kconfig_file)");
+      "target_kconfig_disabled_$(kconfig_target_disabled_symbols)" expression => regline("# CONFIG_$(kconfig_target_disabled_symbols) is not set", "$(kconfig_file)");
+      "target_kconfig_enabled_$(kconfig_target_disabled_symbols)" expression => regline("CONFIG_$(kconfig_target_disabled_symbols)=y", "$(kconfig_file)");
+      "target_kconfig_enabled_$(kconfig_target_enabled_symbols)" expression => regline("CONFIG_$(kconfig_target_enabled_symbols)=y", "$(kconfig_file)");
 
   files:
 
-    have_host_kconfig::
+    have_target_kconfig::
 
-      "$(cryptoo.kernel_build_dir)/host/x86_64/.config"
-        ifvarclass => "host_kconfig_disabled_$(kconfig_host_enabled_symbols)",
+      "$(kconfig_file)"
+        ifvarclass => "target_kconfig_disabled_$(kconfig_target_enabled_symbols)",
         perms => system,
         create => "false",
-        edit_line => enable_kconfig("$(kconfig_host_enabled_symbols)"),
-        classes => u_if_repaired("host_kconfig_changed"),
+        edit_line => enable_kconfig("$(kconfig_target_enabled_symbols)","$(kconfig_file)"),
+        classes => u_if_repaired("target_kconfig_changed"),
         comment => "repair symbols that should be enabled, but are in the disabled state";
 
-      "$(cryptoo.kernel_build_dir)/host/x86_64/.config"
-        ifvarclass => "!host_kconfig_enabled_$(kconfig_host_enabled_symbols)",
+      "$(kconfig_file)"
+        ifvarclass => "!target_kconfig_enabled_$(kconfig_target_enabled_symbols)",
         perms => system,
         create => "false",
-        edit_line => enable_kconfig("$(kconfig_host_enabled_symbols)"),
-        classes => u_if_repaired("host_kconfig_changed"),
+        edit_line => enable_kconfig("$(kconfig_target_enabled_symbols)","$(kconfig_file)"),
+        classes => u_if_repaired("target_kconfig_changed"),
         comment => "repair symbols that should be enabled, but are missing";
 
-      "$(cryptoo.kernel_build_dir)/host/x86_64/.config"
-        ifvarclass => "host_kconfig_enabled_$(kconfig_host_disabled_symbols)",
+      "$(kconfig_file)"
+        ifvarclass => "target_kconfig_enabled_$(kconfig_target_disabled_symbols)",
         perms => system,
         create => "false",
-        edit_line => disable_kconfig("$(kconfig_host_disabled_symbols)"),
-        classes => u_if_repaired("host_kconfig_changed"),
+        edit_line => disable_kconfig("$(kconfig_target_disabled_symbols)","$(kconfig_file)"),
+        classes => u_if_repaired("target_kconfig_changed"),
         comment => "repair symbols that should be disabled, but are in the enabled state";
 
-
-      "$(cryptoo.kernel_build_dir)/host/x86_64/.config"
-        ifvarclass => "!host_kconfig_disabled_$(kconfig_host_disabled_symbols)",
+      "$(kconfig_file)"
+        ifvarclass => "!target_kconfig_disabled_$(kconfig_target_disabled_symbols)",
         perms => system,
         create => "false",
-        edit_line => disable_kconfig("$(kconfig_host_disabled_symbols)"),
-        classes => u_if_repaired("host_kconfig_changed"),
+        edit_line => disable_kconfig("$(kconfig_target_disabled_symbols)","$(kconfig_file)"),
+        classes => u_if_repaired("target_kconfig_changed"),
         comment => "repair symbols that should be disabled, but are missing";
 
   commands:
 
     !have_kernel_src::
-      "/usr/bin/git clone git://github.com/cryptoo/kernel $(cryptoo.kernel_src_dir)";
+      "/usr/bin/git clone $(kernel_git) $(cryptoo.kernel_src_dir)";
 
-    need_host_kconfig_bootstrap::
+    need_target_kconfig_bootstrap::
       "/usr/cryptoo/bin/kmake_host allnoconfig";
 
-    host_kconfig_changed::
+    target_kconfig_changed::
       "/usr/cryptoo/bin/kmake_host olddefconfig";
 
+  reports:
+
+    "$(kconfig_file)";
 }
 
-bundle edit_line enable_kconfig(x)
+bundle edit_line enable_kconfig(symbol, file)
 
 {
      classes:
 
-       "exists_disabled" expression => regline("# CONFIG_$(x) is not set", "$(cryptoo.kernel_build_dir)/host/x86_64/.config");
+       "exists_disabled" expression => regline("# CONFIG_$(symbol) is not set", "$(file)");
        "missing_from_file" not => "exists_disabled";
  
      replace_patterns:
 
       exists_disabled::
 
-       "# CONFIG_$(x) is not set"
-         replace_with => enable_kernel_symbol("$(x)");
+       "# CONFIG_$(symbol) is not set"
+         replace_with => enable_kernel_symbol("$(symbol)");
 
      insert_lines:
 
       missing_from_file::
 
-       "CONFIG_$(x)=y"
+       "CONFIG_$(symbol)=y"
          location => first_line;
 
      reports:
 
-       "enabled CONFIG_$(x)";
+       "enabled CONFIG_$(symbol)";
 
 }
 
-bundle edit_line disable_kconfig(x)
+bundle edit_line disable_kconfig(symbol,file)
 
 {
      classes:
 
-       "exists_enabled" expression => regline("CONFIG_$(x)=.*", "$(cryptoo.kernel_build_dir)/host/x86_64/.config");
+       "exists_enabled" expression => regline("CONFIG_$(symbol)=.*", "$(file)");
        "missing_from_file" not => "exists_enabled";
  
      replace_patterns:
 
       exists_enabled::
 
-       "CONFIG_$(x)=y"
-         replace_with => disable_kernel_symbol("$(x)");
+       "CONFIG_$(symbol)=y"
+         replace_with => disable_kernel_symbol("$(symbol)");
 
      insert_lines:
 
       missing_from_file::
 
-       "# CONFIG_$(x) is not set"
+       "# CONFIG_$(symbol) is not set"
          location => first_line;
 
      reports:
 
       exists_enabled::
 
-        "toggled CONFIG_$(x)";
+        "toggled CONFIG_$(symbol)";
 
       missing_from_file::
 
-        "added CONFIG_$(x)";
+        "added CONFIG_$(symbol)";
+
 }
 
-body replace_with enable_kernel_symbol(x)
+body replace_with enable_kernel_symbol(symbol)
 
 {
-    replace_value => "CONFIG_$(x)=y";
+    replace_value => "CONFIG_$(symbol)=y";
     occurrences => "all";
 
 }
 
-body replace_with disable_kernel_symbol(x)
+body replace_with disable_kernel_symbol(symbol)
 
 {
-    replace_value => "CONFIG_$(x)=n";
+    replace_value => "CONFIG_$(symbol)=n";
     occurrences => "all";
 
 }
