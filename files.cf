@@ -2,6 +2,10 @@ bundle agent files
 
 {
 
+  classes:
+
+      "need_cryptoo" not => "have_cryptoo";
+
   files:
 
       "/etc/localtime"
@@ -131,6 +135,9 @@ bundle agent files
         edit_template => "/var/cfengine/inputs/templates/cryptoo_world_sets.txt";
 
   commands:
+
+    need_cryptoo::
+      "/usr/bin/git clone git://github.com/cryptoo/overlay /$(cryptoo.dist_root)";
 
     update_locale::
       "/usr/sbin/locale-gen";

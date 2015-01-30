@@ -311,10 +311,10 @@ bundle agent kconfig(target)
 
       "kconfig_target_enabled_array[$($(kconfig_target_enabled))]" string => "$($(kconfig_target_enabled))";
       "kconfig_target_disabled_array[$($(kconfig_target_disabled))]" string => "$($(kconfig_target_disabled))";
-      
+
       "kconfig_target_enabled_symbols" slist => getindices(kconfig_target_enabled_array);
       "kconfig_target_disabled_symbols" slist => getindices(kconfig_target_disabled_array);
-      
+
       "kconfig_file" string => "$(cryptoo.kernel_build_dir)/$(target)/x86_64/.config";
 
   classes:

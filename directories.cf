@@ -6,10 +6,6 @@ bundle agent directories
 
     "root" string => "/";
 
-  classes:
-
-      "need_cryptoo" not => "have_cryptoo";
-
   files:
 
       "$(root)etc/."
@@ -179,17 +175,6 @@ bundle agent directories
         uid => "405",
         group_primary => "users",
         shell => "/sbin/nologin";
-
-  commands:
-
-    need_cryptoo::
-      "/usr/bin/git clone git://github.com/cryptoo/overlay /$(cryptoo.dist_root)";
-
-    update_locale::
-      "/usr/sbin/locale-gen";
-
-    update_env::
-      "/usr/sbin/env-update";
 
 }
 
