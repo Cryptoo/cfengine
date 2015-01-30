@@ -1,0 +1,401 @@
+bundle agent directories
+
+{
+
+  classes:
+
+      "need_cryptoo" not => "have_cryptoo";
+
+  files:
+
+      "/etc/."
+        perms => system,
+        create => "true";
+
+      "/etc/localtime"
+        move_obstructions => "true",
+        link_from => timezone("UTC");
+
+      "/etc/locale.gen"
+        perms => system,
+        create => "false",
+        edit_line => uncomment_lines_containing("en_US\.UTF-8 UTF-8","#"),
+        classes => u_if_repaired("update_locale");
+
+      "/etc/env.d/."
+        perms => system,
+        create => "true";
+
+      "/etc/env.d/02locale"
+        create => "true",
+        edit_template => "/var/cfengine/inputs/templates/cryptoo_env_locale.txt",
+        classes => u_if_repaired("update_env");
+
+      "/etc/portage/."
+        perms => system,
+        create => "true";
+
+      "/etc/portage/make.conf"
+        create => "true",
+        edit_template => "/var/cfengine/inputs/templates/cryptoo_make_conf.txt";
+
+      "/etc/portage/make.profile"
+        move_obstructions => "true",
+        link_from => cryptoo_profile("cryptoo");
+
+      "/etc/portage/env/."
+        perms => system,
+        create => "true";
+
+      "/etc/portage/env/local-distfiles.conf"
+        move_obstructions => "true",
+        link_from => cryptoo_portage_env("local-distfiles.conf");
+
+      "/etc/portage/env/nosandbox.conf"
+        move_obstructions => "true",
+        link_from => cryptoo_portage_env("nosandbox.conf");
+
+      "/etc/portage/env/notmpfs.conf"
+        move_obstructions => "true",
+        link_from => cryptoo_portage_env("notmpfs.conf");
+
+      "/etc/portage/package.env/."
+        perms => system,
+        create => "true";
+
+      "/etc/portage/package.env/cryptoo"
+        move_obstructions => "true",
+        link_from => cryptoo_package_env("cryptoo");
+
+      "/etc/portage/package.keywords/."
+        perms => system,
+        create => "true";
+
+      "/etc/portage/package.keywords/basic-programs"
+        move_obstructions => "true",
+        link_from => cryptoo_package_keyword("basic-programs");
+
+      "/etc/portage/package.keywords/virtualization"
+        move_obstructions => "true",
+        link_from => cryptoo_package_keyword("virtualization");
+
+      "/etc/portage/package.mask/." 
+        perms => system,
+        create => "true";
+
+      "/etc/portage/package.mask/basic-programs" 
+        move_obstructions => "true",
+        link_from => cryptoo_package_mask("basic-programs");
+
+      "/etc/portage/package.unmask/." 
+        perms => system,
+        create => "true";
+
+      "/etc/portage/package.use/." 
+        perms => system,
+        create => "true";
+
+      "/etc/portage/package.use/basic-programs" 
+        move_obstructions => "true",
+        link_from => cryptoo_package_use("basic-programs");
+
+      "/etc/portage/package.use/host" 
+        move_obstructions => "true",
+        link_from => cryptoo_package_use("host");
+
+      "/etc/portage/package.use/virtualization" 
+        move_obstructions => "true",
+        link_from => cryptoo_package_use("virtualization");
+
+      "/etc/portage/patches/." 
+        perms => system,
+        create => "true";
+
+      "/etc/portage/profile/." 
+        perms => system,
+        create => "true";
+
+      "/etc/portage/profile/package.provided" 
+        move_obstructions => "true",
+        link_from => cryptoo_portage_profile("package.provided");
+
+      "/etc/portage/profile/stub/." 
+        perms => system,
+        create => "true";
+
+      "/etc/portage/profile/stub/parent" 
+        create => "true",
+        edit_template => "/var/cfengine/inputs/templates/cryptoo_profile_parent.txt";
+
+      "/mnt/." 
+        perms => system,
+        create => "true";
+
+      "/mnt/shared/." 
+        depends_on => { "user_guest" },
+        perms => guest,
+        create => "true";
+
+      "/usr/." 
+        perms => system,
+        create => "true";
+
+      "$(cryptoo.dist_root)" 
+        perms => system,
+        create => "false";
+
+      "/usr/local/portage/." 
+        depends_on => { "user_portage" },
+        perms => portage,
+        create => "true";
+
+      "/usr/local/portage/metadata/." 
+        depends_on => { "user_portage" },
+        perms => portage,
+        create => "true";
+
+      "/usr/local/portage/metadata/layout.conf" 
+        create => "true",
+        edit_template => "/var/cfengine/inputs/templates/cryptoo_local_layout_conf.txt";
+
+      "/usr/local/portage/profiles/." 
+        depends_on => { "user_portage" },
+        perms => portage,
+        create => "true";
+
+      "/usr/local/portage/profiles/repo_name" 
+        create => "true",
+        edit_template => "/var/cfengine/inputs/templates/cryptoo_local_repo_name.txt";
+
+      "/usr/site-local/." 
+        perms => system,
+        create => "true";
+
+      "/usr/site-local/bin/." 
+        perms => system,
+        create => "true";
+
+      "/usr/site-local/distfiles/." 
+        depends_on => { "user_portage" },
+        perms => portage_open,
+        create => "true";
+
+      "/usr/site-local/packages/." 
+        perms => system,
+        create => "true";
+
+      "/usr/site-local/portage/." 
+        depends_on => { "user_portage" },
+        perms => portage,
+        create => "true";
+
+      "/usr/site-local/portage/metadata/." 
+        depends_on => { "user_portage" },
+        perms => portage,
+        create => "true";
+
+      "/usr/site-local/portage/metadata/layout.conf" 
+        create => "true",
+        edit_template => "/var/cfengine/inputs/templates/cryptoo_local_layout_conf.txt";
+
+      "/usr/site-local/portage/profiles/." 
+        depends_on => { "user_portage" },
+        perms => portage,
+        create => "true";
+
+      "/usr/site-local/portage/profiles/repo_name" 
+        create => "true",
+        edit_template => "/var/cfengine/inputs/templates/cryptoo_site_local_repo_name.txt";
+
+      "/usr/site-local/src/."
+        perms => system,
+        create => "true";
+
+      "/usr/src/."
+        perms => system,
+        create => "true";
+
+      "/usr/src/linux"
+        move_obstructions => "true",
+        link_from => kernel_dir;
+
+      "/var/." 
+        perms => system,
+        create => "true";
+
+      "/var/lib/." 
+        perms => system,
+        create => "true";
+
+      "/var/lib/portage/." 
+        depends_on => { "user_portage" },
+        perms => portage,
+        create => "true";
+
+      "/var/lib/portage/world_sets" 
+        create => "true",
+        edit_template => "/var/cfengine/inputs/templates/cryptoo_world_sets.txt";
+
+      "/var/lib/layman/." 
+        depends_on => { "user_portage" },
+        perms => portage,
+        create => "true";
+
+      "/var/tmp/." 
+        perms => system_tmp,
+        create => "true";
+
+      "/var/tmp/kernel/." 
+        perms => system,
+        create => "true";
+
+  users:
+
+      "portage"
+        handle => "user_portage",
+        policy => "present",
+        home_dir => "/var/tmp/portage",
+        uid => "250",
+        group_primary => "portage",
+        shell => "/sbin/nologin";
+
+      "guest"
+        handle => "user_guest",
+        policy => "present",
+        home_dir => "/mnt/shared",
+        uid => "405",
+        group_primary => "users",
+        shell => "/sbin/nologin";
+
+  commands:
+
+    need_cryptoo::
+      "/usr/bin/git clone git://github.com/cryptoo/overlay $(cryptoo.dist_root)";
+
+    update_locale::
+      "/usr/sbin/locale-gen";
+
+    update_env::
+      "/usr/sbin/env-update";
+
+}
+
+body perms guest
+
+{
+      mode  => "0664";
+      owners  => { "guest" };
+      groups  => { "users" };
+}
+
+body perms portage
+
+{
+      mode  => "0644";
+      owners  => { "portage" };
+      groups  => { "portage" };
+}
+
+body perms portage_open
+
+{
+      mode  => "0664";
+      owners  => { "portage" };
+      groups  => { "portage" };
+}
+
+body perms system
+
+{
+      mode  => "0644";
+      owners  => { "root" };
+      groups  => { "root" };
+}
+
+body perms system_tmp
+
+{
+      mode  => "1666";
+      owners  => { "root" };
+      groups  => { "root" };
+}
+
+body link_from cryptoo_portage_env(x)
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "$(cryptoo.dist_portage)/env/$(x)";
+}
+
+body link_from cryptoo_package_env(x)
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "$(cryptoo.dist_portage)/package.env/$(x)";
+}
+
+body link_from cryptoo_package_keyword(x)
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "$(cryptoo.dist_portage)/package.keywords/$(x)";
+}
+
+body link_from cryptoo_package_mask(x)
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "$(cryptoo.dist_portage)/package.mask/$(x)";
+}
+
+body link_from cryptoo_package_unmask(x)
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "$(cryptoo.dist_portage)/package.unmask/$(x)";
+}
+
+body link_from cryptoo_package_use(x)
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "$(cryptoo.dist_portage)/package.use/$(x)";
+}
+
+body link_from cryptoo_portage_profile(x)
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "$(cryptoo.dist_portage)/profile/$(x)";
+}
+
+body link_from cryptoo_profile(x)
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "$(cryptoo.profile_root)/$(x)";
+}
+
+body link_from timezone(x)
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "/usr/share/zoneinfo/$(x)";
+}
+
+body link_from kernel_dir
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "/usr/site-local/src/linux";
+}
