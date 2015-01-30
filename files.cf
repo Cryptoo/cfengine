@@ -205,7 +205,7 @@ body link_from cryptoo_portage_env(x)
 {
      link_type => "symlink";
      when_no_source => "force";
-     source => "$(cryptoo.dist_portage)/env/$(x)";
+     source => "/$(cryptoo.dist_portage)/env/$(x)";
 }
 
 body link_from cryptoo_package_env(x)
@@ -213,7 +213,7 @@ body link_from cryptoo_package_env(x)
 {
      link_type => "symlink";
      when_no_source => "force";
-     source => "$(cryptoo.dist_portage)/package.env/$(x)";
+     source => "/$(cryptoo.dist_portage)/package.env/$(x)";
 }
 
 body link_from cryptoo_package_keyword(x)
@@ -221,7 +221,7 @@ body link_from cryptoo_package_keyword(x)
 {
      link_type => "symlink";
      when_no_source => "force";
-     source => "$(cryptoo.dist_portage)/package.keywords/$(x)";
+     source => "/$(cryptoo.dist_portage)/package.keywords/$(x)";
 }
 
 body link_from cryptoo_package_mask(x)
@@ -229,7 +229,7 @@ body link_from cryptoo_package_mask(x)
 {
      link_type => "symlink";
      when_no_source => "force";
-     source => "$(cryptoo.dist_portage)/package.mask/$(x)";
+     source => "/$(cryptoo.dist_portage)/package.mask/$(x)";
 }
 
 body link_from cryptoo_package_unmask(x)
@@ -237,7 +237,7 @@ body link_from cryptoo_package_unmask(x)
 {
      link_type => "symlink";
      when_no_source => "force";
-     source => "$(cryptoo.dist_portage)/package.unmask/$(x)";
+     source => "/$(cryptoo.dist_portage)/package.unmask/$(x)";
 }
 
 body link_from cryptoo_package_use(x)
@@ -245,7 +245,7 @@ body link_from cryptoo_package_use(x)
 {
      link_type => "symlink";
      when_no_source => "force";
-     source => "$(cryptoo.dist_portage)/package.use/$(x)";
+     source => "/$(cryptoo.dist_portage)/package.use/$(x)";
 }
 
 body link_from cryptoo_portage_profile(x)
@@ -253,7 +253,7 @@ body link_from cryptoo_portage_profile(x)
 {
      link_type => "symlink";
      when_no_source => "force";
-     source => "$(cryptoo.dist_portage)/profile/$(x)";
+     source => "/$(cryptoo.dist_portage)/profile/$(x)";
 }
 
 body link_from cryptoo_profile(x)
@@ -261,7 +261,7 @@ body link_from cryptoo_profile(x)
 {
      link_type => "symlink";
      when_no_source => "force";
-     source => "$(cryptoo.profile_root)/$(x)";
+     source => "/$(cryptoo.profile_root)/$(x)";
 }
 
 body link_from timezone(x)
