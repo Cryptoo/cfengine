@@ -16,6 +16,18 @@ bundle agent directories
         perms => system,
         create => "true";
 
+      "$(root)etc/cryptoo/."
+        perms => system,
+        create => "true";
+
+      "$(root)etc/cryptoo/inbox/."
+        perms => root,
+        create => "true";
+
+      "$(root)etc/cryptoo/outbox/."
+        perms => root,
+        create => "true";
+
       "$(root)etc/env.d/."
         perms => system,
         create => "true";
@@ -206,6 +218,14 @@ body perms system
 
 {
       mode  => "0644";
+      owners  => { "root" };
+      groups  => { "root" };
+}
+
+body perms root
+
+{
+      mode  => "0600";
       owners  => { "root" };
       groups  => { "root" };
 }
