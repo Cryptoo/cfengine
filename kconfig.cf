@@ -376,9 +376,6 @@ bundle agent kconfig(target)
     target_kconfig_changed::
       "/usr/cryptoo/bin/kmake_host olddefconfig";
 
-  reports:
-
-    "$(kconfig_file)";
 }
 
 bundle edit_line enable_kconfig(symbol, file)
