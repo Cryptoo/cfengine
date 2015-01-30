@@ -9,6 +9,7 @@ bundle agent files (root, role)
       "need_cryptoo" not => "have_cryptoo";
       "local_role_$(role)" expression => "any";
       "bootstrap_systemd" not => fileexists("$(root)usr/bin/systemctl");
+      "locale_gen" expression => fileexists("$(root)etc/locale.gen");
 
     role_master&local_role_master::
 
@@ -17,12 +18,6 @@ bundle agent files (root, role)
   files:
 
     any::
-
-      "$(root)etc/locale.gen"
-        perms => system,
-        create => "false",
-        edit_line => uncomment_lines_containing("en_US\.UTF-8 UTF-8","#"),
-        classes => u_if_repaired("update_locale");
 
       "$(root)etc/portage/make.conf"
         perms => system,
@@ -96,6 +91,14 @@ bundle agent files (root, role)
         perms => system,
         create => "true",
         edit_template => "/var/cfengine/inputs/templates/cryptoo_world_sets.txt";
+
+    locale_gen::
+
+      "$(root)etc/locale.gen"
+        perms => system,
+        create => "false",
+        edit_line => uncomment_lines_containing("en_US\.UTF-8 UTF-8","#"),
+        classes => u_if_repaired("update_locale");
 
     bootstrap_systemd::
 
