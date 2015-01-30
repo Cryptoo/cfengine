@@ -14,6 +14,11 @@ bundle agent files
         edit_line => PS1_always_show_full_path,
         edit_line => aliases;
 
+      "/etc/bash/bash_logout"
+        perms => system,
+        create => "false",
+        edit_line => uncomment_lines_containing("clear","#");
+
       "/etc/locale.gen"
         perms => system,
         create => "false",
