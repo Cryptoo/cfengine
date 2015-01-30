@@ -37,6 +37,12 @@ bundle agent files
         edit_template => "/var/cfengine/inputs/templates/cryptoo_env_locale.txt",
         classes => u_if_repaired("update_env");
 
+      "/etc/env.d/99kernel"
+        perms => system,
+        create => "true",
+        edit_template => "/var/cfengine/inputs/templates/cryptoo_env_kernel.txt",
+        classes => u_if_repaired("update_env");
+
       "/etc/portage/make.conf"
         perms => system,
         create => "true",
