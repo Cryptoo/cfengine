@@ -2,159 +2,163 @@ bundle agent directories
 
 {
 
+  vars:
+
+    "root" string => "/";
+
   classes:
 
       "need_cryptoo" not => "have_cryptoo";
 
   files:
 
-      "/etc/."
+      "$(root)etc/."
         perms => system,
         create => "true";
 
-      "/etc/bash/."
+      "$(root)etc/bash/."
         perms => system,
         create => "true";
 
-      "/etc/env.d/."
+      "$(root)etc/env.d/."
         perms => system,
         create => "true";
 
-      "/etc/portage/."
+      "$(root)etc/portage/."
         perms => system,
         create => "true";
 
-      "/etc/portage/env/."
+      "$(root)etc/portage/env/."
         perms => system,
         create => "true";
 
-      "/etc/portage/package.env/."
+      "$(root)etc/portage/package.env/."
         perms => system,
         create => "true";
 
-      "/etc/portage/package.keywords/."
+      "$(root)etc/portage/package.keywords/."
         perms => system,
         create => "true";
 
-      "/etc/portage/package.mask/." 
+      "$(root)etc/portage/package.mask/." 
         perms => system,
         create => "true";
 
-      "/etc/portage/package.unmask/." 
+      "$(root)etc/portage/package.unmask/." 
         perms => system,
         create => "true";
 
-      "/etc/portage/package.use/." 
+      "$(root)etc/portage/package.use/." 
         perms => system,
         create => "true";
 
-      "/etc/portage/patches/." 
+      "$(root)etc/portage/patches/." 
         perms => system,
         create => "true";
 
-      "/etc/portage/profile/." 
+      "$(root)etc/portage/profile/." 
         perms => system,
         create => "true";
 
-      "/etc/portage/profile/stub/." 
+      "$(root)etc/portage/profile/stub/." 
         perms => system,
         create => "true";
 
-      "/mnt/." 
+      "$(root)mnt/." 
         perms => system,
         create => "true";
 
-      "/mnt/shared/." 
+      "$(root)mnt/shared/." 
         depends_on => { "user_guest" },
         perms => guest,
         create => "true";
 
-      "/usr/." 
+      "$(root)usr/." 
         perms => system,
         create => "true";
 
-      "$(cryptoo.dist_root)" 
+      "$(root)$(cryptoo.dist_root)" 
         perms => system,
         create => "false";
 
-      "/usr/local/portage/." 
+      "$(root)usr/local/portage/." 
         depends_on => { "user_portage" },
         perms => portage,
         create => "true";
 
-      "/usr/local/portage/metadata/." 
+      "$(root)usr/local/portage/metadata/." 
         depends_on => { "user_portage" },
         perms => portage,
         create => "true";
 
-      "/usr/local/portage/profiles/." 
+      "$(root)usr/local/portage/profiles/." 
         depends_on => { "user_portage" },
         perms => portage,
         create => "true";
 
-      "/usr/site-local/." 
+      "$(root)usr/site-local/." 
         perms => system,
         create => "true";
 
-      "/usr/site-local/bin/." 
+      "$(root)usr/site-local/bin/." 
         perms => system,
         create => "true";
 
-      "/usr/site-local/distfiles/." 
+      "$(root)usr/site-local/distfiles/." 
         depends_on => { "user_portage" },
         perms => portage_open,
         create => "true";
 
-      "/usr/site-local/packages/." 
+      "$(root)usr/site-local/packages/." 
         perms => system,
         create => "true";
 
-      "/usr/site-local/portage/." 
+      "$(root)usr/site-local/portage/." 
         depends_on => { "user_portage" },
         perms => portage,
         create => "true";
 
-      "/usr/site-local/portage/metadata/." 
+      "$(root)usr/site-local/portage/metadata/." 
         depends_on => { "user_portage" },
         perms => portage,
         create => "true";
 
-      "/usr/site-local/portage/profiles/." 
+      "$(root)usr/site-local/portage/profiles/." 
         depends_on => { "user_portage" },
         perms => portage,
         create => "true";
 
-      "/usr/site-local/src/."
+      "$(root)usr/site-local/src/."
         perms => system,
         create => "true";
 
-      "/usr/src/."
+      "$(root)usr/src/."
         perms => system,
         create => "true";
 
-      "/var/." 
+      "$(root)var/." 
         perms => system,
         create => "true";
 
-      "/var/lib/." 
+      "$(root)var/lib/." 
         perms => system,
         create => "true";
 
-      "/var/lib/portage/." 
+      "$(root)var/lib/portage/." 
         depends_on => { "user_portage" },
         perms => portage,
         create => "true";
 
-      "/var/lib/layman/." 
+      "$(root)var/lib/layman/." 
         depends_on => { "user_portage" },
         perms => portage,
         create => "true";
 
-      "/var/tmp/." 
+      "$(root)var/tmp/." 
         perms => system_tmp,
         create => "true";
 
-      "/var/tmp/kernel/." 
+      "$(root)var/tmp/kernel/." 
         perms => system,
         create => "true";
 
@@ -179,7 +183,7 @@ bundle agent directories
   commands:
 
     need_cryptoo::
-      "/usr/bin/git clone git://github.com/cryptoo/overlay $(cryptoo.dist_root)";
+      "/usr/bin/git clone git://github.com/cryptoo/overlay /$(cryptoo.dist_root)";
 
     update_locale::
       "/usr/sbin/locale-gen";
