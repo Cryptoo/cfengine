@@ -8,6 +8,7 @@ bundle agent files (root, role)
 
       "need_cryptoo" not => "have_cryptoo";
       "local_role_$(role)" expression => "any";
+      "bootstrap_systemd" not => fileexists("$(root)usr/bin/systemctl");
 
     role_master&local_role_master::
 
@@ -64,10 +65,6 @@ bundle agent files (root, role)
         move_obstructions => "true",
         link_from => cryptoo_package_use("basic-programs");
 
-      "$(root)etc/portage/package.use/host"
-        move_obstructions => "true",
-        link_from => cryptoo_package_use("host");
-
       "$(root)etc/portage/package.use/virtualization"
         move_obstructions => "true",
         link_from => cryptoo_package_use("virtualization");
@@ -99,6 +96,17 @@ bundle agent files (root, role)
         perms => system,
         create => "true",
         edit_template => "/var/cfengine/inputs/templates/cryptoo_world_sets.txt";
+
+    bootstrap_systemd::
+
+      "$(root)etc/portage/package.use/systemd"
+        delete => tidy;
+
+    !bootstrap_systemd::
+
+      "$(root)etc/portage/package.use/systemd"
+        move_obstructions => "true",
+        link_from => cryptoo_package_use("systemd");
 
     bootable::
 
@@ -146,6 +154,10 @@ bundle agent files (root, role)
         perms => system,
         create => "true",
         edit_template => "/var/cfengine/inputs/templates/cryptoo_site_local_repo_name.txt";
+
+      "$(root)etc/portage/package.use/host"
+        move_obstructions => "true",
+        link_from => cryptoo_package_use("host");
 
   commands:
 
