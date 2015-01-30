@@ -8,6 +8,7 @@ bundle common cryptoo
       "dist_portage" string => "$(dist_root)/Documentation/etc/portage";
       "profile_root" string => "$(dist_root)/profiles";
       "kernel_src_dir" string => "/usr/site-local/src/linux";
+      "kernel_build_dir" string => "/var/tmp/kernel";
 
   classes:
 
