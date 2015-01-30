@@ -7,11 +7,13 @@ bundle common cryptoo
       "bundles" slist => {
                             "cryptoo",
                             "directories",
+                            "files",
                             "kconfig"
                          };
 
       "inputs" slist => {
                             "cryptoo/directories.cf",
+                            "cryptoo/files.cf",
                             "cryptoo/kconfig.cf"
                          };
 

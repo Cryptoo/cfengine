@@ -1,0 +1,190 @@
+bundle agent files
+
+{
+
+  files:
+
+      "/etc/localtime"
+        move_obstructions => "true",
+        link_from => timezone("UTC");
+
+      "/etc/locale.gen"
+        perms => system,
+        create => "false",
+        edit_line => uncomment_lines_containing("en_US\.UTF-8 UTF-8","#"),
+        classes => u_if_repaired("update_locale");
+
+      "/etc/env.d/02locale"
+        create => "true",
+        edit_template => "/var/cfengine/inputs/templates/cryptoo_env_locale.txt",
+        classes => u_if_repaired("update_env");
+
+      "/etc/portage/make.conf"
+        create => "true",
+        edit_template => "/var/cfengine/inputs/templates/cryptoo_make_conf.txt";
+
+      "/etc/portage/make.profile"
+        move_obstructions => "true",
+        link_from => cryptoo_profile("cryptoo");
+
+      "/etc/portage/env/local-distfiles.conf"
+        move_obstructions => "true",
+        link_from => cryptoo_portage_env("local-distfiles.conf");
+
+      "/etc/portage/env/nosandbox.conf"
+        move_obstructions => "true",
+        link_from => cryptoo_portage_env("nosandbox.conf");
+
+      "/etc/portage/env/notmpfs.conf"
+        move_obstructions => "true",
+        link_from => cryptoo_portage_env("notmpfs.conf");
+
+      "/etc/portage/package.env/cryptoo"
+        move_obstructions => "true",
+        link_from => cryptoo_package_env("cryptoo");
+
+      "/etc/portage/package.keywords/basic-programs"
+        move_obstructions => "true",
+        link_from => cryptoo_package_keyword("basic-programs");
+
+      "/etc/portage/package.keywords/virtualization"
+        move_obstructions => "true",
+        link_from => cryptoo_package_keyword("virtualization");
+
+      "/etc/portage/package.mask/basic-programs" 
+        move_obstructions => "true",
+        link_from => cryptoo_package_mask("basic-programs");
+
+      "/etc/portage/package.use/basic-programs" 
+        move_obstructions => "true",
+        link_from => cryptoo_package_use("basic-programs");
+
+      "/etc/portage/package.use/host" 
+        move_obstructions => "true",
+        link_from => cryptoo_package_use("host");
+
+      "/etc/portage/package.use/virtualization" 
+        move_obstructions => "true",
+        link_from => cryptoo_package_use("virtualization");
+
+      "/etc/portage/profile/package.provided" 
+        move_obstructions => "true",
+        link_from => cryptoo_portage_profile("package.provided");
+
+      "/etc/portage/profile/stub/parent" 
+        create => "true",
+        edit_template => "/var/cfengine/inputs/templates/cryptoo_profile_parent.txt";
+
+      "/usr/local/portage/metadata/layout.conf" 
+        create => "true",
+        edit_template => "/var/cfengine/inputs/templates/cryptoo_local_layout_conf.txt";
+
+      "/usr/local/portage/profiles/repo_name" 
+        create => "true",
+        edit_template => "/var/cfengine/inputs/templates/cryptoo_local_repo_name.txt";
+
+      "/usr/site-local/portage/metadata/layout.conf" 
+        create => "true",
+        edit_template => "/var/cfengine/inputs/templates/cryptoo_local_layout_conf.txt";
+
+      "/usr/site-local/portage/profiles/repo_name" 
+        create => "true",
+        edit_template => "/var/cfengine/inputs/templates/cryptoo_site_local_repo_name.txt";
+
+      "/usr/src/linux"
+        move_obstructions => "true",
+        link_from => kernel_dir;
+
+      "/var/lib/portage/world_sets" 
+        create => "true",
+        edit_template => "/var/cfengine/inputs/templates/cryptoo_world_sets.txt";
+
+  commands:
+
+    update_locale::
+      "/usr/sbin/locale-gen";
+
+    update_env::
+      "/usr/sbin/env-update";
+
+}
+
+body link_from cryptoo_portage_env(x)
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "$(cryptoo.dist_portage)/env/$(x)";
+}
+
+body link_from cryptoo_package_env(x)
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "$(cryptoo.dist_portage)/package.env/$(x)";
+}
+
+body link_from cryptoo_package_keyword(x)
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "$(cryptoo.dist_portage)/package.keywords/$(x)";
+}
+
+body link_from cryptoo_package_mask(x)
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "$(cryptoo.dist_portage)/package.mask/$(x)";
+}
+
+body link_from cryptoo_package_unmask(x)
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "$(cryptoo.dist_portage)/package.unmask/$(x)";
+}
+
+body link_from cryptoo_package_use(x)
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "$(cryptoo.dist_portage)/package.use/$(x)";
+}
+
+body link_from cryptoo_portage_profile(x)
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "$(cryptoo.dist_portage)/profile/$(x)";
+}
+
+body link_from cryptoo_profile(x)
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "$(cryptoo.profile_root)/$(x)";
+}
+
+body link_from timezone(x)
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "/usr/share/zoneinfo/$(x)";
+}
+
+body link_from kernel_dir
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "/usr/site-local/src/linux";
+}
