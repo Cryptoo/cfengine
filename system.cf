@@ -4,6 +4,14 @@ bundle agent system
 
   methods:
 
+    role_undefined::
+
+      "create top-level directory structure"
+        usebundle => directories("/","undefined");
+
+      "manage files for the system"
+        usebundle => files("/","undefined");
+
     role_master::
 
       "create top-level directory structure"
