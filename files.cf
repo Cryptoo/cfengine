@@ -149,7 +149,7 @@ bundle agent files (root, role)
 
   commands:
 
-    any::
+    bootable::
 
       update_locale::
         "/usr/sbin/locale-gen";
