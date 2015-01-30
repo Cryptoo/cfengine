@@ -11,7 +11,8 @@ bundle agent files
       "/etc/bash/bashrc"
         perms => system,
         create => "true",
-        edit_line => PS1_always_show_full_path;
+        edit_line => PS1_always_show_full_path,
+        edit_line => aliases;
 
       "/etc/locale.gen"
         perms => system,
@@ -139,6 +140,22 @@ bundle edit_line PS1_always_show_full_path
 
       "(.*PS1=.*)W(.*)"
         replace_with => PS1_small_w;
+}
+
+bundle edit_line aliases
+
+{
+    insert_lines:
+
+      "alias ls='ls -FADv -I .keep --color=auto'$(const.n)alias nano='nano -w'"
+        location => after_unset;
+}
+
+body location after_unset
+
+{
+    select_line_matching => "unset.*use_color.*safe_term.*match_lhs.*";
+    before_after => "after";
 }
 
 body replace_with PS1_small_w
