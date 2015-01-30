@@ -4,6 +4,8 @@ bundle common cryptoo
 
   vars:
 
+      "bundles" slist => {"cryptoo", "files", "kconfig"};
+
       "dist_root" string => "/usr/cryptoo";
       "dist_portage" string => "$(dist_root)/Documentation/etc/portage";
       "profile_root" string => "$(dist_root)/profiles";
