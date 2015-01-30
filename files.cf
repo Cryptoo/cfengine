@@ -105,11 +105,18 @@ bundle agent files (root, role)
       "$(root)etc/portage/package.use/systemd"
         delete => tidy;
 
+      "$(root)etc/portage/package.use/systemd-bootstrap"
+        move_obstructions => "true",
+        link_from => cryptoo_package_use("systemd-bootstrap");
+
     !bootstrap_systemd::
 
       "$(root)etc/portage/package.use/systemd"
         move_obstructions => "true",
         link_from => cryptoo_package_use("systemd");
+
+      "$(root)etc/portage/package.use/systemd-bootstrap"
+        delete => tidy;
 
     bootable::
 
