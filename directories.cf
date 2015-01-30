@@ -1,6 +1,12 @@
-bundle agent directories(root)
+bundle agent directories(root, role)
 
 {
+
+  classes:
+
+    any::
+
+      "local_role_$(role)" expression => "any";
 
   files:
 
@@ -14,15 +20,15 @@ bundle agent directories(root)
         perms => system,
         create => "true";
 
-      "$(root)etc/cryptoo/."
+      "$(root)$(cryptoo.cryptoo_config_root)/."
         perms => system,
         create => "true";
 
-      "$(root)etc/cryptoo/inbox/."
+      "$(root)$(cryptoo.cryptoo_config_incoming)/."
         perms => root,
         create => "true";
 
-      "$(root)etc/cryptoo/outbox/."
+      "$(root)$(cryptoo.cryptoo_config_outgoing)/."
         perms => root,
         create => "true";
 
@@ -154,7 +160,7 @@ bundle agent directories(root)
         perms => system_tmp,
         create => "true";
 
-    role_master::
+    local_role_master::
 
       "$(root)usr/site-local/portage/metadata/." 
         depends_on => { "user_portage" },

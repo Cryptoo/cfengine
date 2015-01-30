@@ -7,6 +7,6 @@ bundle agent system
     any::
 
       "create top-level directory structure"
-        usebundle => directories("/");
+        usebundle => directories("/","master");
 
 }
