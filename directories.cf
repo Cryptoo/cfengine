@@ -172,6 +172,14 @@ bundle agent directories(root, role)
         perms => portage,
         create => "true";
 
+      "$(root)var/images/."
+        perms => system,
+        create => "true";
+
+      "$(root)var/images/server/."
+        perms => system,
+        create => "true";
+
       "$(root)var/tmp/kernel/." 
         perms => system,
         create => "true";
