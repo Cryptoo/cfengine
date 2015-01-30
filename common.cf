@@ -25,11 +25,26 @@ bundle common cryptoo
       "kernel_git" string => "git://github.com/cryptoo/kernel";
       "kernel_src_dir" string => "/usr/site-local/src/linux";
       "kernel_build_dir" string => "/var/tmp/kernel";
+      "cryptoo_config_root" string => "/etc/cryptoo";
+      "cryptoo_config_incoming" string => "$(cryptoo_config_root)/inbox";
+      "cryptoo_config_outgoing" string => "$(cryptoo_config_root)/outbox";
+      "cryptoo_config_role" string => "$(cryptoo_config_incoming)/role";
 
   classes:
 
     any::
 
       "have_cryptoo" expression => fileexists("$(dist_root)");
+      "role_master" expression => regline("master", "$(cryptoo_config_role)");
+      "role_undefined" not => fileexists("$(cryptoo_config_role)");
 
+  reports:
+
+    role_master::
+
+      "My role is: master";
+
+    role_undefined::
+
+      "My role is: undefined";
 }
