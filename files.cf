@@ -8,8 +8,11 @@ bundle agent files (root, role)
 
       "need_cryptoo" not => "have_cryptoo";
       "local_role_$(role)" expression => "any";
+      "have_systemd" expression => fileexists("$(root)usr/bin/systemctl");
       "bootstrap_systemd" not => fileexists("$(root)usr/bin/systemctl");
-      "locale_gen" expression => fileexists("$(root)etc/locale.gen");
+      "have_locale_gen" expression => fileexists("$(root)etc/locale.gen");
+      "have_dracut" expression => fileexists("$(root)usr/bin/dracut");
+      "need_dracut_image" not => fileexists("$(root)boot/initramfs.dracut.xz");
 
     role_master&local_role_master::
 
@@ -92,7 +95,7 @@ bundle agent files (root, role)
         create => "true",
         edit_template => "/var/cfengine/inputs/templates/cryptoo_world_sets.txt";
 
-    locale_gen::
+    have_locale_gen::
 
       "$(root)etc/locale.gen"
         perms => system,
@@ -109,7 +112,7 @@ bundle agent files (root, role)
         move_obstructions => "true",
         link_from => cryptoo_package_use("systemd-bootstrap");
 
-    !bootstrap_systemd::
+    have_systemd::
 
       "$(root)etc/portage/package.use/systemd"
         move_obstructions => "true",
@@ -182,6 +185,10 @@ bundle agent files (root, role)
     local_role_master&need_cryptoo::
 
       "/usr/bin/git clone -b dev git://github.com/cryptoo/overlay /$(cryptoo.dist_root)";
+
+    local_role_master&have_dracut&need_dracut_image::
+
+      "/usr/bin/dracut --force --xz /boot/initramfs.dracut.xz";
 
   methods:
 

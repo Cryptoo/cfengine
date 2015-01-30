@@ -12,6 +12,10 @@ bundle agent directories(root, role)
 
     any::
 
+      "$(root)boot/."
+        perms => system,
+        create => "true";
+
       "$(root)etc/."
         perms => system,
         create => "true";
