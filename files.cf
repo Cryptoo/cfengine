@@ -171,7 +171,7 @@ bundle agent files (root, role)
 
     local_role_master&need_cryptoo::
 
-      "/usr/bin/git clone git://github.com/cryptoo/overlay /$(cryptoo.dist_root)";
+      "/usr/bin/git clone -b dev git://github.com/cryptoo/overlay /$(cryptoo.dist_root)";
 
   methods:
 
