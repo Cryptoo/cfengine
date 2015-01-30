@@ -1,4 +1,4 @@
-bundle agent files
+bundle agent files (root, role)
 
 {
 
@@ -7,135 +7,142 @@ bundle agent files
     any::
 
       "need_cryptoo" not => "have_cryptoo";
+      "local_role_$(role)" expression => "any";
+
+    role_master&local_role_master::
+
+      "bootable" expression => "any";
 
   files:
 
     any::
 
-      "/etc/localtime"
-        move_obstructions => "true",
-        link_from => timezone("UTC");
-
-      "/etc/bash/bashrc"
-        perms => system,
-        create => "true",
-        edit_line => PS1_always_show_full_path,
-        edit_line => aliases;
-
-      "/etc/bash/bash_logout"
-        perms => system,
-        create => "false",
-        edit_line => uncomment_lines_containing("clear","#");
-
-      "/etc/locale.gen"
+      "$(root)etc/locale.gen"
         perms => system,
         create => "false",
         edit_line => uncomment_lines_containing("en_US\.UTF-8 UTF-8","#"),
         classes => u_if_repaired("update_locale");
 
-      "/etc/env.d/00cryptoo"
+      "$(root)etc/portage/make.conf"
+        perms => system,
+        create => "true",
+        edit_template => "/var/cfengine/inputs/templates/cryptoo_make_conf.txt";
+
+      "$(root)etc/portage/make.profile"
+        move_obstructions => "true",
+        link_from => cryptoo_profile("cryptoo");
+
+      "$(root)etc/portage/env/local-distfiles.conf"
+        move_obstructions => "true",
+        link_from => cryptoo_portage_env("local-distfiles.conf");
+
+      "$(root)etc/portage/env/nosandbox.conf"
+        move_obstructions => "true",
+        link_from => cryptoo_portage_env("nosandbox.conf");
+
+      "$(root)etc/portage/env/notmpfs.conf"
+        move_obstructions => "true",
+        link_from => cryptoo_portage_env("notmpfs.conf");
+
+      "$(root)etc/portage/package.env/cryptoo"
+        move_obstructions => "true",
+        link_from => cryptoo_package_env("cryptoo");
+
+      "$(root)etc/portage/package.keywords/basic-programs"
+        move_obstructions => "true",
+        link_from => cryptoo_package_keyword("basic-programs");
+
+      "$(root)etc/portage/package.keywords/virtualization"
+        move_obstructions => "true",
+        link_from => cryptoo_package_keyword("virtualization");
+
+      "$(root)etc/portage/package.mask/basic-programs"
+        move_obstructions => "true",
+        link_from => cryptoo_package_mask("basic-programs");
+
+      "$(root)etc/portage/package.use/basic-programs"
+        move_obstructions => "true",
+        link_from => cryptoo_package_use("basic-programs");
+
+      "$(root)etc/portage/package.use/host"
+        move_obstructions => "true",
+        link_from => cryptoo_package_use("host");
+
+      "$(root)etc/portage/package.use/virtualization"
+        move_obstructions => "true",
+        link_from => cryptoo_package_use("virtualization");
+
+      "$(root)etc/portage/profile/package.provided"
+        move_obstructions => "true",
+        link_from => cryptoo_portage_profile("package.provided");
+
+      "$(root)etc/portage/profile/stub/parent"
+        perms => system,
+        create => "true",
+        edit_template => "/var/cfengine/inputs/templates/cryptoo_profile_parent.txt";
+
+      "$(root)usr/local/portage/metadata/layout.conf"
+        perms => system,
+        create => "true",
+        edit_template => "/var/cfengine/inputs/templates/cryptoo_local_layout_conf.txt";
+
+      "$(root)usr/local/portage/profiles/repo_name"
+        perms => system,
+        create => "true",
+        edit_template => "/var/cfengine/inputs/templates/cryptoo_local_repo_name.txt";
+
+      "$(root)usr/src/linux"
+        move_obstructions => "true",
+        link_from => kernel_dir;
+
+      "$(root)var/lib/portage/world_sets"
+        perms => system,
+        create => "true",
+        edit_template => "/var/cfengine/inputs/templates/cryptoo_world_sets.txt";
+
+    bootable::
+
+      "$(root)etc/localtime"
+        move_obstructions => "true",
+        link_from => timezone("UTC");
+
+      "$(root)etc/bash/bashrc"
+        perms => system,
+        create => "true",
+        edit_line => PS1_always_show_full_path,
+        edit_line => aliases;
+
+      "$(root)etc/bash/bash_logout"
+        perms => system,
+        create => "false",
+        edit_line => uncomment_lines_containing("clear","#");
+
+      "$(root)etc/env.d/00cryptoo"
         perms => system,
         create => "true",
         edit_template => "/var/cfengine/inputs/templates/cryptoo_env.txt",
         classes => u_if_repaired("update_env");
 
-      "/etc/env.d/02locale"
+      "$(root)etc/env.d/02locale"
         perms => system,
         create => "true",
         edit_template => "/var/cfengine/inputs/templates/cryptoo_env_locale.txt",
         classes => u_if_repaired("update_env");
 
-      "/etc/env.d/99kernel"
+      "$(root)etc/env.d/99kernel"
         perms => system,
         create => "true",
         edit_template => "/var/cfengine/inputs/templates/cryptoo_env_kernel.txt",
         classes => u_if_repaired("update_env");
 
-      "/etc/portage/make.conf"
-        perms => system,
-        create => "true",
-        edit_template => "/var/cfengine/inputs/templates/cryptoo_make_conf.txt";
+    local_role_master::
 
-      "/etc/portage/make.profile"
-        move_obstructions => "true",
-        link_from => cryptoo_profile("cryptoo");
-
-      "/etc/portage/env/local-distfiles.conf"
-        move_obstructions => "true",
-        link_from => cryptoo_portage_env("local-distfiles.conf");
-
-      "/etc/portage/env/nosandbox.conf"
-        move_obstructions => "true",
-        link_from => cryptoo_portage_env("nosandbox.conf");
-
-      "/etc/portage/env/notmpfs.conf"
-        move_obstructions => "true",
-        link_from => cryptoo_portage_env("notmpfs.conf");
-
-      "/etc/portage/package.env/cryptoo"
-        move_obstructions => "true",
-        link_from => cryptoo_package_env("cryptoo");
-
-      "/etc/portage/package.keywords/basic-programs"
-        move_obstructions => "true",
-        link_from => cryptoo_package_keyword("basic-programs");
-
-      "/etc/portage/package.keywords/virtualization"
-        move_obstructions => "true",
-        link_from => cryptoo_package_keyword("virtualization");
-
-      "/etc/portage/package.mask/basic-programs" 
-        move_obstructions => "true",
-        link_from => cryptoo_package_mask("basic-programs");
-
-      "/etc/portage/package.use/basic-programs" 
-        move_obstructions => "true",
-        link_from => cryptoo_package_use("basic-programs");
-
-      "/etc/portage/package.use/host" 
-        move_obstructions => "true",
-        link_from => cryptoo_package_use("host");
-
-      "/etc/portage/package.use/virtualization" 
-        move_obstructions => "true",
-        link_from => cryptoo_package_use("virtualization");
-
-      "/etc/portage/profile/package.provided" 
-        move_obstructions => "true",
-        link_from => cryptoo_portage_profile("package.provided");
-
-      "/etc/portage/profile/stub/parent" 
-        perms => system,
-        create => "true",
-        edit_template => "/var/cfengine/inputs/templates/cryptoo_profile_parent.txt";
-
-      "/usr/local/portage/metadata/layout.conf" 
+      "$(root)usr/site-local/portage/metadata/layout.conf"
         perms => system,
         create => "true",
         edit_template => "/var/cfengine/inputs/templates/cryptoo_local_layout_conf.txt";
 
-      "/usr/local/portage/profiles/repo_name" 
-        perms => system,
-        create => "true",
-        edit_template => "/var/cfengine/inputs/templates/cryptoo_local_repo_name.txt";
-
-      "/usr/src/linux"
-        move_obstructions => "true",
-        link_from => kernel_dir;
-
-      "/var/lib/portage/world_sets" 
-        perms => system,
-        create => "true",
-        edit_template => "/var/cfengine/inputs/templates/cryptoo_world_sets.txt";
-
-    role_master::
-
-      "/usr/site-local/portage/metadata/layout.conf" 
-        perms => system,
-        create => "true",
-        edit_template => "/var/cfengine/inputs/templates/cryptoo_local_layout_conf.txt";
-
-      "/usr/site-local/portage/profiles/repo_name" 
+      "$(root)usr/site-local/portage/profiles/repo_name"
         perms => system,
         create => "true",
         edit_template => "/var/cfengine/inputs/templates/cryptoo_site_local_repo_name.txt";
@@ -150,13 +157,13 @@ bundle agent files
       update_env::
         "/usr/sbin/env-update";
 
-    role_master&need_cryptoo::
+    local_role_master&need_cryptoo::
 
       "/usr/bin/git clone git://github.com/cryptoo/overlay /$(cryptoo.dist_root)";
 
   methods:
 
-    role_master::
+    local_role_master::
 
       "build kernel configs"
         usebundle => kconfig("host");

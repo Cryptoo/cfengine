@@ -9,7 +9,13 @@ bundle agent system
       "create top-level directory structure"
         usebundle => directories("/","master");
 
-      "create a skeleton guest directory tree for building packages"
+      "manage files for the system"
+        usebundle => files("/","master");
+
+      "create a skeleton guest tree for building packages"
         usebundle => directories("/var/images/server/","guest");
+
+      "manage files for the guest tree"
+        usebundle => files("/var/images/server/","guest");
 
 }

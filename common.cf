@@ -8,8 +8,7 @@ bundle common cryptoo
 
       "bundles" slist => {
                             "cryptoo",
-                            "system",
-                            "files"
+                            "system"
                          };
 
       "inputs" slist => {
