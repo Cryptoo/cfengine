@@ -1,0 +1,12 @@
+bundle agent system
+
+{
+
+  methods:
+
+    any::
+
+      "create top-level directory structure"
+        usebundle => directories("/");
+
+}

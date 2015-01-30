@@ -1,10 +1,6 @@
-bundle agent directories
+bundle agent directories(root)
 
 {
-
-  vars:
-
-    "root" string => "/";
 
   files:
 

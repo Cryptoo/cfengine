@@ -4,16 +4,19 @@ bundle common cryptoo
 
   vars:
 
+    any::
+
       "bundles" slist => {
                             "cryptoo",
-                            "directories",
+                            "system",
                             "files"
                          };
 
       "inputs" slist => {
                             "cryptoo/directories.cf",
                             "cryptoo/files.cf",
-                            "cryptoo/kconfig.cf"
+                            "cryptoo/kconfig.cf",
+                            "cryptoo/system.cf"
                          };
 
       "dist_root" string => "usr/cryptoo";
@@ -24,6 +27,8 @@ bundle common cryptoo
       "kernel_build_dir" string => "/var/tmp/kernel";
 
   classes:
+
+    any::
 
       "have_cryptoo" expression => fileexists("$(dist_root)");
 
