@@ -4,9 +4,12 @@ bundle agent system
 
   methods:
 
-    any::
+    role_master::
 
       "create top-level directory structure"
         usebundle => directories("/","master");
+
+      "create a skeleton guest directory tree for building packages"
+        usebundle => directories("/var/images/server/","guest");
 
 }
