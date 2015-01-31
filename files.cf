@@ -158,12 +158,12 @@ bundle agent files (root, role)
 
     local_role_master::
 
-      "$(root)usr/site-local/portage/metadata/layout.conf"
+      "$(root)srv/site-local/portage/metadata/layout.conf"
         perms => system,
         create => "true",
         edit_template => "/var/cfengine/inputs/templates/cryptoo_local_layout_conf.txt";
 
-      "$(root)usr/site-local/portage/profiles/repo_name"
+      "$(root)srv/site-local/portage/profiles/repo_name"
         perms => system,
         create => "true",
         edit_template => "/var/cfengine/inputs/templates/cryptoo_site_local_repo_name.txt";

@@ -56,80 +56,89 @@ bundle agent directories(root, role)
         perms => system,
         create => "true";
 
-      "$(root)etc/portage/package.mask/." 
+      "$(root)etc/portage/package.mask/."
         perms => system,
         create => "true";
 
-      "$(root)etc/portage/package.unmask/." 
+      "$(root)etc/portage/package.unmask/."
         perms => system,
         create => "true";
 
-      "$(root)etc/portage/package.use/." 
+      "$(root)etc/portage/package.use/."
         perms => system,
         create => "true";
 
-      "$(root)etc/portage/patches/." 
+      "$(root)etc/portage/patches/."
         perms => system,
         create => "true";
 
-      "$(root)etc/portage/profile/." 
+      "$(root)etc/portage/profile/."
         perms => system,
         create => "true";
 
-      "$(root)etc/portage/profile/stub/." 
+      "$(root)etc/portage/profile/stub/."
         perms => system,
         create => "true";
 
-      "$(root)mnt/." 
+      "$(root)mnt/."
         perms => system,
         create => "true";
 
-      "$(root)mnt/shared/." 
+      "$(root)mnt/root/."
+        perms => system,
+        create => "true";
+
+      "$(root)mnt/shared/."
         depends_on => { "user_guest" },
         perms => guest,
         create => "true";
 
-      "$(root)usr/." 
+      "$(root)tmp/."
+        perms => system_tmp,
+        create => "true";
+
+      "$(root)usr/."
         perms => system,
         create => "true";
 
-      "$(root)$(cryptoo.dist_root)" 
+      "$(root)$(cryptoo.dist_root)"
         perms => system,
         create => "false";
 
-      "$(root)usr/local/portage/." 
+      "$(root)usr/local/portage/."
         depends_on => { "user_portage" },
         perms => portage,
         create => "true";
 
-      "$(root)usr/local/portage/metadata/." 
+      "$(root)usr/local/portage/metadata/."
         depends_on => { "user_portage" },
         perms => portage,
         create => "true";
 
-      "$(root)usr/local/portage/profiles/." 
+      "$(root)usr/local/portage/profiles/."
         depends_on => { "user_portage" },
         perms => portage,
         create => "true";
 
-      "$(root)usr/site-local/." 
+      "$(root)usr/site-local/."
         perms => system,
         create => "true";
 
-      "$(root)usr/site-local/bin/." 
+      "$(root)usr/site-local/bin/."
         perms => system,
         create => "true";
 
-      "$(root)usr/site-local/distfiles/." 
+      "$(root)usr/site-local/distfiles/."
         depends_on => { "user_portage" },
         perms => portage_open,
         create => "true";
 
-      "$(root)usr/site-local/packages/." 
-        perms => system,
+      "$(root)usr/site-local/packages/."
+        depends_on => { "user_portage" },
+        perms => portage_open,
         create => "true";
 
-      "$(root)usr/site-local/portage/." 
+      "$(root)usr/site-local/portage/."
         depends_on => { "user_portage" },
         perms => portage,
         create => "true";
@@ -142,38 +151,79 @@ bundle agent directories(root, role)
         perms => system,
         create => "true";
 
-      "$(root)var/." 
+      "$(root)var/."
         perms => system,
         create => "true";
 
-      "$(root)var/lib/." 
+      "$(root)var/lib/."
         perms => system,
         create => "true";
 
-      "$(root)var/lib/portage/." 
+      "$(root)var/lib/portage/."
         depends_on => { "user_portage" },
         perms => portage,
         create => "true";
 
-      "$(root)var/lib/layman/." 
+      "$(root)var/lib/layman/."
         depends_on => { "user_portage" },
         perms => portage,
         create => "true";
 
-      "$(root)var/tmp/." 
+      "$(root)var/tmp/."
         perms => system_tmp,
         create => "true";
 
     local_role_master::
 
-      "$(root)usr/site-local/portage/metadata/." 
+      "$(root)srv/."
+        perms => system,
+        create => "true";
+
+      "$(root)srv/site-local/."
+        perms => system,
+        create => "true";
+
+      "$(root)srv/site-local/bin/."
+        perms => system,
+        create => "true";
+
+      "$(root)srv/site-local/distfiles/."
+        depends_on => { "user_portage" },
+        perms => portage_open,
+        create => "true";
+
+      "$(root)srv/site-local/layman/."
         depends_on => { "user_portage" },
         perms => portage,
         create => "true";
 
-      "$(root)usr/site-local/portage/profiles/." 
+      "$(root)srv/site-local/packages/."
+        depends_on => { "user_portage" },
+        perms => portage_open,
+        create => "true";
+
+      "$(root)srv/site-local/portage/."
         depends_on => { "user_portage" },
         perms => portage,
+        create => "true";
+
+      "$(root)srv/site-local/portage/metadata/."
+        depends_on => { "user_portage" },
+        perms => portage,
+        create => "true";
+
+      "$(root)srv/site-local/portage/profiles/."
+        depends_on => { "user_portage" },
+        perms => portage,
+        create => "true";
+
+      "$(root)srv/site-local/storage/."
+        depends_on => { "user_guest" },
+        perms => guest,
+        create => "true";
+
+      "$(root)srv/site-local/src/."
+        perms => system,
         create => "true";
 
       "$(root)var/images/."
@@ -184,7 +234,7 @@ bundle agent directories(root, role)
         perms => system,
         create => "true";
 
-      "$(root)var/tmp/kernel/." 
+      "$(root)var/tmp/kernel/."
         perms => system,
         create => "true";
 
