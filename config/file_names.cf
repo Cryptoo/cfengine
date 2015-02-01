@@ -1,0 +1,57 @@
+bundle common file_names
+
+{
+
+  vars:
+
+    any::
+
+      "mount_info" string => "/proc/self/mountstats";
+
+      "mount_app" string => "$(directory_names.fs_apps_base)/mount";
+      "move_app" string => "$(directory_names.fs_apps_base)/mv";
+      "dracut_image" string => "$(directory_names.fs_boot_base)/initramfs.dracut.xz";
+      "fstab" string => "$(directory_names.fs_config_base)/fstab";
+      "locale" string => "$(directory_names.fs_config_base)/locale.gen";
+      "localtime" string => "$(directory_names.fs_config_base)/localtime";
+      "system_bashrc" string => "$(directory_names.fs_config_bash)/bashrc";
+      "system_bash_logout" string => "$(directory_names.fs_config_bash)/bash_logout";
+      "crypoo_role" string => "$(directory_names.fs_config_crypoo_incoming)/role";
+      "env_cryptoo" string => "$(directory_names.fs_config_environment)/00cryptoo";
+      "env_locale" string => "$(directory_names.fs_config_environment)/02locale";
+      "env_kernel" string => "$(directory_names.fs_config_environment)/99kernel";
+      "mtab" string => "$(directory_names.fs_config_base)/mtab";
+      "pm_config" string => "$(directory_names.fs_config_pm)/make.conf";
+      "pm_profile" string => "$(directory_names.fs_config_pm)/make.profile";
+      "pm_env_localdistfiles" string => "$(directory_names.fs_config_pm_env)/local-distfiles.conf";
+      "pm_env_nosandbox" string => "$(directory_names.fs_config_pm_env)/nosandbox.conf";
+      "pm_env_notmpfs" string => "$(directory_names.fs_config_pm_env)/notmpfs.conf";
+      "pm_environment_cryptoo" string => "$(directory_names.fs_config_pm_environments)/cryptoo";
+      "pm_keywords_basicprograms" string => "$(directory_names.fs_config_pm_keywords)/basic-programs";
+      "pm_keywords_virtualization" string => "$(directory_names.fs_config_pm_keywords)/virtualization";
+      "pm_mask_basicprograms" string => "$(directory_names.fs_config_pm_mask)/basic-programs";
+      "pm_use_basicprograms" string => "$(directory_names.fs_config_pm_use)/basic-programs";
+      "pm_use_host" string => "$(directory_names.fs_config_pm_use)/host";
+      "pm_use_systemd" string => "$(directory_names.fs_config_pm_use)/systemd";
+      "pm_use_systemdbootstrap" string => "$(directory_names.fs_config_pm_use)/systemd-bootstrap";
+      "pm_use_virtualization" string => "$(directory_names.fs_config_pm_use)/virtualization";
+      "pm_profile_provided" string => "$(directory_names.fs_config_pm_profile)/package.provided";
+      "pm_profile_upstream" string => "$(directory_names.fs_config_pm_upstream)/parent";
+      "proc_mounts" string => "proc/self/mounts";
+      "storage_pm_site_meta" string => "$(directory_names.fs_storage_pm_site_meta)/layout.conf";
+      "storage_pm_site_repo" string => "$(directory_names.fs_storage_pm_site_profile)/repo_name";
+      "kernel_makefile" string => "$(directory_names.fs_storage_kernel)/Makefile";
+      "dracut_app" string => "$(directory_names.fs_standard_apps)/dracut";
+      "find_app" string => "$(directory_names.fs_standard_apps)/find";
+      "git_app" string => "$(directory_names.fs_standard_apps)/git";
+      "systemd_app" string => "$(directory_names.fs_standard_apps)/systemctl";
+      "cryptoo_profile" string => "$(directory_names.fs_crypoo_profiles)/repo_name";
+      "pm_machine_meta" string => "$(directory_names.fs_machine_pm_meta)/layout.conf";
+      "pm_machine_repo" string => "$(directory_names.fs_machine_pm_profile)/repo_name";
+      "envupdate_app" string => "$(directory_names.fs_standard_admin_apps)/env-update";
+      "localegen_app" string => "$(directory_names.fs_standard_admin_apps)/locale-gen";
+      "pm_site_meta" string => "$(directory_names.fs_storage_pm_site_meta)/layout.conf";
+      "pm_site_repo" string => "$(directory_names.fs_storage_pm_site_profile)/repo_name";
+      "pm_installed_sets" string => "$(directory_names.fs_volatile_pm)/world_sets";
+
+}

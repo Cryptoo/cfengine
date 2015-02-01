@@ -315,14 +315,20 @@ bundle agent kconfig(target)
       "kconfig_target_enabled_symbols" slist => getindices(kconfig_target_enabled_array);
       "kconfig_target_disabled_symbols" slist => getindices(kconfig_target_disabled_array);
 
-      "kconfig_file" string => "$(cryptoo.kernel_build_dir)/$(target)/x86_64/.config";
+      "kconfig_file" string => "/$(directory_names.fs_volatile_kernel)/$(target)/x86_64/.config";
+
+#      FIXME: This is the real command. It is tested and works, but it's too slow to use during development
+#      "kernel_clone_command" string => "/$(file_names.git_app) clone $(cryptoo.kernel_git) /$(directory_names.fs_storage_kernel)";
+
+#      FIXME: Cloning from virtfs is much faster than cloning over the 'net
+      "kernel_clone_command" string => "/usr/bin/rsync -a --exclude .git /usr/src/linux-host/ /srv/site-local/src/linux";
 
   classes:
 
-      "have_kernel_src" expression => fileexists("$(cryptoo.kernel_src_dir)");
-      "need_kernel_src" not => "have_kernel_src";
+      "have_kernel_src" expression => fileexists("/$(file_names.kernel_makefile)");
+      "need_kernel_src" not => fileexists("/$(file_names.kernel_makefile)");
       "have_target_kconfig" expression => fileexists("$(kconfig_file)");
-      "need_target_kconfig" not => "have_target_kconfig";
+      "need_target_kconfig" not => fileexists("$(kconfig_file)");
       "need_target_kconfig_bootstrap" and => { have_cryptoo, have_kernel_src, need_target_kconfig };
       "target_kconfig_disabled_$(kconfig_target_enabled_symbols)" expression => regline("# CONFIG_$(kconfig_target_enabled_symbols) is not set", "$(kconfig_file)");
       "target_kconfig_disabled_$(kconfig_target_disabled_symbols)" expression => regline("# CONFIG_$(kconfig_target_disabled_symbols) is not set", "$(kconfig_file)");
@@ -367,8 +373,8 @@ bundle agent kconfig(target)
 
   commands:
 
-    !have_kernel_src::
-      "/usr/bin/git clone $(kernel_git) $(cryptoo.kernel_src_dir)";
+    need_kernel_src::
+      "$(kernel_clone_command)";
 
     need_target_kconfig_bootstrap::
       "/usr/cryptoo/bin/kmake_host allnoconfig";

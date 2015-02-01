@@ -1,0 +1,23 @@
+bundle agent mount_types(fs)
+
+{
+
+  commands:
+
+    any::
+
+      "/$(file_names.mount_app) -a -t $(fs)";
+
+}
+
+bundle agent mount_all
+
+{
+
+  commands:
+
+    any::
+
+      "/$(file_names.mount_app) -a";
+
+}

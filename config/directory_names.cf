@@ -1,0 +1,86 @@
+bundle common directory_names
+
+{
+
+  vars:
+
+    any::
+
+      "pm" string => "portage";
+      "fs_apps_base" string => "bin";
+      "fs_boot_base" string => "boot";
+      "fs_config_base" string => "etc";
+      "fs_config_bash" string => "$(fs_config_base)/bash";
+      "fs_config_crypoo_root" string => "$(fs_config_base)/cryptoo";
+      "fs_config_crypoo_incoming" string => "$(fs_config_crypoo_root)/inbox";
+      "fs_config_crypoo_outgoing" string => "$(fs_config_crypoo_root)/outbox";
+      "fs_config_crypoo_role" string => "$(fs_config_crypoo_incoming)/role";
+      "fs_config_environment" string => "$(fs_config_base)/env.d";
+      "fs_config_pm" string => "$(fs_config_base)/$(pm)";
+      "fs_config_pm_env" string => "$(fs_config_pm)/env";
+      "fs_config_pm_environments" string => "$(fs_config_pm)/env.d";
+      "fs_config_pm_keywords" string => "$(fs_config_pm)/package.keywords";
+      "fs_config_pm_mask" string => "$(fs_config_pm)/package.mask";
+      "fs_config_pm_unmask" string => "$(fs_config_pm)/package.unmask";
+      "fs_config_pm_use" string => "$(fs_config_pm)/package.use";
+      "fs_config_pm_patches" string => "$(fs_config_pm)/patches";
+      "fs_config_pm_profile" string => "$(fs_config_pm)/profile";
+      "fs_config_pm_upstream" string => "$(fs_config_pm_profile)/stub";
+      "fs_mount_base" string => "mnt";
+      "fs_mount_root" string => "$(fs_mount_base)/root";
+      "fs_mount_shared" string => "$(fs_mount_base)/shared";
+      "fs_admin_base" string => "root";
+      "fs_storage_base" string => "srv";
+      "fs_storage_site" string => "$(fs_storage_base)/site-local";
+      "fs_storage_apps" string => "$(fs_storage_site)/bin";
+      "fs_storage_cryptoo" string => "$(fs_storage_site)/cryptoo";
+      "fs_storage_srcpkg" string => "$(fs_storage_site)/distfiles";
+      "fs_storage_overlay" string => "$(fs_storage_site)/layman";
+      "fs_storage_binpkg" string => "$(fs_storage_site)/packages";
+      "fs_storage_pm" string => "$(fs_storage_site)/portage";
+      "fs_storage_pm_site" string => "$(fs_storage_site)/portage-local";
+      "fs_storage_pm_site_meta" string => "$(fs_storage_pm_site)/metadata";
+      "fs_storage_pm_site_profile" string => "$(fs_storage_pm_site)/profiles";
+      "fs_storage_shared" string => "$(fs_storage_site)/storage";
+      "fs_storage_sources" string => "$(fs_storage_site)/src";
+      "fs_storage_kernel" string => "$(fs_storage_sources)/linux";
+      "fs_temp_base" string => "tmp";
+      "fs_standard_base" string => "usr";
+      "fs_standard_apps" string => "$(fs_standard_base)/bin";
+      "fs_cryptoo" string => "$(fs_standard_base)/cryptoo";
+      "fs_cryptoo_pm" string => "$(fs_cryptoo)/Documentation/$(fs_config_pm)";
+      "fs_cryptoo_pm_env" string => "$(fs_cryptoo_pm)/env";
+      "fs_cryptoo_pm_environments" string => "$(fs_cryptoo_pm)/package.env";
+      "fs_cryptoo_pm_keywords" string => "$(fs_cryptoo_pm)/package.keywords";
+      "fs_cryptoo_pm_mask" string => "$(fs_cryptoo_pm)/package.mask";
+      "fs_cryptoo_pm_unmask" string => "$(fs_cryptoo_pm)/package.unmask";
+      "fs_cryptoo_pm_use" string => "$(fs_cryptoo_pm)/package.use";
+      "fs_cryptoo_pm_patches" string => "$(fs_cryptoo_pm)/patches";
+      "fs_cryptoo_pm_profile" string => "$(fs_cryptoo_pm)/profile";
+      "fs_crypoo_profiles" string => "$(fs_cryptoo)/profiles";
+      "fs_machine_base" string => "$(fs_standard_base)/local"; 
+      "fs_machine_pm" string => "$(fs_machine_base)/$(pm)"; 
+      "fs_machine_pm_meta" string => "$(fs_machine_pm)/metadata"; 
+      "fs_machine_pm_profile" string => "$(fs_machine_pm)/profiles"; 
+      "fs_pm" string => "$(fs_standard_base)/$(pm)";
+      "fs_standard_admin_apps" string => "$(fs_standard_base)/sbin";
+      "fs_standard_share" string => "$(fs_standard_base)/share";
+      "fs_standard_timezones" string => "$(fs_standard_share)/zoneinfo";
+      "fs_site_base" string => "$(fs_standard_base)/site-local"; 
+      "fs_site_apps" string => "$(fs_site_base)/bin"; 
+      "fs_site_srcpkg" string => "$(fs_site_base)/distfiles"; 
+      "fs_site_binpkg" string => "$(fs_site_base)/packages"; 
+      "fs_site_pm" string => "$(fs_site_base)/$(pm)"; 
+      "fs_site_sources" string => "$(fs_site_base)/src"; 
+      "fs_site_kernel" string => "$(fs_site_sources)/linux";
+      "fs_standard_sources" string => "$(fs_standard_base)/src";
+      "fs_standard_kernel" string => "/$(fs_standard_sources)/linux";
+      "fs_volatile_base" string => "var";
+      "fs_volatile_images" string => "$(fs_volatile_base)/images";
+      "fs_volatile_library" string => "$(fs_volatile_base)/lib";
+      "fs_volatile_pm" string => "$(fs_volatile_library)/$(pm)";
+      "fs_volatile_overlay" string => "$(fs_volatile_library)/layman";
+      "fs_volatile_temp" string => "$(fs_volatile_base)/tmp";
+      "fs_volatile_kernel" string => "$(fs_volatile_temp)/kernel";
+
+}

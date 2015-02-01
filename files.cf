@@ -8,96 +8,105 @@ bundle agent files (root, role)
 
       "need_cryptoo" not => "have_cryptoo";
       "local_role_$(role)" expression => "any";
-      "have_systemd" expression => fileexists("$(root)usr/bin/systemctl");
-      "bootstrap_systemd" not => fileexists("$(root)usr/bin/systemctl");
-      "have_locale_gen" expression => fileexists("$(root)etc/locale.gen");
-      "have_dracut" expression => fileexists("$(root)usr/bin/dracut");
-      "need_dracut_image" not => fileexists("$(root)boot/initramfs.dracut.xz");
+      "have_systemd" expression => fileexists("$(root)$(file_names.systemd_app)");
+      "bootstrap_systemd" not => fileexists("$(root)$(file_names.systemd_app)");
+      "have_locale_gen" expression => fileexists("$(root)$(file_names.locale)");
+      "have_dracut" expression => fileexists("$(root)$(file_names.dracut_app)");
+      "need_dracut_image" not => fileexists("$(root)$(file_names.dracut_image)");
+      "storage_mounted" expression => regline("device /dev/mapper/hydrogen-storage mounted on /$(directory_names.fs_storage_base).*", "$(file_names.mount_info)");
+      "fail" not => "any";
 
     role_master&local_role_master::
 
       "bootable" expression => "any";
+      "srv_portage_local_exists" expression => fileexists("/$(directory_names.fs_storage_pm_site)");
+      "srv_cryptoo_exists" expression => fileexists("/$(directory_names.fs_storage_cryptoo)");
+      "srv_src_exists" expression => fileexists("/$(directory_names.fs_storage_sources)");
 
   files:
 
     any::
 
-      "$(root)etc/portage/make.conf"
+      "$(root)$(file_names.mtab)"
+        move_obstructions => "true",
+        link_from => proc_mounts;
+
+      "$(root)$(file_names.pm_config)"
         perms => system,
         create => "true",
         edit_template => "/var/cfengine/inputs/templates/cryptoo_make_conf.txt";
 
-      "$(root)etc/portage/make.profile"
+      "$(root)$(file_names.pm_profile)"
         move_obstructions => "true",
         link_from => cryptoo_profile("cryptoo");
 
-      "$(root)etc/portage/env/local-distfiles.conf"
+      "$(root)$(file_names.pm_env_localdistfiles)"
         move_obstructions => "true",
         link_from => cryptoo_portage_env("local-distfiles.conf");
 
-      "$(root)etc/portage/env/nosandbox.conf"
+      "$(root)$(file_names.pm_env_nosandbox)"
         move_obstructions => "true",
         link_from => cryptoo_portage_env("nosandbox.conf");
 
-      "$(root)etc/portage/env/notmpfs.conf"
+      "$(root)$(file_names.pm_env_notmpfs)"
         move_obstructions => "true",
         link_from => cryptoo_portage_env("notmpfs.conf");
 
-      "$(root)etc/portage/package.env/cryptoo"
+      "$(root)$(file_names.pm_environment_cryptoo)"
         move_obstructions => "true",
         link_from => cryptoo_package_env("cryptoo");
 
-      "$(root)etc/portage/package.keywords/basic-programs"
+      "$(root)$(file_names.pm_keywords_basicprograms)"
         move_obstructions => "true",
         link_from => cryptoo_package_keyword("basic-programs");
 
-      "$(root)etc/portage/package.keywords/virtualization"
+      "$(root)$(file_names.pm_keywords_virtualization)"
         move_obstructions => "true",
         link_from => cryptoo_package_keyword("virtualization");
 
-      "$(root)etc/portage/package.mask/basic-programs"
+      "$(root)$(file_names.pm_mask_basicprograms)"
         move_obstructions => "true",
         link_from => cryptoo_package_mask("basic-programs");
 
-      "$(root)etc/portage/package.use/basic-programs"
+      "$(root)$(file_names.pm_use_basicprograms)"
         move_obstructions => "true",
         link_from => cryptoo_package_use("basic-programs");
 
-      "$(root)etc/portage/package.use/virtualization"
+      "$(root)$(file_names.pm_use_virtualization)"
         move_obstructions => "true",
         link_from => cryptoo_package_use("virtualization");
 
-      "$(root)etc/portage/profile/package.provided"
+      "$(root)$(file_names.pm_profile_provided)"
         move_obstructions => "true",
         link_from => cryptoo_portage_profile("package.provided");
 
-      "$(root)etc/portage/profile/stub/parent"
+      "$(root)$(file_names.pm_profile_upstream)"
         perms => system,
         create => "true",
         edit_template => "/var/cfengine/inputs/templates/cryptoo_profile_parent.txt";
 
-      "$(root)usr/local/portage/metadata/layout.conf"
+      "$(root)$(file_names.pm_machine_meta)"
         perms => system,
         create => "true",
         edit_template => "/var/cfengine/inputs/templates/cryptoo_local_layout_conf.txt";
 
-      "$(root)usr/local/portage/profiles/repo_name"
+      "$(root)$(file_names.pm_machine_repo)"
         perms => system,
         create => "true",
         edit_template => "/var/cfengine/inputs/templates/cryptoo_local_repo_name.txt";
 
-      "$(root)usr/src/linux"
+      "$(root)$(directory_names.fs_standard_kernel)"
         move_obstructions => "true",
         link_from => kernel_dir;
 
-      "$(root)var/lib/portage/world_sets"
+      "$(root)$(file_names.pm_installed_sets)"
         perms => system,
         create => "true",
         edit_template => "/var/cfengine/inputs/templates/cryptoo_world_sets.txt";
 
     have_locale_gen::
 
-      "$(root)etc/locale.gen"
+      "$(root)$(file_names.locale)"
         perms => system,
         create => "false",
         edit_line => uncomment_lines_containing("en_US\.UTF-8 UTF-8","#"),
@@ -105,52 +114,57 @@ bundle agent files (root, role)
 
     bootstrap_systemd::
 
-      "$(root)etc/portage/package.use/systemd"
+      "$(root)$(file_names.pm_use_systemd)"
         delete => tidy;
 
-      "$(root)etc/portage/package.use/systemd-bootstrap"
+      "$(root)$(file_names.pm_use_systemdbootstrap)"
         move_obstructions => "true",
         link_from => cryptoo_package_use("systemd-bootstrap");
 
     have_systemd::
 
-      "$(root)etc/portage/package.use/systemd"
+      "$(root)$(file_names.pm_use_systemd)"
         move_obstructions => "true",
         link_from => cryptoo_package_use("systemd");
 
-      "$(root)etc/portage/package.use/systemd-bootstrap"
+      "$(root)$(file_names.pm_use_systemdbootstrap)"
         delete => tidy;
 
     bootable::
 
-      "$(root)etc/localtime"
+      "$(root)$(file_names.fstab)"
+        perms => system,
+        create => "true",
+        edit_template => "/var/cfengine/inputs/templates/cryptoo_fstab.txt";
+
+      "$(root)$(file_names.localtime)"
         move_obstructions => "true",
         link_from => timezone("UTC");
 
-      "$(root)etc/bash/bashrc"
+      "$(root)$(file_names.system_bashrc)"
         perms => system,
         create => "true",
-        edit_line => PS1_always_show_full_path,
-        edit_line => aliases;
+        edit_line => PS1_always_show_full_path;
+        #edit_line => aliases;
 
-      "$(root)etc/bash/bash_logout"
+      "$(root)$(file_names.system_bash_logout)"
         perms => system,
         create => "false",
         edit_line => uncomment_lines_containing("clear","#");
 
-      "$(root)etc/env.d/00cryptoo"
+      "$(root)$(file_names.env_cryptoo)"
         perms => system,
         create => "true",
         edit_template => "/var/cfengine/inputs/templates/cryptoo_env.txt",
         classes => u_if_repaired("update_env");
 
-      "$(root)etc/env.d/02locale"
+      "$(root)$(file_names.env_locale)"
         perms => system,
         create => "true",
         edit_template => "/var/cfengine/inputs/templates/cryptoo_env_locale.txt",
         classes => u_if_repaired("update_env");
 
-      "$(root)etc/env.d/99kernel"
+      "$(root)$(file_names.env_kernel)"
         perms => system,
         create => "true",
         edit_template => "/var/cfengine/inputs/templates/cryptoo_env_kernel.txt",
@@ -158,44 +172,47 @@ bundle agent files (root, role)
 
     local_role_master::
 
-      "$(root)srv/site-local/portage/metadata/layout.conf"
+      "$(root)$(file_names.pm_use_host)"
+        move_obstructions => "true",
+        link_from => cryptoo_package_use("host");
+
+    local_role_master&srv_portage_local_exists::
+
+      "$(root)$(file_names.storage_pm_site_meta)"
         perms => system,
         create => "true",
         edit_template => "/var/cfengine/inputs/templates/cryptoo_local_layout_conf.txt";
 
-      "$(root)srv/site-local/portage/profiles/repo_name"
+      "$(root)$(file_names.storage_pm_site_repo)"
         perms => system,
         create => "true",
         edit_template => "/var/cfengine/inputs/templates/cryptoo_site_local_repo_name.txt";
 
-      "$(root)etc/portage/package.use/host"
-        move_obstructions => "true",
-        link_from => cryptoo_package_use("host");
-
   commands:
 
-    bootable::
+    bootable&update_locale::
 
-      update_locale::
-        "/usr/sbin/locale-gen";
+      "$(root)$(file_names.localegen_app)";
 
-      update_env::
-        "/usr/sbin/env-update";
+    bootable&update_env::
 
-    local_role_master&need_cryptoo::
+      "$(root)$(file_names.envupdate_app)";
 
-      "/usr/bin/git clone -b dev git://github.com/cryptoo/overlay /$(cryptoo.dist_root)";
+    local_role_master&need_cryptoo&srv_cryptoo_exists::
+
+      "$(root)$(file_names.git_app) clone -b dev $(cryptoo.overlay_git) $(root)$(directory_names.fs_storage_cryptoo)";
 
     local_role_master&have_dracut&need_dracut_image::
 
-      "/usr/bin/dracut --force --xz /boot/initramfs.dracut.xz";
+      "$(root)$(file_names.dracut_app) --force --xz $(file_names.dracut_image)";
 
   methods:
 
-    local_role_master::
+    local_role_master&srv_src_exists::
 
       "build kernel configs"
         usebundle => kconfig("host");
+
 }
 
 bundle edit_line PS1_always_show_full_path
@@ -205,6 +222,11 @@ bundle edit_line PS1_always_show_full_path
 
       "(.*PS1=.*)W(.*)"
         replace_with => PS1_small_w;
+
+    insert_lines:
+
+      "alias ls='ls -FADv -I .keep --color=auto'$(const.n)alias nano='nano -w'"
+        location => after_unset;
 }
 
 bundle edit_line aliases
@@ -234,7 +256,7 @@ body link_from cryptoo_portage_env(x)
 {
      link_type => "symlink";
      when_no_source => "force";
-     source => "/$(cryptoo.dist_portage)/env/$(x)";
+     source => "/$(directory_names.fs_cryptoo_pm_env)/$(x)";
 }
 
 body link_from cryptoo_package_env(x)
@@ -242,7 +264,7 @@ body link_from cryptoo_package_env(x)
 {
      link_type => "symlink";
      when_no_source => "force";
-     source => "/$(cryptoo.dist_portage)/package.env/$(x)";
+     source => "/$(directory_names.fs_cryptoo_pm_environments)/$(x)";
 }
 
 body link_from cryptoo_package_keyword(x)
@@ -250,7 +272,7 @@ body link_from cryptoo_package_keyword(x)
 {
      link_type => "symlink";
      when_no_source => "force";
-     source => "/$(cryptoo.dist_portage)/package.keywords/$(x)";
+     source => "/$(directory_names.fs_cryptoo_pm_keywords)/$(x)";
 }
 
 body link_from cryptoo_package_mask(x)
@@ -258,7 +280,7 @@ body link_from cryptoo_package_mask(x)
 {
      link_type => "symlink";
      when_no_source => "force";
-     source => "/$(cryptoo.dist_portage)/package.mask/$(x)";
+     source => "/$(directory_names.fs_cryptoo_pm_mask)/$(x)";
 }
 
 body link_from cryptoo_package_unmask(x)
@@ -266,7 +288,7 @@ body link_from cryptoo_package_unmask(x)
 {
      link_type => "symlink";
      when_no_source => "force";
-     source => "/$(cryptoo.dist_portage)/package.unmask/$(x)";
+     source => "/$(directory_names.fs_cryptoo_pm_unmask)/$(x)";
 }
 
 body link_from cryptoo_package_use(x)
@@ -274,7 +296,7 @@ body link_from cryptoo_package_use(x)
 {
      link_type => "symlink";
      when_no_source => "force";
-     source => "/$(cryptoo.dist_portage)/package.use/$(x)";
+     source => "/$(directory_names.fs_cryptoo_pm_use)/$(x)";
 }
 
 body link_from cryptoo_portage_profile(x)
@@ -282,7 +304,7 @@ body link_from cryptoo_portage_profile(x)
 {
      link_type => "symlink";
      when_no_source => "force";
-     source => "/$(cryptoo.dist_portage)/profile/$(x)";
+     source => "/$(directory_names.fs_cryptoo_pm_profile)/$(x)";
 }
 
 body link_from cryptoo_profile(x)
@@ -290,7 +312,7 @@ body link_from cryptoo_profile(x)
 {
      link_type => "symlink";
      when_no_source => "force";
-     source => "/$(cryptoo.profile_root)/$(x)";
+     source => "/$(directory_names.fs_crypoo_profiles)/$(x)";
 }
 
 body link_from timezone(x)
@@ -298,7 +320,7 @@ body link_from timezone(x)
 {
      link_type => "symlink";
      when_no_source => "force";
-     source => "/usr/share/zoneinfo/$(x)";
+     source => "/$(directory_names.fs_standard_timezones)/$(x)";
 }
 
 body link_from kernel_dir
@@ -306,5 +328,13 @@ body link_from kernel_dir
 {
      link_type => "symlink";
      when_no_source => "force";
-     source => "/usr/site-local/src/linux";
+     source => "/$(directory_names.fs_site_kernel)";
+}
+
+body link_from proc_mounts
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "/$(file_names.proc_mounts)";
 }

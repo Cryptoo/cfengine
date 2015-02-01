@@ -7,246 +7,79 @@ bundle agent directories(root, role)
     any::
 
       "local_role_$(role)" expression => "any";
+      "storage_mounted" expression => regline("device /dev/mapper/hydrogen-storage mounted on $(root)$(directory_names.fs_storage_base).*", $(file_names.mount_info));
 
   files:
 
     any::
 
-      "$(root)boot/."
+      "$(root)/."
         perms => system,
-        create => "true";
+        create => "true",
+        handle => "$(root)";
 
-      "$(root)etc/."
+      "$(root)$(directory_groups.common_system)/."
         perms => system,
-        create => "true";
+        create => "true",
+        handle => "$(root)$(directory_groups.common_system)";
 
-      "$(root)etc/bash/."
-        perms => system,
-        create => "true";
-
-      "$(root)$(cryptoo.cryptoo_config_root)/."
-        perms => system,
-        create => "true";
-
-      "$(root)$(cryptoo.cryptoo_config_incoming)/."
+      "$(root)$(directory_groups.common_system_private)/."
         perms => root,
-        create => "true";
+        create => "true",
+        handle => "$(root)$(directory_groups.common_system_private)";
 
-      "$(root)$(cryptoo.cryptoo_config_outgoing)/."
-        perms => root,
-        create => "true";
+      "$(root)$(directory_groups.common_open)/."
+        perms => system_tmp,
+        create => "true",
+        handle => "$(root)$(directory_groups.common_open)";
 
-      "$(root)etc/env.d/."
-        perms => system,
-        create => "true";
+      "$(root)$(directory_groups.common_pm)/."
+        perms => portage,
+        create => "true",
+        handle => "$(root)$(directory_groups.common_pm)";
 
-      "$(root)etc/portage/."
-        perms => system,
-        create => "true";
+      "$(root)$(directory_groups.common_pm_open)/."
+        perms => portage_open,
+        create => "true",
+        handle => "$(root)$(directory_groups.common_pm_open)";
 
-      "$(root)etc/portage/env/."
-        perms => system,
-        create => "true";
-
-      "$(root)etc/portage/package.env/."
-        perms => system,
-        create => "true";
-
-      "$(root)etc/portage/package.keywords/."
-        perms => system,
-        create => "true";
-
-      "$(root)etc/portage/package.mask/."
-        perms => system,
-        create => "true";
-
-      "$(root)etc/portage/package.unmask/."
-        perms => system,
-        create => "true";
-
-      "$(root)etc/portage/package.use/."
-        perms => system,
-        create => "true";
-
-      "$(root)etc/portage/patches/."
-        perms => system,
-        create => "true";
-
-      "$(root)etc/portage/profile/."
-        perms => system,
-        create => "true";
-
-      "$(root)etc/portage/profile/stub/."
-        perms => system,
-        create => "true";
-
-      "$(root)mnt/."
-        perms => system,
-        create => "true";
-
-      "$(root)mnt/root/."
-        perms => system,
-        create => "true";
-
-      "$(root)mnt/shared/."
+      "$(root)$(directory_names.fs_mount_shared)/."
         depends_on => { "user_guest" },
         perms => guest,
-        create => "true";
-
-      "$(root)tmp/."
-        perms => system_tmp,
-        create => "true";
-
-      "$(root)usr/."
-        perms => system,
-        create => "true";
-
-      "$(root)$(cryptoo.dist_root)"
-        perms => system,
-        create => "false";
-
-      "$(root)usr/local/portage/."
-        depends_on => { "user_portage" },
-        perms => portage,
-        create => "true";
-
-      "$(root)usr/local/portage/metadata/."
-        depends_on => { "user_portage" },
-        perms => portage,
-        create => "true";
-
-      "$(root)usr/local/portage/profiles/."
-        depends_on => { "user_portage" },
-        perms => portage,
-        create => "true";
-
-      "$(root)usr/site-local/."
-        perms => system,
-        create => "true";
-
-      "$(root)usr/site-local/bin/."
-        perms => system,
-        create => "true";
-
-      "$(root)usr/site-local/distfiles/."
-        depends_on => { "user_portage" },
-        perms => portage_open,
-        create => "true";
-
-      "$(root)usr/site-local/packages/."
-        depends_on => { "user_portage" },
-        perms => portage_open,
-        create => "true";
-
-      "$(root)usr/site-local/portage/."
-        depends_on => { "user_portage" },
-        perms => portage,
-        create => "true";
-
-      "$(root)usr/site-local/src/."
-        perms => system,
-        create => "true";
-
-      "$(root)usr/src/."
-        perms => system,
-        create => "true";
-
-      "$(root)var/."
-        perms => system,
-        create => "true";
-
-      "$(root)var/lib/."
-        perms => system,
-        create => "true";
-
-      "$(root)var/lib/portage/."
-        depends_on => { "user_portage" },
-        perms => portage,
-        create => "true";
-
-      "$(root)var/lib/layman/."
-        depends_on => { "user_portage" },
-        perms => portage,
-        create => "true";
-
-      "$(root)var/tmp/."
-        perms => system_tmp,
-        create => "true";
+        create => "true",
+        handle => "$(root)$(directory_names.fs_mount_shared)";
 
     local_role_master::
 
-      "$(root)srv/."
+      "$(root)$(directory_groups.host_system)/."
         perms => system,
-        create => "true";
+        create => "true",
+        handle => "$(root)$(directory_groups.common_system)";
 
-      "$(root)srv/site-local/."
+    local_role_master&storage_mounted::
+
+      "$(root)$(directory_groups.host_system_storage)/."
         perms => system,
-        create => "true";
+        create => "true",
+        handle => "$(root)$(directory_groups.host_system_storage)";
 
-      "$(root)srv/site-local/bin/."
-        perms => system,
-        create => "true";
+      "$(root)$(directory_groups.host_pm)/."
+        perms => portage,
+        create => "true",
+        handle => "$(root)$(directory_groups.host_pm)";
 
-      "$(root)srv/site-local/distfiles/."
-        depends_on => { "user_portage" },
+      "$(root)$(directory_groups.host_pm_open)/."
         perms => portage_open,
-        create => "true";
+        create => "true",
+        handle => "$(root)$(directory_groups.host_pm_open)";
 
-      "$(root)srv/site-local/layman/."
-        depends_on => { "user_portage" },
-        perms => portage,
-        create => "true";
-
-      "$(root)srv/site-local/packages/."
-        depends_on => { "user_portage" },
-        perms => portage_open,
-        create => "true";
-
-      "$(root)srv/site-local/portage/."
-        depends_on => { "user_portage" },
-        perms => portage,
-        create => "true";
-
-      "$(root)srv/site-local/portage/metadata/."
-        depends_on => { "user_portage" },
-        perms => portage,
-        create => "true";
-
-      "$(root)srv/site-local/portage/profiles/."
-        depends_on => { "user_portage" },
-        perms => portage,
-        create => "true";
-
-      "$(root)srv/site-local/storage/."
+      "$(root)$(directory_names.fs_storage_shared)/."
         depends_on => { "user_guest" },
         perms => guest,
-        create => "true";
-
-      "$(root)srv/site-local/src/."
-        perms => system,
-        create => "true";
-
-      "$(root)var/images/."
-        perms => system,
-        create => "true";
-
-      "$(root)var/images/server/."
-        perms => system,
-        create => "true";
-
-      "$(root)var/tmp/kernel/."
-        perms => system,
-        create => "true";
+        create => "true",
+        handle => "$(root)$(directory_names.fs_storage_shared)";
 
   users:
-
-      "portage"
-        handle => "user_portage",
-        policy => "present",
-        home_dir => "/var/tmp/portage",
-        uid => "250",
-        group_primary => "portage",
-        shell => "/sbin/nologin";
 
       "guest"
         handle => "user_guest",

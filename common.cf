@@ -8,35 +8,36 @@ bundle common cryptoo
 
       "bundles" slist => {
                             "cryptoo",
-                            "system"
+                            "directory_names",
+                            "directory_groups",
+                            "file_names",
+                            "cryptoo_system"
                          };
 
       "inputs" slist => {
+                            "cryptoo/config/directory_names.cf",
+                            "cryptoo/config/directory_groups.cf",
+                            "cryptoo/config/file_names.cf",
                             "cryptoo/directories.cf",
                             "cryptoo/files.cf",
                             "cryptoo/kconfig.cf",
+                            "cryptoo/mounts.cf",
                             "cryptoo/system.cf"
                          };
 
-      "bootdev" string => "FIXME";
-      "dist_root" string => "usr/cryptoo";
-      "dist_portage" string => "$(dist_root)/Documentation/etc/portage";
-      "profile_root" string => "$(dist_root)/profiles";
+
       "kernel_git" string => "git://github.com/cryptoo/kernel";
-      "kernel_src_dir" string => "/usr/site-local/src/linux";
-      "kernel_build_dir" string => "/var/tmp/kernel";
-      "cryptoo_config_root" string => "etc/cryptoo";
-      "cryptoo_config_incoming" string => "$(cryptoo_config_root)/inbox";
-      "cryptoo_config_outgoing" string => "$(cryptoo_config_root)/outbox";
-      "cryptoo_config_role" string => "$(cryptoo_config_incoming)/role";
+      "overlay_git" string => "git://github.com/cryptoo/overlay";
+
+      "boot_device" string => "FIXME";
 
   classes:
 
     any::
 
-      "have_cryptoo" expression => fileexists("/$(dist_root)");
-      "role_master" expression => regline("master", "/$(cryptoo_config_role)");
-      "role_undefined" not => fileexists("/$(cryptoo_config_role)");
+      "have_cryptoo" expression => fileexists("/$(file_names.cryptoo_profile)");
+      "role_master" expression => regline("master", "/$(file_names.crypoo_role)");
+      "role_undefined" not => fileexists("/$(file_names.crypoo_role)");
 
   reports:
 
@@ -47,4 +48,5 @@ bundle common cryptoo
     role_undefined::
 
       "My role is: undefined";
+
 }
