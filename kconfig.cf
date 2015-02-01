@@ -245,6 +245,9 @@ bundle agent kconfig(target)
       "kconfig[DRM_I915_PRELIMINARY_HW_SUPPORT]" string => "DRM_I915_PRELIMINARY_HW_SUPPORT", meta => { "enabled", "host" };
       "kconfig[FB_VESA]" string => "FB_VESA", meta => { "enabled", "host" };
       "kconfig[DEVPTS_MULTIPLE_INSTANCES]" string => "DEVPTS_MULTIPLE_INSTANCES", meta => { "enabled", "host" };
+      "kconfig[SERIAL_8250]" string => "SERIAL_8250", meta => { "enabled", "host" };
+      "kconfig[SERIAL_8250_DEPRECATED_OPTIONS]" string => "SERIAL_8250_DEPRECATED_OPTIONS", meta => { "disabled", "host" };
+      "kconfig[SERIAL_8250_CONSOLE]" string => "SERIAL_8250_CONSOLE", meta => { "enabled", "host" };
       "kconfig[HW_RANDOM]" string => "HW_RANDOM", meta => { "enabled", "host" };
       "kconfig[HW_RANDOM_TIMERIOMEM]" string => "HW_RANDOM_TIMERIOMEM", meta => { "enabled", "host" };
       "kconfig[HW_RANDOM_INTEL]" string => "HW_RANDOM_INTEL", meta => { "enabled", "host" };
