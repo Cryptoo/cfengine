@@ -209,9 +209,11 @@ bundle agent kconfig(target)
       "kconfig[WIRELESS]" string => "WIRELESS", meta => { "disabled", "host" };
       "kconfig[UEVENT_HELPER]" string => "UEVENT_HELPER", meta => { "enabled", "host" };
       "kconfig[DEVTMPFS]" string => "DEVTMPFS", meta => { "enabled", "host" };
+      "kconfig[FW_LOADER_USER_HELPER]" string => "FW_LOADER_USER_HELPER", meta => { "disabled", "host" };
       "kconfig[BLK_DEV_LOOP]" string => "BLK_DEV_LOOP", meta => { "enabled", "host" };
       "kconfig[SCSI_MQ_DEFAULT]" string => "SCSI_MQ_DEFAULT", meta => { "enabled", "host" };
       "kconfig[SCSI_PROC_FS]" string => "SCSI_PROC_FS", meta => { "disabled", "host" };
+      "kconfig[BLK_DEV_SD]" string => "BLK_DEV_SD", meta => { "enabled", "host" };
       "kconfig[BLK_DEV_SR]" string => "BLK_DEV_SR", meta => { "enabled", "host" };
       "kconfig[ATA]" string => "ATA", meta => { "enabled", "host" };
       "kconfig[SATA_AHCI]" string => "SATA_AHCI", meta => { "enabled", "host" };
@@ -225,6 +227,7 @@ bundle agent kconfig(target)
       "kconfig[DM_CRYPT]" string => "DM_CRYPT", meta => { "enabled", "host" };
       "kconfig[DM_SNAPSHOT]" string => "DM_SNAPSHOT", meta => { "enabled", "host" };
       "kconfig[DM_MIRROR]" string => "DM_MIRROR", meta => { "enabled", "host" };
+      "kconfig[DM_MULTIPATH]" string => "DM_MULTIPATH", meta => { "enabled", "host" };
       "kconfig[DM_UEVENT]" string => "DM_UEVENT", meta => { "enabled", "host" };
       "kconfig[NETDEVICES]" string => "NETDEVICES", meta => { "enabled", "host" };
       "kconfig[MACVLAN]" string => "MACVLAN", meta => { "enabled", "host" };
@@ -278,8 +281,11 @@ bundle agent kconfig(target)
       "kconfig[MISC_FILESYSTEMS]" string => "MISC_FILESYSTEMS", meta => { "enabled", "host" };
       "kconfig[HFSPLUS_FS]" string => "HFSPLUS_FS", meta => { "enabled", "host" };
       "kconfig[TMPFS]" string => "TMPFS", meta => { "enabled", "host" };
+      "kconfig[TMPFS_POSIX_ACL]" string => "TMPFS_POSIX_ACL", meta => { "enabled", "host" };
       "kconfig[TMPFS_XATTR]" string => "TMPFS_XATTR", meta => { "enabled", "host" };
       "kconfig[MAGIC_SYSRQ]" string => "MAGIC_SYSRQ", meta => { "enabled", "host" };
+      "kconfig[DEBUG_KERNEL]" string => "DEBUG_KERNEL", meta => { "disabled", "host" };
+      "kconfig[DEBUG_FS]" string => "DEBUG_FS", meta => { "disabled", "host" };
       "kconfig[STRICT_DEVMEM]" string => "STRICT_DEVMEM", meta => { "enabled", "host" };
       "kconfig[CRYPTO_RMD128]" string => "CRYPTO_RMD128", meta => { "enabled", "host" };
       "kconfig[CRYPTO_RMD160]" string => "CRYPTO_RMD160", meta => { "enabled", "host" };
