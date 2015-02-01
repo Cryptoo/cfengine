@@ -13,7 +13,7 @@ bundle agent files (root, role)
       "have_locale_gen" expression => fileexists("$(root)$(file_names.locale)");
       "have_dracut" expression => fileexists("$(root)$(file_names.dracut_app)");
       "need_dracut_image" not => fileexists("$(root)$(file_names.dracut_image)");
-      "storage_mounted" expression => regline("device /dev/mapper/hydrogen-storage mounted on /$(directory_names.fs_storage_base).*", "$(file_names.mount_info)");
+      "storage_mounted" expression => regline("device /dev/mapper/$(cryptoo.machine_names[$(cryptoo.machine_number)])-storage mounted on /$(directory_names.fs_storage_base).*", "$(file_names.mount_info)");
       "need_machine_names" not => fileexists("/$(file_names.machine_names)");
 
     role_master&local_role_master::
@@ -132,11 +132,6 @@ bundle agent files (root, role)
 
     bootable::
 
-      "$(root)$(file_names.fstab)"
-        perms => system,
-        create => "true",
-        edit_template => "/var/cfengine/inputs/templates/cryptoo_fstab.txt";
-
       "$(root)$(file_names.localtime)"
         move_obstructions => "true",
         link_from => timezone("UTC");
@@ -169,6 +164,13 @@ bundle agent files (root, role)
         create => "true",
         edit_template => "/var/cfengine/inputs/templates/cryptoo_env_kernel.txt",
         classes => u_if_repaired("update_env");
+
+    bootable&machine_name_available::
+
+      "$(root)$(file_names.fstab)"
+        perms => system,
+        create => "true",
+        edit_template => "/var/cfengine/inputs/templates/cryptoo_fstab.txt";
 
     local_role_master::
 

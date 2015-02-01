@@ -7,7 +7,7 @@ bundle agent directories(root, role)
     any::
 
       "local_role_$(role)" expression => "any";
-      "storage_mounted" expression => regline("device /dev/mapper/hydrogen-storage mounted on $(root)$(directory_names.fs_storage_base).*", $(file_names.mount_info));
+      "storage_mounted" expression => regline("device /dev/mapper/$(cryptoo.machine_names[$(cryptoo.machine_number)])-storage mounted on $(root)$(directory_names.fs_storage_base).*", $(file_names.mount_info));
 
   files:
 

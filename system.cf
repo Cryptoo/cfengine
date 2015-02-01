@@ -12,6 +12,10 @@ bundle agent cryptoo_system
 
   classes:
 
+    any::
+
+      "have_machine_names" expression => fileexists("/$(file_names.machine_names)");
+
     role_master::
 
       "srv_exists" expression => fileexists("/$(directory_names.fs_storage_base)");
@@ -53,7 +57,7 @@ bundle agent cryptoo_system
       "manage files for the guest skeleton"
         usebundle => files("/var/images/server/","guest");
 
-    role_master&srv_exists::
+    role_master&srv_exists&machine_name_available::
 
       "ensure storage mounted"
         usebundle => mount_types("ext4"),
