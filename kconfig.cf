@@ -209,7 +209,7 @@ bundle agent kconfig(target)
       "kconfig[WIRELESS]" string => "WIRELESS", meta => { "disabled", "host" };
       "kconfig[UEVENT_HELPER]" string => "UEVENT_HELPER", meta => { "enabled", "host" };
       "kconfig[DEVTMPFS]" string => "DEVTMPFS", meta => { "enabled", "host" };
-      "kconfig[FW_LOADER_USER_HELPER]" string => "FW_LOADER_USER_HELPER", meta => { "disabled", "host" };
+      "kconfig[FW_LOADER_USER_HELPER_FALLBACK]" string => "FW_LOADER_USER_HELPER_FALLBACK", meta => { "disabled", "host" };
       "kconfig[BLK_DEV_LOOP]" string => "BLK_DEV_LOOP", meta => { "enabled", "host" };
       "kconfig[SCSI_MQ_DEFAULT]" string => "SCSI_MQ_DEFAULT", meta => { "enabled", "host" };
       "kconfig[SCSI_PROC_FS]" string => "SCSI_PROC_FS", meta => { "disabled", "host" };
