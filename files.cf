@@ -14,7 +14,7 @@ bundle agent files (root, role)
       "have_dracut" expression => fileexists("$(root)$(file_names.dracut_app)");
       "need_dracut_image" not => fileexists("$(root)$(file_names.dracut_image)");
       "storage_mounted" expression => regline("device /dev/mapper/hydrogen-storage mounted on /$(directory_names.fs_storage_base).*", "$(file_names.mount_info)");
-      "fail" not => "any";
+      "need_machine_names" not => fileexists("/$(file_names.machine_names)");
 
     role_master&local_role_master::
 
@@ -187,6 +187,13 @@ bundle agent files (root, role)
         perms => system,
         create => "true",
         edit_template => "/var/cfengine/inputs/templates/cryptoo_site_local_repo_name.txt";
+
+    local_role_master&need_machine_names::
+
+      "$(root)$(file_names.machine_names)"
+        perms => system,
+        create => "true",
+        edit_template => "/var/cfengine/inputs/templates/cryptoo_machine_names_json.txt";
 
   commands:
 
