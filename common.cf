@@ -31,6 +31,14 @@ bundle common cryptoo
 
       "boot_device" string => "FIXME";
 
+    have_machine_names::
+
+      "machine_names" data => readjson("/$(file_names.machine_names)", 1M);
+
+    role_master::
+
+      "machine_number" string => "1";
+
   classes:
 
     any::
@@ -38,15 +46,19 @@ bundle common cryptoo
       "have_cryptoo" expression => fileexists("/$(file_names.cryptoo_profile)");
       "role_master" expression => regline("master", "/$(file_names.crypoo_role)");
       "role_undefined" not => fileexists("/$(file_names.crypoo_role)");
+      "have_machine_names" expression => fileexists("/$(file_names.machine_names)");
+      "need_machine_names" not => fileexists("/$(file_names.machine_names)");
 
   reports:
 
     role_master::
 
       "My role is: master";
+      "My number is: $(machine_number)";
+      "My hostname is: $(machine_names[$(machine_number)])";
 
     role_undefined::
 
       "My role is: undefined";
-
+      
 }
