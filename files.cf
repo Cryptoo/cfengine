@@ -8,7 +8,6 @@ bundle agent files (root, role)
 
     "root_dev" string => "/dev/mapper/$(cryptoo.machine_names[$(cryptoo.machine_number)])-root";
     "root_uuid" string => execresult("/$(file_names.blkid_app) -s UUID -o value $(root_dev)","noshell");
-    "fs_uuids" string => execresult("/$(file_names.lsblk_app) -o MOUNTPOINT,UUID","noshell");
 
   classes:
 
@@ -29,7 +28,6 @@ bundle agent files (root, role)
     role_master&local_role_master::
 
       "bootable" expression => "any";
-      "boot_uuid_ok" expression => regextract("/boot *([0-9a-f]*-[0-9a-f]*-[0-9a-f]*-[0-9a-f]*-[0-9a-f]*)","$(fs_uuids)","boot_uuid");
       "cryptoo_bind_mount" expression => regline("device /dev/mapper/$(cryptoo.machine_names[$(cryptoo.machine_number)])-storage mounted on /$(directory_names.fs_cryptoo).*", "$(file_names.mount_info)");
       "srv_portage_local_exists" expression => fileexists("/$(directory_names.fs_storage_pm_site)");
       "srv_cryptoo_exists" expression => fileexists("/$(directory_names.fs_storage_cryptoo)");
