@@ -18,4 +18,9 @@ bundle agent crypttab
         create => "true",
         edit_template => "/var/cfengine/inputs/templates/cryptoo_crypttab.txt";
 
+      "/$(file_names.dmcrypt_conf)"
+        perms => root,
+        create => "true",
+        edit_template => "/var/cfengine/inputs/templates/cryptoo_dmcrypt.txt";
+
 }

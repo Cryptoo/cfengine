@@ -1,0 +1,41 @@
+bundle agent openrc
+
+{
+
+  vars:
+
+    any::
+
+      "root" string => "/";
+
+  files:
+
+    any::
+
+      "$(root)$(file_names.openrc_acpid)"
+        move_obstructions => "true",
+        link_from => openrc(acpid),
+        classes => u_if_repaired("update_openrc");
+
+      "$(root)$(file_names.openrc_dmcrypt)"
+        move_obstructions => "true",
+        link_from => openrc(acpid),
+        classes => u_if_repaired("update_openrc");
+
+      "$(root)$(file_names.openrc_lvm)"
+        move_obstructions => "true",
+        link_from => openrc(acpid),
+        classes => u_if_repaired("update_openrc");
+
+      "$(root)$(file_names.openrc_mdraid)"
+        move_obstructions => "true",
+        link_from => openrc(acpid),
+        classes => u_if_repaired("update_openrc");
+
+  commands:
+
+    update_openrc::
+
+      "$(root)$(file_names.rc_app)";
+
+}

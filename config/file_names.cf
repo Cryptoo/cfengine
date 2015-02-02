@@ -7,9 +7,11 @@ bundle common file_names
     any::
 
       "mount_info" string => "/proc/self/mountstats";
+      "lsblk_app" string => "$(directory_names.fs_apps_base)/lsblk";
       "mount_app" string => "$(directory_names.fs_apps_base)/mount";
       "move_app" string => "$(directory_names.fs_apps_base)/mv";
       "dracut_image" string => "$(directory_names.fs_boot_base)/initramfs.dracut.xz";
+      "dmcrypt_conf" string => "$(directory_names.fs_config_openrc_env)/dmcrypt";
       "crypttab" string => "$(directory_names.fs_config_base)/crypttab";
       "dracut_conf" string => "$(directory_names.fs_config_dracut)/cryptoo.conf";
       "fstab" string => "$(directory_names.fs_config_base)/fstab";
@@ -39,6 +41,10 @@ bundle common file_names
       "pm_use_virtualization" string => "$(directory_names.fs_config_pm_use)/virtualization";
       "pm_profile_provided" string => "$(directory_names.fs_config_pm_profile)/package.provided";
       "pm_profile_upstream" string => "$(directory_names.fs_config_pm_upstream)/parent";
+      "openrc_acpid" string => "$(directory_names.fs_config_run_boot)/acpid";
+      "openrc_dmcrypt" string => "$(directory_names.fs_config_run_boot)/dmcrypt";
+      "openrc_lvm" string => "$(directory_names.fs_config_run_boot)/lvm";
+      "openrc_mdraid" string => "$(directory_names.fs_config_run_boot)/mdraid";
       "proc_mounts" string => "proc/self/mounts";
       "blkid_app" string => "$(directory_names.fs_admin_apps)/blkid";
       "storage_pm_site_meta" string => "$(directory_names.fs_storage_pm_site_meta)/layout.conf";
@@ -55,6 +61,7 @@ bundle common file_names
       "localegen_app" string => "$(directory_names.fs_standard_admin_apps)/locale-gen";
       "pm_site_meta" string => "$(directory_names.fs_storage_pm_site_meta)/layout.conf";
       "pm_site_repo" string => "$(directory_names.fs_storage_pm_site_profile)/repo_name";
+      "rc_app" string => "$(directory_names.fs_admin_apps)/rc";
       "pm_installed_sets" string => "$(directory_names.fs_volatile_pm)/world_sets";
 
 }

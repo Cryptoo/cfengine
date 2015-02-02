@@ -4,14 +4,11 @@ bundle agent files (root, role)
 
   vars:
 
-    any::
+    role_master&local_role_master::
 
     "root_dev" string => "/dev/mapper/$(cryptoo.machine_names[$(cryptoo.machine_number)])-root";
-    "uuid_data" string => execresult("/$(file_names.blkid_app) -s UUID","noshell");
-    "uuid_lines" slist => string_split("$(uuid_data)","\n",64);
-    "dim" int => parsestringarray("uuids", "$(uuid_lines)", "^#.*", ": UUID=", 64, 10K);
-    "root_uuid" string => "$(uuids[$(root_dev)])";
-
+    "root_uuid" string => execresult("/$(file_names.blkid_app) -s UUID -o value $(root_dev)","noshell");
+    "fs_uuids" string => execresult("/$(file_names.lsblk_app) -o MOUNTPOINT,UUID","noshell");
 
   classes:
 
@@ -32,11 +29,12 @@ bundle agent files (root, role)
     role_master&local_role_master::
 
       "bootable" expression => "any";
+      "boot_uuid_ok" expression => regextract("/boot *([0-9a-f]*-[0-9a-f]*-[0-9a-f]*-[0-9a-f]*-[0-9a-f]*)","$(fs_uuids)","boot_uuid");
       "cryptoo_bind_mount" expression => regline("device /dev/mapper/$(cryptoo.machine_names[$(cryptoo.machine_number)])-storage mounted on /$(directory_names.fs_cryptoo).*", "$(file_names.mount_info)");
       "srv_portage_local_exists" expression => fileexists("/$(directory_names.fs_storage_pm_site)");
       "srv_cryptoo_exists" expression => fileexists("/$(directory_names.fs_storage_cryptoo)");
       "srv_src_exists" expression => fileexists("/$(directory_names.fs_storage_sources)");
-      
+
   files:
 
     any::
@@ -153,8 +151,7 @@ bundle agent files (root, role)
       "$(root)$(file_names.system_bashrc)"
         perms => system,
         create => "true",
-        edit_line => PS1_always_show_full_path;
-        #edit_line => aliases;
+        edit_line => bashrc;
 
       "$(root)$(file_names.system_bash_logout)"
         perms => system,
@@ -246,16 +243,10 @@ bundle agent files (root, role)
 
       "build kernel configs"
         usebundle => kconfig("host");
-        
-  reports:
-  
-    any::
-    
-      "root_uuid: $(root_uuid)";
 
 }
 
-bundle edit_line PS1_always_show_full_path
+bundle edit_line bashrc
 
 {
     replace_patterns:
@@ -263,15 +254,6 @@ bundle edit_line PS1_always_show_full_path
       "(.*PS1=.*)W(.*)"
         replace_with => PS1_small_w;
 
-    insert_lines:
-
-      "alias ls='ls -FADv -I .keep --color=auto'$(const.n)alias nano='nano -w'"
-        location => after_unset;
-}
-
-bundle edit_line aliases
-
-{
     insert_lines:
 
       "alias ls='ls -FADv -I .keep --color=auto'$(const.n)alias nano='nano -w'"
@@ -378,3 +360,11 @@ body link_from proc_mounts
      when_no_source => "force";
      source => "/$(file_names.proc_mounts)";
 }
+body link_from openrc(service)
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "/$(directory_names.fs_config_openrc)/$(service)";
+}
+

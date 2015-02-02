@@ -23,14 +23,13 @@ bundle common cryptoo
                             "cryptoo/files.cf",
                             "cryptoo/kconfig.cf",
                             "cryptoo/mounts.cf",
+                            "cryptoo/openrc.cf",
                             "cryptoo/system.cf"
                          };
 
 
       "kernel_git" string => "git://github.com/cryptoo/kernel";
       "overlay_git" string => "git://github.com/cryptoo/overlay";
-
-      "boot_device" string => "FIXME";
 
     have_machine_names::
 
