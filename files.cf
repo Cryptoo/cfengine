@@ -19,6 +19,7 @@ bundle agent files (root, role)
     role_master&local_role_master::
 
       "bootable" expression => "any";
+      "cryptoo_bind_mount" expression => regline("device /dev/mapper/$(cryptoo.machine_names[$(cryptoo.machine_number)])-storage mounted on /$(directory_names.fs_cryptoo).*", "$(file_names.mount_info)");
       "srv_portage_local_exists" expression => fileexists("/$(directory_names.fs_storage_pm_site)");
       "srv_cryptoo_exists" expression => fileexists("/$(directory_names.fs_storage_cryptoo)");
       "srv_src_exists" expression => fileexists("/$(directory_names.fs_storage_sources)");
@@ -207,7 +208,7 @@ bundle agent files (root, role)
 
       "$(root)$(file_names.envupdate_app)";
 
-    local_role_master&need_cryptoo&srv_cryptoo_exists::
+    cryptoo_bind_mount&need_cryptoo&srv_cryptoo_exists::
 
       "$(root)$(file_names.git_app) clone -b dev $(cryptoo.overlay_git) $(root)$(directory_names.fs_storage_cryptoo)";
 
