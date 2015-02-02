@@ -7,29 +7,42 @@ bundle agent openrc
     any::
 
       "root" string => "/";
+      "enabled_services" slist => {
+                                    "acpid",
+                                    "dmcrypt",
+                                    "lvm",
+                                    "mdraid",
+                                    "consolefont",
+                                    "dbus",
+                                    "gpm",
+                                    "libvirtd",
+                                    "metalog",
+                                    "ntpd",
+                                    "numlock",
+                                    "sshd",
+                                    "kmod",
+                                  };
+      "disabled_services" slist => {
+                                     "kmod",
+                                     "modules",
+                                   };
 
   files:
 
     any::
 
-      "$(root)$(file_names.openrc_acpid)"
+      "$(root)$(file_names.openrc_$(enabled_services))"
         move_obstructions => "true",
-        link_from => openrc(acpid),
+        link_from => openrc($(enabled_services)),
         classes => u_if_repaired("update_openrc");
 
-      "$(root)$(file_names.openrc_dmcrypt)"
+      "$(root)$(file_names.openrc_vixiecron)"
         move_obstructions => "true",
-        link_from => openrc(acpid),
+        link_from => openrc("vixie-cron"),
         classes => u_if_repaired("update_openrc");
 
-      "$(root)$(file_names.openrc_lvm)"
-        move_obstructions => "true",
-        link_from => openrc(acpid),
-        classes => u_if_repaired("update_openrc");
-
-      "$(root)$(file_names.openrc_mdraid)"
-        move_obstructions => "true",
-        link_from => openrc(acpid),
+      "$(root)$(file_names.openrc_$(disabled_services))"
+        delete => tidy,
         classes => u_if_repaired("update_openrc");
 
   commands:

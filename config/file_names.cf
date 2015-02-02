@@ -46,6 +46,17 @@ bundle common file_names
       "openrc_dmcrypt" string => "$(directory_names.fs_config_run_boot)/dmcrypt";
       "openrc_lvm" string => "$(directory_names.fs_config_run_boot)/lvm";
       "openrc_mdraid" string => "$(directory_names.fs_config_run_boot)/mdraid";
+      "openrc_modules" string => "$(directory_names.fs_config_run_boot)/modules";
+      "openrc_consolefont" string => "$(directory_names.fs_config_run_default)/consolefont";
+      "openrc_dbus" string => "$(directory_names.fs_config_run_default)/dbus";
+      "openrc_gpm" string => "$(directory_names.fs_config_run_default)/gpm";
+      "openrc_libvirtd" string => "$(directory_names.fs_config_run_default)/libvirtd";
+      "openrc_metalog" string => "$(directory_names.fs_config_run_default)/metalog";
+      "openrc_ntpd" string => "$(directory_names.fs_config_run_default)/ntpd";
+      "openrc_numlock" string => "$(directory_names.fs_config_run_default)/numlock";
+      "openrc_sshd" string => "$(directory_names.fs_config_run_default)/sshd";
+      "openrc_vixiecron" string => "$(directory_names.fs_config_run_default)/vixie-cron";
+      "openrc_kmod" string => "$(directory_names.fs_config_run_sysinit)/kmod-static-nodes";
       "proc_mounts" string => "proc/self/mounts";
       "blkid_app" string => "$(directory_names.fs_admin_apps)/blkid";
       "storage_pm_site_meta" string => "$(directory_names.fs_storage_pm_site_meta)/layout.conf";
