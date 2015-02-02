@@ -177,6 +177,12 @@ bundle agent files (root, role)
 
     local_role_master::
 
+      "$(root)$(file_names.dracut_conf)"
+        perms => system,
+        create => "true",
+        edit_template => "/var/cfengine/inputs/templates/cryptoo_dracut_conf.txt",
+        classes => u_if_repaired("update_dracut");
+
       "$(root)$(file_names.pm_use_host)"
         move_obstructions => "true",
         link_from => cryptoo_package_use("host");
@@ -214,7 +220,7 @@ bundle agent files (root, role)
 
       "$(root)$(file_names.git_app) clone -b dev $(cryptoo.overlay_git) $(root)$(directory_names.fs_storage_cryptoo)";
 
-    local_role_master&have_dracut&need_dracut_image&have_crypttab::
+    local_role_master&have_dracut&have_crypttab&(need_dracut_image|update_dracut)::
 
       "$(root)$(file_names.dracut_app) --force --xz $(root)$(file_names.dracut_image)";
 

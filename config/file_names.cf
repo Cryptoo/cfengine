@@ -11,6 +11,7 @@ bundle common file_names
       "move_app" string => "$(directory_names.fs_apps_base)/mv";
       "dracut_image" string => "$(directory_names.fs_boot_base)/initramfs.dracut.xz";
       "crypttab" string => "$(directory_names.fs_config_base)/crypttab";
+      "dracut_conf" string => "$(directory_names.fs_config_dracut)/cryptoo.conf";
       "fstab" string => "$(directory_names.fs_config_base)/fstab";
       "locale" string => "$(directory_names.fs_config_base)/locale.gen";
       "localtime" string => "$(directory_names.fs_config_base)/localtime";

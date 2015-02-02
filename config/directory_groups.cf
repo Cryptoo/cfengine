@@ -12,6 +12,7 @@ bundle common directory_groups
                                  $(directory_names.fs_config_base),
                                  $(directory_names.fs_config_bash),
                                  $(directory_names.fs_config_crypoo_root),
+                                 $(directory_names.fs_config_dracut),
                                  $(directory_names.fs_config_environment),
                                  $(directory_names.fs_config_pm),
                                  $(directory_names.fs_config_pm_env),
