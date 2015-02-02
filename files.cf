@@ -2,6 +2,17 @@ bundle agent files (root, role)
 
 {
 
+  vars:
+
+    any::
+
+    "root_dev" string => "/dev/mapper/$(cryptoo.machine_names[$(cryptoo.machine_number)])-root";
+    "uuid_data" string => execresult("/$(file_names.blkid_app) -s UUID","noshell");
+    "uuid_lines" slist => string_split("$(uuid_data)","\n",64);
+    "dim" int => parsestringarray("uuids", "$(uuid_lines)", "^#.*", ": UUID=", 64, 10K);
+    "root_uuid" string => "$(uuids[$(root_dev)])";
+
+
   classes:
 
     any::
@@ -25,7 +36,7 @@ bundle agent files (root, role)
       "srv_portage_local_exists" expression => fileexists("/$(directory_names.fs_storage_pm_site)");
       "srv_cryptoo_exists" expression => fileexists("/$(directory_names.fs_storage_cryptoo)");
       "srv_src_exists" expression => fileexists("/$(directory_names.fs_storage_sources)");
-
+      
   files:
 
     any::
@@ -235,6 +246,12 @@ bundle agent files (root, role)
 
       "build kernel configs"
         usebundle => kconfig("host");
+        
+  reports:
+  
+    any::
+    
+      "root_uuid: $(root_uuid)";
 
 }
 
