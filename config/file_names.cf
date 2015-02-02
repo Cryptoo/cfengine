@@ -7,10 +7,10 @@ bundle common file_names
     any::
 
       "mount_info" string => "/proc/self/mountstats";
-
       "mount_app" string => "$(directory_names.fs_apps_base)/mount";
       "move_app" string => "$(directory_names.fs_apps_base)/mv";
       "dracut_image" string => "$(directory_names.fs_boot_base)/initramfs.dracut.xz";
+      "crypttab" string => "$(directory_names.fs_config_base)/crypttab";
       "fstab" string => "$(directory_names.fs_config_base)/fstab";
       "locale" string => "$(directory_names.fs_config_base)/locale.gen";
       "localtime" string => "$(directory_names.fs_config_base)/localtime";
@@ -39,6 +39,7 @@ bundle common file_names
       "pm_profile_provided" string => "$(directory_names.fs_config_pm_profile)/package.provided";
       "pm_profile_upstream" string => "$(directory_names.fs_config_pm_upstream)/parent";
       "proc_mounts" string => "proc/self/mounts";
+      "blkid_app" string => "$(directory_names.fs_admin_apps)/blkid";
       "storage_pm_site_meta" string => "$(directory_names.fs_storage_pm_site_meta)/layout.conf";
       "storage_pm_site_repo" string => "$(directory_names.fs_storage_pm_site_profile)/repo_name";
       "kernel_makefile" string => "$(directory_names.fs_storage_kernel)/Makefile";

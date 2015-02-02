@@ -13,6 +13,8 @@ bundle agent files (root, role)
       "have_locale_gen" expression => fileexists("$(root)$(file_names.locale)");
       "have_dracut" expression => fileexists("$(root)$(file_names.dracut_app)");
       "need_dracut_image" not => fileexists("$(root)$(file_names.dracut_image)");
+      "have_crypttab" expression => fileexists("$(root)$(file_names.crypttab)");
+      "need_crypttab" not => fileexists("$(root)$(file_names.crypttab)");
       "storage_mounted" expression => regline("device /dev/mapper/$(cryptoo.machine_names[$(cryptoo.machine_number)])-storage mounted on /$(directory_names.fs_storage_base).*", "$(file_names.mount_info)");
       "need_machine_names" not => fileexists("/$(file_names.machine_names)");
 
@@ -212,11 +214,16 @@ bundle agent files (root, role)
 
       "$(root)$(file_names.git_app) clone -b dev $(cryptoo.overlay_git) $(root)$(directory_names.fs_storage_cryptoo)";
 
-    local_role_master&have_dracut&need_dracut_image::
+    local_role_master&have_dracut&need_dracut_image&have_crypttab::
 
       "$(root)$(file_names.dracut_app) --force --xz $(root)$(file_names.dracut_image)";
 
   methods:
+
+    local_role_master&need_crypttab::
+
+      "build crypttab"
+        usebundle => crypttab;
 
     local_role_master&srv_src_exists::
 

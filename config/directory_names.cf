@@ -30,6 +30,7 @@ bundle common directory_names
       "fs_mount_root" string => "$(fs_mount_base)/root";
       "fs_mount_shared" string => "$(fs_mount_base)/shared";
       "fs_admin_base" string => "root";
+      "fs_admin_apps" string => "sbin";
       "fs_storage_base" string => "srv";
       "fs_storage_site" string => "$(fs_storage_base)/site-local";
       "fs_storage_apps" string => "$(fs_storage_site)/bin";

@@ -18,6 +18,7 @@ bundle common cryptoo
                             "cryptoo/config/directory_names.cf",
                             "cryptoo/config/directory_groups.cf",
                             "cryptoo/config/file_names.cf",
+                            "cryptoo/crypttab.cf",
                             "cryptoo/directories.cf",
                             "cryptoo/files.cf",
                             "cryptoo/kconfig.cf",
