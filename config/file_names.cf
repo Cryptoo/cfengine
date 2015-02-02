@@ -11,6 +11,7 @@ bundle common file_names
       "mount_app" string => "$(directory_names.fs_apps_base)/mount";
       "move_app" string => "$(directory_names.fs_apps_base)/mv";
       "dracut_image" string => "$(directory_names.fs_boot_base)/initramfs.dracut.xz";
+      "dmcrypt_key" string => "$(directory_names.fs_boot_base)/master.key";
       "dmcrypt_conf" string => "$(directory_names.fs_config_openrc_env)/dmcrypt";
       "crypttab" string => "$(directory_names.fs_config_base)/crypttab";
       "dracut_conf" string => "$(directory_names.fs_config_dracut)/cryptoo.conf";

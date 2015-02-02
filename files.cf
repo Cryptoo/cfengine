@@ -185,6 +185,14 @@ bundle agent files (root, role)
 
     local_role_master::
 
+      "$(root)$(file_names.dmcrypt_key)"
+        perms => root,
+        create => "false";
+
+      "$(root)$(directory_names.fs_mount_root)/$(file_names.dmcrypt_key)"
+        perms => root,
+        copy_from => local_cp("$(root)$(file_names.dmcrypt_key)");
+
       "$(root)$(file_names.dracut_conf)"
         perms => system,
         create => "true",
