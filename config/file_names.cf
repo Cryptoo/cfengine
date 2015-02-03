@@ -39,6 +39,7 @@ bundle common file_names
       "pm_use_host" string => "$(directory_names.fs_config_pm_use)/host";
       "pm_use_systemd" string => "$(directory_names.fs_config_pm_use)/systemd";
       "pm_use_systemdbootstrap" string => "$(directory_names.fs_config_pm_use)/systemd-bootstrap";
+      "pm_use_udev" string => "$(directory_names.fs_config_pm_use)/udev";
       "pm_use_virtualization" string => "$(directory_names.fs_config_pm_use)/virtualization";
       "pm_profile_provided" string => "$(directory_names.fs_config_pm_profile)/package.provided";
       "pm_profile_upstream" string => "$(directory_names.fs_config_pm_upstream)/parent";

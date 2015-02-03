@@ -128,9 +128,13 @@ bundle agent files (root, role)
       "$(root)$(file_names.pm_use_systemd)"
         delete => tidy;
 
-      "$(root)$(file_names.pm_use_systemdbootstrap)"
+      "$(root)$(file_names.pm_use_udev)"
         move_obstructions => "true",
-        link_from => cryptoo_package_use("systemd-bootstrap");
+        link_from => cryptoo_package_use("udev");
+
+      #"$(root)$(file_names.pm_use_systemdbootstrap)"
+      #  move_obstructions => "true",
+      #  link_from => cryptoo_package_use("systemd-bootstrap");
 
     have_systemd::
 
