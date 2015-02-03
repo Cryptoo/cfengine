@@ -21,7 +21,7 @@ bundle common directory_names
       "fs_config_openrc" string => "$(fs_config_base)/init.d";
       "fs_config_pm" string => "$(fs_config_base)/$(pm)";
       "fs_config_pm_env" string => "$(fs_config_pm)/env";
-      "fs_config_pm_environments" string => "$(fs_config_pm)/env.d";
+      "fs_config_pm_environments" string => "$(fs_config_pm)/package.env";
       "fs_config_pm_keywords" string => "$(fs_config_pm)/package.keywords";
       "fs_config_pm_mask" string => "$(fs_config_pm)/package.mask";
       "fs_config_pm_unmask" string => "$(fs_config_pm)/package.unmask";
