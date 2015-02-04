@@ -63,6 +63,7 @@ bundle common file_names
       "storage_pm_site_meta" string => "$(directory_names.fs_storage_pm_site_meta)/layout.conf";
       "storage_pm_site_repo" string => "$(directory_names.fs_storage_pm_site_profile)/repo_name";
       "kernel_makefile" string => "$(directory_names.fs_storage_kernel)/Makefile";
+      "cpu2use_app" string => "$(directory_names.fs_standard_apps)/cpuinfo2cpuflags-x86";
       "dracut_app" string => "$(directory_names.fs_standard_apps)/dracut";
       "find_app" string => "$(directory_names.fs_standard_apps)/find";
       "git_app" string => "$(directory_names.fs_standard_apps)/git";

@@ -4,6 +4,10 @@ bundle agent files (root, role)
 
   vars:
 
+    any::
+
+    "cpu_flags" string => execresult("/$(file_names.cpu2use_app)","noshell");
+
     role_master&local_role_master::
 
     "root_dev" string => "/dev/mapper/$(cryptoo.machine_names[$(cryptoo.machine_number)])-root";
@@ -257,6 +261,9 @@ bundle agent files (root, role)
       "build kernel configs"
         usebundle => kconfig("host");
 
+  reports:
+  
+      "CPU flags: $(files.cpu_flags)";
 }
 
 bundle edit_line bashrc
