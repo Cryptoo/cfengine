@@ -41,9 +41,19 @@ bundle common cryptoo
       "machine_names" data => readjson("/$(file_names.machine_names)", 1M),
         classes => if_ok("machine_name_available");
 
+    need_machine_names::
+
+      "machine_names" data => readjson("/var/cfengine/inputs/templates/cryptoo_machine_names_json.txt", 1M),
+        classes => if_ok("machine_name_available");
+
     have_site_config::
 
       "site_config" data => readjson("/$(file_names.site_config)", 1M),
+        classes => if_ok("site_config_available");
+
+    need_site_config::
+
+      "site_config" data => readjson("/var/cfengine/inputs/templates/cryptoo_site_config_json.txt", 1M),
         classes => if_ok("site_config_available");
 
     role_master::
