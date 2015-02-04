@@ -6,12 +6,14 @@ bundle agent files (root, role)
 
     any::
 
-    "cpu_flags" string => execresult("/$(file_names.cpu2use_app)","noshell");
-
     role_master&local_role_master::
 
     "root_dev" string => "/dev/mapper/$(cryptoo.machine_names[$(cryptoo.machine_number)])-root";
     "root_uuid" string => execresult("/$(file_names.blkid_app) -s UUID -o value $(root_dev)","noshell");
+
+  have_cpu2use::
+
+    "cpu_flags" string => execresult("/$(file_names.cpu2use_app)","noshell");
 
   classes:
 
@@ -28,6 +30,7 @@ bundle agent files (root, role)
       "need_crypttab" not => fileexists("$(root)$(file_names.crypttab)");
       "storage_mounted" expression => regline("device /dev/mapper/$(cryptoo.machine_names[$(cryptoo.machine_number)])-storage mounted on /$(directory_names.fs_storage_base).*", "$(file_names.mount_info)");
       "need_machine_names" not => fileexists("/$(file_names.machine_names)");
+      "have_cpu2use" expression => fileexists("/$(file_names.cpu2use_app)");
 
     role_master&local_role_master::
 
