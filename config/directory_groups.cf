@@ -31,6 +31,7 @@ bundle common directory_groups
                                  $(directory_names.fs_mount_root),
                                  $(directory_names.fs_admin_apps),
                                  $(directory_names.fs_storage_base),
+                                 $(directory_names.fs_storage_shared),
                                  $(directory_names.fs_standard_base),
                                  $(directory_names.fs_standard_apps),
                                  $(directory_names.fs_cryptoo),

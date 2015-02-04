@@ -39,7 +39,8 @@ bundle common directory_names
       "fs_admin_base" string => "root";
       "fs_admin_apps" string => "sbin";
       "fs_storage_base" string => "srv";
-      "fs_storage_site" string => "$(fs_storage_base)/site-local";
+      "fs_storage_shared" string => "$(fs_storage_base)/nfs";
+      "fs_storage_site" string => "$(fs_storage_shared)/site-local";
       "fs_storage_apps" string => "$(fs_storage_site)/bin";
       "fs_storage_cryptoo" string => "$(fs_storage_site)/cryptoo";
       "fs_storage_srcpkg" string => "$(fs_storage_site)/distfiles";
