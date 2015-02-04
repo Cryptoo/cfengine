@@ -52,10 +52,10 @@ bundle agent cryptoo_system
         usebundle => files("/","master");
 
       "manage skeleton guest directory structure"
-        usebundle => directories("/var/images/server/","guest");
+        usebundle => directories("/$(directory_names.fs_volatile_images)/server/","guest");
 
       "manage files for the guest skeleton"
-        usebundle => files("/var/images/server/","guest");
+        usebundle => files("/$(directory_names.fs_volatile_images)/server/","guest");
 
     role_master&srv_exists&machine_name_available::
 
