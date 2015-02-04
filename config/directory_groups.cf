@@ -30,8 +30,6 @@ bundle common directory_groups
                                  $(directory_names.fs_config_run_boot),                                 $(directory_names.fs_config_run_default),                                 $(directory_names.fs_config_run_sysinit),                                 $(directory_names.fs_mount_base),
                                  $(directory_names.fs_mount_root),
                                  $(directory_names.fs_admin_apps),
-                                 $(directory_names.fs_storage_base),
-                                 $(directory_names.fs_storage_shared),
                                  $(directory_names.fs_standard_base),
                                  $(directory_names.fs_standard_apps),
                                  $(directory_names.fs_cryptoo),
@@ -75,6 +73,7 @@ bundle common directory_groups
 
       "host_system" slist => {
                                  $(directory_names.fs_storage_base),
+                                 $(directory_names.fs_storage_nfs),
                                  $(directory_names.fs_volatile_images),
                                  $(directory_names.fs_volatile_kernel)
                                 };
