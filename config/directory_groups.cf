@@ -13,7 +13,6 @@ bundle common directory_groups
                                  $(directory_names.fs_config_bash),
                                  $(directory_names.fs_config_openrc_env),
                                  $(directory_names.fs_config_crypoo_root),
-                                 $(directory_names.fs_config_dracut),
                                  $(directory_names.fs_config_environment),
                                  $(directory_names.fs_config_openrc),
                                  $(directory_names.fs_config_pm),
@@ -27,7 +26,10 @@ bundle common directory_groups
                                  $(directory_names.fs_config_pm_profile),
                                  $(directory_names.fs_config_pm_upstream),
                                  $(directory_names.fs_config_run_base),
-                                 $(directory_names.fs_config_run_boot),                                 $(directory_names.fs_config_run_default),                                 $(directory_names.fs_config_run_sysinit),                                 $(directory_names.fs_mount_base),
+                                 $(directory_names.fs_config_run_boot),
+                                 $(directory_names.fs_config_run_default),
+                                 $(directory_names.fs_config_run_sysinit),
+                                 $(directory_names.fs_mount_base),
                                  $(directory_names.fs_mount_root),
                                  $(directory_names.fs_admin_apps),
                                  $(directory_names.fs_standard_base),
@@ -72,6 +74,7 @@ bundle common directory_groups
                                 };
 
       "host_system" slist => {
+                                 $(directory_names.fs_config_dracut),
                                  $(directory_names.fs_storage_base),
                                  $(directory_names.fs_storage_nfs),
                                  $(directory_names.fs_volatile_images),
