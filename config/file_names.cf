@@ -21,6 +21,7 @@ bundle common file_names
       "system_bashrc" string => "$(directory_names.fs_config_bash)/bashrc";
       "system_bash_logout" string => "$(directory_names.fs_config_bash)/bash_logout";
       "machine_names" string => "$(directory_names.fs_config_crypoo_incoming)/machine_names.json";
+      "site_config" string => "$(directory_names.fs_config_crypoo_incoming)/site_config.json";
       "crypoo_role" string => "$(directory_names.fs_config_crypoo_incoming)/role";
       "env_cryptoo" string => "$(directory_names.fs_config_environment)/00cryptoo";
       "env_locale" string => "$(directory_names.fs_config_environment)/02locale";

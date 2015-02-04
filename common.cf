@@ -36,6 +36,11 @@ bundle common cryptoo
       "machine_names" data => readjson("/$(file_names.machine_names)", 1M),
         classes => if_ok("machine_name_available");
 
+    have_site_config::
+
+      "site_config" data => readjson("/$(file_names.site_config)", 1M),
+        classes => if_ok("site_config_available");
+
     role_master::
 
       "machine_number" string => "1";
@@ -49,6 +54,8 @@ bundle common cryptoo
       "role_undefined" not => fileexists("/$(file_names.crypoo_role)");
       "have_machine_names" expression => fileexists("/$(file_names.machine_names)");
       "need_machine_names" not => fileexists("/$(file_names.machine_names)");
+      "have_site_config" expression => fileexists("/$(file_names.site_config)");
+      "need_site_config" not => fileexists("/$(file_names.site_config)");
 
   reports:
 
