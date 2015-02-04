@@ -330,7 +330,7 @@ bundle agent kconfig(target)
 #      "kernel_clone_command" string => "/$(file_names.git_app) clone $(cryptoo.kernel_git) /$(directory_names.fs_storage_kernel)";
 
 #      FIXME: Cloning from virtfs is much faster than cloning over the 'net
-      "kernel_clone_command" string => "/usr/bin/rsync -a --exclude .git /usr/src/linux-host/ /srv/site-local/src/linux";
+      "kernel_clone_command" string => "/usr/bin/rsync -a --exclude .git /usr/src/linux-host/ /$(file_names.fs_storage_kernel)";
 
   classes:
 
