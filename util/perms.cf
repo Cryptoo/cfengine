@@ -1,0 +1,47 @@
+body perms guest
+
+{
+      mode  => "0664";
+      owners  => { "guest" };
+      groups  => { "users" };
+}
+
+body perms portage
+
+{
+      mode  => "0644";
+      owners  => { "portage" };
+      groups  => { "portage" };
+}
+
+body perms portage_open
+
+{
+      mode  => "0664";
+      owners  => { "portage" };
+      groups  => { "portage" };
+}
+
+body perms system
+
+{
+      mode  => "0644";
+      owners  => { "root" };
+      groups  => { "root" };
+}
+
+body perms root
+
+{
+      mode  => "0600";
+      owners  => { "root" };
+      groups  => { "root" };
+}
+
+body perms system_tmp
+
+{
+      mode  => "1666";
+      owners  => { "root" };
+      groups  => { "root" };
+}

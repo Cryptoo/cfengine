@@ -1,0 +1,94 @@
+body link_from cryptoo_portage_env(x)
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "/$(directory_names.fs_cryptoo_pm_env)/$(x)";
+}
+
+body link_from cryptoo_package_env(x)
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "/$(directory_names.fs_cryptoo_pm_environments)/$(x)";
+}
+
+body link_from cryptoo_package_keyword(x)
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "/$(directory_names.fs_cryptoo_pm_keywords)/$(x)";
+}
+
+body link_from cryptoo_package_mask(x)
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "/$(directory_names.fs_cryptoo_pm_mask)/$(x)";
+}
+
+body link_from cryptoo_package_unmask(x)
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "/$(directory_names.fs_cryptoo_pm_unmask)/$(x)";
+}
+
+body link_from cryptoo_package_use(x)
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "/$(directory_names.fs_cryptoo_pm_use)/$(x)";
+}
+
+body link_from cryptoo_portage_profile(x)
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "/$(directory_names.fs_cryptoo_pm_profile)/$(x)";
+}
+
+body link_from cryptoo_profile(x)
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "/$(directory_names.fs_crypoo_profiles)/$(x)";
+}
+
+body link_from timezone(x)
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "/$(directory_names.fs_standard_timezones)/$(x)";
+}
+
+body link_from kernel_dir
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "/$(directory_names.fs_site_kernel)";
+}
+
+body link_from proc_mounts
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "/$(file_names.proc_mounts)";
+}
+body link_from openrc(service)
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "/$(directory_names.fs_config_openrc)/$(service)";
+}

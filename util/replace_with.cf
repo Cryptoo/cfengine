@@ -1,0 +1,22 @@
+body replace_with PS1_small_w
+
+{
+    replace_value => "$(match.1)w$(match.2)";
+}
+
+body replace_with enable_kernel_symbol(symbol)
+
+{
+    replace_value => "CONFIG_$(symbol)=y";
+    occurrences => "all";
+
+}
+
+body replace_with disable_kernel_symbol(symbol)
+
+{
+    replace_value => "CONFIG_$(symbol)=n";
+    occurrences => "all";
+
+}
+

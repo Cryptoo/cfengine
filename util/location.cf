@@ -1,0 +1,14 @@
+body location after_unset
+
+{
+    select_line_matching => "unset.*use_color.*safe_term.*match_lhs.*";
+    before_after => "after";
+}
+
+body location first_line
+
+{
+    before_after => "before";
+    first_last => "first";
+    select_line_matching => ".*";
+}
