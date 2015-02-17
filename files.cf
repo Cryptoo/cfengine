@@ -1,4 +1,4 @@
-bundle agent files (root, role)
+bundle agent files (root, role, arch, multilib)
 
 {
 
@@ -21,6 +21,8 @@ bundle agent files (root, role)
 
       "need_cryptoo" not => "have_cryptoo";
       "local_role_$(role)" expression => "any";
+      "$(arch)" expression => "any";
+      "$(multilib)" expression => "any";
       "have_systemd" expression => fileexists("$(root)$(file_names.systemd_app)");
       "bootstrap_systemd" not => fileexists("$(root)$(file_names.systemd_app)");
       "have_locale_gen" expression => fileexists("$(root)$(file_names.locale)");

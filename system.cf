@@ -8,6 +8,9 @@ bundle agent cryptoo_system
 
       "portage_cleanup_command" string => "/$(file_names.find_app) /$(directory_names.fs_mount_root)/$(directory_names.fs_pm) -mindepth 1 -maxdepth 1 -name * -exec /$(file_names.move_app) {} /$(directory_names.fs_storage_pm) ;";
       "distfiles_cleanup_command" string => "/$(file_names.find_app) /$(directory_names.fs_storage_pm)/distfiles -mindepth 1 -maxdepth 1 -name * -exec /$(file_names.move_app) {} /$(directory_names.fs_storage_srcpkg) ;";
+      "guest_templates" slist => getindices("cryptoo.site_config[guest_templates])");
+      "arch_templates[$(guest_templates)]" string => "$(cryptoo.site_config[guest_templates][$(guest_templates)][arch])";
+      "guest_templates_arches" slist => getvalues(arch_templates);
 
 
   classes:
@@ -38,24 +41,36 @@ bundle agent cryptoo_system
     role_undefined::
 
       "manage top-level directory structure"
-        usebundle => directories("/","undefined");
+        usebundle => directories("/","undefined","amd64","nomultilib");
 
       "manage files for the system"
-        usebundle => files("/","undefined");
+        usebundle => files("/","undefined","amd64","nomultilib");
 
     role_master::
 
       "manage top-level directory structure"
-        usebundle => directories("/","master");
+        usebundle => directories("/","master","amd64","nomultilib");
 
       "manage files for the host system"
-        usebundle => files("/","master");
+        usebundle => files("/","master","amd64","nomultilib");
 
-      "manage skeleton guest directory structure"
-        usebundle => directories("/$(directory_names.fs_volatile_images)/server/","guest");
+      "manage skeleton server directory structure"
+        usebundle => directories("/$(directory_names.fs_volatile_images)/server/x86_64/no-multilib/","server","amd64","nomultilib");
 
-      "manage files for the guest skeleton"
-        usebundle => files("/$(directory_names.fs_volatile_images)/server/","guest");
+      "manage files for the server skeleton"
+        usebundle => files("/$(directory_names.fs_volatile_images)/server/x86_64/no-multilib/","server","amd64","nomultilib");
+
+      "manage skeleton desktop directory structure"
+        usebundle => directories("/$(directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/","desktop","amd64","nomultilib");
+
+      "manage files for the desktop skeleton"
+        usebundle => files("/$(directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/","desktop","amd64","nomultilib");
+
+      "manage skeleton desktop-multilib directory structure"
+        usebundle => directories("/$(directory_names.fs_volatile_images)/desktop/x86_64/multilib/","desktop_multilib","amd64","multilib");
+
+      "manage files for the desktop-multilib skeleton"
+        usebundle => files("/$(directory_names.fs_volatile_images)/desktop/x86_64/multilib/","desktop_multilib","amd64","multilib");
 
     role_master&srv_exists&machine_name_available::
 
@@ -66,10 +81,10 @@ bundle agent cryptoo_system
     srv_mounted::
 
       "manage /src directory structure"
-        usebundle => directories("/","master");
+        usebundle => directories("/","master","amd64","nomultilib");
 
       "manage /srv files"
-        usebundle => files("/","master");
+        usebundle => files("/","master","amd64","nomultilib");
 
     srv_directories_exist::
 

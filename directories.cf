@@ -1,4 +1,4 @@
-bundle agent directories(root, role)
+bundle agent directories(root, role, arch, multilib)
 
 {
 
@@ -7,6 +7,8 @@ bundle agent directories(root, role)
     any::
 
       "local_role_$(role)" expression => "any";
+      "$(arch)" expression => "any";
+      "$(multilib)" expression => "any";
       "storage_mounted" expression => regline("device /dev/mapper/$(cryptoo.machine_names[$(cryptoo.machine_number)])-storage mounted on $(root)$(directory_names.fs_storage_base).*", $(file_names.mount_info));
 
   files:
@@ -80,6 +82,8 @@ bundle agent directories(root, role)
         handle => "$(root)$(directory_names.fs_storage_shared)";
 
   users:
+
+    local_role_master::
 
       "guest"
         handle => "user_guest",
