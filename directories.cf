@@ -25,6 +25,11 @@ bundle agent directories(root, role, arch, multilib)
         create => "true",
         handle => "$(root)$(directory_groups.common_system)";
 
+      "$(root)$(directory_groups.common_system_restricted)/."
+        perms => restricted,
+        create => "true",
+        handle => "$(root)$(directory_groups.common_system_restricted)";
+
       "$(root)$(directory_groups.common_system_private)/."
         perms => root,
         create => "true",

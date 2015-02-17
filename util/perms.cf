@@ -30,6 +30,14 @@ body perms system
       groups  => { "root" };
 }
 
+body perms restricted
+
+{
+      mode  => "0444";
+      owners  => { "root" };
+      groups  => { "root" };
+}
+
 body perms root
 
 {

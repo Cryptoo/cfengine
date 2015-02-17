@@ -9,6 +9,7 @@ bundle common directory_groups
       "common_system" slist => {
                                  $(directory_names.fs_apps_base),
                                  $(directory_names.fs_boot_base),
+                                 $(directory_names.fs_dev_base),
                                  $(directory_names.fs_config_base),
                                  $(directory_names.fs_config_bash),
                                  $(directory_names.fs_config_openrc_env),
@@ -45,6 +46,11 @@ bundle common directory_groups
                                  $(directory_names.fs_standard_sources),
                                  $(directory_names.fs_volatile_base),
                                  $(directory_names.fs_volatile_library)
+                                };
+
+      "common_system_restricted" slist => {
+                                 $(directory_names.fs_proc_base),
+                                 $(directory_names.fs_sys_base)
                                 };
 
       "common_system_private" slist => {

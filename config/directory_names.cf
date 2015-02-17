@@ -9,6 +9,7 @@ bundle common directory_names
       "pm" string => "portage";
       "fs_apps_base" string => "bin";
       "fs_boot_base" string => "boot";
+      "fs_dev_base" string => "dev";
       "fs_config_base" string => "etc";
       "fs_config_bash" string => "$(fs_config_base)/bash";
       "fs_config_openrc_env" string => "$(fs_config_base)/conf.d";
@@ -36,6 +37,7 @@ bundle common directory_names
       "fs_mount_base" string => "mnt";
       "fs_mount_root" string => "$(fs_mount_base)/root";
       "fs_mount_shared" string => "$(fs_mount_base)/shared";
+      "fs_proc_base" string => "proc";
       "fs_admin_base" string => "root";
       "fs_admin_apps" string => "sbin";
       "fs_storage_base" string => "srv";
@@ -53,6 +55,7 @@ bundle common directory_names
       "fs_storage_shared" string => "$(fs_storage_site)/storage";
       "fs_storage_sources" string => "$(fs_storage_site)/src";
       "fs_storage_kernel" string => "$(fs_storage_sources)/linux";
+      "fs_sys_base" string => "sys";
       "fs_temp_base" string => "tmp";
       "fs_standard_base" string => "usr";
       "fs_standard_apps" string => "$(fs_standard_base)/bin";
