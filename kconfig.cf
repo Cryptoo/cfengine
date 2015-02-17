@@ -45,7 +45,6 @@ bundle agent kconfig(target)
       "kconfig[TRANSPARENT_HUGEPAGE]" string => "TRANSPARENT_HUGEPAGE", meta => { "enabled", "host" };
       "kconfig[SECCOMP]" string => "SECCOMP", meta => { "enabled", "host" };
       "kconfig[ACPI]" string => "ACPI", meta => { "enabled", "host" };
-      "kconfig[PM_RUNTIME]" string => "PM_RUNTIME", meta => { "enabled", "host" };
       "kconfig[ACPI_AC]" string => "ACPI_AC", meta => { "disabled", "host" };
       "kconfig[ACPI_BATTERY]" string => "ACPI_BATTERY", meta => { "disabled", "host" };
       "kconfig[CPU_FREQ]" string => "CPU_FREQ", meta => { "enabled", "host" };
@@ -311,6 +310,8 @@ bundle agent kconfig(target)
       "kconfig[KVM_AMD]" string => "KVM_AMD", meta => { "enabled", "host" };
       "kconfig[VHOST_NET]" string => "VHOST_NET", meta => { "enabled", "host" };
 
+      "kconfig_string_host[CONFIG_INITRAMFS_SOURCE]" string => "/boot/dracut.initramfs.cpio";
+
       "kconfig_target" slist => variablesmatching(".*kconfig\[.*]", "$(target)");
       "kconfig_enabled" slist => variablesmatching(".*kconfig\[.*]", "enabled");
       "kconfig_disabled" slist => variablesmatching(".*kconfig\[.*]", "disabled");
@@ -334,6 +335,7 @@ bundle agent kconfig(target)
 
   classes:
 
+      "$(target)" expression => "any";
       "have_kernel_src" expression => fileexists("/$(file_names.kernel_makefile)");
       "need_kernel_src" not => fileexists("/$(file_names.kernel_makefile)");
       "have_target_kconfig" expression => fileexists("$(kconfig_file)");
@@ -379,6 +381,13 @@ bundle agent kconfig(target)
         edit_line => disable_kconfig("$(kconfig_target_disabled_symbols)","$(kconfig_file)"),
         classes => u_if_repaired("target_kconfig_changed"),
         comment => "repair symbols that should be disabled, but are missing";
+
+  host::
+
+      "$(kconfig_file)"
+        edit_line => set_quoted_values("kconfig.kconfig_string_host"),
+        classes => u_if_repaired("target_kconfig_changed"),
+        comment => "set kconfig strings";
 
   commands:
 
