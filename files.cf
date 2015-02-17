@@ -8,12 +8,17 @@ bundle agent files (root, role, arch, multilib)
 
     role_master&local_role_master::
 
-    "root_dev" string => "/dev/mapper/$(cryptoo.machine_names[$(cryptoo.machine_number)])-root";
-    "root_uuid" string => execresult("/$(file_names.blkid_app) -s UUID -o value $(root_dev)","noshell");
+      "root_dev" string => "/dev/mapper/$(cryptoo.machine_names[$(cryptoo.machine_number)])-root";
+      "root_uuid" string => execresult("/$(file_names.blkid_app) -s UUID -o value $(root_dev)","noshell");
 
-  have_cpu2use::
+    bootable::
 
-    "cpu_flags" string => execresult("/$(file_names.cpu2use_app)","noshell");
+      "grub[GRUB_CMDLINE_LINUX]" string => "rd.auto";
+      "grub[GRUB_CMDLINE_LINUX_DEFAULT]" string => "quiet";
+
+    have_cpu2use::
+
+      "cpu_flags" string => execresult("/$(file_names.cpu2use_app)","noshell");
 
   classes:
 
@@ -155,6 +160,16 @@ bundle agent files (root, role, arch, multilib)
         delete => tidy;
 
     bootable::
+
+      "$(root)$(file_names.grub_defaults)"
+        perms => system,
+        create => "false",
+        edit_line => delete_lines_matching("# GRUB_CMDLINE_LINUX=.*");
+
+      "$(root)$(file_names.grub_defaults)"
+        perms => system,
+        create => "false",
+        edit_line => set_quoted_values("files.grub");
 
       "$(root)$(file_names.localtime)"
         move_obstructions => "true",

@@ -17,6 +17,7 @@ bundle common directory_names
       "fs_config_crypoo_incoming" string => "$(fs_config_crypoo_root)/inbox";
       "fs_config_crypoo_outgoing" string => "$(fs_config_crypoo_root)/outbox";
       "fs_config_crypoo_role" string => "$(fs_config_crypoo_incoming)/role";
+      "fs_config_default" string => "$(fs_config_base)/default";
       "fs_config_dracut" string => "$(fs_config_base)/dracut.conf.d";
       "fs_config_environment" string => "$(fs_config_base)/env.d";
       "fs_config_openrc" string => "$(fs_config_base)/init.d";

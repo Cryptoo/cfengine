@@ -14,6 +14,7 @@ bundle common file_names
       "dmcrypt_key" string => "$(directory_names.fs_boot_base)/master.key";
       "dmcrypt_conf" string => "$(directory_names.fs_config_openrc_env)/dmcrypt";
       "crypttab" string => "$(directory_names.fs_config_base)/crypttab";
+      "grub_defaults" string => "$(directory_names.fs_config_default)/grub";
       "dracut_conf" string => "$(directory_names.fs_config_dracut)/cryptoo.conf";
       "fstab" string => "$(directory_names.fs_config_base)/fstab";
       "locale" string => "$(directory_names.fs_config_base)/locale.gen";
