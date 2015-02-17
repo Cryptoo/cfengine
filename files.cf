@@ -259,7 +259,7 @@ bundle agent files (root, role, arch, multilib)
 
     local_role_master&have_dracut&have_crypttab&(need_dracut_image|update_dracut)::
 
-      "$(root)$(file_names.dracut_app) --force --xz $(root)$(file_names.dracut_image)";
+      "$(root)$(file_names.dracut_app) --force --no-compress $(root)$(file_names.dracut_image)";
 
   methods:
 

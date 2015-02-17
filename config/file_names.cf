@@ -10,7 +10,7 @@ bundle common file_names
       "lsblk_app" string => "$(directory_names.fs_apps_base)/lsblk";
       "mount_app" string => "$(directory_names.fs_apps_base)/mount";
       "move_app" string => "$(directory_names.fs_apps_base)/mv";
-      "dracut_image" string => "$(directory_names.fs_boot_base)/initramfs.dracut.xz";
+      "dracut_image" string => "$(directory_names.fs_boot_base)/dracut.initramfs.cpio";
       "dmcrypt_key" string => "$(directory_names.fs_boot_base)/master.key";
       "dmcrypt_conf" string => "$(directory_names.fs_config_openrc_env)/dmcrypt";
       "crypttab" string => "$(directory_names.fs_config_base)/crypttab";
