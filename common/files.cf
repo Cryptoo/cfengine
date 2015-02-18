@@ -166,12 +166,12 @@ bundle agent common_files (root, role, arch, multilib)
 
     update_locale::
 
-      "$(root)$(file_names.localegen_app)"
+      "/$(file_names.localegen_app)"
         contain => basic_chroot($(root));
 
     update_env&have_envupdate_app::
 
-      "$(root)$(file_names.envupdate_app)"
+      "/$(file_names.envupdate_app)"
         contain => basic_chroot($(root));
 
 }
