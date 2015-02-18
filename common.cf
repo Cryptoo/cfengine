@@ -29,6 +29,7 @@ bundle common cryptoo
                             "cryptoo/kconfig.cf",
                             "cryptoo/mounts.cf",
                             "cryptoo/openrc.cf",
+                            "cryptoo/subnet.cf",
                             "cryptoo/system.cf"
                          };
 
@@ -56,6 +57,11 @@ bundle common cryptoo
       "site_config" data => readjson("/var/cfengine/inputs/templates/cryptoo_site_config_json.txt", 1M),
         classes => if_ok("site_config_available");
 
+    have_subnet_config::
+
+      "subnet_config" data => readjson("/$(file_names.subnet_config)", 1M),
+        classes => if_ok("subnet_config_available");
+
     role_master::
 
       "machine_number" string => "1";
@@ -71,6 +77,8 @@ bundle common cryptoo
       "need_machine_names" not => fileexists("/$(file_names.machine_names)");
       "have_site_config" expression => fileexists("/$(file_names.site_config)");
       "need_site_config" not => fileexists("/$(file_names.site_config)");
+      "have_subnet_config" expression => fileexists("/$(file_names.subnet_config)");
+      "need_subnet_config" not => fileexists("/$(file_names.subnet_config)");
 
   reports:
 

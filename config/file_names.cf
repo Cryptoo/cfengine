@@ -24,6 +24,7 @@ bundle common file_names
       "hostname_openrc" string => "$(directory_names.fs_config_openrc_env)/hostname";
       "machine_names" string => "$(directory_names.fs_config_crypoo_incoming)/machine_names.json";
       "site_config" string => "$(directory_names.fs_config_crypoo_incoming)/site_config.json";
+      "subnet_config" string => "$(directory_names.fs_config_crypoo_incoming)/subnet_config.json";
       "crypoo_role" string => "$(directory_names.fs_config_crypoo_incoming)/role";
       "env_cryptoo" string => "$(directory_names.fs_config_environment)/00cryptoo";
       "env_locale" string => "$(directory_names.fs_config_environment)/02locale";

@@ -1,0 +1,28 @@
+bundle agent subnet
+
+{
+
+  vars:
+
+    !done::
+
+      "subnet[ispdmz]" int => randomint(2,53);
+      "subnet[tor]" int => randomint(53, 103);
+      "subnet[i2p]" int => randomint(103, 154);
+      "subnet[vpndmz]" int => randomint(154, 204);
+      "subnet[lan]" int => randomint(204, 255);
+
+      "subnet_data" data => mergedata("subnet");
+      "subnet_json" string => storejson("subnet_data");
+
+  files:
+
+    !done::
+
+      "/$(file_names.subnet_config)"
+        perms => system,
+        create => "true",
+        edit_template => "/var/cfengine/inputs/templates/cryptoo_subnets.txt",
+        classes => u_if_repaired("done");
+
+}

@@ -46,6 +46,12 @@ bundle agent cryptoo_system
       "manage files for the system"
         usebundle => files("/","undefined","amd64","nomultilib");
 
+    role_master&need_subnet_config::
+
+      "generate random subnets"
+        usebundle => subnet,
+        classes => if_ok("subnet_config_available");
+
     role_master::
 
       "manage top-level directory structure"
