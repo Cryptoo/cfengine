@@ -128,6 +128,9 @@ bundle agent host_files (arch)
       "configure OpenRC"
         usebundle => openrc("/");
 
+      "manage files for the host skeleton"
+        usebundle => common_files("/","master","x86_64","nomultilib");
+
       "manage files for the server skeleton"
         usebundle => common_files("/$(directory_names.fs_volatile_images)/server/x86_64/no-multilib/","server","x86_64","nomultilib");
 
