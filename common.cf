@@ -18,18 +18,18 @@ bundle common cryptoo
                             "cryptoo/config/directory_names.cf",
                             "cryptoo/config/directory_groups.cf",
                             "cryptoo/config/file_names.cf",
+                            "cryptoo/host/crypttab.cf",
+                            "cryptoo/host/kernel.cf",
+                            "cryptoo/host/openrc.cf",
+                            "cryptoo/host/subnet.cf",
                             "cryptoo/util/edit_line.cf",
                             "cryptoo/util/link_from.cf",
                             "cryptoo/util/location.cf",
                             "cryptoo/util/perms.cf",
                             "cryptoo/util/replace_with.cf",
-                            "cryptoo/crypttab.cf",
                             "cryptoo/directories.cf",
                             "cryptoo/files.cf",
-                            "cryptoo/kconfig.cf",
                             "cryptoo/mounts.cf",
-                            "cryptoo/openrc.cf",
-                            "cryptoo/subnet.cf",
                             "cryptoo/system.cf"
                          };
 
