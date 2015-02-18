@@ -285,7 +285,7 @@ bundle agent files (root, role, arch, multilib)
     local_role_master&srv_src_exists::
 
       "build kernel configs"
-        usebundle => kconfig("host");
+        usebundle => kconfig("host", "$(arch)");
 
     local_role_master::
 

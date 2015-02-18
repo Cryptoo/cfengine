@@ -1,4 +1,4 @@
-bundle agent kconfig(target)
+bundle agent kconfig(target, arch)
 
 {
 
@@ -17,7 +17,7 @@ bundle agent kconfig(target)
       "kconfig_target_enabled_symbols" slist => getindices(kconfig_target_enabled_array);
       "kconfig_target_disabled_symbols" slist => getindices(kconfig_target_disabled_array);
 
-      "kconfig_file" string => "/$(directory_names.fs_volatile_kernel)/$(target)/x86_64/.config";
+      "kconfig_file" string => "/$(directory_names.fs_volatile_kernel)/$(target)/$(arch)/.config";
 
 #      FIXME: This is the real command. It is tested and works, but it's too slow to use during development
 #      "kernel_clone_command" string => "/$(file_names.git_app) clone $(cryptoo.kernel_git) /$(directory_names.fs_storage_kernel)";
