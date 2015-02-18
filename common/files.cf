@@ -22,6 +22,7 @@ bundle agent common_files (root, role, arch, multilib)
       "bootstrap_systemd" not => fileexists("$(root)$(file_names.systemd_app)");
       "have_systemd" expression => fileexists("$(root)$(file_names.systemd_app)");
       "have_envupdate_app" expression => fileexists("$(root)$(file_names.envupdate_app)");
+      "have_localegen_app" expression => fileexists("$(root)$(file_names.localegen_app)");
 
   files:
 
@@ -164,7 +165,7 @@ bundle agent common_files (root, role, arch, multilib)
 
   commands:
 
-    update_locale::
+    update_locale&have_localegen_app::
 
       "/$(file_names.localegen_app)"
         contain => basic_chroot($(root));
