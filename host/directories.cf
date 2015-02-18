@@ -1,0 +1,59 @@
+bundle agent host_directories
+
+{
+
+  classes:
+
+    any::
+
+      "storage_mounted" expression => regline("device /dev/mapper/$(cryptoo.machine_names[$(cryptoo.machine_number)])-storage mounted on /$(directory_names.fs_storage_base).*", $(file_names.mount_info));
+
+  files:
+
+    any::
+
+      "/$(directory_groups.host_system)/."
+        perms => system,
+        create => "true",
+        handle => "/$(directory_groups.common_system)";
+
+    storage_mounted::
+
+      "/$(directory_groups.host_system_storage)/."
+        perms => system,
+        create => "true",
+        handle => "/$(directory_groups.host_system_storage)";
+
+      "/$(directory_groups.host_pm)/."
+        perms => portage,
+        create => "true",
+        handle => "/$(directory_groups.host_pm)";
+
+      "/$(directory_groups.host_pm_open)/."
+        perms => portage_open,
+        create => "true",
+        handle => "/$(directory_groups.host_pm_open)";
+
+      "/$(directory_names.fs_storage_shared)/."
+        depends_on => { "user_guest" },
+        perms => guest,
+        create => "true",
+        handle => "/$(directory_names.fs_storage_shared)";
+
+  methods:
+
+    any::
+
+      "common directories"
+        usebundle => common_directories("/");
+
+      "manage skeleton server directory structure"
+        usebundle => common_directories("/$(directory_names.fs_volatile_images)/server/x86_64/no-multilib/");
+
+      "manage skeleton desktop directory structure"
+        usebundle => common_directories("/$(directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/");
+
+      "manage skeleton desktop-multilib directory structure"
+        usebundle => common_directories("/$(directory_names.fs_volatile_images)/desktop/x86_64/multilib/");
+
+}

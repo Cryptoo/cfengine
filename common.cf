@@ -20,7 +20,9 @@ bundle common cryptoo
                             "cryptoo/config/directory_names.cf",
                             "cryptoo/config/directory_groups.cf",
                             "cryptoo/config/file_names.cf",
+                            "cryptoo/common/directories.cf",
                             "cryptoo/host/crypttab.cf",
+                            "cryptoo/host/directories.cf",
                             "cryptoo/host/kernel.cf",
                             "cryptoo/host/openrc.cf",
                             "cryptoo/host/subnet.cf",
@@ -96,5 +98,5 @@ bundle common cryptoo
     role_undefined::
 
       "My role is: undefined";
-      
+
 }

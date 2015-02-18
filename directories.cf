@@ -1,4 +1,4 @@
-bundle agent directories(root, role, arch, multilib)
+bundle agent directories(role)
 
 {
 
@@ -7,95 +7,17 @@ bundle agent directories(root, role, arch, multilib)
     any::
 
       "local_role_$(role)" expression => "any";
-      "$(arch)" expression => "any";
-      "$(multilib)" expression => "any";
-      "storage_mounted" expression => regline("device /dev/mapper/$(cryptoo.machine_names[$(cryptoo.machine_number)])-storage mounted on $(root)$(directory_names.fs_storage_base).*", $(file_names.mount_info));
 
-  files:
 
-    any::
+  methods:
 
-      "$(root)/."
-        perms => system,
-        create => "true",
-        handle => "$(root)";
+    local_role_undefined::
 
-      "$(root)$(directory_groups.common_system)/."
-        perms => system,
-        create => "true",
-        handle => "$(root)$(directory_groups.common_system)";
-
-      "$(root)$(directory_groups.common_system_restricted)/."
-        perms => restricted,
-        create => "true",
-        handle => "$(root)$(directory_groups.common_system_restricted)";
-
-      "$(root)$(directory_groups.common_system_private)/."
-        perms => root,
-        create => "true",
-        handle => "$(root)$(directory_groups.common_system_private)";
-
-      "$(root)$(directory_groups.common_open)/."
-        perms => system_tmp,
-        create => "true",
-        handle => "$(root)$(directory_groups.common_open)";
-
-      "$(root)$(directory_groups.common_pm)/."
-        perms => portage,
-        create => "true",
-        handle => "$(root)$(directory_groups.common_pm)";
-
-      "$(root)$(directory_groups.common_pm_open)/."
-        perms => portage_open,
-        create => "true",
-        handle => "$(root)$(directory_groups.common_pm_open)";
-
-      "$(root)$(directory_names.fs_mount_shared)/."
-        depends_on => { "user_guest" },
-        perms => guest,
-        create => "true",
-        handle => "$(root)$(directory_names.fs_mount_shared)";
+      "create common directores"
+        usebundle => common_directories;
 
     local_role_master::
 
-      "$(root)$(directory_groups.host_system)/."
-        perms => system,
-        create => "true",
-        handle => "$(root)$(directory_groups.common_system)";
-
-    local_role_master&storage_mounted::
-
-      "$(root)$(directory_groups.host_system_storage)/."
-        perms => system,
-        create => "true",
-        handle => "$(root)$(directory_groups.host_system_storage)";
-
-      "$(root)$(directory_groups.host_pm)/."
-        perms => portage,
-        create => "true",
-        handle => "$(root)$(directory_groups.host_pm)";
-
-      "$(root)$(directory_groups.host_pm_open)/."
-        perms => portage_open,
-        create => "true",
-        handle => "$(root)$(directory_groups.host_pm_open)";
-
-      "$(root)$(directory_names.fs_storage_shared)/."
-        depends_on => { "user_guest" },
-        perms => guest,
-        create => "true",
-        handle => "$(root)$(directory_names.fs_storage_shared)";
-
-  users:
-
-    local_role_master::
-
-      "guest"
-        handle => "user_guest",
-        policy => "present",
-        home_dir => "/mnt/shared",
-        uid => "405",
-        group_primary => "users",
-        shell => "/sbin/nologin";
-
+      "create host directores"
+        usebundle => host_directories;
 }

@@ -37,7 +37,7 @@ bundle agent cryptoo_system
     role_undefined::
 
       "manage top-level directory structure"
-        usebundle => directories("/","undefined","x86_64","nomultilib");
+        usebundle => directories("undefined");
 
       "manage files for the system"
         usebundle => files("/","undefined","x86_64","nomultilib");
@@ -51,25 +51,16 @@ bundle agent cryptoo_system
     role_master::
 
       "manage top-level directory structure"
-        usebundle => directories("/","master","x86_64","nomultilib");
+        usebundle => directories("master");
 
       "manage files for the host system"
         usebundle => files("/","master","x86_64","nomultilib");
 
-      "manage skeleton server directory structure"
-        usebundle => directories("/$(directory_names.fs_volatile_images)/server/x86_64/no-multilib/","server","x86_64","nomultilib");
-
       "manage files for the server skeleton"
         usebundle => files("/$(directory_names.fs_volatile_images)/server/x86_64/no-multilib/","server","x86_64","nomultilib");
 
-      "manage skeleton desktop directory structure"
-        usebundle => directories("/$(directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/","desktop","x86_64","nomultilib");
-
       "manage files for the desktop skeleton"
         usebundle => files("/$(directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/","desktop","x86_64","nomultilib");
-
-      "manage skeleton desktop-multilib directory structure"
-        usebundle => directories("/$(directory_names.fs_volatile_images)/desktop/x86_64/multilib/","desktop","x86_64","multilib");
 
       "manage files for the desktop-multilib skeleton"
         usebundle => files("/$(directory_names.fs_volatile_images)/desktop/x86_64/multilib/","desktop","x86_64","multilib");
@@ -83,7 +74,7 @@ bundle agent cryptoo_system
     srv_mounted::
 
       "manage /src directory structure"
-        usebundle => directories("/","master","x86_64","nomultilib");
+        usebundle => directories("master");
 
       "manage /srv files"
         usebundle => files("/","master","x86_64","nomultilib");
