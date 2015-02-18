@@ -8,6 +8,7 @@ bundle common cryptoo
 
       "bundles" slist => {
                             "cryptoo",
+                            "config",
                             "directory_names",
                             "directory_groups",
                             "file_names",
@@ -15,6 +16,7 @@ bundle common cryptoo
                          };
 
       "inputs" slist => {
+                            "cryptoo/config/config.cf",
                             "cryptoo/config/directory_names.cf",
                             "cryptoo/config/directory_groups.cf",
                             "cryptoo/config/file_names.cf",

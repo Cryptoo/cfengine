@@ -13,8 +13,6 @@ bundle agent files (root, role, arch, multilib)
 
     bootable::
 
-      "grub[GRUB_CMDLINE_LINUX]" string => "rd.auto";
-      "grub[GRUB_CMDLINE_LINUX_DEFAULT]" string => "quiet";
       "hostname[hostname]" string => "$(cryptoo.machine_names[$(cryptoo.machine_number)])";
 
     have_cpu2use::
@@ -170,7 +168,7 @@ bundle agent files (root, role, arch, multilib)
       "$(root)$(file_names.grub_defaults)"
         perms => system,
         create => "false",
-        edit_line => set_quoted_values("files.grub");
+        edit_line => set_quoted_values("config.grub");
 
       "$(root)$(file_names.localtime)"
         move_obstructions => "true",
@@ -292,6 +290,6 @@ bundle agent files (root, role, arch, multilib)
     local_role_master::
 
       "configure OpenRC"
-        usebundle => "openrc";
+        usebundle => openrc("$(root)");
 
 }

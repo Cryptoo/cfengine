@@ -5,7 +5,7 @@ bundle agent crypttab
   vars:
 
     any::
-    
+
       "luks" string => execresult("/$(file_names.blkid_app) -t TYPE=crypto_LUKS -s UUID -o value","noshell");
       "uuids" slist => string_split("$(luks)","\n",16);
 

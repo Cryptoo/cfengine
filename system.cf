@@ -8,10 +8,6 @@ bundle agent cryptoo_system
 
       "portage_cleanup_command" string => "/$(file_names.find_app) /$(directory_names.fs_mount_root)/$(directory_names.fs_pm) -mindepth 1 -maxdepth 1 -name * -exec /$(file_names.move_app) {} /$(directory_names.fs_storage_pm) ;";
       "distfiles_cleanup_command" string => "/$(file_names.find_app) /$(directory_names.fs_storage_pm)/distfiles -mindepth 1 -maxdepth 1 -name * -exec /$(file_names.move_app) {} /$(directory_names.fs_storage_srcpkg) ;";
-      "guest_templates" slist => getindices("cryptoo.site_config[guest_templates])");
-      "arch_templates[$(guest_templates)]" string => "$(cryptoo.site_config[guest_templates][$(guest_templates)][arch])";
-      "guest_templates_arches" slist => getvalues(arch_templates);
-
 
   classes:
 
