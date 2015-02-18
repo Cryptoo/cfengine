@@ -23,6 +23,7 @@ bundle agent common_files (root, role, arch, multilib)
       "have_systemd" expression => fileexists("$(root)$(file_names.systemd_app)");
       "have_envupdate_app" expression => fileexists("$(root)$(file_names.envupdate_app)");
       "have_localegen_app" expression => fileexists("$(root)$(file_names.localegen_app)");
+      "have_layman_conf" expression => fileexists("$(root)$(file_names.overlay_conf)");
 
     local_role_master|local_role_desktop|local_role_server::
 

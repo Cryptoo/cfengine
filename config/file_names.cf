@@ -132,6 +132,7 @@ bundle common file_names
       "template_machine_names" string => "$(directory_names.fs_volatile_cf_templates)/cryptoo/host/machine_names.txt";
       "template_site_config" string => "$(directory_names.fs_volatile_cf_templates)/cryptoo/host/site_config.txt";
       "template_site_repo_name" string => "$(directory_names.fs_volatile_cf_templates)/cryptoo/host/site_repo_name.txt";
+      "overlay_conf" string => "$(directory_names.fs_volatile_overlay)/make.conf";
       "bitcoin_overlay" string => "$(directory_names.fs_bitcoin_overlay)/profiles/repo_name";
 
 }
