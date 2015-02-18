@@ -67,10 +67,10 @@ bundle agent cryptoo_system
         usebundle => files("/$(directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/","desktop","amd64","nomultilib");
 
       "manage skeleton desktop-multilib directory structure"
-        usebundle => directories("/$(directory_names.fs_volatile_images)/desktop/x86_64/multilib/","desktop_multilib","amd64","multilib");
+        usebundle => directories("/$(directory_names.fs_volatile_images)/desktop/x86_64/multilib/","desktop","amd64","multilib");
 
       "manage files for the desktop-multilib skeleton"
-        usebundle => files("/$(directory_names.fs_volatile_images)/desktop/x86_64/multilib/","desktop_multilib","amd64","multilib");
+        usebundle => files("/$(directory_names.fs_volatile_images)/desktop/x86_64/multilib/","desktop","amd64","multilib");
 
     role_master&srv_exists&machine_name_available::
 
