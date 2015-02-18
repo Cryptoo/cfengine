@@ -6,17 +6,17 @@ bundle agent directories(role)
 
     any::
 
-      "local_role_$(role)" expression => "any";
+      "directory_role_$(role)" expression => "any";
 
 
   methods:
 
-    local_role_undefined::
+    directory_role_undefined::
 
       "create common directores"
         usebundle => common_directories;
 
-    local_role_master::
+    directory_role_master::
 
       "create host directores"
         usebundle => host_directories;

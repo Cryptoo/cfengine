@@ -16,11 +16,11 @@ bundle agent crypttab
       "/$(file_names.crypttab)"
         perms => root,
         create => "true",
-        edit_template => "/var/cfengine/inputs/templates/cryptoo_crypttab.txt";
+        edit_template => "/$(file_names.template_crypttab)";
 
       "/$(file_names.dmcrypt_conf)"
         perms => root,
         create => "true",
-        edit_template => "/var/cfengine/inputs/templates/cryptoo_dmcrypt.txt";
+        edit_template => "/$(file_names.template_dmcrypt)";
 
 }

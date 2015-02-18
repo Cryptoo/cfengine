@@ -86,5 +86,20 @@ bundle common file_names
       "pm_site_repo" string => "$(directory_names.fs_storage_pm_site_profile)/repo_name";
       "rc_app" string => "$(directory_names.fs_admin_apps)/rc";
       "pm_installed_sets" string => "$(directory_names.fs_volatile_pm)/world_sets";
+      "template_env_cryptoo" string => "$(directory_names.fs_volatile_cf_templates)/cryptoo/common/env_cryptoo.txt";
+      "template_env_locale" string => "$(directory_names.fs_volatile_cf_templates)/cryptoo/common/env_locale.txt";
+      "template_make_conf" string => "$(directory_names.fs_volatile_cf_templates)/cryptoo/common/make_conf.txt";
+      "template_local_layout_conf" string => "$(directory_names.fs_volatile_cf_templates)/cryptoo/common/local_layout_conf.txt";
+      "template_local_repo_name" string => "$(directory_names.fs_volatile_cf_templates)/cryptoo/common/local_repo_name.txt";
+      "template_profile_parent" string => "$(directory_names.fs_volatile_cf_templates)/cryptoo/common/profile_parent.txt";
+      "template_world_sets" string => "$(directory_names.fs_volatile_cf_templates)/cryptoo/common/world_sets.txt";
+      "template_crypttab" string => "$(directory_names.fs_volatile_cf_templates)/cryptoo/host/crypttab.txt";
+      "template_dmcrypt" string => "$(directory_names.fs_volatile_cf_templates)/cryptoo/host/dmcrypt.txt";
+      "template_dracut_conf" string => "$(directory_names.fs_volatile_cf_templates)/cryptoo/host/dracut_conf.txt";
+      "template_env_kernel" string => "$(directory_names.fs_volatile_cf_templates)/cryptoo/host/env_kernel.txt";
+      "template_fstab" string => "$(directory_names.fs_volatile_cf_templates)/cryptoo/host/fstab.txt";
+      "template_machine_names" string => "$(directory_names.fs_volatile_cf_templates)/cryptoo/host/machine_names.txt";
+      "template_site_config" string => "$(directory_names.fs_volatile_cf_templates)/cryptoo/host/site_config.txt";
+      "template_site_repo_name" string => "$(directory_names.fs_volatile_cf_templates)/cryptoo/host/site_repo_name.txt";
 
 }

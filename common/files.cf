@@ -1,0 +1,177 @@
+bundle agent common_files (root, role, arch, multilib)
+
+{
+
+  vars:
+
+    any::
+
+    have_cpu2use::
+
+      "cpu_flags" string => execresult("/$(file_names.cpu2use_app)","noshell");
+
+  classes:
+
+    any::
+
+      "local_role_$(role)" expression => "any";
+      "$(arch)" expression => "any";
+      "$(multilib)" expression => "any";
+      "have_cpu2use" expression => fileexists("/$(file_names.cpu2use_app)");
+      "have_locale_gen" expression => fileexists("$(root)$(file_names.locale)");
+      "bootstrap_systemd" not => fileexists("$(root)$(file_names.systemd_app)");
+      "have_systemd" expression => fileexists("$(root)$(file_names.systemd_app)");
+      "have_envupdate_app" expression => fileexists("$(root)$(file_names.envupdate_app)");
+
+  files:
+
+    any::
+
+      "$(root)$(file_names.mtab)"
+        move_obstructions => "true",
+        link_from => proc_mounts;
+
+      "$(root)$(file_names.pm_config)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(file_names.template_make_conf)";
+
+      "$(root)$(file_names.pm_profile)"
+        move_obstructions => "true",
+        link_from => cryptoo_profile("cryptoo");
+
+      "$(root)$(file_names.pm_env_localdistfiles)"
+        move_obstructions => "true",
+        link_from => cryptoo_portage_env("local-distfiles.conf");
+
+      "$(root)$(file_names.pm_env_nosandbox)"
+        move_obstructions => "true",
+        link_from => cryptoo_portage_env("nosandbox.conf");
+
+      "$(root)$(file_names.pm_env_notmpfs)"
+        move_obstructions => "true",
+        link_from => cryptoo_portage_env("notmpfs.conf");
+
+      "$(root)$(file_names.pm_environment_cryptoo)"
+        move_obstructions => "true",
+        link_from => cryptoo_package_env("cryptoo");
+
+      "$(root)$(file_names.pm_keywords_basicprograms)"
+        move_obstructions => "true",
+        link_from => cryptoo_package_keyword("basic-programs");
+
+      "$(root)$(file_names.pm_keywords_virtualization)"
+        move_obstructions => "true",
+        link_from => cryptoo_package_keyword("virtualization");
+
+      "$(root)$(file_names.pm_mask_basicprograms)"
+        move_obstructions => "true",
+        link_from => cryptoo_package_mask("basic-programs");
+
+      "$(root)$(file_names.pm_use_basicprograms)"
+        move_obstructions => "true",
+        link_from => cryptoo_package_use("basic-programs");
+
+      "$(root)$(file_names.pm_use_virtualization)"
+        move_obstructions => "true",
+        link_from => cryptoo_package_use("virtualization");
+
+      "$(root)$(file_names.pm_profile_provided)"
+        move_obstructions => "true",
+        link_from => cryptoo_portage_profile("package.provided");
+
+      "$(root)$(file_names.pm_profile_upstream)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(file_names.template_make_conf)";
+
+      "$(root)$(file_names.pm_machine_meta)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(file_names.template_local_layout_conf)";
+
+      "$(root)$(file_names.pm_machine_repo)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(file_names.template_local_repo_name)";
+
+      "$(root)$(directory_names.fs_standard_kernel)"
+        move_obstructions => "true",
+        link_from => kernel_dir;
+
+      "$(root)$(file_names.pm_installed_sets)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(file_names.template_world_sets)";
+
+      "$(root)$(file_names.localtime)"
+        move_obstructions => "true",
+        link_from => timezone("UTC");
+
+      "$(root)$(file_names.system_bashrc)"
+        perms => system,
+        create => "false",
+        ifvarclass => fileexists("$(root)$(file_names.system_bashrc)"),
+        edit_line => bashrc;
+
+      "$(root)$(file_names.system_bash_logout)"
+        perms => system,
+        create => "false",
+        ifvarclass => fileexists("$(root)$(file_names.system_bash_logout)"),
+        edit_line => uncomment_lines_containing("clear","#");
+
+      "$(root)$(file_names.env_cryptoo)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(file_names.template_env_cryptoo)",
+        classes => u_if_repaired("update_env");
+
+      "$(root)$(file_names.env_locale)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(file_names.template_env_locale)",
+        classes => u_if_repaired("update_env");
+
+    have_locale_gen::
+
+      "$(root)$(file_names.locale)"
+        perms => system,
+        create => "false",
+        edit_line => uncomment_lines_containing("en_US\.UTF-8 UTF-8","#"),
+        classes => u_if_repaired("update_locale");
+
+    bootstrap_systemd::
+
+      "$(root)$(file_names.pm_use_systemd)"
+        delete => tidy;
+
+      "$(root)$(file_names.pm_use_udev)"
+        move_obstructions => "true",
+        link_from => cryptoo_package_use("udev");
+
+      #"$(root)$(file_names.pm_use_systemdbootstrap)"
+      #  move_obstructions => "true",
+      #  link_from => cryptoo_package_use("systemd-bootstrap");
+
+    have_systemd::
+
+      "$(root)$(file_names.pm_use_systemd)"
+        move_obstructions => "true",
+        link_from => cryptoo_package_use("systemd");
+
+      "$(root)$(file_names.pm_use_systemdbootstrap)"
+        delete => tidy;
+
+  commands:
+
+    update_locale::
+
+      "$(root)$(file_names.localegen_app)"
+        contain => basic_chroot($(root));
+
+    update_env&have_envupdate_app::
+
+      "$(root)$(file_names.envupdate_app)"
+        contain => basic_chroot($(root));
+
+}

@@ -57,7 +57,10 @@ bundle common directory_groups
       "common_system_private" slist => {
                                  $(directory_names.fs_config_crypoo_incoming),
                                  $(directory_names.fs_config_crypoo_outgoing),
-                                 $(directory_names.fs_admin_base)
+                                 $(directory_names.fs_admin_base),
+                                 $(directory_names.fs_volatile_cfengine),
+                                 $(directory_names.fs_volatile_cf_inputs),
+                                 $(directory_names.fs_volatile_cf_templates)
                                 };
 
       "common_open" slist => {

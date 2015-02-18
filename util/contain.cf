@@ -1,0 +1,4 @@
+body contain basic_chroot(newroot)
+{
+  chroot => "$(newroot)";
+}

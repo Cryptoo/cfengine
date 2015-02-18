@@ -21,11 +21,14 @@ bundle common cryptoo
                             "cryptoo/config/directory_groups.cf",
                             "cryptoo/config/file_names.cf",
                             "cryptoo/common/directories.cf",
+                            "cryptoo/common/files.cf",
                             "cryptoo/host/crypttab.cf",
                             "cryptoo/host/directories.cf",
+                            "cryptoo/host/files.cf",
                             "cryptoo/host/kernel.cf",
                             "cryptoo/host/openrc.cf",
                             "cryptoo/host/subnet.cf",
+                            "cryptoo/util/contain.cf",
                             "cryptoo/util/edit_line.cf",
                             "cryptoo/util/link_from.cf",
                             "cryptoo/util/location.cf",
@@ -48,7 +51,7 @@ bundle common cryptoo
 
     need_machine_names::
 
-      "machine_names" data => readjson("/var/cfengine/inputs/templates/cryptoo_machine_names_json.txt", 1M),
+      "machine_names" data => readjson("/$(file_names.template_machine_names)", 1M),
         classes => if_ok("machine_name_available");
 
     have_site_config::
@@ -58,7 +61,7 @@ bundle common cryptoo
 
     need_site_config::
 
-      "site_config" data => readjson("/var/cfengine/inputs/templates/cryptoo_site_config_json.txt", 1M),
+      "site_config" data => readjson("/$(file_names.template_site_config)", 1M),
         classes => if_ok("site_config_available");
 
     have_subnet_config::
