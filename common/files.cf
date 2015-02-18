@@ -137,7 +137,7 @@ bundle agent common_files (root, role, arch, multilib)
       "$(root)$(file_names.locale)"
         perms => system,
         create => "false",
-        edit_line => uncomment_lines_containing("en_US\.UTF-8 UTF-8","#"),
+        edit_line => uncomment_lines_containing("$(cryptoo.site_config[locale])","#"),
         classes => u_if_repaired("update_locale");
 
     bootstrap_systemd::
