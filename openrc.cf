@@ -45,6 +45,13 @@ bundle agent openrc
         delete => tidy,
         classes => u_if_repaired("update_openrc");
 
+    machine_name_available::
+
+      "$(root)$(file_names.hostname_openrc)"
+        perms => system,
+        create => "true",
+        edit_line => set_quoted_values("files.hostname");
+
   commands:
 
     update_openrc::

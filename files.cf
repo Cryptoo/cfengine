@@ -211,11 +211,6 @@ bundle agent files (root, role, arch, multilib)
         create => "true",
         edit_template => "/var/cfengine/inputs/templates/cryptoo_fstab.txt";
 
-      "$(root)$(file_names.hostname_openrc)"
-        perms => system,
-        create => "true",
-        edit_line => set_quoted_values("files.hostname");
-
     local_role_master::
 
       "$(root)$(file_names.dracut_conf)"
@@ -293,5 +288,10 @@ bundle agent files (root, role, arch, multilib)
 
       "build kernel configs"
         usebundle => kconfig("host");
+
+    local_role_master::
+
+      "configure OpenRC"
+        usebundle => "openrc";
 
 }
