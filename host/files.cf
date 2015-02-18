@@ -66,7 +66,8 @@ bundle agent host_files (arch)
       "/$(file_names.fstab)"
         perms => system,
         create => "true",
-        edit_template => "/$(file_names.template_fstab)";
+        edit_template => "/$(file_names.template_fstab)",
+        classes => u_if_repaired("fstab_repaired");
 
     root_bind_mount::
 
@@ -145,5 +146,10 @@ bundle agent host_files (arch)
 
       "build kernel configs"
         usebundle => kconfig("host", "$(arch)");
+
+    fstab_repaired::
+
+      "activate all mountpoints"
+        usebundle => mount_all;
 
 }
