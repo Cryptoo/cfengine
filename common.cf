@@ -22,6 +22,7 @@ bundle common cryptoo
                             "cryptoo/config/file_names.cf",
                             "cryptoo/common/directories.cf",
                             "cryptoo/common/files.cf",
+                            "cryptoo/guest/template/files.cf",
                             "cryptoo/host/crypttab.cf",
                             "cryptoo/host/directories.cf",
                             "cryptoo/host/files.cf",

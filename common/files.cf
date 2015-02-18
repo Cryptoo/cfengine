@@ -28,6 +28,10 @@ bundle agent common_files (root, role, arch, multilib)
 
       "local_role_host" expression => "any";
 
+    local_role_desktop|local_role_server::
+
+      "local_role_template" expression => "any";
+
   files:
 
     any::
@@ -178,5 +182,12 @@ bundle agent common_files (root, role, arch, multilib)
 
       "/$(file_names.envupdate_app)"
         contain => basic_chroot($(root));
+
+  methods:
+
+    local_role_template::
+
+      "manage template files"
+        usebundle => template_files("$(root)", "$(role)");
 
 }

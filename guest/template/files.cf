@@ -1,0 +1,153 @@
+bundle agent template_files(root, role)
+
+{
+
+  classes:
+
+    any::
+
+      "template_type_$(role)" expression => "any";
+
+  files:
+
+    template_type_server::
+
+      "$(root)$(file_names.pm_keywords_bitcoin)"
+          move_obstructions => "true",
+          link_from => cryptoo_package_keyword("bitcoin");
+
+      "$(root)$(file_names.pm_keywords_bitmessage)"
+          move_obstructions => "true",
+          link_from => cryptoo_package_keyword("bitmessage");
+
+      "$(root)$(file_names.pm_keywords_btcd)"
+          move_obstructions => "true",
+          link_from => cryptoo_package_keyword("btcd");
+
+      "$(root)$(file_names.pm_keywords_deluge)"
+          move_obstructions => "true",
+          link_from => cryptoo_package_keyword("deluge");
+
+      "$(root)$(file_names.pm_keywords_dns)"
+          move_obstructions => "true",
+          link_from => cryptoo_package_keyword("dns");
+
+      "$(root)$(file_names.pm_keywords_freenet)"
+          move_obstructions => "true",
+          link_from => cryptoo_package_keyword("freenet");
+
+      "$(root)$(file_names.pm_keywords_i2p)"
+          move_obstructions => "true",
+          link_from => cryptoo_package_keyword("i2p");
+
+      "$(root)$(file_names.pm_keywords_mail)"
+          move_obstructions => "true",
+          link_from => cryptoo_package_keyword("mail");
+
+      "$(root)$(file_names.pm_keywords_namecoin)"
+          move_obstructions => "true",
+          link_from => cryptoo_package_keyword("namecoin");
+
+      "$(root)$(file_names.pm_keywords_router)"
+          move_obstructions => "true",
+          link_from => cryptoo_package_keyword("router");
+
+      "$(root)$(file_names.pm_keywords_samba)"
+          move_obstructions => "true",
+          link_from => cryptoo_package_keyword("samba");
+
+      "$(root)$(file_names.pm_keywords_tor)"
+          move_obstructions => "true",
+          link_from => cryptoo_package_keyword("tor");
+
+      "$(root)$(file_names.pm_keywords_vpn)"
+          move_obstructions => "true",
+          link_from => cryptoo_package_keyword("vpn");
+
+      "$(root)$(file_names.pm_keywords_znc)"
+          move_obstructions => "true",
+          link_from => cryptoo_package_keyword("znc");
+
+      "$(root)$(file_names.pm_unmask_java)"
+          move_obstructions => "true",
+          link_from => cryptoo_package_unmask("java");
+
+      "$(root)$(file_names.pm_use_bitcoin)"
+          move_obstructions => "true",
+          link_from => cryptoo_package_use("bitcoin");
+
+      "$(root)$(file_names.pm_use_bitcoin_wallet)"
+          move_obstructions => "true",
+          link_from => cryptoo_package_use("bitcoin_wallet");
+
+      "$(root)$(file_names.pm_use_deluge)"
+          move_obstructions => "true",
+          link_from => cryptoo_package_use("deluge");
+
+      "$(root)$(file_names.pm_use_deluge_server)"
+          move_obstructions => "true",
+          link_from => cryptoo_package_use("deluge_server");
+
+      "$(root)$(file_names.pm_use_dns)"
+          move_obstructions => "true",
+          link_from => cryptoo_package_use("dns");
+
+      "$(root)$(file_names.pm_use_freenet)"
+          move_obstructions => "true",
+          link_from => cryptoo_package_use("freenet");
+
+      "$(root)$(file_names.pm_use_i2p)"
+          move_obstructions => "true",
+          link_from => cryptoo_package_use("i2p");
+
+      "$(root)$(file_names.pm_use_java)"
+          move_obstructions => "true",
+          link_from => cryptoo_package_use("java");
+
+      "$(root)$(file_names.pm_use_mail)"
+          move_obstructions => "true",
+          link_from => cryptoo_package_use("mail");
+
+      "$(root)$(file_names.pm_use_router)"
+          move_obstructions => "true",
+          link_from => cryptoo_package_use("router");
+
+      "$(root)$(file_names.pm_use_samba_server)"
+          move_obstructions => "true",
+          link_from => cryptoo_package_use("samba_server");
+
+      "$(root)$(file_names.pm_use_simplegit)"
+          move_obstructions => "true",
+          link_from => cryptoo_package_use("simplegit");
+
+      "$(root)$(file_names.pm_use_tor)"
+          move_obstructions => "true",
+          link_from => cryptoo_package_use("tor");
+
+      "$(root)$(file_names.pm_use_vpn)"
+          move_obstructions => "true",
+          link_from => cryptoo_package_use("vpn");
+
+      "$(root)$(file_names.pm_use_znc)"
+          move_obstructions => "true",
+          link_from => cryptoo_package_use("znc");
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
