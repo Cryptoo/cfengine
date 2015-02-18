@@ -84,7 +84,7 @@ bundle agent common_files (root, role, arch, multilib)
       "$(root)$(file_names.pm_profile_upstream)"
         perms => system,
         create => "true",
-        edit_template => "/$(file_names.template_make_conf)";
+        edit_template => "/$(file_names.template_profile_parent)";
 
       "$(root)$(file_names.pm_machine_meta)"
         perms => system,
