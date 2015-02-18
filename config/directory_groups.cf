@@ -104,7 +104,8 @@ bundle common directory_groups
                                  $(directory_names.fs_storage_pm),
                                  $(directory_names.fs_storage_pm_site),
                                  $(directory_names.fs_storage_pm_site_meta),
-                                 $(directory_names.fs_storage_pm_site_profile)
+                                 $(directory_names.fs_storage_pm_site_profile),
+                                 $(directory_names.fs_bitcoin_overlay),
                                 };
 
       "host_pm_open" slist => {

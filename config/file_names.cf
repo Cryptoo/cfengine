@@ -105,6 +105,7 @@ bundle common file_names
       "cpu2use_app" string => "$(directory_names.fs_standard_apps)/cpuinfo2cpuflags-x86";
       "dracut_app" string => "$(directory_names.fs_standard_apps)/dracut";
       "find_app" string => "$(directory_names.fs_standard_apps)/find";
+      "layman_app" string => "$(directory_names.fs_standard_apps)/layman";
       "git_app" string => "$(directory_names.fs_standard_apps)/git";
       "systemd_app" string => "$(directory_names.fs_standard_apps)/systemctl";
       "cryptoo_profile" string => "$(directory_names.fs_crypoo_profiles)/repo_name";
@@ -131,5 +132,6 @@ bundle common file_names
       "template_machine_names" string => "$(directory_names.fs_volatile_cf_templates)/cryptoo/host/machine_names.txt";
       "template_site_config" string => "$(directory_names.fs_volatile_cf_templates)/cryptoo/host/site_config.txt";
       "template_site_repo_name" string => "$(directory_names.fs_volatile_cf_templates)/cryptoo/host/site_repo_name.txt";
+      "bitcoin_overlay" string => "$(directory_names.fs_bitcoin_overlay)/profiles/repo_name";
 
 }

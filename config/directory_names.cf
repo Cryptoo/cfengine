@@ -96,6 +96,7 @@ bundle common directory_names
       "fs_volatile_library" string => "$(fs_volatile_base)/lib";
       "fs_volatile_pm" string => "$(fs_volatile_library)/$(pm)";
       "fs_volatile_overlay" string => "$(fs_volatile_library)/layman";
+      "fs_bitcoin_overlay" string => "$(fs_volatile_overlay)/bitcoin";
       "fs_volatile_temp" string => "$(fs_volatile_base)/tmp";
       "fs_volatile_kernel" string => "$(fs_volatile_temp)/kernel";
 

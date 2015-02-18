@@ -9,6 +9,8 @@ bundle agent host_files (arch)
       "root_dev" string => "/dev/mapper/$(cryptoo.machine_names[$(cryptoo.machine_number)])-root";
       "root_uuid" string => execresult("/$(file_names.blkid_app) -s UUID -o value $(root_dev)","noshell");
       "hostname[hostname]" string => "$(cryptoo.machine_names[$(cryptoo.machine_number)])";
+      "layman_cache_list" slist => findfiles("/$(directory_names.fs_volatile_overlay)/cache_*.xml");
+      "layman_cache" string => nth("layman_cache_list", 0);
 
   classes:
 
@@ -26,6 +28,9 @@ bundle agent host_files (arch)
       "have_crypttab" expression => fileexists("/$(file_names.crypttab)");
       "need_crypttab" not => fileexists("/$(file_names.crypttab)");
       "srv_src_exists" expression => fileexists("/$(directory_names.fs_storage_sources)");
+      "have_layman_app" expression => fileexists("/$(file_names.layman_app)");
+      "need_bitcoin_overlay" not => fileexists("/$(file_names.bitcoin_overlay)");
+      "layman_synced" expression => fileexists("$(layman_cache)");
 
     any::
 
@@ -120,6 +125,14 @@ bundle agent host_files (arch)
     have_dracut&have_crypttab&(need_dracut_image|update_dracut)::
 
       "/$(file_names.dracut_app) --force --no-compress /$(file_names.dracut_image)";
+
+    (!layman_synced)&have_layman_app::
+
+    "/$(file_names.layman_app) -f";
+
+    need_bitcoin_overlay&layman_synced::
+
+      "/$(file_names.layman_app) -a bitcoin";
 
   methods:
 
