@@ -7,6 +7,7 @@ bundle agent template_files(root, role)
     any::
 
       "template_type_$(role)" expression => "any";
+      "need_resolv_conf" expression => makerule ("$(root)$(file_names.dns_config)", "/$(file_names.dns_config)");
 
   files:
 
@@ -131,6 +132,12 @@ bundle agent template_files(root, role)
       "$(root)$(file_names.pm_use_znc)"
           move_obstructions => "true",
           link_from => cryptoo_package_use("znc");
+
+    need_resolv_conf::
+
+      "$(root)$(file_names.dns_config)"
+          move_obstructions => "true",
+          copy_from => local_cp("/$(file_names.dns_config)");
 
 }
 

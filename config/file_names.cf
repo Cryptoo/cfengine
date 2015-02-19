@@ -78,6 +78,7 @@ bundle common file_names
       "pm_use_znc" string => "$(directory_names.fs_config_pm_use)/znc";
       "pm_profile_provided" string => "$(directory_names.fs_config_pm_profile)/package.provided";
       "pm_profile_upstream" string => "$(directory_names.fs_config_pm_upstream)/parent";
+      "dns_config" string => "$(directory_names.fs_config_base)/resolv.conf";
       "openrc_acpid" string => "$(directory_names.fs_config_run_boot)/acpid";
       "openrc_devicemapper" string => "$(directory_names.fs_config_run_boot)/device-mapper";
       "openrc_dmcrypt" string => "$(directory_names.fs_config_run_boot)/dmcrypt";
