@@ -81,7 +81,7 @@ bundle agent cryptoo_system
     all_mounted::
 
       "$(portage_cleanup_command)";
-
-      "$(distfiles_cleanup_command)";
+#      FIXME: disabled for development
+#      "$(distfiles_cleanup_command)";
 
 }
