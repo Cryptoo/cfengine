@@ -15,14 +15,14 @@ bundle agent host_directories
       "/$(directory_groups.host_system)/."
         perms => system,
         create => "true",
-        handle => "/$(directory_groups.common_system)";
+        handle => "done_$(directory_groups.host_system)";
 
     storage_mounted::
 
       "/$(directory_groups.host_system_storage)/."
         perms => system,
         create => "true",
-        handle => "/$(directory_groups.host_system_storage)";
+        handle => "done_$(directory_groups.host_system_storage)";
 
       "/$(directory_groups.host_pm)/."
         perms => portage,
@@ -55,5 +55,15 @@ bundle agent host_directories
 
       "manage skeleton desktop-multilib directory structure"
         usebundle => common_directories("/$(directory_names.fs_volatile_images)/desktop/x86_64/multilib/");
+
+  reports:
+
+    done_srv::
+
+        "/srv exists";
+
+    !done_srv::
+
+        "/srv missing";
 
 }
