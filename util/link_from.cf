@@ -85,10 +85,19 @@ body link_from proc_mounts
      when_no_source => "force";
      source => "/$(file_names.proc_mounts)";
 }
+
 body link_from openrc(service)
 
 {
      link_type => "symlink";
      when_no_source => "force";
      source => "/$(directory_names.fs_config_openrc)/$(service)";
+}
+
+body link_from gcc_profile(profile)
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "$(profile)";
 }

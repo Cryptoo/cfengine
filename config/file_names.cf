@@ -26,6 +26,8 @@ bundle common file_names
       "site_config" string => "$(directory_names.fs_config_crypoo_incoming)/site_config.json";
       "subnet_config" string => "$(directory_names.fs_config_crypoo_incoming)/subnet_config.json";
       "crypoo_role" string => "$(directory_names.fs_config_crypoo_incoming)/role";
+      "env_gcc_native" string => "$(directory_names.fs_config_gcc_environment)/.NATIVE";
+      "env_gcc_x86_64" string => "$(directory_names.fs_config_gcc_environment)/config-x86_64-pc-linux-gnu";
       "env_cryptoo" string => "$(directory_names.fs_config_environment)/00cryptoo";
       "env_locale" string => "$(directory_names.fs_config_environment)/02locale";
       "env_kernel" string => "$(directory_names.fs_config_environment)/99kernel";
@@ -107,6 +109,7 @@ bundle common file_names
       "cpu2use_app" string => "$(directory_names.fs_standard_apps)/cpuinfo2cpuflags-x86";
       "dracut_app" string => "$(directory_names.fs_standard_apps)/dracut";
       "find_app" string => "$(directory_names.fs_standard_apps)/find";
+      "gcc_config_app" string => "$(directory_names.fs_standard_apps)/gcc-config";
       "layman_app" string => "$(directory_names.fs_standard_apps)/layman";
       "git_app" string => "$(directory_names.fs_standard_apps)/git";
       "systemd_app" string => "$(directory_names.fs_standard_apps)/systemctl";

@@ -16,6 +16,7 @@ bundle common directory_groups
                                  $(directory_names.fs_config_crypoo_root),
                                  $(directory_names.fs_config_default),
                                  $(directory_names.fs_config_environment),
+                                 $(directory_names.fs_config_gcc_environment),
                                  $(directory_names.fs_config_openrc),
                                  $(directory_names.fs_config_pm),
                                  $(directory_names.fs_config_pm_env),

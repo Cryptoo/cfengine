@@ -6,6 +6,18 @@ bundle agent common_files (root, role, arch, multilib)
 
     any::
 
+      "native_gcc_profiles"
+        slist => findfiles("/$(directory_names.fs_config_gcc_environment)/$(arch)-pc-linux-gnu-*");
+
+      "native_gcc_profiles_sorted"
+        slist => sort("native_gcc_profiles", "lex");
+
+      "native_gcc_profiles_sorted_reverse"
+        slist => reverse("native_gcc_profiles_sorted");
+
+      "native_gcc_profile_best_path"
+        string => nth("native_gcc_profiles_sorted_reverse", 0);
+
     have_cpu2use_app::
 
       "cpu_flags" string => execresult("/$(file_names.cpu2use_app)","noshell");
@@ -13,6 +25,11 @@ bundle agent common_files (root, role, arch, multilib)
     !have_cpu2use_app::
 
       "cpu_flags" string => " ";
+
+    native_gcc_profile_best::
+
+      "gcc[CURRENT]"
+        string => "$(native_gcc_profile_best[2])";
 
   classes:
 
@@ -28,6 +45,12 @@ bundle agent common_files (root, role, arch, multilib)
       "have_envupdate_app" expression => fileexists("$(root)$(file_names.envupdate_app)");
       "have_localegen_app" expression => fileexists("$(root)$(file_names.localegen_app)");
       "have_layman_conf" expression => fileexists("$(root)$(file_names.overlay_conf)");
+
+      "have_gcc"
+        expression => fileexists("$(root)$(file_names.env_gcc_$(arch))");
+
+      "native_gcc_profile_best"
+        expression => regextract("(/$(directory_names.fs_config_gcc_environment)/)(.*)", "$(native_gcc_profile_best_path)", "native_gcc_profile_best");
 
     local_role_master|local_role_desktop|local_role_server::
 
@@ -179,6 +202,18 @@ bundle agent common_files (root, role, arch, multilib)
 
       "$(root)$(file_names.pm_use_systemdbootstrap)"
         delete => tidy;
+
+    have_gcc&native_gcc_profile_best::
+
+      "$(root)$(file_names.env_gcc_native)"
+        move_obstructions => "true",
+        link_from => gcc_profile("$(native_gcc_profile_best_path)"),
+        classes => u_if_repaired("update_env");
+
+      "$(root)$(file_names.env_gcc_$(arch))"
+        move_obstructions => "true",
+        edit_line => set_variable_values("common_files.gcc"),
+        classes => u_if_repaired("update_env");
 
   commands:
 
