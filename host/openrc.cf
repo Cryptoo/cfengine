@@ -2,6 +2,13 @@ bundle agent openrc(root)
 
 {
 
+  classes:
+
+    any::
+
+      "openrc_running"
+        expression => fileexists("/$(file_names.openrc_softlevel)");
+
   files:
 
     any::
@@ -25,16 +32,14 @@ bundle agent openrc(root)
         delete => tidy,
         classes => u_if_repaired("update_openrc");
 
-    machine_name_available::
-
       "$(root)$(file_names.hostname_openrc)"
         perms => system,
         create => "true",
-        edit_line => set_quoted_values("files.hostname");
+        edit_line => set_quoted_values("host.hostname");
 
   commands:
 
-    update_openrc::
+    update_openrc&openrc_running::
 
       "$(root)$(file_names.rc_app)";
 

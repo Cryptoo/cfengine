@@ -4,6 +4,8 @@ bundle agent kconfig(target, arch)
 
   vars:
 
+    any::
+
       "kconfig_target" slist => variablesmatching(".*config\.kconfig\[.*]", "$(target)");
       "kconfig_enabled" slist => variablesmatching(".*config\.kconfig\[.*]", "enabled");
       "kconfig_disabled" slist => variablesmatching(".*config\.kconfig\[.*]", "disabled");
@@ -27,16 +29,40 @@ bundle agent kconfig(target, arch)
 
   classes:
 
-      "$(target)" expression => "any";
-      "have_kernel_src" expression => fileexists("/$(file_names.kernel_makefile)");
-      "need_kernel_src" not => fileexists("/$(file_names.kernel_makefile)");
-      "have_target_kconfig" expression => fileexists("$(kconfig_file)");
-      "need_target_kconfig" not => fileexists("$(kconfig_file)");
-      "need_target_kconfig_bootstrap" and => { have_cryptoo, have_kernel_src, need_target_kconfig };
-      "target_kconfig_disabled_$(kconfig_target_enabled_symbols)" expression => regline("# CONFIG_$(kconfig_target_enabled_symbols) is not set", "$(kconfig_file)");
-      "target_kconfig_disabled_$(kconfig_target_disabled_symbols)" expression => regline("# CONFIG_$(kconfig_target_disabled_symbols) is not set", "$(kconfig_file)");
-      "target_kconfig_enabled_$(kconfig_target_disabled_symbols)" expression => regline("CONFIG_$(kconfig_target_disabled_symbols)=y", "$(kconfig_file)");
-      "target_kconfig_enabled_$(kconfig_target_enabled_symbols)" expression => regline("CONFIG_$(kconfig_target_enabled_symbols)=y", "$(kconfig_file)");
+    any::
+
+      "$(target)"
+        expression => "any";
+
+      "have_cryptoo"
+        expression => fileexists("/$(file_names.cryptoo_profile)");
+
+      "have_kernel_src"
+        expression => fileexists("/$(file_names.kernel_makefile)");
+
+      "need_kernel_src"
+        not => fileexists("/$(file_names.kernel_makefile)");
+
+      "have_target_kconfig"
+        expression => fileexists("$(kconfig_file)");
+
+      "need_target_kconfig"
+        not => fileexists("$(kconfig_file)");
+
+      "need_target_kconfig_bootstrap"
+        and => { have_cryptoo, have_kernel_src, need_target_kconfig };
+
+      "target_kconfig_disabled_$(kconfig_target_enabled_symbols)"
+        expression => regline("# CONFIG_$(kconfig_target_enabled_symbols) is not set", "$(kconfig_file)");
+
+      "target_kconfig_disabled_$(kconfig_target_disabled_symbols)"
+        expression => regline("# CONFIG_$(kconfig_target_disabled_symbols) is not set", "$(kconfig_file)");
+
+      "target_kconfig_enabled_$(kconfig_target_disabled_symbols)"
+        expression => regline("CONFIG_$(kconfig_target_disabled_symbols)=y", "$(kconfig_file)");
+
+      "target_kconfig_enabled_$(kconfig_target_enabled_symbols)"
+        expression => regline("CONFIG_$(kconfig_target_enabled_symbols)=y", "$(kconfig_file)");
 
   files:
 
@@ -74,7 +100,7 @@ bundle agent kconfig(target, arch)
         classes => u_if_repaired("target_kconfig_changed"),
         comment => "repair symbols that should be disabled, but are missing";
 
-  host::
+  host&have_target_kconfig::
 
       "$(kconfig_file)"
         edit_line => set_quoted_values("kconfig.kconfig_string_host"),

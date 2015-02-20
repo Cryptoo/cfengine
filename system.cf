@@ -2,36 +2,6 @@ bundle agent cryptoo_system
 
 {
 
-  vars:
-
-    role_master::
-
-      "portage_cleanup_command" string => "/$(file_names.find_app) /$(directory_names.fs_mount_root)/$(directory_names.fs_pm) -mindepth 1 -maxdepth 1 -name * -exec /$(file_names.move_app) {} /$(directory_names.fs_storage_pm) ;";
-      "distfiles_cleanup_command" string => "/$(file_names.find_app) /$(directory_names.fs_storage_pm)/distfiles -mindepth 1 -maxdepth 1 -name * -exec /$(file_names.move_app) {} /$(directory_names.fs_storage_srcpkg) ;";
-
-  classes:
-
-    any::
-
-      "have_machine_names" expression => fileexists("/$(file_names.machine_names)");
-
-    role_master::
-
-      "srv_exists" expression => fileexists("/$(directory_names.fs_storage_base)");
-      "srv_bin_exists" expression => fileexists("/$(directory_names.fs_storage_apps)");
-      "srv_cryptoo_exists" expression => fileexists("/$(directory_names.fs_storage_cryptoo)");
-      "srv_distfiles_exists" expression => fileexists("/$(directory_names.fs_storage_srcpkg)");
-      "srv_layman_exists" expression => fileexists("/$(directory_names.fs_storage_overlay)");
-      "srv_packages_exists" expression => fileexists("/$(directory_names.fs_storage_binpkg)");
-      "srv_portage_exists" expression => fileexists("/$(directory_names.fs_storage_pm)");
-      "srv_portage_local_exists" expression => fileexists("/$(directory_names.fs_storage_pm_site)");
-      "srv_storage_exists" expression => fileexists("/$(directory_names.fs_storage_shared)");
-      "srv_src_exists" expression => fileexists("/$(directory_names.fs_storage_sources)");
-
-    srv_bin_exists&srv_cryptoo_exists&srv_distfiles_exists&srv_layman_exists&srv_packages_exists&srv_portage_exists&srv_portage_local_exists&srv_storage_exists&srv_src_exists::
-
-      "srv_directories_exist" expression => "any";
-
   methods:
 
     role_undefined::
@@ -42,46 +12,9 @@ bundle agent cryptoo_system
       "manage files for the system"
         usebundle => files("undefined");
 
-    role_master&need_subnet_config::
-
-      "generate random subnets"
-        usebundle => subnet,
-        classes => if_ok("subnet_config_available");
-
     role_master::
 
-      "manage top-level directory structure"
-        usebundle => directories("master");
-
-      "manage files for the host system"
-        usebundle => files("master");
-
-    role_master&srv_exists&machine_name_available::
-
-      "ensure storage mounted"
-        usebundle => mount_types("ext4"),
-        classes => if_ok("srv_mounted");
-
-    srv_mounted::
-
-      "manage /src directory structure"
-        usebundle => directories("master");
-
-      "manage /srv files"
-        usebundle => files("master");
-
-    srv_directories_exist::
-
-      "ensure all mounts are active"
-        usebundle => mount_all,
-        classes => if_ok("all_mounted");
-
-  commands:
-
-    all_mounted::
-
-      "$(portage_cleanup_command)";
-#      FIXME: disabled for development
-#      "$(distfiles_cleanup_command)";
+      "configure system as a host"
+        usebundle => host("x86_64");
 
 }

@@ -14,11 +14,6 @@ bundle agent files(role)
     file_role_undefined::
 
       "create common files"
-        usebundle => common_files;
-
-    file_role_master::
-
-      "create host files"
-        usebundle => host_files("x86_64");
+        usebundle => common_files("/", "$(role)", "x86_64", "nomultilib");
 
 }

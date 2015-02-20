@@ -6,9 +6,13 @@ bundle agent common_files (root, role, arch, multilib)
 
     any::
 
-    have_cpu2use::
+    have_cpu2use_app::
 
       "cpu_flags" string => execresult("/$(file_names.cpu2use_app)","noshell");
+
+    !have_cpu2use_app::
+
+      "cpu_flags" string => " ";
 
   classes:
 
@@ -17,7 +21,7 @@ bundle agent common_files (root, role, arch, multilib)
       "local_role_$(role)" expression => "any";
       "$(arch)" expression => "any";
       "$(multilib)" expression => "any";
-      "have_cpu2use" expression => fileexists("/$(file_names.cpu2use_app)");
+      "have_cpu2use_app" expression => fileexists("/$(file_names.cpu2use_app)");
       "have_locale_gen" expression => fileexists("$(root)$(file_names.locale)");
       "bootstrap_systemd" not => fileexists("$(root)$(file_names.systemd_app)");
       "have_systemd" expression => fileexists("$(root)$(file_names.systemd_app)");

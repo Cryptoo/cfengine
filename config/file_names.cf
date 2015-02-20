@@ -118,6 +118,7 @@ bundle common file_names
       "pm_site_repo" string => "$(directory_names.fs_storage_pm_site_profile)/repo_name";
       "rc_app" string => "$(directory_names.fs_admin_apps)/rc";
       "pm_installed_sets" string => "$(directory_names.fs_volatile_pm)/world_sets";
+      "openrc_softlevel" string => "$(directory_names.fs_runtime_base)/openrc/softlevel";
       "template_env_cryptoo" string => "$(directory_names.fs_volatile_cf_templates)/cryptoo/common/env_cryptoo.txt";
       "template_env_locale" string => "$(directory_names.fs_volatile_cf_templates)/cryptoo/common/env_locale.txt";
       "template_make_conf" string => "$(directory_names.fs_volatile_cf_templates)/cryptoo/common/make_conf.txt";

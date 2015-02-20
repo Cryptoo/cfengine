@@ -24,11 +24,11 @@ bundle common cryptoo
                             "cryptoo/common/files.cf",
                             "cryptoo/guest/template/files.cf",
                             "cryptoo/host/crypttab.cf",
-                            "cryptoo/host/directories.cf",
-                            "cryptoo/host/files.cf",
+                            "cryptoo/host/host.cf",
                             "cryptoo/host/kernel.cf",
                             "cryptoo/host/openrc.cf",
                             "cryptoo/host/subnet.cf",
+                            "cryptoo/util/classes.cf",
                             "cryptoo/util/contain.cf",
                             "cryptoo/util/edit_line.cf",
                             "cryptoo/util/link_from.cf",
@@ -42,18 +42,19 @@ bundle common cryptoo
                          };
 
 
-      "kernel_git" string => "git://github.com/cryptoo/kernel";
-      "overlay_git" string => "git://github.com/cryptoo/overlay";
+      "kernel_git"
+        string => "git://github.com/cryptoo/kernel";
+
+      "overlay_git"
+        string => "git://github.com/cryptoo/overlay";
 
     have_machine_names::
 
-      "machine_names" data => readjson("/$(file_names.machine_names)", 1M),
-        classes => if_ok("machine_name_available");
+      "machine_names" data => readjson("/$(file_names.machine_names)", 1M);
 
     need_machine_names::
 
-      "machine_names" data => readjson("/$(file_names.template_machine_names)", 1M),
-        classes => if_ok("machine_name_available");
+      "machine_names" data => readjson("/$(file_names.template_machine_names)", 1M);
 
     have_site_config::
 
@@ -78,15 +79,29 @@ bundle common cryptoo
 
     any::
 
-      "have_cryptoo" expression => fileexists("/$(file_names.cryptoo_profile)");
-      "role_master" expression => regline("master", "/$(file_names.crypoo_role)");
-      "role_undefined" not => fileexists("/$(file_names.crypoo_role)");
-      "have_machine_names" expression => fileexists("/$(file_names.machine_names)");
-      "need_machine_names" not => fileexists("/$(file_names.machine_names)");
-      "have_site_config" expression => fileexists("/$(file_names.site_config)");
-      "need_site_config" not => fileexists("/$(file_names.site_config)");
-      "have_subnet_config" expression => fileexists("/$(file_names.subnet_config)");
-      "need_subnet_config" not => fileexists("/$(file_names.subnet_config)");
+      "role_master"
+        expression => regline("master", "/$(file_names.crypoo_role)");
+
+      "role_undefined"
+        not => fileexists("/$(file_names.crypoo_role)");
+
+      "have_machine_names"
+        expression => fileexists("/$(file_names.machine_names)");
+
+      "need_machine_names"
+        not => fileexists("/$(file_names.machine_names)");
+
+      "have_site_config"
+        expression => fileexists("/$(file_names.site_config)");
+
+      "need_site_config"
+        not => fileexists("/$(file_names.site_config)");
+
+      "have_subnet_config"
+        expression => fileexists("/$(file_names.subnet_config)");
+
+      "need_subnet_config"
+        not => fileexists("/$(file_names.subnet_config)");
 
   reports:
 
@@ -94,9 +109,6 @@ bundle common cryptoo
 
       "My role is: master";
       "My number is: $(machine_number)";
-
-    role_master&machine_name_available::
-
       "My hostname is: $(machine_names[$(machine_number)])";
 
     role_undefined::

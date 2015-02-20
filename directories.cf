@@ -14,10 +14,6 @@ bundle agent directories(role)
     directory_role_undefined::
 
       "create common directores"
-        usebundle => common_directories;
+        usebundle => common_directories("/");
 
-    directory_role_master::
-
-      "create host directores"
-        usebundle => host_directories;
 }
