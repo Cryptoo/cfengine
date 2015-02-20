@@ -311,47 +311,4 @@ bundle agent host(arch)
 
       "$(distfiles_cleanup_command)";
 
-  reports:
-
-    root_bind_mount:: "root_bind_mount";
-    !root_bind_mount:: "dont_root_bind_mount";
-    have_grub:: "have_grub";
-    !have_grub:: "dont_have_grub";
-    have_cryptoo:: "have_cryptoo";
-    need_cryptoo:: "need_cryptoo";
-    have_crypttab:: "have_crypttab";
-    need_crypttab:: "need_crypttab";
-    have_dracut_app:: "have_dracut_app";
-    !have_dracut_app:: "dont_have_dracut_app";
-    have_dracut_image:: "have_dracut_image";
-    need_dracut_image:: "need_dracut_image";
-    have_layman_app:: "have_layman_app";
-    !have_layman_app:: "dont_have_layman_app";
-    have_layman_cache:: "have_layman_cache";
-    need_layman_cache:: "need_layman_cache";
-    need_bitcoin_overlay:: "need_bitcoin_overlay";
-    !need_bitcoin_overlay:: "dont_need_bitcoin_overlay";
-    update_dracut:: "update_dracut";
-    !update_dracut:: "not_update_dracut";
-    fstab_repaired:: "fstab_repaired";
-    !fstab_repaired:: "not_fstab_repaired";
-    need_subnet_config:: "need_subnet_config";
-    subnet_config_available:: "subnet_config_available";
-    srv_created:: "srv_created";
-    !srv_created:: "not_srv_created";
-    srv_ok:: "srv_ok";
-    !srv_ok:: "not_srv_ok";
-    srv_started:: "srv_started";
-    !srv_started:: "not_srv_started";
-    srv_failed:: "srv_failed";
-    !srv_failed:: "not_srv_failed";
-    srv_ready:: "srv_ready";
-    !srv_ready:: "not_srv_ready";
-    srv_mounted:: "srv_mounted";
-    !srv_mounted:: "not_srv_mounted";
-    all_mounted:: "all_mounted";
-    !all_mounted:: "not_all_mounted";
-    all_ready:: "all_readh";
-    !all_ready:: "not_all_ready";
-
 }
