@@ -82,6 +82,10 @@ bundle agent common_files (root, role, arch, multilib)
         move_obstructions => "true",
         link_from => cryptoo_package_mask("basic-programs");
 
+      "$(root)$(file_names.pm_mask_problematic)"
+        move_obstructions => "true",
+        link_from => cryptoo_package_mask("problematic");
+
       "$(root)$(file_names.pm_use_basicprograms)"
         move_obstructions => "true",
         link_from => cryptoo_package_use("basic-programs");

@@ -54,6 +54,7 @@ bundle common file_names
       "pm_keywords_vpn" string => "$(directory_names.fs_config_pm_keywords)/vpn";
       "pm_keywords_znc" string => "$(directory_names.fs_config_pm_keywords)/znc";
       "pm_mask_basicprograms" string => "$(directory_names.fs_config_pm_mask)/basic-programs";
+      "pm_mask_problematic" string => "$(directory_names.fs_config_pm_mask)/problematic";
       "pm_unmask_java" string => "$(directory_names.fs_config_pm_unmask)/java";
       "pm_use_basicprograms" string => "$(directory_names.fs_config_pm_use)/basic-programs";
       "pm_use_bitcoin" string => "$(directory_names.fs_config_pm_use)/bitcoin";
