@@ -1,3 +1,17 @@
+body file control
+
+{
+
+  inputs => {
+              "cryptoo/system.cf",
+              "cryptoo/config/config.cf",
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/directory_groups.cf",
+              "cryptoo/config/file_names.cf"
+            };
+
+}
+
 bundle common cryptoo
 
 {
@@ -14,31 +28,6 @@ bundle common cryptoo
                             "file_names",
                             "cryptoo_system"
                          };
-
-      "inputs" slist => {
-                            "cryptoo/config/config.cf",
-                            "cryptoo/config/directory_names.cf",
-                            "cryptoo/config/directory_groups.cf",
-                            "cryptoo/config/file_names.cf",
-                            "cryptoo/common/common.cf",
-                            "cryptoo/common/gcc.cf",
-                            "cryptoo/guest/template/files.cf",
-                            "cryptoo/host/crypttab.cf",
-                            "cryptoo/host/host.cf",
-                            "cryptoo/host/kernel.cf",
-                            "cryptoo/host/openrc.cf",
-                            "cryptoo/host/subnet.cf",
-                            "cryptoo/util/classes.cf",
-                            "cryptoo/util/contain.cf",
-                            "cryptoo/util/edit_line.cf",
-                            "cryptoo/util/link_from.cf",
-                            "cryptoo/util/location.cf",
-                            "cryptoo/util/perms.cf",
-                            "cryptoo/util/replace_with.cf",
-                            "cryptoo/mounts.cf",
-                            "cryptoo/system.cf"
-                         };
-
 
       "kernel_git"
         string => "git://github.com/cryptoo/kernel";

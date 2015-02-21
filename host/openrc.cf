@@ -1,3 +1,14 @@
+body file control
+
+{
+
+  inputs => {
+              "cryptoo/util/link_from.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
 bundle agent openrc(root)
 
 {

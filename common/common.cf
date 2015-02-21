@@ -1,3 +1,18 @@
+body file control
+
+{
+
+  inputs => {
+              "cryptoo/common/gcc.cf",
+              "cryptoo/guest/template/files.cf",
+              "cryptoo/util/contain.cf",
+              "cryptoo/util/edit_line.cf",
+              "cryptoo/util/link_from.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
 bundle agent cryptoo_filesystem(root, role, arch, multilib)
 
 {

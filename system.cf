@@ -1,3 +1,14 @@
+body file control
+
+{
+
+  inputs => {
+              "cryptoo/common/common.cf",
+              "cryptoo/host/host.cf"
+            };
+
+}
+
 bundle agent cryptoo_system
 
 {

@@ -1,3 +1,14 @@
+body file control
+
+{
+
+  inputs => {
+              "cryptoo/util/location.cf",
+              "cryptoo/util/replace_with.cf"
+            };
+
+}
+
 bundle edit_line bashrc
 
 {

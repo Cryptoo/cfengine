@@ -1,3 +1,14 @@
+body file control
+
+{
+
+  inputs => {
+              "cryptoo/util/edit_line.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
 bundle agent kconfig(target, arch)
 
 {

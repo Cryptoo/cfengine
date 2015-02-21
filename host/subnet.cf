@@ -1,3 +1,13 @@
+body file control
+
+{
+
+  inputs => {
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
 bundle agent subnet
 
 {
