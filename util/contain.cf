@@ -1,4 +1,15 @@
-body contain basic_chroot(newroot)
+body file control
+
 {
+
+  namespace => "cryptoo";
+
+}
+
+body contain basic_chroot(newroot)
+
+{
+
   chroot => "$(newroot)";
+
 }

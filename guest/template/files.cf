@@ -2,6 +2,8 @@ body file control
 
 {
 
+  namespace => "cryptoo";
+
   inputs => {
               "cryptoo/util/link_from.cf"
             };
@@ -147,7 +149,7 @@ bundle agent template_files(root, role)
 
       "$(root)$(file_names.dns_config)"
           move_obstructions => "true",
-          copy_from => local_cp("/$(file_names.dns_config)");
+          copy_from => default:local_cp("/$(file_names.dns_config)");
 
 }
 

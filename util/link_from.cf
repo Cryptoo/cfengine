@@ -1,3 +1,11 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+}
+
 body link_from cryptoo_portage_env(x)
 
 {

@@ -2,6 +2,8 @@ body file control
 
 {
 
+  namespace => "cryptoo";
+
   inputs => {
               "cryptoo/util/edit_line.cf",
               "cryptoo/util/perms.cf"
@@ -84,7 +86,7 @@ bundle agent kconfig(target, arch)
         perms => system,
         create => "false",
         edit_line => enable_kconfig("$(kconfig_target_enabled_symbols)","$(kconfig_file)"),
-        classes => u_if_repaired("target_kconfig_changed"),
+        classes => default:u_if_repaired("target_kconfig_changed"),
         comment => "repair symbols that should be enabled, but are in the disabled state";
 
       "$(kconfig_file)"
@@ -92,7 +94,7 @@ bundle agent kconfig(target, arch)
         perms => system,
         create => "false",
         edit_line => enable_kconfig("$(kconfig_target_enabled_symbols)","$(kconfig_file)"),
-        classes => u_if_repaired("target_kconfig_changed"),
+        classes => default:u_if_repaired("target_kconfig_changed"),
         comment => "repair symbols that should be enabled, but are missing";
 
       "$(kconfig_file)"
@@ -100,7 +102,7 @@ bundle agent kconfig(target, arch)
         perms => system,
         create => "false",
         edit_line => disable_kconfig("$(kconfig_target_disabled_symbols)","$(kconfig_file)"),
-        classes => u_if_repaired("target_kconfig_changed"),
+        classes => default:u_if_repaired("target_kconfig_changed"),
         comment => "repair symbols that should be disabled, but are in the enabled state";
 
       "$(kconfig_file)"
@@ -108,14 +110,14 @@ bundle agent kconfig(target, arch)
         perms => system,
         create => "false",
         edit_line => disable_kconfig("$(kconfig_target_disabled_symbols)","$(kconfig_file)"),
-        classes => u_if_repaired("target_kconfig_changed"),
+        classes => default:u_if_repaired("target_kconfig_changed"),
         comment => "repair symbols that should be disabled, but are missing";
 
   host&have_target_kconfig::
 
       "$(kconfig_file)"
-        edit_line => set_quoted_values("kconfig.kconfig_string_host"),
-        classes => u_if_repaired("target_kconfig_changed"),
+        edit_line => default:set_quoted_values("kconfig.kconfig_string_host"),
+        classes => default:u_if_repaired("target_kconfig_changed"),
         comment => "set kconfig strings";
 
   commands:

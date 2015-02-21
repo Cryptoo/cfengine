@@ -2,6 +2,8 @@ body file control
 
 {
 
+  namespace => "cryptoo";
+
   inputs => {
               "cryptoo/util/link_from.cf",
               "cryptoo/util/perms.cf"
@@ -27,26 +29,26 @@ bundle agent openrc(root)
       "$(root)$(file_names.openrc_$(config.enabled_services))"
         move_obstructions => "true",
         link_from => openrc($(config.enabled_services)),
-        classes => u_if_repaired("update_openrc");
+        classes => default:u_if_repaired("update_openrc");
 
       "$(root)$(file_names.openrc_devicemapper)"
         move_obstructions => "true",
         link_from => openrc("device-mapper"),
-        classes => u_if_repaired("update_openrc");
+        classes => default:u_if_repaired("update_openrc");
 
       "$(root)$(file_names.openrc_vixiecron)"
         move_obstructions => "true",
         link_from => openrc("vixie-cron"),
-        classes => u_if_repaired("update_openrc");
+        classes => default:u_if_repaired("update_openrc");
 
       "$(root)$(file_names.openrc_$(config.disabled_services))"
-        delete => tidy,
-        classes => u_if_repaired("update_openrc");
+        delete => default:tidy,
+        classes => default:u_if_repaired("update_openrc");
 
       "$(root)$(file_names.hostname_openrc)"
         perms => system,
         create => "true",
-        edit_line => set_quoted_values("host.hostname");
+        edit_line => default:set_quoted_values("host.hostname");
 
   commands:
 

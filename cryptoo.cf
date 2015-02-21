@@ -2,6 +2,8 @@ body file control
 
 {
 
+  namespace => "cryptoo";
+
   inputs => {
               "cryptoo/system.cf",
               "cryptoo/config/config.cf",
@@ -21,12 +23,12 @@ bundle common cryptoo
     any::
 
       "bundles" slist => {
-                            "cryptoo",
-                            "config",
-                            "directory_names",
-                            "directory_groups",
-                            "file_names",
-                            "cryptoo_system"
+                            "cryptoo:cryptoo",
+                            "cryptoo:config",
+                            "cryptoo:directory_names",
+                            "cryptoo:directory_groups",
+                            "cryptoo:file_names",
+                            "cryptoo:cryptoo_system"
                          };
 
       "kernel_git"
@@ -46,17 +48,17 @@ bundle common cryptoo
     have_site_config::
 
       "site_config" data => readjson("/$(file_names.site_config)", 1M),
-        classes => if_ok("site_config_available");
+        classes => default:if_ok("site_config_available");
 
     need_site_config::
 
       "site_config" data => readjson("/$(file_names.template_site_config)", 1M),
-        classes => if_ok("site_config_available");
+        classes => default:if_ok("site_config_available");
 
     have_subnet_config::
 
       "subnet_config" data => readjson("/$(file_names.subnet_config)", 1M),
-        classes => if_ok("subnet_config_available");
+        classes => default:if_ok("subnet_config_available");
 
     role_master::
 

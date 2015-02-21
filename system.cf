@@ -2,6 +2,8 @@ body file control
 
 {
 
+  namespace => "cryptoo";
+
   inputs => {
               "cryptoo/common/common.cf",
               "cryptoo/host/host.cf"

@@ -2,6 +2,8 @@ body file control
 
 {
 
+  namespace => "cryptoo";
+
   inputs => {
               "cryptoo/common/gcc.cf",
               "cryptoo/guest/template/files.cf",
@@ -220,32 +222,32 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
         perms => system,
         create => "false",
         ifvarclass => fileexists("$(root)$(file_names.system_bash_logout)"),
-        edit_line => uncomment_lines_containing("clear","#");
+        edit_line => default:uncomment_lines_containing("clear","#");
 
       "$(root)$(file_names.env_cryptoo)"
         perms => system,
         create => "true",
         edit_template => "/$(file_names.template_env_cryptoo)",
-        classes => u_if_repaired("update_env");
+        classes => default:u_if_repaired("update_env");
 
       "$(root)$(file_names.env_locale)"
         perms => system,
         create => "true",
         edit_template => "/$(file_names.template_env_locale)",
-        classes => u_if_repaired("update_env");
+        classes => default:u_if_repaired("update_env");
 
     have_locale_gen::
 
       "$(root)$(file_names.locale)"
         perms => system,
         create => "false",
-        edit_line => uncomment_lines_containing("$(cryptoo.site_config[locale])","#"),
-        classes => u_if_repaired("update_locale");
+        edit_line => default:uncomment_lines_containing("$(cryptoo.site_config[locale])","#"),
+        classes => default:u_if_repaired("update_locale");
 
     bootstrap_systemd::
 
       "$(root)$(file_names.pm_use_systemd)"
-        delete => tidy;
+        delete => default:tidy;
 
       "$(root)$(file_names.pm_use_udev)"
         move_obstructions => "true",
@@ -262,7 +264,7 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
         link_from => cryptoo_package_use("systemd");
 
       "$(root)$(file_names.pm_use_systemdbootstrap)"
-        delete => tidy;
+        delete => default:tidy;
 
   methods:
 

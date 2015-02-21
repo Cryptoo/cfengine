@@ -2,6 +2,8 @@ body file control
 
 {
 
+  namespace => "cryptoo";
+
   inputs => {
               "cryptoo/util/location.cf",
               "cryptoo/util/replace_with.cf"

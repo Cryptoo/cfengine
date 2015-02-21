@@ -2,6 +2,8 @@ body file control
 
 {
 
+  namespace => "cryptoo";
+
   inputs => {
               "cryptoo/util/perms.cf"
             };
@@ -33,6 +35,6 @@ bundle agent subnet
         perms => system,
         create => "true",
         edit_template => "/var/cfengine/inputs/templates/cryptoo_subnets.txt",
-        classes => u_if_repaired("done");
+        classes => default:u_if_repaired("done");
 
 }
