@@ -1,4 +1,4 @@
-bundle agent common_files (root, role, arch, multilib)
+bundle agent cryptoo_filesystem(root, role, arch, multilib)
 
 {
 
@@ -24,7 +24,7 @@ bundle agent common_files (root, role, arch, multilib)
 
     !have_cpu2use_app::
 
-      "cpu_flags" string => " ";
+      "cpu_flags" string => "CPU_FLAGS_X86=\"\"";
 
     native_gcc_profile_best::
 
@@ -35,16 +35,34 @@ bundle agent common_files (root, role, arch, multilib)
 
     any::
 
-      "local_role_$(role)" expression => "any";
-      "$(arch)" expression => "any";
+      "local_role_$(role)"
+        expression => "any";
+
+      "$(arch)"
+        expression => "any";
+
       "$(multilib)" expression => "any";
-      "have_cpu2use_app" expression => fileexists("/$(file_names.cpu2use_app)");
-      "have_locale_gen" expression => fileexists("$(root)$(file_names.locale)");
-      "bootstrap_systemd" not => fileexists("$(root)$(file_names.systemd_app)");
-      "have_systemd" expression => fileexists("$(root)$(file_names.systemd_app)");
-      "have_envupdate_app" expression => fileexists("$(root)$(file_names.envupdate_app)");
-      "have_localegen_app" expression => fileexists("$(root)$(file_names.localegen_app)");
-      "have_layman_conf" expression => fileexists("$(root)$(file_names.overlay_conf)");
+
+      "have_cpu2use_app"
+        expression => fileexists("/$(file_names.cpu2use_app)");
+
+      "have_locale_gen"
+        expression => fileexists("$(root)$(file_names.locale)");
+
+      "bootstrap_systemd"
+        not => fileexists("$(root)$(file_names.systemd_app)");
+
+      "have_systemd"
+        expression => fileexists("$(root)$(file_names.systemd_app)");
+
+      "have_envupdate_app"
+        expression => fileexists("$(root)$(file_names.envupdate_app)");
+
+      "have_localegen_app"
+        expression => fileexists("$(root)$(file_names.localegen_app)");
+
+      "have_layman_conf"
+        expression => fileexists("$(root)$(file_names.overlay_conf)");
 
       "have_gcc"
         expression => fileexists("$(root)$(file_names.env_gcc_$(arch))");
@@ -60,9 +78,62 @@ bundle agent common_files (root, role, arch, multilib)
 
       "local_role_template" expression => "any";
 
+  users:
+
+    any::
+
+      "guest"
+        handle => "user_guest",
+        policy => "present",
+        home_dir => "/mnt/shared",
+        uid => "405",
+        group_primary => "users",
+        shell => "/sbin/nologin";
+
   files:
 
     any::
+
+      "$(root)/."
+        perms => system,
+        create => "true",
+        handle => "$(root)";
+
+      "$(root)$(directory_groups.common_system)/."
+        perms => system,
+        create => "true",
+        handle => "$(root)$(directory_groups.common_system)";
+
+      "$(root)$(directory_groups.common_system_restricted)/."
+        perms => restricted,
+        create => "true",
+        handle => "$(root)$(directory_groups.common_system_restricted)";
+
+      "$(root)$(directory_groups.common_system_private)/."
+        perms => root,
+        create => "true",
+        handle => "$(root)$(directory_groups.common_system_private)";
+
+      "$(root)$(directory_groups.common_open)/."
+        perms => system_tmp,
+        create => "true",
+        handle => "$(root)$(directory_groups.common_open)";
+
+      "$(root)$(directory_groups.common_pm)/."
+        perms => portage,
+        create => "true",
+        handle => "$(root)$(directory_groups.common_pm)";
+
+      "$(root)$(directory_groups.common_pm_open)/."
+        perms => portage_open,
+        create => "true",
+        handle => "$(root)$(directory_groups.common_pm_open)";
+
+      "$(root)$(directory_names.fs_mount_shared)/."
+        depends_on => { "user_guest" },
+        perms => guest,
+        create => "true",
+        handle => "$(root)$(directory_names.fs_mount_shared)";
 
       "$(root)$(file_names.mtab)"
         move_obstructions => "true",
@@ -212,8 +283,15 @@ bundle agent common_files (root, role, arch, multilib)
 
       "$(root)$(file_names.env_gcc_$(arch))"
         move_obstructions => "true",
-        edit_line => set_variable_values("common_files.gcc"),
+        edit_line => set_variable_values("cryptoo_filesystem.gcc"),
         classes => u_if_repaired("update_env");
+
+  methods:
+
+    local_role_template::
+
+      "manage template files"
+        usebundle => template_files("$(root)", "$(role)");
 
   commands:
 
@@ -226,12 +304,5 @@ bundle agent common_files (root, role, arch, multilib)
 
       "/$(file_names.envupdate_app)"
         contain => basic_chroot($(root));
-
-  methods:
-
-    local_role_template::
-
-      "manage template files"
-        usebundle => template_files("$(root)", "$(role)");
 
 }

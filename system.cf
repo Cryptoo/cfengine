@@ -6,11 +6,8 @@ bundle agent cryptoo_system
 
     role_undefined::
 
-      "manage top-level directory structure"
-        usebundle => directories("undefined");
-
-      "manage files for the system"
-        usebundle => files("undefined");
+      "configure generic system"
+        usebundle => cryptoo_filesystem("/", "undefined", "x86_64", "nomultilib");
 
     role_master::
 

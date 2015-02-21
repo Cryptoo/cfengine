@@ -20,8 +20,7 @@ bundle common cryptoo
                             "cryptoo/config/directory_names.cf",
                             "cryptoo/config/directory_groups.cf",
                             "cryptoo/config/file_names.cf",
-                            "cryptoo/common/directories.cf",
-                            "cryptoo/common/files.cf",
+                            "cryptoo/common/common.cf",
                             "cryptoo/guest/template/files.cf",
                             "cryptoo/host/crypttab.cf",
                             "cryptoo/host/host.cf",
@@ -35,8 +34,6 @@ bundle common cryptoo
                             "cryptoo/util/location.cf",
                             "cryptoo/util/perms.cf",
                             "cryptoo/util/replace_with.cf",
-                            "cryptoo/directories.cf",
-                            "cryptoo/files.cf",
                             "cryptoo/mounts.cf",
                             "cryptoo/system.cf"
                          };

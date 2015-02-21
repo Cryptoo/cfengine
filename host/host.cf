@@ -224,31 +224,19 @@ bundle agent host(arch)
       "configure OpenRC"
         usebundle => openrc("/");
 
-      "manage skeleton server directory structure"
-        usebundle => common_directories("/$(directory_names.fs_volatile_images)/server/x86_64/no-multilib/");
-
       "manage files for the server skeleton"
-        usebundle => common_files("/$(directory_names.fs_volatile_images)/server/x86_64/no-multilib/","server","x86_64","nomultilib");
-
-      "manage skeleton desktop directory structure"
-        usebundle => common_directories("/$(directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/");
+        usebundle => cryptoo_filesystem("/$(directory_names.fs_volatile_images)/server/x86_64/no-multilib/","server","x86_64","nomultilib");
 
       "manage files for the desktop skeleton"
-        usebundle => common_files("/$(directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/","desktop","x86_64","nomultilib");
-
-      "manage skeleton desktop-multilib directory structure"
-        usebundle => common_directories("/$(directory_names.fs_volatile_images)/desktop/x86_64/multilib/");
+        usebundle => cryptoo_filesystem("/$(directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/","desktop","x86_64","nomultilib");
 
       "manage files for the desktop-multilib skeleton"
-        usebundle => common_files("/$(directory_names.fs_volatile_images)/desktop/x86_64/multilib/","desktop","x86_64","multilib");
+        usebundle => cryptoo_filesystem("/$(directory_names.fs_volatile_images)/desktop/x86_64/multilib/","desktop","x86_64","multilib");
 
     (all_mounted)|(all_ready)::
 
-      "manage common directories"
-        usebundle => common_directories("/");
-
       "manage common files"
-        usebundle => common_files("/","master","$(arch)","nomultilib");
+        usebundle => cryptoo_filesystem("/","master","$(arch)","nomultilib");
 
       "configure kernel"
         usebundle => kconfig("host", "$(arch)"),
