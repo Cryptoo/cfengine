@@ -5,6 +5,7 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
+              "cryptoo/local.cf",
               "cryptoo/system.cf",
               "cryptoo/config/config.cf",
               "cryptoo/config/directory_names.cf",
@@ -28,6 +29,7 @@ bundle common cryptoo
                             "cryptoo:directory_names",
                             "cryptoo:directory_groups",
                             "cryptoo:file_names",
+                            "cryptoo:local",
                             "cryptoo:cryptoo_system"
                          };
 
@@ -36,6 +38,9 @@ bundle common cryptoo
 
       "overlay_git"
         string => "git://github.com/cryptoo/overlay";
+
+      "local_inputs"
+        slist => lsdir("$(this.promise_dirname)/local/promises", ".*\.cf", "true");
 
     have_machine_names::
 

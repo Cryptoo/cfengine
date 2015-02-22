@@ -1,0 +1,27 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => { "@(cryptoo:cryptoo.local_inputs)" };
+
+}
+
+bundle agent local
+{
+  vars:
+
+    any::
+
+      "bundles"
+        slist => bundlesmatching("local:.*", "cryptoo");
+
+  methods:
+
+    any::
+
+      "run local bundles"
+        usebundle => $(bundles);
+
+}
