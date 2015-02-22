@@ -96,7 +96,6 @@ bundle common directory_groups
 
       "host_system" slist => {
                                  $(directory_names.fs_config_dracut),
-                                 $(directory_names.fs_storage_base),
                                  $(directory_names.fs_volatile_kernel),
                                  $(directory_names.fs_volatile_libvirt)
                                 };
@@ -106,6 +105,7 @@ bundle common directory_groups
                                 };
 
       "host_system_storage" slist => {
+                                 $(directory_names.fs_storage_nfs),
                                  $(directory_names.fs_storage_site),
                                  $(directory_names.fs_storage_apps),
                                  $(directory_names.fs_storage_cryptoo),

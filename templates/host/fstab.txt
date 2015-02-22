@@ -1,7 +1,7 @@
 LABEL=$(cryptoo:cryptoo.machine_names[$(cryptoo:cryptoo.machine_number)])-boot   /$(cryptoo:directory_names.fs_boot_base)                           ext4        noatime       1 2
 UUID=$(cryptoo:host.root_uuid)                         /                               ext4        noatime       0 1
 /dev/mapper/$(cryptoo:cryptoo.machine_names[$(cryptoo:cryptoo.machine_number)])-swap                              none                            swap        sw            0 0
-/dev/mapper/$(cryptoo:cryptoo.machine_names[$(cryptoo:cryptoo.machine_number)])-storage                           /$(cryptoo:directory_names.fs_storage_nfs)          ext4        noatime       0 0
+/dev/mapper/$(cryptoo:cryptoo.machine_names[$(cryptoo:cryptoo.machine_number)])-storage                           /$(cryptoo:directory_names.fs_storage_base)          ext4        noatime       0 0
 
 /$(cryptoo:directory_names.fs_storage_apps)             /usr/site-local/bin             none        bind          0 0
 /$(cryptoo:directory_names.fs_storage_cryptoo)          /$(cryptoo:directory_names.fs_cryptoo)               none        bind          0 0

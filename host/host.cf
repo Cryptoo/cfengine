@@ -64,8 +64,8 @@ bundle agent host(arch)
         comment => "/ is mounted as a bind mount on /mnt/root. Gives access to underlying rootfs";
 
       "srv_mounted"
-        expression => regline("device /dev/mapper/$(cryptoo.machine_names[$(cryptoo.machine_number)])-storage mounted on /$(directory_names.fs_storage_nfs).*", "$(file_names.mount_info)"),
-        comment => "backing LV is mounted for /srv/nfs";
+        expression => regline("device /dev/mapper/$(cryptoo.machine_names[$(cryptoo.machine_number)])-storage mounted on /$(directory_names.fs_storage_base).*", "$(file_names.mount_info)"),
+        comment => "backing LV is mounted for /srv";
 
       "have_grub"
         expression => fileexists("/$(file_names.grub_defaults)");
@@ -166,12 +166,12 @@ bundle agent host(arch)
         link_from => cryptoo_package_use("host"),
         comment => "create /etc/portage/package.use/host";
 
-      "/$(directory_names.fs_storage_nfs)/."
+      "/$(directory_names.fs_storage_base)/."
         depends_on => { "done_srv" },
         perms => system,
         create => "true",
         classes => srv,
-        comment => "create /srv/nfs mountpoint";
+        comment => "create /srv mountpoint";
 
     have_grub::
 
