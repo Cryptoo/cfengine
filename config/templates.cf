@@ -4,10 +4,6 @@ body file control
 
   namespace => "cryptoo";
 
-  inputs => {
-              "cryptoo/config/file_names.cf",
-            };
-
 }
 
 bundle common templates
