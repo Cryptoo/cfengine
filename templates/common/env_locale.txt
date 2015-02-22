@@ -1,0 +1,2 @@
+LANG="$(cryptoo:cryptoo.site_config[locale]).utf8"
+LC_COLLATE="C"

@@ -10,7 +10,8 @@ body file control
               "cryptoo/config/config.cf",
               "cryptoo/config/directory_names.cf",
               "cryptoo/config/directory_groups.cf",
-              "cryptoo/config/file_names.cf"
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/templates.cf"
             };
 
 }
@@ -29,6 +30,7 @@ bundle common cryptoo
                             "cryptoo:directory_names",
                             "cryptoo:directory_groups",
                             "cryptoo:file_names",
+                            "cryptoo:templates",
                             "cryptoo:local",
                             "cryptoo:cryptoo_system"
                          };
@@ -58,7 +60,7 @@ bundle common cryptoo
 
     need_machine_names::
 
-      "machine_names" data => readjson("/$(file_names.template_machine_names)", 1M);
+      "machine_names" data => readjson("/$(templates.machine_names)", 1M);
 
     have_site_config::
 
@@ -67,7 +69,7 @@ bundle common cryptoo
 
     need_site_config::
 
-      "site_config" data => readjson("/$(file_names.template_site_config)", 1M),
+      "site_config" data => readjson("/$(templates.site_config)", 1M),
         classes => default:if_ok("site_config_available");
 
     have_subnet_config::

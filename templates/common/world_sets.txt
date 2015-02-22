@@ -1,0 +1,4 @@
+[%CFEngine local_role_master:: %]
+@master
+[%CFEngine local_role_server:: %]
+@template-server

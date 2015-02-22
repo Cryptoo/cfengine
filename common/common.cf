@@ -134,7 +134,7 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
       "$(root)$(file_names.pm_config)"
         perms => system,
         create => "true",
-        edit_template => "/$(file_names.template_make_conf)";
+        edit_template => "/$(templates.make_conf)";
 
       "$(root)$(file_names.pm_profile)"
         move_obstructions => "true",
@@ -187,17 +187,17 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
       "$(root)$(file_names.pm_profile_upstream)"
         perms => system,
         create => "true",
-        edit_template => "/$(file_names.template_profile_parent)";
+        edit_template => "/$(templates.profile_parent)";
 
       "$(root)$(file_names.pm_machine_meta)"
         perms => system,
         create => "true",
-        edit_template => "/$(file_names.template_local_layout_conf)";
+        edit_template => "/$(templates.local_layout_conf)";
 
       "$(root)$(file_names.pm_machine_repo)"
         perms => system,
         create => "true",
-        edit_template => "/$(file_names.template_local_repo_name)";
+        edit_template => "/$(templates.local_repo_name)";
 
       "$(root)$(directory_names.fs_standard_kernel)"
         move_obstructions => "true",
@@ -206,7 +206,7 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
       "$(root)$(file_names.pm_installed_sets)"
         perms => system,
         create => "true",
-        edit_template => "/$(file_names.template_world_sets)";
+        edit_template => "/$(templates.world_sets)";
 
       "$(root)$(file_names.localtime)"
         move_obstructions => "true",
@@ -227,13 +227,13 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
       "$(root)$(file_names.env_cryptoo)"
         perms => system,
         create => "true",
-        edit_template => "/$(file_names.template_env_cryptoo)",
+        edit_template => "/$(templates.env_cryptoo)",
         classes => default:u_if_repaired("update_env");
 
       "$(root)$(file_names.env_locale)"
         perms => system,
         create => "true",
-        edit_template => "/$(file_names.template_env_locale)",
+        edit_template => "/$(templates.env_locale)",
         classes => default:u_if_repaired("update_env");
 
     have_locale_gen::

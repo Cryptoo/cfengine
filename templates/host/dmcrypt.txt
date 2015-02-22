@@ -1,0 +1,9 @@
+[%CFEngine START %]
+# /etc/conf.d/dmcrypt
+[%CFEngine END %]
+[%CFEngine START %]
+target=luks-$(cryptoo:crypttab.uuids)
+source=/dev/disk/by-uuid/$(cryptoo:crypttab.uuids)
+key=/boot/master.key
+
+[%CFEngine END %]

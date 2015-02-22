@@ -102,7 +102,8 @@ bundle common directory_names
       "fs_volatile_base" string => "var";
       "fs_volatile_cfengine" string => "$(fs_volatile_base)/cfengine";
       "fs_volatile_cf_inputs" string => "$(fs_volatile_cfengine)/inputs";
-      "fs_volatile_cf_templates" string => "$(fs_volatile_cf_inputs)/templates";
+      "fs_volatile_cf_templates" string => "$(fs_volatile_cf_inputs)/cryptoo/templates";
+      "fs_volatile_local_templates" string => "$(fs_volatile_cf_inputs)/cryptoo/local/templates";
       "fs_volatile_images" string => "$(fs_volatile_base)/image";
       "fs_volatile_library" string => "$(fs_volatile_base)/lib";
       "fs_volatile_pm" string => "$(fs_volatile_library)/$(pm)";

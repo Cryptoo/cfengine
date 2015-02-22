@@ -16,7 +16,7 @@ bundle agent local
     any::
 
       "bundles"
-        slist => bundlesmatching("local:.*", "cryptoo", "auto");
+        slist => bundlesmatching("local:.*", "cryptoo_auto");
 
   methods:
 

@@ -1,0 +1,2 @@
+PATH="/usr/cryptoo/bin:/usr/site-local/bin:/usr/local/bin"
+ROOTPATH="/usr/cryptoo/bin:/usr/site-local/bin:/usr/local/bin"

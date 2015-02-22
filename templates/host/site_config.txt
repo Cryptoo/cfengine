@@ -1,0 +1,28 @@
+{
+    "make.conf": {
+                   "USE":"",
+                   "VIDEO_CARDS":""
+                 },
+    "locale": "en_US",
+    "guest_templates": {
+                   "server": {
+                              "arch": "x86_64",
+                              "portage_arch": "amd64",
+                              "multilib": false,
+                              "graphical": false
+                            },
+                   "desktop": {
+                              "arch": "x86_64",
+                              "portage_arch": "amd64",
+                              "multilib": false
+                              "graphical": true
+                            },
+                   "desktop-multilib": {
+                              "arch": "x86_64",
+                              "portage_arch": "amd64",
+                              "multilib": true,
+                              "graphical": true
+                            }
+                 }
+
+}

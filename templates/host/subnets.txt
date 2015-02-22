@@ -1,0 +1,3 @@
+[%CFEngine START %]
+$(cryptoo:subnet.subnet_json)
+[%CFEngine END %]

@@ -34,7 +34,7 @@ bundle agent subnet
       "/$(file_names.subnet_config)"
         perms => system,
         create => "true",
-        edit_template => "/var/cfengine/inputs/templates/cryptoo_subnets.txt",
+        edit_template => "/$(templates.subnets)",
         classes => default:u_if_repaired("done");
 
 }

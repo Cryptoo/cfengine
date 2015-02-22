@@ -1,0 +1,3 @@
+install_items+=" /etc/crypttab /boot/master.key "
+add_dracutmodules+=" crypt dm lvm mdraid "
+omit_dracutmodules+=" btrfs kernel-modules network "

@@ -1,0 +1,2 @@
+KTYPE="host"
+KARCH="x86_64"
