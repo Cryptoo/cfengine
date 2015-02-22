@@ -126,6 +126,7 @@ bundle common file_names
       "pm_machine_repo" string => "$(directory_names.fs_machine_pm_profile)/repo_name";
       "envupdate_app" string => "$(directory_names.fs_standard_admin_apps)/env-update";
       "localegen_app" string => "$(directory_names.fs_standard_admin_apps)/locale-gen";
+      "libvirtd_app" string => "$(directory_names.fs_standard_admin_apps)/libvirtd";
       "pm_site_meta" string => "$(directory_names.fs_storage_pm_site_meta)/layout.conf";
       "pm_site_repo" string => "$(directory_names.fs_storage_pm_site_profile)/repo_name";
       "rc_app" string => "$(directory_names.fs_admin_apps)/rc";

@@ -61,3 +61,11 @@ body perms system_tmp
       owners  => { "root" };
       groups  => { "root" };
 }
+
+body perms qemu
+
+{
+      mode  => "0660";
+      owners  => { "qemu" };
+      groups  => { "qemu" };
+}

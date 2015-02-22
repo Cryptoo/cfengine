@@ -103,6 +103,10 @@ bundle agent host(arch)
       "need_bitcoin_overlay"
         not => fileexists("/$(file_names.bitcoin_overlay)");
 
+      "have_libvirtd_app"
+        expression => fileexists("/$(file_names.libvirtd_app)");
+
+
     srv_started&(!srv_failed)::
 
       "srv_ready"
@@ -124,6 +128,12 @@ bundle agent host(arch)
         create => "true",
         handle => "done_$(directory_groups.host_system)",
         comment => "create host-specific directories";
+
+      "/$(directory_groups.host_system_private)/."
+        perms => root,
+        create => "true",
+        handle => "done_$(directory_groups.host_system)",
+        comment => "create host-specific root-only directories";
 
       "/$(file_names.dmcrypt_key)"
         perms => root,
@@ -236,6 +246,14 @@ bundle agent host(arch)
         create => "true",
         edit_template => "/$(templates.site_config)",
         classes => default:u_if_repaired("cryptoo:site_config_available");
+
+    have_libvirtd_app::
+
+      "/$(directory_groups.host_qemu)/."
+        perms => qemu,
+        create => "true",
+        handle => "done_$(directory_groups.host_qemu)",
+        comment => "create qemu storage directories";
 
   methods:
 

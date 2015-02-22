@@ -97,8 +97,12 @@ bundle common directory_groups
       "host_system" slist => {
                                  $(directory_names.fs_config_dracut),
                                  $(directory_names.fs_storage_base),
-                                 $(directory_names.fs_volatile_images),
-                                 $(directory_names.fs_volatile_kernel)
+                                 $(directory_names.fs_volatile_kernel),
+                                 $(directory_names.fs_volatile_libvirt)
+                                };
+
+      "host_system_private" slist => {
+                                 $(directory_names.fs_volatile_images)
                                 };
 
       "host_system_storage" slist => {
@@ -121,6 +125,11 @@ bundle common directory_groups
       "host_pm_open" slist => {
                                  $(directory_names.fs_storage_srcpkg),
                                  $(directory_names.fs_storage_binpkg)
+                                };
+
+      "host_qemu" slist => {
+                                 $(directory_names.fs_libvirt_images),
+                                 $(directory_names.fs_libvirt_extra_images),
                                 };
 
 }
