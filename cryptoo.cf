@@ -42,6 +42,16 @@ bundle common cryptoo
       "local_inputs"
         slist => lsdir("$(this.promise_dirname)/local/promises", ".*\.cf", "true");
 
+    have_role::
+
+      "configured_role"
+        string => readfile("/$(file_names.crypoo_role)","128");
+
+    need_role::
+
+      "configured_role"
+        string => "undefined";
+
     have_machine_names::
 
       "machine_names" data => readjson("/$(file_names.machine_names)", 1M);
@@ -65,6 +75,10 @@ bundle common cryptoo
       "subnet_config" data => readjson("/$(file_names.subnet_config)", 1M),
         classes => default:if_ok("subnet_config_available");
 
+    role_undefined::
+
+      "machine_number" string => "-1";
+
     role_master::
 
       "machine_number" string => "1";
@@ -73,10 +87,10 @@ bundle common cryptoo
 
     any::
 
-      "role_master"
-        expression => regline("master", "/$(file_names.crypoo_role)");
+      "have_role"
+        expression => fileexists("/$(file_names.crypoo_role)");
 
-      "role_undefined"
+      "need_role"
         not => fileexists("/$(file_names.crypoo_role)");
 
       "have_machine_names"
@@ -97,16 +111,22 @@ bundle common cryptoo
       "need_subnet_config"
         not => fileexists("/$(file_names.subnet_config)");
 
+    have_role::
+
+      "role_$(configured_role)"
+        expression => "any";
+
+    need_role::
+
+      "role_undefined"
+        expression => "any";
+
   reports:
 
-    role_master::
+    any::
 
-      "My role is: master";
+      "My role is: $(configured_role)";
       "My number is: $(machine_number)";
       "My hostname is: $(machine_names[$(machine_number)])";
-
-    role_undefined::
-
-      "My role is: undefined";
 
 }
