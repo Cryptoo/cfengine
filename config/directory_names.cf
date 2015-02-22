@@ -67,6 +67,7 @@ bundle common directory_names
       "fs_storage_shared" string => "$(fs_storage_site)/storage";
       "fs_storage_sources" string => "$(fs_storage_site)/src";
       "fs_storage_kernel" string => "$(fs_storage_sources)/linux";
+      "fs_storage_qemu" string => "$(fs_storage_base)/qemu";
       "fs_sys_base" string => "sys";
       "fs_temp_base" string => "tmp";
       "fs_standard_base" string => "usr";

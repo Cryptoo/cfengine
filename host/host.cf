@@ -255,6 +255,14 @@ bundle agent host(arch)
         handle => "done_$(directory_groups.host_qemu)",
         comment => "create qemu storage directories";
 
+    have_libvirtd_app&srv_mounted::
+
+      "/$(directory_names.fs_storage_qemu)/."
+        perms => qemu,
+        create => "true",
+        handle => "done_$(directory_names.fs_storage_qemu)",
+        comment => "create base qemu storage directory";
+
   methods:
 
     any::
