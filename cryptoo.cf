@@ -65,17 +65,17 @@ bundle common cryptoo
     have_site_config::
 
       "site_config" data => readjson("/$(file_names.site_config)", 1M),
-        classes => default:if_ok("cryptoo:site_config_available");
+        classes => default:if_ok("site_config_available");
 
     need_site_config::
 
       "site_config" data => readjson("/$(templates.site_config)", 1M),
-        classes => default:if_ok("cryptoo:site_config_available");
+        classes => default:if_ok("site_config_available");
 
     have_subnet_config::
 
       "subnet_config" data => readjson("/$(file_names.subnet_config)", 1M),
-        classes => default:if_ok("cryptoo:subnet_config_available");
+        classes => default:if_ok("subnet_config_available");
 
     role_undefined::
 

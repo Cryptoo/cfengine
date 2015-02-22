@@ -47,11 +47,11 @@ bundle agent gcc(root, arch)
       "$(root)$(file_names.env_gcc_native)"
         move_obstructions => "true",
         link_from => gcc_profile("$(native_gcc_profile_best_path)"),
-        classes => default:u_if_repaired("cryptoo:update_env");
+        classes => default:u_if_repaired("update_env");
 
       "$(root)$(file_names.env_gcc_$(arch))"
         move_obstructions => "true",
         edit_line => default:set_variable_values("cryptoo:gcc.gcc"),
-        classes => default:u_if_repaired("cryptoo:update_env");
+        classes => default:u_if_repaired("update_env");
 
 }
