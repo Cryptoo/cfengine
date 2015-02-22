@@ -21,11 +21,11 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
 
   vars:
 
-    have_cpu2use_app::
+    have_cpu2use_app&(!broken_cpu2use)::
 
-      "cpu_flags" string => execresult("/$(file_names.cpu2use_app)","noshell");
+      "cpu_flags" string => execresult("$(root)$(file_names.cpu2use_app)","noshell");
 
-    !have_cpu2use_app::
+    (!have_cpu2use_app)|(broken_cpu2use)::
 
       "cpu_flags" string => "CPU_FLAGS_X86=\"\"";
 
@@ -42,7 +42,7 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
       "$(multilib)" expression => "any";
 
       "have_cpu2use_app"
-        expression => fileexists("/$(file_names.cpu2use_app)");
+        expression => fileexists("$(root)$(file_names.cpu2use_app)");
 
       "have_locale_gen"
         expression => fileexists("$(root)$(file_names.locale)");
@@ -64,11 +64,18 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
 
     local_role_master|local_role_desktop|local_role_server::
 
-      "local_role_host" expression => "any";
+      "local_role_host"
+        expression => "any";
 
     local_role_desktop|local_role_server::
 
-      "local_role_template" expression => "any";
+      "local_role_template"
+        expression => "any";
+
+    have_cpu2use_app::
+
+      "broken_cpu2use"
+        expression => regextract(".*Traceback.*", "$(cpu_flags)", "broken_cpu2use");
 
   users:
 
@@ -130,11 +137,6 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
       "$(root)$(file_names.mtab)"
         move_obstructions => "true",
         link_from => proc_mounts;
-
-      "$(root)$(file_names.pm_config)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.make_conf)";
 
       "$(root)$(file_names.pm_profile)"
         move_obstructions => "true",
@@ -264,6 +266,18 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
         link_from => cryptoo_package_use("systemd");
 
       "$(root)$(file_names.pm_use_systemdbootstrap)"
+        delete => default:tidy;
+
+    !broken_cpu2use::
+
+      "$(root)$(file_names.pm_config)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.make_conf)";
+
+    broken_cpu2use::
+
+      "$(root)$(file_names.pm_config)"
         delete => default:tidy;
 
   methods:

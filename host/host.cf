@@ -167,7 +167,6 @@ bundle agent host(arch)
         comment => "create /etc/portage/package.use/host";
 
       "/$(directory_names.fs_storage_base)/."
-        depends_on => { "done_srv" },
         perms => system,
         create => "true",
         classes => srv,
