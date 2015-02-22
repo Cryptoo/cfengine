@@ -15,6 +15,13 @@ bundle agent cryptoo_system
 
 {
 
+  vars:
+
+    local_role::
+
+      "role_bundle"
+        slist => bundlesmatching("local:$(cryptoo.configured_role)", "cryptoo");
+
   methods:
 
     role_undefined::
@@ -26,5 +33,10 @@ bundle agent cryptoo_system
 
       "configure system as a host"
         usebundle => host("x86_64");
+
+    local_role::
+
+      "configure system using local rules"
+        usebundle => $(role_bundle);
 
 }

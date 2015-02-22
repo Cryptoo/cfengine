@@ -9,13 +9,14 @@ body file control
 }
 
 bundle agent local
+
 {
   vars:
 
     any::
 
       "bundles"
-        slist => bundlesmatching("local:.*", "cryptoo");
+        slist => bundlesmatching("local:.*", "cryptoo", "auto");
 
   methods:
 

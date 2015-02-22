@@ -121,6 +121,11 @@ bundle common cryptoo
       "role_undefined"
         expression => "any";
 
+    have_role&(!role_master)::
+
+      "local_role"
+        expression => "any";
+
   reports:
 
     any::
