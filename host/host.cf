@@ -161,6 +161,10 @@ bundle agent host(arch)
         classes => default:u_if_repaired("fstab_repaired"),
         comment => "configure /etc/fstab";
 
+      "/$(file_names.pm_profile)"
+        move_obstructions => "true",
+        link_from => cryptoo_profile("cryptoo");
+
       "/$(file_names.pm_use_host)"
         move_obstructions => "true",
         link_from => cryptoo_package_use("host"),

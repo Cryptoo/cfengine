@@ -138,10 +138,6 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
         move_obstructions => "true",
         link_from => proc_mounts;
 
-      "$(root)$(file_names.pm_profile)"
-        move_obstructions => "true",
-        link_from => cryptoo_profile("cryptoo");
-
       "$(root)$(file_names.pm_env_localdistfiles)"
         move_obstructions => "true",
         link_from => cryptoo_portage_env("local-distfiles.conf");

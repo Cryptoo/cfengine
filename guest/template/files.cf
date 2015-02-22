@@ -25,6 +25,10 @@ bundle agent template_files(root, role)
 
     template_type_server::
 
+      "$(root)$(file_names.pm_profile)"
+        move_obstructions => "true",
+        link_from => cryptoo_profile("cryptoo");
+
       "$(root)$(file_names.pm_keywords_bitcoin)"
           move_obstructions => "true",
           link_from => cryptoo_package_keyword("bitcoin");
