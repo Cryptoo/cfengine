@@ -29,21 +29,21 @@ bundle agent openrc(root)
       "$(root)$(file_names.openrc_$(config.enabled_services))"
         move_obstructions => "true",
         link_from => openrc($(config.enabled_services)),
-        classes => default:u_if_repaired("update_openrc");
+        classes => default:u_if_repaired("cryptoo:update_openrc");
 
       "$(root)$(file_names.openrc_devicemapper)"
         move_obstructions => "true",
         link_from => openrc("device-mapper"),
-        classes => default:u_if_repaired("update_openrc");
+        classes => default:u_if_repaired("cryptoo:update_openrc");
 
       "$(root)$(file_names.openrc_vixiecron)"
         move_obstructions => "true",
         link_from => openrc("vixie-cron"),
-        classes => default:u_if_repaired("update_openrc");
+        classes => default:u_if_repaired("cryptoo:update_openrc");
 
       "$(root)$(file_names.openrc_$(config.disabled_services))"
         delete => default:tidy,
-        classes => default:u_if_repaired("update_openrc");
+        classes => default:u_if_repaired("cryptoo:update_openrc");
 
       "$(root)$(file_names.hostname_openrc)"
         perms => system,

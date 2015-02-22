@@ -228,21 +228,21 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
         perms => system,
         create => "true",
         edit_template => "/$(templates.env_cryptoo)",
-        classes => default:u_if_repaired("update_env");
+        classes => default:u_if_repaired("cryptoo:update_env");
 
       "$(root)$(file_names.env_locale)"
         perms => system,
         create => "true",
         edit_template => "/$(templates.env_locale)",
-        classes => default:u_if_repaired("update_env");
+        classes => default:u_if_repaired("cryptoo:update_env");
 
     have_locale_gen::
 
       "$(root)$(file_names.locale)"
         perms => system,
         create => "false",
-        edit_line => default:uncomment_lines_containing("$(cryptoo.site_config[locale])","#"),
-        classes => default:u_if_repaired("update_locale");
+        edit_line => default:uncomment_lines_containing("$(cryptoo:cryptoo.site_config[locale])","#"),
+        classes => default:u_if_repaired("cryptoo:update_locale");
 
     bootstrap_systemd::
 

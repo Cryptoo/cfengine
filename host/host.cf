@@ -134,21 +134,21 @@ bundle agent host(arch)
         perms => system,
         create => "true",
         edit_template => "/$(templates.dracut_conf)",
-        classes => default:u_if_repaired("update_dracut"),
+        classes => default:u_if_repaired("cryptoo:update_dracut"),
         comment => "configure dracut";
 
       "/$(file_names.env_kernel)"
         perms => system,
         create => "true",
         edit_template => "/$(templates.env_kernel)",
-        classes => default:u_if_repaired("update_env"),
+        classes => default:u_if_repaired("cryptoo:update_env"),
         comment => "create /etc/env.d/99kernel";
 
       "/$(file_names.fstab)"
         perms => system,
         create => "true",
         edit_template => "/$(templates.fstab)",
-        classes => default:u_if_repaired("fstab_repaired"),
+        classes => default:u_if_repaired("cryptoo:fstab_repaired"),
         comment => "configure /etc/fstab";
 
       "/$(file_names.pm_use_host)"
@@ -174,14 +174,14 @@ bundle agent host(arch)
       "/$(file_names.grub_defaults)"
         perms => system,
         create => "false",
-        edit_line => default:set_quoted_values("config.grub"),
+        edit_line => default:set_quoted_values("cryptoo:config.grub"),
         comment => "configure /etc/default/grub";
 
     root_bind_mount::
 
       "/$(directory_names.fs_mount_root)/$(file_names.dmcrypt_key)"
         perms => root,
-        copy_from => default:local_cp("/$(file_names.dmcrypt_key)"),
+        copy_from => default:local_cp("/$(cryptoo:file_names.dmcrypt_key)"),
         comment => "put a backup copy of the master HD encryption inside the encrypted volume";
 
     srv_mounted::
@@ -235,7 +235,7 @@ bundle agent host(arch)
         perms => system,
         create => "true",
         edit_template => "/$(templates.site_config)",
-        classes => default:u_if_repaired("site_config_available");
+        classes => default:u_if_repaired("cryptoo:site_config_available");
 
   methods:
 
@@ -263,19 +263,19 @@ bundle agent host(arch)
 
       "configure kernel"
         usebundle => kconfig("host", "$(arch)"),
-        classes => default:if_ok("kernel_ok");
+        classes => default:if_ok("cryptoo:kernel_ok");
 
     srv_created::
 
       "mount storage device"
         usebundle => mount_types("ext4"),
-        classes => default:if_ok("srv_mounted");
+        classes => default:if_ok("cryptoo:srv_mounted");
 
     srv_ready&srv_created::
 
       "ensure all mounts are active"
         usebundle => mount_all,
-        classes => default:if_ok("all_mounted");
+        classes => default:if_ok("cryptoo:all_mounted");
 
     fstab_repaired::
 
@@ -287,7 +287,7 @@ bundle agent host(arch)
 
       "generate random subnets"
         usebundle => subnet,
-        classes => default:if_ok("subnet_config_available");
+        classes => default:if_ok("cryptoo:subnet_config_available");
 
   commands:
 
