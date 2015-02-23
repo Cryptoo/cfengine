@@ -143,21 +143,21 @@ bundle agent host(arch)
       "/$(file_names.dracut_conf)"
         perms => system,
         create => "true",
-        edit_template => "/$(templates.dracut_conf)",
+        edit_template => "/$(templates.template[dracut_conf])",
         classes => default:u_if_repaired("update_dracut"),
         comment => "configure dracut";
 
       "/$(file_names.env_kernel)"
         perms => system,
         create => "true",
-        edit_template => "/$(templates.env_kernel)",
+        edit_template => "/$(templates.template[env_kernel])",
         classes => default:u_if_repaired("update_env"),
         comment => "create /etc/env.d/99kernel";
 
       "/$(file_names.fstab)"
         perms => system,
         create => "true",
-        edit_template => "/$(templates.fstab)",
+        edit_template => "/$(templates.template[fstab])",
         classes => default:u_if_repaired("fstab_repaired"),
         comment => "configure /etc/fstab";
 
@@ -228,26 +228,26 @@ bundle agent host(arch)
       "/$(file_names.storage_pm_site_meta)"
         perms => system,
         create => "true",
-        edit_template => "/$(templates.local_layout_conf)";
+        edit_template => "/$(templates.template[local_layout_conf])";
 
       "/$(file_names.storage_pm_site_repo)"
         perms => system,
         create => "true",
-        edit_template => "/$(templates.site_repo_name)";
+        edit_template => "/$(templates.template[site_repo_name])";
 
     need_machine_names::
 
       "/$(file_names.machine_names)"
         perms => system,
         create => "true",
-        edit_template => "/$(templates.machine_names)";
+        edit_template => "/$(templates.template[machine_names])";
 
     need_site_config::
 
       "/$(file_names.site_config)"
         perms => system,
         create => "true",
-        edit_template => "/$(templates.site_config)",
+        edit_template => "/$(templates.template[site_config])",
         classes => default:u_if_repaired("site_config_available");
 
     have_libvirtd_app::

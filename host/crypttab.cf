@@ -28,11 +28,11 @@ bundle agent crypttab
       "/$(file_names.crypttab)"
         perms => root,
         create => "true",
-        edit_template => "/$(templates.crypttab)";
+        edit_template => "/$(templates.template[crypttab])";
 
       "/$(file_names.dmcrypt_conf)"
         perms => root,
         create => "true",
-        edit_template => "/$(templates.dmcrypt)";
+        edit_template => "/$(templates.template[dmcrypt])";
 
 }

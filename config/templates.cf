@@ -34,53 +34,10 @@ bundle common templates
                     "subnets"
                  };
 
-    !local_template_env_cryptoo:: "env_cryptoo" string => "$(directory_names.fs_volatile_cf_templates)/$(file_names.template_env_cryptoo)";
-    local_template_env_cryptoo:: "env_cryptoo" string => "$(directory_names.fs_volatile_local_templates)/$(file_names.template_env_cryptoo)";
-
-    !local_template_env_locale:: "env_locale" string => "$(directory_names.fs_volatile_cf_templates)/$(file_names.template_env_locale)";
-    local_template_env_locale:: "env_locale" string => "$(directory_names.fs_volatile_local_templates)/$(file_names.template_env_locale)";
-
-    !local_template_make_conf:: "make_conf" string => "$(directory_names.fs_volatile_cf_templates)/$(file_names.template_make_conf)";
-    local_template_make_conf:: "make_conf" string => "$(directory_names.fs_volatile_local_templates)/$(file_names.template_make_conf)";
-
-    !local_template_local_layout_conf:: "local_layout_conf" string => "$(directory_names.fs_volatile_cf_templates)/$(file_names.template_local_layout_conf)";
-    local_template_local_layout_conf:: "local_layout_conf" string => "$(directory_names.fs_volatile_local_templates)/$(file_names.template_local_layout_conf)";
-
-    !local_template_local_repo_name:: "local_repo_name" string => "$(directory_names.fs_volatile_cf_templates)/$(file_names.template_local_repo_name)";
-    local_template_local_repo_name:: "local_repo_name" string => "$(directory_names.fs_volatile_local_templates)/$(file_names.template_local_repo_name)";
-
-    !local_template_profile_parent:: "profile_parent" string => "$(directory_names.fs_volatile_cf_templates)/$(file_names.template_profile_parent)";
-    local_template_profile_parent:: "profile_parent" string => "$(directory_names.fs_volatile_local_templates)/$(file_names.template_profile_parent)";
-
-    !local_template_world_sets:: "world_sets" string => "$(directory_names.fs_volatile_cf_templates)/$(file_names.template_world_sets)";
-    local_template_world_sets:: "world_sets" string => "$(directory_names.fs_volatile_local_templates)/$(file_names.template_world_sets)";
-
-    !local_template_crypttab:: "crypttab" string => "$(directory_names.fs_volatile_cf_templates)/$(file_names.template_crypttab)";
-    local_template_crypttab:: "crypttab" string => "$(directory_names.fs_volatile_local_templates)/$(file_names.template_crypttab)";
-
-    !local_template_dmcrypt:: "dmcrypt" string => "$(directory_names.fs_volatile_cf_templates)/$(file_names.template_dmcrypt)";
-    local_template_dmcrypt:: "dmcrypt" string => "$(directory_names.fs_volatile_local_templates)/$(file_names.template_dmcrypt)";
-
-    !local_template_dracut_conf:: "dracut_conf" string => "$(directory_names.fs_volatile_cf_templates)/$(file_names.template_dracut_conf)";
-    local_template_dracut_conf:: "dracut_conf" string => "$(directory_names.fs_volatile_local_templates)/$(file_names.template_dracut_conf)";
-
-    !local_template_env_kernel:: "env_kernel" string => "$(directory_names.fs_volatile_cf_templates)/$(file_names.template_env_kernel)";
-    local_template_env_kernel:: "env_kernel" string => "$(directory_names.fs_volatile_local_templates)/$(file_names.template_env_kernel)";
-
-    !local_template_fstab:: "fstab" string => "$(directory_names.fs_volatile_cf_templates)/$(file_names.template_fstab)";
-    local_template_fstab:: "fstab" string => "$(directory_names.fs_volatile_local_templates)/$(file_names.template_fstab)";
-
-    !local_template_machine_names:: "machine_names" string => "$(directory_names.fs_volatile_cf_templates)/$(file_names.template_machine_names)";
-    local_template_machine_names:: "machine_names" string => "$(directory_names.fs_volatile_local_templates)/$(file_names.template_machine_names)";
-
-    !local_template_site_config:: "site_config" string => "$(directory_names.fs_volatile_cf_templates)/$(file_names.template_site_config)";
-    local_template_site_config:: "site_config" string => "$(directory_names.fs_volatile_local_templates)/$(file_names.template_site_config)";
-
-    !local_template_site_repo_name:: "site_repo_name" string => "$(directory_names.fs_volatile_cf_templates)/$(file_names.template_site_repo_name)";
-    local_template_site_repo_name:: "site_repo_name" string => "$(directory_names.fs_volatile_local_templates)/$(file_names.template_site_repo_name)";
-
-    !local_template_subnets:: "subnets" string => "$(directory_names.fs_volatile_cf_templates)/$(file_names.template_subnets)";
-    local_template_subnets:: "subnets" string => "$(directory_names.fs_volatile_local_templates)/$(file_names.template_subnets)";
+      "template[$(template_list)]"
+        string => ifelse("local_template_$(template_list)", "$(directory_names.fs_volatile_local_templates)/$(file_names.template_$(template_list))",
+                         "!local_template_$(template_list)", "$(directory_names.fs_volatile_cf_templates)/$(file_names.template_$(template_list))",
+                         "missing");
 
   classes:
 
@@ -88,5 +45,11 @@ bundle common templates
 
       "local_template_$(template_list)"
         expression => fileexists("/$(directory_names.fs_volatile_local_templates)/$(file_names.template_$(template_list))");
+
+  reports:
+
+    any::
+
+        "template[$(template_list)] = \"$(template[$(template_list)])\"";
 
 }
