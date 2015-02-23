@@ -140,6 +140,16 @@ bundle agent host(arch)
         create => "false",
         comment => "ensure master HD encryption key is root-only";
 
+      "/$(directory_names.fs_config_crypoo_incoming)/guests/$(config.server_guests)"
+        perms => root,
+        create => "true",
+        comment => "outbox directories for the server guests on the host filesystem";
+
+      "/$(directory_names.fs_config_crypoo_outgoing)/guests/$(config.server_guests)"
+        perms => root,
+        create => "true",
+        comment => "inbox directories for the server guests on the host filesystem";
+
       "/$(file_names.dracut_conf)"
         perms => system,
         create => "true",
