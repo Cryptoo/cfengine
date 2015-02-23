@@ -46,10 +46,4 @@ bundle common templates
       "local_template_$(template_list)"
         expression => fileexists("/$(directory_names.fs_volatile_local_templates)/$(file_names.template_$(template_list))");
 
-  reports:
-
-    any::
-
-        "template[$(template_list)] = \"$(template[$(template_list)])\"";
-
 }
