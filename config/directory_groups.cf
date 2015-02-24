@@ -14,122 +14,142 @@ bundle common directory_groups
 
     any::
 
-      "common_system" slist => {
-                                 $(directory_names.fs_apps_base),
-                                 $(directory_names.fs_boot_base),
-                                 $(directory_names.fs_dev_base),
-                                 $(directory_names.fs_config_base),
-                                 $(directory_names.fs_config_bash),
-                                 $(directory_names.fs_config_openrc_env),
-                                 $(directory_names.fs_config_crypoo_root),
-                                 $(directory_names.fs_config_default),
-                                 $(directory_names.fs_config_environment),
-                                 $(directory_names.fs_config_gcc_environment),
-                                 $(directory_names.fs_config_openrc),
-                                 $(directory_names.fs_config_pm),
-                                 $(directory_names.fs_config_pm_env),
-                                 $(directory_names.fs_config_pm_environments),
-                                 $(directory_names.fs_config_pm_keywords),
-                                 $(directory_names.fs_config_pm_mask),
-                                 $(directory_names.fs_config_pm_unmask),
-                                 $(directory_names.fs_config_pm_use),
-                                 $(directory_names.fs_config_pm_patches),
-                                 $(directory_names.fs_config_pm_profile),
-                                 $(directory_names.fs_config_pm_upstream),
-                                 $(directory_names.fs_config_run_base),
-                                 $(directory_names.fs_config_run_boot),
-                                 $(directory_names.fs_config_run_default),
-                                 $(directory_names.fs_config_run_sysinit),
-                                 $(directory_names.fs_mount_base),
-                                 $(directory_names.fs_mount_root),
-                                 $(directory_names.fs_mount_temp),
-                                 $(directory_names.fs_runtime_base),
-                                 $(directory_names.fs_admin_apps),
-                                 $(directory_names.fs_standard_base),
-                                 $(directory_names.fs_standard_apps),
-                                 $(directory_names.fs_cryptoo),
-                                 $(directory_names.fs_standard_admin_apps),
-                                 $(directory_names.fs_standard_share),
-                                 $(directory_names.fs_standard_timezones),
-                                 $(directory_names.fs_machine_base),
-                                 $(directory_names.fs_site_base),
-                                 $(directory_names.fs_site_apps),
-                                 $(directory_names.fs_site_sources),
-                                 $(directory_names.fs_standard_sources),
-                                 $(directory_names.fs_volatile_base),
-                                 $(directory_names.fs_volatile_library)
-                                };
+      "common_system"
+        slist => {
+                    $(directory_names.fs_apps_base),
+                    $(directory_names.fs_boot_base),
+                    $(directory_names.fs_dev_base),
+                    $(directory_names.fs_config_base),
+                    $(directory_names.fs_config_bash),
+                    $(directory_names.fs_config_openrc_env),
+                    $(directory_names.fs_config_crypoo_root),
+                    $(directory_names.fs_config_default),
+                    $(directory_names.fs_config_environment),
+                    $(directory_names.fs_config_gcc_environment),
+                    $(directory_names.fs_config_openrc),
+                    $(directory_names.fs_config_pm),
+                    $(directory_names.fs_config_pm_env),
+                    $(directory_names.fs_config_pm_environments),
+                    $(directory_names.fs_config_pm_keywords),
+                    $(directory_names.fs_config_pm_mask),
+                    $(directory_names.fs_config_pm_unmask),
+                    $(directory_names.fs_config_pm_use),
+                    $(directory_names.fs_config_pm_patches),
+                    $(directory_names.fs_config_pm_profile),
+                    $(directory_names.fs_config_pm_upstream),
+                    $(directory_names.fs_config_run_base),
+                    $(directory_names.fs_config_run_boot),
+                    $(directory_names.fs_config_run_default),
+                    $(directory_names.fs_config_run_sysinit),
+                    $(directory_names.fs_mount_base),
+                    $(directory_names.fs_mount_root),
+                    $(directory_names.fs_mount_temp),
+                    $(directory_names.fs_runtime_base),
+                    $(directory_names.fs_admin_apps),
+                    $(directory_names.fs_standard_base),
+                    $(directory_names.fs_standard_apps),
+                    $(directory_names.fs_cryptoo),
+                    $(directory_names.fs_standard_admin_apps),
+                    $(directory_names.fs_standard_share),
+                    $(directory_names.fs_standard_timezones),
+                    $(directory_names.fs_machine_base),
+                    $(directory_names.fs_site_base),
+                    $(directory_names.fs_site_apps),
+                    $(directory_names.fs_site_sources),
+                    $(directory_names.fs_standard_sources),
+                    $(directory_names.fs_volatile_base),
+                    $(directory_names.fs_volatile_library)
+                 };
 
-      "common_system_restricted" slist => {
-                                 $(directory_names.fs_proc_base),
-                                 $(directory_names.fs_sys_base)
-                                };
+      "common_system_restricted"
+        slist => {
+                    $(directory_names.fs_proc_base),
+                    $(directory_names.fs_sys_base)
+                 };
 
-      "common_system_private" slist => {
-                                 $(directory_names.fs_config_crypoo_incoming),
-                                 $(directory_names.fs_config_crypoo_outgoing),
-                                 $(directory_names.fs_admin_base),
-                                 $(directory_names.fs_volatile_cfengine),
-                                 $(directory_names.fs_volatile_cf_inputs),
-                                 $(directory_names.fs_volatile_cf_templates)
-                                };
+      "common_system_private"
+        slist => {
+                    $(directory_names.fs_config_crypoo_incoming),
+                    $(directory_names.fs_config_crypoo_outgoing),
+                    $(directory_names.fs_admin_base),
+                    $(directory_names.fs_volatile_cfengine),
+                    $(directory_names.fs_volatile_cf_inputs),
+                    $(directory_names.fs_volatile_cf_templates)
+                 };
 
-      "common_open" slist => {
-                                 $(directory_names.fs_temp_base),
-                                 $(directory_names.fs_volatile_temp)
-                                };
+      "common_open"
+        slist => {
+                    $(directory_names.fs_temp_base),
+                    $(directory_names.fs_volatile_temp)
+                 };
 
-      "common_pm" slist => {
-                                 $(directory_names.fs_machine_pm),
-                                 $(directory_names.fs_machine_pm_meta),
-                                 $(directory_names.fs_machine_pm_profile),
-                                 $(directory_names.fs_pm),
-                                 $(directory_names.fs_site_pm),
-                                 $(directory_names.fs_volatile_pm),
-                                 $(directory_names.fs_volatile_overlay)
-                                };
+      "common_pm"
+        slist => {
+                    $(directory_names.fs_machine_pm),
+                    $(directory_names.fs_machine_pm_meta),
+                    $(directory_names.fs_machine_pm_profile),
+                    $(directory_names.fs_pm),
+                    $(directory_names.fs_site_pm),
+                    $(directory_names.fs_volatile_pm),
+                    $(directory_names.fs_volatile_overlay)
+                 };
 
-      "common_pm_open" slist => {
-                                 $(directory_names.fs_site_srcpkg),
-                                 $(directory_names.fs_site_binpkg)
-                                };
+      "common_pm_open"
+        slist => {
+                    $(directory_names.fs_site_srcpkg),
+                    $(directory_names.fs_site_binpkg)
+                 };
 
-      "host_system" slist => {
-                                 $(directory_names.fs_config_dracut),
-                                 $(directory_names.fs_volatile_kernel),
-                                 $(directory_names.fs_volatile_libvirt)
-                                };
+      "host_system"
+        slist => {
+                    $(directory_names.fs_config_dracut),
+                    $(directory_names.fs_volatile_kernel),
+                    $(directory_names.fs_volatile_libvirt)
+                 };
 
-      "host_system_private" slist => {
-                                 $(directory_names.fs_volatile_images)
-                                };
+      "host_system_private"
+        slist => {
+                    $(directory_names.fs_volatile_images)
+                 };
 
-      "host_system_storage" slist => {
-                                 $(directory_names.fs_storage_nfs),
-                                 $(directory_names.fs_storage_site),
-                                 $(directory_names.fs_storage_apps),
-                                 $(directory_names.fs_storage_cryptoo),
-                                 $(directory_names.fs_storage_sources),
-                                 $(directory_names.fs_storage_kernel)
-                                };
+      "host_system_storage"
+        slist => {
+                    $(directory_names.fs_storage_nfs),
+                    $(directory_names.fs_storage_site),
+                    $(directory_names.fs_storage_apps),
+                    $(directory_names.fs_storage_cryptoo),
+                    $(directory_names.fs_storage_sources),
+                    $(directory_names.fs_storage_kernel)
+                 };
 
-      "host_pm" slist => {
-                                 $(directory_names.fs_storage_overlay),
-                                 $(directory_names.fs_storage_pm),
-                                 $(directory_names.fs_storage_pm_site),
-                                 $(directory_names.fs_storage_pm_site_meta),
-                                 $(directory_names.fs_storage_pm_site_profile),
-                                 $(directory_names.fs_bitcoin_overlay),
-                                };
+      "host_pm"
+        slist => {
+                    $(directory_names.fs_storage_overlay),
+                    $(directory_names.fs_storage_pm),
+                    $(directory_names.fs_storage_pm_site),
+                    $(directory_names.fs_storage_pm_site_meta),
+                    $(directory_names.fs_storage_pm_site_profile),
+                    $(directory_names.fs_bitcoin_overlay),
+                 };
 
-      "host_pm_open" slist => {
-                                 $(directory_names.fs_storage_srcpkg),
-                                 $(directory_names.fs_storage_binpkg)
-                                };
+      "host_pm_open"
+        slist => {
+                    $(directory_names.fs_storage_srcpkg),
+                    $(directory_names.fs_storage_binpkg)
+                 };
 
-      "host_qemu" slist => {
-                                 $(directory_names.fs_libvirt_images),
-                                 $(directory_names.fs_libvirt_extra_images),
-                                };
+      "host_qemu"
+        slist => {
+                    $(directory_names.fs_libvirt_images),
+                    $(directory_names.fs_libvirt_extra_images),
+                 };
 
+      "host_root_qemu"
+        slist => {
+                    $(directory_names.fs_config_crypoo_guests),
+                    $(directory_names.fs_config_guest_inboxes),
+                    "$(directory_names.fs_config_guest_inboxes)/$(config.server_guests)",
+                    $(directory_names.fs_config_guest_outboxes),
+                    "$(directory_names.fs_config_guest_outboxes)/$(config.server_guests)"
+                 };
 }

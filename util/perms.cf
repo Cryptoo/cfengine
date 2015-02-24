@@ -69,3 +69,11 @@ body perms qemu
       owners  => { "qemu" };
       groups  => { "qemu" };
 }
+
+body perms root_qemu
+
+{
+      mode  => "0660";
+      owners  => { "root" };
+      groups  => { "qemu" };
+}
