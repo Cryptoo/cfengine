@@ -24,9 +24,9 @@ bundle common directory_names
       "fs_config_crypoo_root" string => "$(fs_config_base)/cryptoo";
       "fs_config_crypoo_incoming" string => "$(fs_config_crypoo_root)/inbox";
       "fs_config_crypoo_outgoing" string => "$(fs_config_crypoo_root)/outbox";
-      "fs_config_crypoo_guests" string => "$(fs_config_crypoo_root)/guests";
-      "fs_config_guest_inboxes" string => "$(fs_config_crypoo_guests)/inboxes";
-      "fs_config_guest_outboxes" string => "$(fs_config_crypoo_guests)/outboxes";
+      "fs_config_crypoo_guests" string => "$(fs_config_crypoo_root)/guest";
+      "fs_config_guest_inboxes" string => "$(fs_config_crypoo_guests)/inbox";
+      "fs_config_guest_outboxes" string => "$(fs_config_crypoo_guests)/outbox";
       "fs_config_crypoo_role" string => "$(fs_config_crypoo_incoming)/role";
       "fs_config_default" string => "$(fs_config_base)/default";
       "fs_config_dracut" string => "$(fs_config_base)/dracut.conf.d";
