@@ -143,7 +143,17 @@ bundle agent host(arch)
       "/$(directory_groups.host_root_qemu)/."
         perms => root_qemu,
         create => "true",
-        comment => "inbox and outbox directories for the server guests on the host filesystem";
+        comment => "/etc/cryptoo/guest/{inbox,outbox}";
+
+      "/$(directory_names.fs_config_guest_inboxes)/$(config.server_guests)/."
+        perms => root_qemu,
+        create => "true",
+        comment => "guest inboxes";
+
+      "/$(directory_names.fs_config_guest_outboxes)/$(config.server_guests)/."
+        perms => root_qemu,
+        create => "true",
+        comment => "guest outboxes";
 
       "/$(file_names.dracut_conf)"
         perms => system,

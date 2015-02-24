@@ -148,8 +148,6 @@ bundle common directory_groups
         slist => {
                     $(directory_names.fs_config_crypoo_guests),
                     $(directory_names.fs_config_guest_inboxes),
-                    "$(directory_names.fs_config_guest_inboxes)/$(config.server_guests)",
-                    $(directory_names.fs_config_guest_outboxes),
-                    "$(directory_names.fs_config_guest_outboxes)/$(config.server_guests)"
+                    $(directory_names.fs_config_guest_outboxes)
                  };
 }
