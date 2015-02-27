@@ -151,6 +151,18 @@ bundle agent host(arch)
         create => "true",
         comment => "guest inboxes";
 
+      "/$(directory_names.fs_config_guest_inboxes)/$(config.server_guests)/machine_names.json"
+        perms => root_qemu,
+        create => "true",
+        copy_from => default:local_cp("/$(cryptoo:file_names.machine_names)"),
+        comment => "guest machine names";
+
+      "/$(directory_names.fs_config_guest_inboxes)/$(config.server_guests)/subnet_config.json"
+        perms => root_qemu,
+        create => "true",
+        copy_from => default:local_cp("/$(cryptoo:file_names.subnet_config)"),
+        comment => "guest subnet config";
+
       "/$(directory_names.fs_config_guest_outboxes)/$(config.server_guests)/."
         perms => root_qemu,
         create => "true",
