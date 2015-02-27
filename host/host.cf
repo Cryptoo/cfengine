@@ -10,6 +10,7 @@ body file control
               "cryptoo/util/perms.cf",
               "cryptoo/common/common.cf",
               "cryptoo/host/crypttab.cf",
+              "cryptoo/host/guest_role.cf",
               "cryptoo/host/kernel.cf",
               "cryptoo/host/mounts.cf",
               "cryptoo/host/openrc.cf",
@@ -287,6 +288,9 @@ bundle agent host(arch)
 
       "configure OpenRC"
         usebundle => openrc("/");
+
+      "configure guest roles"
+        usebundle => cryptoo:guest_role("/$(directory_names.fs_config_guest_inboxes)/$(config.server_guests)", "$(config.server_guests)");
 
       "manage files for the server skeleton"
         usebundle => cryptoo_filesystem("/$(directory_names.fs_volatile_images)/server/x86_64/no-multilib/","server","x86_64","nomultilib");

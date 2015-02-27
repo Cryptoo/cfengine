@@ -144,6 +144,7 @@ bundle common file_names
       "template_dracut_conf" string => "host/dracut_conf.txt";
       "template_env_kernel" string => "host/env_kernel.txt";
       "template_fstab" string => "host/fstab.txt";
+      "template_guest_role" string => "host/guest_role.txt";
       "template_machine_names" string => "host/machine_names.txt";
       "template_site_config" string => "host/site_config.txt";
       "template_site_repo_name" string => "host/site_repo_name.txt";

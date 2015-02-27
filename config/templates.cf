@@ -28,6 +28,7 @@ bundle common templates
                     "dracut_conf",
                     "env_kernel",
                     "fstab",
+                    "guest_role",
                     "machine_names",
                     "site_config",
                     "site_repo_name",

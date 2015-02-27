@@ -1,0 +1,33 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/util/perms.cf",
+              "cryptoo/config/templates.cf",
+            };
+}
+
+bundle agent guest_role(dir, role)
+
+{
+  vars:
+
+    any::
+
+      "specified_role"
+        string => $(role);
+
+  files:
+
+    any::
+
+      "$(dir)/role"
+        perms => cryptoo:root_qemu,
+        create => "true",
+        edit_template => "/$(cryptoo:templates.template[guest_role])",
+        comment => "set the role which the guest VM will see at /etc/cryptoo/input/role";
+
+}
