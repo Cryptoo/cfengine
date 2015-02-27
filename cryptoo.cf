@@ -102,6 +102,11 @@ bundle common cryptoo
       "machine_number"
         string => "1";
 
+    role_firewall_external::
+
+      "machine_number"
+        string => "10";
+
   classes:
 
     any::
