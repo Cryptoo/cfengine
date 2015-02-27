@@ -2,3 +2,5 @@
 @master
 [%CFEngine local_role_server:: %]
 @template-server
+[%CFEngine local_role_firewall_external:: %]
+@firewall_external
