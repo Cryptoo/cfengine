@@ -24,16 +24,17 @@ bundle common cryptoo
 
     any::
 
-      "bundles" slist => {
-                            "cryptoo:cryptoo",
-                            "cryptoo:config",
-                            "cryptoo:directory_names",
-                            "cryptoo:directory_groups",
-                            "cryptoo:file_names",
-                            "cryptoo:templates",
-                            "cryptoo:local",
-                            "cryptoo:cryptoo_system"
-                         };
+      "bundles"
+        slist => {
+                   "cryptoo:cryptoo",
+                   "cryptoo:config",
+                   "cryptoo:directory_names",
+                   "cryptoo:directory_groups",
+                   "cryptoo:file_names",
+                   "cryptoo:templates",
+                   "cryptoo:local",
+                   "cryptoo:cryptoo_system"
+                 };
 
       "kernel_git"
         string => "git://github.com/cryptoo/kernel";
@@ -56,34 +57,50 @@ bundle common cryptoo
 
     have_machine_names::
 
-      "machine_names" data => readjson("/$(file_names.machine_names)", 1M);
+      "machine_names"
+        data => readjson("/$(file_names.machine_names)", 1M);
 
     need_machine_names::
 
-      "machine_names" data => readjson("/$(templates.template[machine_names])", 1M);
+      "machine_names"
+        data => readjson("/$(templates.template[machine_names])", 1M);
 
     have_site_config::
 
-      "site_config" data => readjson("/$(file_names.site_config)", 1M),
+      "site_config"
+        data => readjson("/$(file_names.site_config)", 1M),
         classes => default:if_ok("site_config_available");
 
     need_site_config::
 
-      "site_config" data => readjson("/$(templates.template[site_config])", 1M),
+      "site_config"
+        data => readjson("/$(templates.template[site_config])", 1M),
         classes => default:if_ok("site_config_available");
 
     have_subnet_config::
 
-      "subnet_config" data => readjson("/$(file_names.subnet_config)", 1M),
+      "subnet_config"
+        data => readjson("/$(file_names.subnet_config)", 1M),
         classes => default:if_ok("subnet_config_available");
+
+      "local_subnets"
+        slist => {
+                   "192.168.$(subnet_config[ispdmz]).0/24",
+                   "192.168.$(subnet_config[tor]).0/24",
+                   "192.168.$(subnet_config[i2p]).0/24",
+                   "192.168.$(subnet_config[vpndmz]).0/24",
+                   "192.168.$(subnet_config[lan]).0/24",
+                 };
 
     role_undefined::
 
-      "machine_number" string => "-1";
+      "machine_number"
+        string => "-1";
 
     role_master::
 
-      "machine_number" string => "1";
+      "machine_number"
+        string => "1";
 
   classes:
 
