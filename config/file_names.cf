@@ -97,6 +97,9 @@ bundle common file_names
       "openrc_lvmetad" string => "$(directory_names.fs_config_run_boot)/lvmetad";
       "openrc_mdraid" string => "$(directory_names.fs_config_run_boot)/mdraid";
       "openrc_modules" string => "$(directory_names.fs_config_run_boot)/modules";
+      "openrc_cf_execd" string => "$(directory_names.fs_config_run_default)/cf-execd";
+      "openrc_cf_monitord" string => "$(directory_names.fs_config_run_default)/cf-monitord";
+      "openrc_cf_serverd" string => "$(directory_names.fs_config_run_default)/cf-serverd";
       "openrc_consolefont" string => "$(directory_names.fs_config_run_default)/consolefont";
       "openrc_dbus" string => "$(directory_names.fs_config_run_default)/dbus";
       "openrc_gpm" string => "$(directory_names.fs_config_run_default)/gpm";

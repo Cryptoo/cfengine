@@ -36,6 +36,21 @@ bundle agent openrc(root)
         link_from => openrc("device-mapper"),
         classes => default:u_if_repaired("update_openrc");
 
+      "$(root)$(file_names.openrc_cf_execd)"
+        move_obstructions => "true",
+        link_from => openrc("cf-execd"),
+        classes => default:u_if_repaired("update_openrc");
+
+      "$(root)$(file_names.openrc_cf_monitord)"
+        move_obstructions => "true",
+        link_from => openrc("cf-monitord"),
+        classes => default:u_if_repaired("update_openrc");
+
+      "$(root)$(file_names.openrc_cf_serverd)"
+        move_obstructions => "true",
+        link_from => openrc("cf-serverd"),
+        classes => default:u_if_repaired("update_openrc");
+
       "$(root)$(file_names.openrc_vixiecron)"
         move_obstructions => "true",
         link_from => openrc("vixie-cron"),
