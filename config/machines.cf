@@ -1,0 +1,38 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+}
+
+bundle common machines
+
+{
+
+  vars:
+
+    role_undefined::
+
+      "machine_number"
+        string => "-1";
+
+    role_master::
+
+      "machine_number"
+        string => "1";
+
+    role_firewall_external::
+
+      "machine_number"
+        string => "10";
+
+  reports:
+
+    any::
+
+      "My role is: $(cryptoo:cryptoo.configured_role)";
+      "My number is: $(cryptoo:machines.machine_number)";
+      "My hostname is: $(cryptoo:cryptoo.machine_names[$(cryptoo:machines.machine_number)])";
+
+}

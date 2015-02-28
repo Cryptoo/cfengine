@@ -11,6 +11,7 @@ body file control
               "cryptoo/config/directory_names.cf",
               "cryptoo/config/directory_groups.cf",
               "cryptoo/config/file_names.cf",
+              "cryptoo/config/machines.cf",
               "cryptoo/config/templates.cf"
             };
 
@@ -33,6 +34,7 @@ bundle common cryptoo
                    "cryptoo:file_names",
                    "cryptoo:templates",
                    "cryptoo:local",
+                   "cryptoo:machines",
                    "cryptoo:cryptoo_system"
                  };
 
@@ -92,21 +94,6 @@ bundle common cryptoo
                    "192.168.$(subnet_config[lan]).0/24",
                  };
 
-    role_undefined::
-
-      "machine_number"
-        string => "-1";
-
-    role_master::
-
-      "machine_number"
-        string => "1";
-
-    role_firewall_external::
-
-      "machine_number"
-        string => "10";
-
   classes:
 
     any::
@@ -149,13 +136,5 @@ bundle common cryptoo
 
       "local_role"
         expression => "any";
-
-  reports:
-
-    any::
-
-      "My role is: $(configured_role)";
-      "My number is: $(machine_number)";
-      "My hostname is: $(machine_names[$(machine_number)])";
 
 }
