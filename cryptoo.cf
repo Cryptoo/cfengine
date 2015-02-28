@@ -132,7 +132,7 @@ bundle common cryptoo
       "role_undefined"
         expression => "any";
 
-    have_role&(!role_master)::
+    have_role&(!role_master)&(!role_firewall_external)::
 
       "local_role"
         expression => "any";

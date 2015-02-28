@@ -27,12 +27,18 @@ bundle common machines
       "machine_number"
         string => "10";
 
+    local_role::
+
+      "machine_number"
+        string => "$(local:machines.machine_number[$(cryptoo:cryptoo.configured_role)])";
+
+
   reports:
 
     any::
 
       "My role is: $(cryptoo:cryptoo.configured_role)";
       "My number is: $(cryptoo:machines.machine_number)";
-      "My hostname is: $(cryptoo:cryptoo.machine_names[$(cryptoo:machines.machine_number)])";
+      "My hostname is: $(cryptoo:cryptoo.machine_names[$(machine_number)])";
 
 }
