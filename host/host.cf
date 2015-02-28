@@ -11,6 +11,7 @@ body file control
               "cryptoo/util/setfattr.cf",
               "cryptoo/common/common.cf",
               "cryptoo/host/crypttab.cf",
+              "cryptoo/host/guest_boxes.cf",
               "cryptoo/host/guest_role.cf",
               "cryptoo/host/kernel.cf",
               "cryptoo/host/mounts.cf",
@@ -111,9 +112,6 @@ bundle agent host(arch)
       "have_libvirtd_app"
         expression => fileexists("/$(file_names.libvirtd_app)");
 
-      "have_setfattr_app"
-        expression => fileexists("/$(file_names.setfattr_app)");
-
     srv_started&(!srv_failed)::
 
       "srv_ready"
@@ -151,28 +149,6 @@ bundle agent host(arch)
         perms => root_qemu,
         create => "true",
         comment => "/etc/cryptoo/guest/{inbox,outbox}";
-
-      "/$(directory_names.fs_config_guest_inboxes)/$(config.server_guests)/."
-        perms => root_qemu,
-        create => "true",
-        comment => "guest inboxes";
-
-      "/$(directory_names.fs_config_guest_inboxes)/$(config.server_guests)/machine_names.json"
-        perms => root_qemu,
-        move_obstructions => "true",
-        copy_from => default:local_cp("/$(cryptoo:file_names.machine_names)"),
-        comment => "guest machine names";
-
-      "/$(directory_names.fs_config_guest_inboxes)/$(config.server_guests)/subnet_config.json"
-        perms => root_qemu,
-        move_obstructions => "true",
-        copy_from => default:local_cp("/$(cryptoo:file_names.subnet_config)"),
-        comment => "guest subnet config";
-
-      "/$(directory_names.fs_config_guest_outboxes)/$(config.server_guests)/."
-        perms => root_qemu,
-        create => "true",
-        comment => "guest outboxes";
 
       "/$(file_names.dracut_conf)"
         perms => system,
@@ -307,9 +283,6 @@ bundle agent host(arch)
       "configure OpenRC"
         usebundle => openrc("/");
 
-      "configure guest roles"
-        usebundle => cryptoo:guest_role("/$(directory_names.fs_config_guest_inboxes)/$(config.server_guests)", "$(config.server_guests)");
-
       "manage files for the server skeleton"
         usebundle => cryptoo_filesystem("/$(directory_names.fs_volatile_images)/server/x86_64/no-multilib/","server","x86_64","nomultilib");
 
@@ -321,6 +294,9 @@ bundle agent host(arch)
 
       "manage crypttab"
         usebundle => crypttab;
+
+      "manage guest inboxes and outboxes"
+        usebundle => cryptoo:guest_boxes;
 
     (all_mounted)|(all_ready)::
 
@@ -355,21 +331,7 @@ bundle agent host(arch)
         usebundle => subnet,
         classes => default:if_ok("subnet_config_available");
 
-    have_setfattr_app::
-
-      "set virtfs uid on guest inboxes"
-        usebundle => cryptoo:setfattr("user.virtfs.uid", "$(cryptoo:config.virtfs[uid_gid][0])", "/$(directory_names.fs_config_guest_inboxes)", "$(config.server_guests)");
-
-      "set virtfs gid on guest inboxes"
-        usebundle => cryptoo:setfattr("user.virtfs.gid", "$(cryptoo:config.virtfs[uid_gid][0])", "/$(directory_names.fs_config_guest_inboxes)", "$(config.server_guests)");
-
-      "set virtfs permissions on guest inboxes"
-        usebundle => cryptoo:setfattr("user.virtfs.mode", "$(cryptoo:config.virtfs[mode][0700])", "/$(directory_names.fs_config_guest_inboxes)", "$(config.server_guests)");
-
   commands:
-
-    have_cryptoo::
-      "/usr/cryptoo/bin/cryptoo_perms";
 
     update_env::
 

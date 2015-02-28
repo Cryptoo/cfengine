@@ -1,0 +1,76 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/config.cf",
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/file_names.cf",
+            };
+
+}
+
+bundle agent guest_boxes
+
+{
+
+  classes:
+
+    any::
+
+      "have_setfattr_app"
+        expression => fileexists("/$(cryptoo:file_names.setfattr_app)");
+
+  files:
+
+    any::
+
+      "/$(cryptoo:directory_names.fs_config_guest_inboxes)/$(cryptoo:config.server_guests)/."
+        perms => root_qemu,
+        create => "true",
+        comment => "guest inboxes";
+
+      "/$(cryptoo:directory_names.fs_config_guest_inboxes)/$(cryptoo:config.server_guests)/machine_names.json"
+        perms => root_qemu,
+        move_obstructions => "true",
+        copy_from => default:local_cp("/$(cryptoo:file_names.machine_names)"),
+        comment => "guest machine names";
+
+      "/$(cryptoo:directory_names.fs_config_guest_inboxes)/$(cryptoo:config.server_guests)/subnet_config.json"
+        perms => root_qemu,
+        move_obstructions => "true",
+        copy_from => default:local_cp("/$(cryptoo:file_names.subnet_config)"),
+        comment => "guest subnet config";
+
+      "/$(cryptoo:directory_names.fs_config_guest_outboxes)/$(cryptoo:config.server_guests)/."
+        perms => root_qemu,
+        create => "true",
+        comment => "guest outboxes";
+
+  methods:
+
+    any::
+
+      "configure guest roles"
+        usebundle => cryptoo:guest_role("/$(cryptoo:directory_names.fs_config_guest_inboxes)/$(cryptoo:config.server_guests)", "$(cryptoo:config.server_guests)");
+
+    have_setfattr_app::
+
+      "set virtfs uid on guest inboxes"
+        usebundle => cryptoo:setfattr("user.virtfs.uid", "$(cryptoo:config.virtfs[uid_gid][0])", "/$(cryptoo:directory_names.fs_config_guest_inboxes)", "$(cryptoo:config.server_guests)");
+
+      "set virtfs gid on guest inboxes"
+        usebundle => cryptoo:setfattr("user.virtfs.gid", "$(cryptoo:config.virtfs[uid_gid][0])", "/$(cryptoo:directory_names.fs_config_guest_inboxes)", "$(cryptoo:config.server_guests)");
+
+      "set virtfs permissions on guest inboxes"
+        usebundle => cryptoo:setfattr("user.virtfs.mode", "$(cryptoo:config.virtfs[mode][0700])", "/$(cryptoo:directory_names.fs_config_guest_inboxes)", "$(cryptoo:config.server_guests)");
+
+  commands:
+
+    cryptoo:have_cryptoo::
+
+      "/usr/cryptoo/bin/cryptoo_perms";
+
+}
