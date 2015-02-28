@@ -1,3 +1,4 @@
+[%CFEngine host:: %]
 LABEL=$(cryptoo:cryptoo.machine_names[$(cryptoo:cryptoo.machine_number)])-boot   /$(cryptoo:directory_names.fs_boot_base)                           ext4        noatime       1 2
 UUID=$(cryptoo:host.root_uuid)                         /                               ext4        noatime       0 1
 /dev/mapper/$(cryptoo:cryptoo.machine_names[$(cryptoo:cryptoo.machine_number)])-swap                              none                            swap        sw            0 0
@@ -15,9 +16,9 @@ UUID=$(cryptoo:host.root_uuid)                         /                        
 /$(cryptoo:directory_names.fs_storage_sources)          /$(cryptoo:directory_names.fs_site_sources)          none        bind          0 0
 /$(cryptoo:directory_names.fs_storage_qemu)             /$(cryptoo:directory_names.fs_libvirt_extra_images)  none        bind          0 0
 
-system-tmp                                      /$(cryptoo:directory_names.fs_temp_base)             tmpfs       size=1G       0 0
+system-tmp                                              /$(cryptoo:directory_names.fs_temp_base)             tmpfs       size=1G       0 0
 
-/                                               /$(cryptoo:directory_names.fs_mount_root)            none        bind          0 0
+/                                                       /$(cryptoo:directory_names.fs_mount_root)            none        bind          0 0
 
 /$(cryptoo:directory_names.fs_volatile_overlay)         /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no-multilib/$(cryptoo:directory_names.fs_volatile_overlay)      none        rbind
 /$(cryptoo:directory_names.fs_cryptoo)                  /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no-multilib/$(cryptoo:directory_names.fs_cryptoo)               none        rbind
@@ -27,7 +28,7 @@ system-tmp                                      /$(cryptoo:directory_names.fs_te
 /$(cryptoo:directory_names.fs_dev_base)                 /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no-multilib/$(cryptoo:directory_names.fs_dev_base)              none        rbind
 /$(cryptoo:directory_names.fs_proc_base)                /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no-multilib/$(cryptoo:directory_names.fs_proc_base)             none        rbind
 /$(cryptoo:directory_names.fs_sys_base)                 /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no-multilib/$(cryptoo:directory_names.fs_sys_base)              none        rbind
-server-system-tmp                               /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no-multilib/$(cryptoo:directory_names.fs_temp_base)             tmpfs       size=1G,nosuid,nodev
+server-system-tmp                                       /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no-multilib/$(cryptoo:directory_names.fs_temp_base)             tmpfs       size=1G,nosuid,nodev
 
 /$(cryptoo:directory_names.fs_volatile_overlay)         /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/$(cryptoo:directory_names.fs_volatile_overlay)     none        rbind
 /$(cryptoo:directory_names.fs_cryptoo)                  /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/$(cryptoo:directory_names.fs_cryptoo)              none        rbind
@@ -37,7 +38,7 @@ server-system-tmp                               /$(cryptoo:directory_names.fs_vo
 /$(cryptoo:directory_names.fs_dev_base)                 /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/$(cryptoo:directory_names.fs_dev_base)             none        rbind
 /$(cryptoo:directory_names.fs_proc_base)                /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/$(cryptoo:directory_names.fs_proc_base)            none        rbind
 /$(cryptoo:directory_names.fs_sys_base)                 /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/$(cryptoo:directory_names.fs_sys_base)             none        rbind
-desktop-system-tmp                              /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/$(cryptoo:directory_names.fs_temp_base)            tmpfs       size=1G,nosuid,nodev
+desktop-system-tmp                                      /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/$(cryptoo:directory_names.fs_temp_base)            tmpfs       size=1G,nosuid,nodev
 
 /$(cryptoo:directory_names.fs_volatile_overlay)         /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/multilib/$(cryptoo:directory_names.fs_volatile_overlay)        none        rbind
 /$(cryptoo:directory_names.fs_cryptoo)                  /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/multilib/$(cryptoo:directory_names.fs_cryptoo)                 none        rbind
@@ -47,4 +48,18 @@ desktop-system-tmp                              /$(cryptoo:directory_names.fs_vo
 /$(cryptoo:directory_names.fs_dev_base)                 /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/multilib/$(cryptoo:directory_names.fs_dev_base)                none        rbind
 /$(cryptoo:directory_names.fs_proc_base)                /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/multilib/$(cryptoo:directory_names.fs_proc_base)               none        rbind
 /$(cryptoo:directory_names.fs_sys_base)                 /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/multilib/$(cryptoo:directory_names.fs_sys_base)                none        rbind
-multilib-system-tmp                             /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/multilib/$(cryptoo:directory_names.fs_temp_base)               tmpfs       size=1G,nosuid,nodev
+multilib-system-tmp                                     /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/multilib/$(cryptoo:directory_names.fs_temp_base)               tmpfs       size=1G,nosuid,nodev
+[%CFEngine server_guest:: %]
+/dev/vda        /                               ext4    defaults,noatime                                                0 1
+
+/bin            /$(cryptoo:directory_names.fs_site_apps)                     9p      trans=virtio,version=9p2000.L,ro,nodev,nosuid,noatime           0 0
+/cryptoo        /$(cryptoo:directory_names.fs_cryptoo)                       9p      trans=virtio,version=9p2000.L,ro,nodev,nosuid,noatime           0 0
+/distfiles      /$(cryptoo:directory_names.fs_site_srcpkg)                   9p      trans=virtio,version=9p2000.L,rw,noexec,nodev,nosuid,noatime    0 0
+/inbox          /$(cryptoo:directory_names.fs_config_crypoo_incoming)        9p      trans=virtio,version=9p2000.L,ro,nodev,nosuid,noatime           0 0
+/layman         /$(cryptoo:directory_names.fs_volatile_overlay)              9p      trans=virtio,version=9p2000.L,ro,noexec,nodev,nosuid,noatime    0 0
+/outbox         /$(cryptoo:directory_names.fs_config_crypoo_outgoing)        9p      trans=virtio,version=9p2000.L,rw,nodev,nosuid,noatime           0 0
+/packages       /$(cryptoo:directory_names.fs_site_binpkg)                   9p      trans=virtio,version=9p2000.L,rw,noexec,nodev,nosuid,noatime    0 0
+/portage        /$(cryptoo:directory_names.fs_pm)                            9p      trans=virtio,version=9p2000.L,ro,noexec,nodev,nosuid,noatime    0 0
+/portage-local  /$(cryptoo:directory_names.fs_site_pm)                       9p      trans=virtio,version=9p2000.L,ro,noexec,nodev,nosuid,noatime    0 0
+/src            /$(cryptoo:directory_names.fs_site_sources)                  9p      trans=virtio,version=9p2000.L,ro,noexec,nodev,nosuid,noatime    0 0
+/storage        /$(cryptoo:directory_names.fs_mount_shared)                  9p      trans=virtio,version=9p2000.L,rw,noexec,nodev,nosuid,noatime    0 0

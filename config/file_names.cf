@@ -138,6 +138,7 @@ bundle common file_names
       "openrc_softlevel" string => "$(directory_names.fs_runtime_base)/openrc/softlevel";
       "template_env_cryptoo" string => "common/env_cryptoo.txt";
       "template_env_locale" string => "common/env_locale.txt";
+      "template_fstab" string => "common/fstab.txt";
       "template_make_conf" string => "common/make_conf.txt";
       "template_local_layout_conf" string => "common/local_layout_conf.txt";
       "template_local_repo_name" string => "common/local_repo_name.txt";
@@ -147,7 +148,6 @@ bundle common file_names
       "template_dmcrypt" string => "host/dmcrypt.txt";
       "template_dracut_conf" string => "host/dracut_conf.txt";
       "template_env_kernel" string => "host/env_kernel.txt";
-      "template_fstab" string => "host/fstab.txt";
       "template_guest_role" string => "host/guest_role.txt";
       "template_machine_names" string => "host/machine_names.txt";
       "template_site_config" string => "host/site_config.txt";

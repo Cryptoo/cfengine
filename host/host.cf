@@ -61,6 +61,9 @@ bundle agent host(arch)
       "$(multilib)"
         expression => "any";
 
+      "host"
+        expression => "any";
+
       "root_bind_mount"
         expression => regline("device /dev/mapper/$(cryptoo.machine_names[$(cryptoo.machine_number)])-root mounted on /$(directory_names.fs_mount_root).*", "$(file_names.mount_info)"),
         comment => "/ is mounted as a bind mount on /mnt/root. Gives access to underlying rootfs";

@@ -5,7 +5,8 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
-              "cryptoo/util/link_from.cf"
+              "cryptoo/host/mounts.cf",
+              "cryptoo/util/link_from.cf",
             };
 
 }
@@ -14,9 +15,23 @@ bundle agent firewall_external(root, arch)
 
 {
 
+  classes:
+
+    any::
+
+      "server_guest"
+        expression => "any";
+
   files:
 
     any::
+
+      "/$(file_names.fstab)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[fstab])",
+        classes => default:u_if_repaired("fstab_repaired"),
+        comment => "configure /etc/fstab";
 
       "$(root)$(cryptoo:file_names.pm_keywords_router)"
           move_obstructions => "true",
@@ -32,6 +47,11 @@ bundle agent firewall_external(root, arch)
 
       "manage common files"
         usebundle => cryptoo:cryptoo_filesystem("$(root)","firewall_external","$(arch)","nomultilib");
+
+    fstab_repaired::
+
+      "activate all mountpoints"
+        usebundle => cryptoo:mount_all;
 
 }
 
