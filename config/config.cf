@@ -1295,6 +1295,9 @@ bundle common config
       "virtfs[uid_gid][100]"
         string => "0sZAAAAA==";
 
+      "virtfs[uid_gid][250]"
+        string => "0s+gAAAA==";
+
       "virtfs[uid_gid][405]"
         string => "0slQEAAA==";
 
@@ -1309,5 +1312,8 @@ bundle common config
 
       "virtfs[mode][0700]"
         string => "0swIEAAA==";
+
+      "virtfs[mode][0755]"
+        string => "0s7YEAAA==";
 
 }

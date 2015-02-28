@@ -368,6 +368,9 @@ bundle agent host(arch)
 
   commands:
 
+    have_cryptoo::
+      "/usr/cryptoo/bin/cryptoo_perms";
+
     update_env::
 
       "/$(file_names.envupdate_app)";

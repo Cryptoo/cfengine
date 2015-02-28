@@ -15,6 +15,8 @@ bundle common file_names
     any::
 
       "mount_info" string => "/proc/self/mountstats";
+      "chmod_app" string => "$(directory_names.fs_apps_base)/chmod";
+      "chown_app" string => "$(directory_names.fs_apps_base)/chown";
       "lsblk_app" string => "$(directory_names.fs_apps_base)/lsblk";
       "mount_app" string => "$(directory_names.fs_apps_base)/mount";
       "move_app" string => "$(directory_names.fs_apps_base)/mv";
