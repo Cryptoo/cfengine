@@ -1289,4 +1289,25 @@ bundle common config
       "grub[GRUB_CMDLINE_LINUX_DEFAULT]"
         string => "quiet";
 
+      "virtfs[uid_gid][0]"
+        string => "0sAAAAAA==";
+
+      "virtfs[uid_gid][100]"
+        string => "0sZAAAAA==";
+
+      "virtfs[uid_gid][405]"
+        string => "0slQEAAA==";
+
+      "virtfs[mode][0644]"
+        string => "0spIEAAA==";
+
+      "virtfs[mode][0660]"
+        string => "0ssIEAAA==";
+
+      "virtfs[mode][0600]"
+        string => "0sgIEAAA==";
+
+      "virtfs[mode][0700]"
+        string => "0swIEAAA==";
+
 }

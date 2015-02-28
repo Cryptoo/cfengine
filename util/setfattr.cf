@@ -1,0 +1,24 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/util/contain.cf",
+            };
+
+}
+
+bundle agent setfattr(name, value, dir, file)
+
+{
+
+  commands:
+
+    any::
+
+      "/$(cryptoo:file_names.setfattr_app)"
+         args => "-n $(name) -v $(value) $(file)",
+         contain => cryptoo:working_dir("$(dir)");
+}

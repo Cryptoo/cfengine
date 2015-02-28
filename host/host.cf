@@ -8,6 +8,7 @@ body file control
               "cryptoo/util/classes.cf",
               "cryptoo/util/link_from.cf",
               "cryptoo/util/perms.cf",
+              "cryptoo/util/setfattr.cf",
               "cryptoo/common/common.cf",
               "cryptoo/host/crypttab.cf",
               "cryptoo/host/guest_role.cf",
@@ -107,6 +108,8 @@ bundle agent host(arch)
       "have_libvirtd_app"
         expression => fileexists("/$(file_names.libvirtd_app)");
 
+      "have_setfattr_app"
+        expression => fileexists("/$(file_names.setfattr_app)");
 
     srv_started&(!srv_failed)::
 
@@ -348,6 +351,17 @@ bundle agent host(arch)
       "generate random subnets"
         usebundle => subnet,
         classes => default:if_ok("subnet_config_available");
+
+    have_setfattr_app::
+
+      "set virtfs uid on guest inboxes"
+        usebundle => cryptoo:setfattr("user.virtfs.uid", "$(cryptoo:config.virtfs[uid_gid][0])", "/$(directory_names.fs_config_guest_inboxes)", "$(config.server_guests)");
+
+      "set virtfs gid on guest inboxes"
+        usebundle => cryptoo:setfattr("user.virtfs.gid", "$(cryptoo:config.virtfs[uid_gid][0])", "/$(directory_names.fs_config_guest_inboxes)", "$(config.server_guests)");
+
+      "set virtfs permissions on guest inboxes"
+        usebundle => cryptoo:setfattr("user.virtfs.mode", "$(cryptoo:config.virtfs[mode][0700])", "/$(directory_names.fs_config_guest_inboxes)", "$(config.server_guests)");
 
   commands:
 

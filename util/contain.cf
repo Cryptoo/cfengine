@@ -13,3 +13,11 @@ body contain basic_chroot(newroot)
   chroot => "$(newroot)";
 
 }
+
+body contain working_dir(dir)
+
+{
+
+  chdir => "$(dir)";
+
+}
