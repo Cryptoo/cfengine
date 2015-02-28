@@ -7,7 +7,7 @@ body file control
   inputs => {
               "cryptoo/config/file_names.cf",
               "cryptoo/config/templates.cf",
-            }
+            };
 
 }
 

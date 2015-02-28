@@ -6,6 +6,7 @@ body file control
 
   inputs => {
               "cryptoo/common/gcc.cf",
+              "cryptoo/common/make_conf.cf",
               "cryptoo/guest/template/files.cf",
               "cryptoo/util/contain.cf",
               "cryptoo/util/edit_line.cf",
@@ -187,7 +188,7 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
 
       "$(root)$(file_names.localtime)"
         move_obstructions => "true",
-        link_from => timezone("UTC");
+        link_from => timezone("$(cryptoo:cryptoo.site_config[timezone])");
 
       "$(root)$(file_names.system_bashrc)"
         perms => system,
