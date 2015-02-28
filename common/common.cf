@@ -19,16 +19,6 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
 
 {
 
-  vars:
-
-    have_cpu2use_app&(!broken_cpu2use)::
-
-      "cpu_flags" string => execresult("$(root)$(file_names.cpu2use_app)","noshell");
-
-    (!have_cpu2use_app)|(broken_cpu2use)::
-
-      "cpu_flags" string => "CPU_FLAGS_X86=\"\"";
-
   classes:
 
     any::
@@ -40,9 +30,6 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
         expression => "any";
 
       "$(multilib)" expression => "any";
-
-      "have_cpu2use_app"
-        expression => fileexists("$(root)$(file_names.cpu2use_app)");
 
       "have_locale_gen"
         expression => fileexists("$(root)$(file_names.locale)");
@@ -59,9 +46,6 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
       "have_localegen_app"
         expression => fileexists("$(root)$(file_names.localegen_app)");
 
-      "have_layman_conf"
-        expression => fileexists("$(root)$(file_names.overlay_conf)");
-
     local_role_master|local_role_desktop|local_role_server::
 
       "local_role_host"
@@ -71,11 +55,6 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
 
       "local_role_template"
         expression => "any";
-
-    have_cpu2use_app::
-
-      "broken_cpu2use"
-        expression => regextract(".*Traceback.*", "$(cpu_flags)", "broken_cpu2use");
 
   users:
 
@@ -264,24 +243,15 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
       "$(root)$(file_names.pm_use_systemdbootstrap)"
         delete => default:tidy;
 
-    !broken_cpu2use::
-
-      "$(root)$(file_names.pm_config)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[make_conf])";
-
-    broken_cpu2use::
-
-      "$(root)$(file_names.pm_config)"
-        delete => default:tidy;
-
   methods:
 
     any::
 
       "configure gcc profile"
-        usebundle => gcc("$(root)", "$(arch)");
+        usebundle => cryptoo:gcc("$(root)", "$(arch)");
+
+      "configure make.conf"
+        usebundle => cryptoo:make_conf("$(root)");
 
     local_role_template::
 
