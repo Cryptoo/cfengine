@@ -14,148 +14,293 @@ bundle common file_names
 
     any::
 
-      "mount_info" string => "/proc/self/mountstats";
-      "chmod_app" string => "$(directory_names.fs_apps_base)/chmod";
-      "chown_app" string => "$(directory_names.fs_apps_base)/chown";
-      "lsblk_app" string => "$(directory_names.fs_apps_base)/lsblk";
-      "mount_app" string => "$(directory_names.fs_apps_base)/mount";
-      "move_app" string => "$(directory_names.fs_apps_base)/mv";
-      "setfattr_app" string => "$(directory_names.fs_apps_base)/setfattr";
-      "dracut_image" string => "$(directory_names.fs_boot_base)/dracut.initramfs.cpio";
-      "dmcrypt_key" string => "$(directory_names.fs_boot_base)/master.key";
-      "dmcrypt_conf" string => "$(directory_names.fs_config_openrc_env)/dmcrypt";
-      "crypttab" string => "$(directory_names.fs_config_base)/crypttab";
-      "grub_defaults" string => "$(directory_names.fs_config_default)/grub";
-      "dracut_conf" string => "$(directory_names.fs_config_dracut)/cryptoo.conf";
-      "fstab" string => "$(directory_names.fs_config_base)/fstab";
-      "locale" string => "$(directory_names.fs_config_base)/locale.gen";
-      "localtime" string => "$(directory_names.fs_config_base)/localtime";
-      "system_bashrc" string => "$(directory_names.fs_config_bash)/bashrc";
-      "system_bash_logout" string => "$(directory_names.fs_config_bash)/bash_logout";
-      "hostname_openrc" string => "$(directory_names.fs_config_openrc_env)/hostname";
-      "machine_names" string => "$(directory_names.fs_config_crypoo_incoming)/machine_names.json";
-      "site_config" string => "$(directory_names.fs_config_crypoo_incoming)/site_config.json";
-      "subnet_config" string => "$(directory_names.fs_config_crypoo_incoming)/subnet_config.json";
-      "crypoo_role" string => "$(directory_names.fs_config_crypoo_incoming)/role";
-      "env_gcc_native" string => "$(directory_names.fs_config_gcc_environment)/.NATIVE";
-      "env_gcc_x86_64" string => "$(directory_names.fs_config_gcc_environment)/config-x86_64-pc-linux-gnu";
-      "env_cryptoo" string => "$(directory_names.fs_config_environment)/00cryptoo";
-      "env_locale" string => "$(directory_names.fs_config_environment)/02locale";
-      "env_kernel" string => "$(directory_names.fs_config_environment)/99kernel";
-      "hostname_systemd" string => "$(directory_names.fs_config_base)/hostname";
-      "mtab" string => "$(directory_names.fs_config_base)/mtab";
-      "pm_config" string => "$(directory_names.fs_config_pm)/make.conf";
-      "pm_profile" string => "$(directory_names.fs_config_pm)/make.profile";
-      "pm_env_localdistfiles" string => "$(directory_names.fs_config_pm_env)/local-distfiles.conf";
-      "pm_env_nosandbox" string => "$(directory_names.fs_config_pm_env)/nosandbox.conf";
-      "pm_env_notmpfs" string => "$(directory_names.fs_config_pm_env)/notmpfs.conf";
-      "pm_environment_cryptoo" string => "$(directory_names.fs_config_pm_environments)/cryptoo";
-      "pm_keywords_basicprograms" string => "$(directory_names.fs_config_pm_keywords)/basic-programs";
-      "pm_keywords_bitcoin" string => "$(directory_names.fs_config_pm_keywords)/bitcoin";
-      "pm_keywords_bitmessage" string => "$(directory_names.fs_config_pm_keywords)/bitmessage";
-      "pm_keywords_btcd" string => "$(directory_names.fs_config_pm_keywords)/btcd";
-      "pm_keywords_deluge" string => "$(directory_names.fs_config_pm_keywords)/deluge";
-      "pm_keywords_dns" string => "$(directory_names.fs_config_pm_keywords)/dns";
-      "pm_keywords_freenet" string => "$(directory_names.fs_config_pm_keywords)/freenet";
-      "pm_keywords_i2p" string => "$(directory_names.fs_config_pm_keywords)/i2p";
-      "pm_keywords_mail" string => "$(directory_names.fs_config_pm_keywords)/mail";
-      "pm_keywords_namecoin" string => "$(directory_names.fs_config_pm_keywords)/namecoin";
-      "pm_keywords_router" string => "$(directory_names.fs_config_pm_keywords)/router";
-      "pm_keywords_samba" string => "$(directory_names.fs_config_pm_keywords)/samba";
-      "pm_keywords_tor" string => "$(directory_names.fs_config_pm_keywords)/tor";
-      "pm_keywords_virtualization" string => "$(directory_names.fs_config_pm_keywords)/virtualization";
-      "pm_keywords_vpn" string => "$(directory_names.fs_config_pm_keywords)/vpn";
-      "pm_keywords_znc" string => "$(directory_names.fs_config_pm_keywords)/znc";
-      "pm_mask_basicprograms" string => "$(directory_names.fs_config_pm_mask)/basic-programs";
-      "pm_mask_problematic" string => "$(directory_names.fs_config_pm_mask)/problematic";
-      "pm_unmask_java" string => "$(directory_names.fs_config_pm_unmask)/java";
-      "pm_use_basicprograms" string => "$(directory_names.fs_config_pm_use)/basic-programs";
-      "pm_use_bitcoin" string => "$(directory_names.fs_config_pm_use)/bitcoin";
-      "pm_use_bitcoin_wallet" string => "$(directory_names.fs_config_pm_use)/bitcoin_wallet";
-      "pm_use_deluge" string => "$(directory_names.fs_config_pm_use)/deluge";
-      "pm_use_deluge_server" string => "$(directory_names.fs_config_pm_use)/deluge_server";
-      "pm_use_dns" string => "$(directory_names.fs_config_pm_use)/dns";
-      "pm_use_freenet" string => "$(directory_names.fs_config_pm_use)/freenet";
-      "pm_use_host" string => "$(directory_names.fs_config_pm_use)/host";
-      "pm_use_i2p" string => "$(directory_names.fs_config_pm_use)/i2p";
-      "pm_use_java" string => "$(directory_names.fs_config_pm_use)/java";
-      "pm_use_mail" string => "$(directory_names.fs_config_pm_use)/mail";
-      "pm_use_router" string => "$(directory_names.fs_config_pm_use)/router";
-      "pm_use_samba_server" string => "$(directory_names.fs_config_pm_use)/samba_server";
-      "pm_use_simplegit" string => "$(directory_names.fs_config_pm_use)/simplegit";
-      "pm_use_systemd" string => "$(directory_names.fs_config_pm_use)/systemd";
-      "pm_use_systemdbootstrap" string => "$(directory_names.fs_config_pm_use)/systemd-bootstrap";
-      "pm_use_udev" string => "$(directory_names.fs_config_pm_use)/udev";
-      "pm_use_virtualization" string => "$(directory_names.fs_config_pm_use)/virtualization";
-      "pm_use_tor" string => "$(directory_names.fs_config_pm_use)/tor";
-      "pm_use_vpn" string => "$(directory_names.fs_config_pm_use)/vpn";
-      "pm_use_znc" string => "$(directory_names.fs_config_pm_use)/znc";
-      "pm_profile_provided" string => "$(directory_names.fs_config_pm_profile)/package.provided";
-      "pm_profile_upstream" string => "$(directory_names.fs_config_pm_upstream)/parent";
-      "dns_config" string => "$(directory_names.fs_config_base)/resolv.conf";
-      "openrc_acpid" string => "$(directory_names.fs_config_run_boot)/acpid";
-      "openrc_devicemapper" string => "$(directory_names.fs_config_run_boot)/device-mapper";
-      "openrc_dmcrypt" string => "$(directory_names.fs_config_run_boot)/dmcrypt";
-      "openrc_lvm" string => "$(directory_names.fs_config_run_boot)/lvm";
-      "openrc_lvmetad" string => "$(directory_names.fs_config_run_boot)/lvmetad";
-      "openrc_mdraid" string => "$(directory_names.fs_config_run_boot)/mdraid";
-      "openrc_modules" string => "$(directory_names.fs_config_run_boot)/modules";
-      "openrc_cf_execd" string => "$(directory_names.fs_config_run_default)/cf-execd";
-      "openrc_cf_monitord" string => "$(directory_names.fs_config_run_default)/cf-monitord";
-      "openrc_cf_serverd" string => "$(directory_names.fs_config_run_default)/cf-serverd";
-      "openrc_consolefont" string => "$(directory_names.fs_config_run_default)/consolefont";
-      "openrc_dbus" string => "$(directory_names.fs_config_run_default)/dbus";
-      "openrc_gpm" string => "$(directory_names.fs_config_run_default)/gpm";
-      "openrc_libvirtd" string => "$(directory_names.fs_config_run_default)/libvirtd";
-      "openrc_metalog" string => "$(directory_names.fs_config_run_default)/metalog";
-      "openrc_ntpd" string => "$(directory_names.fs_config_run_default)/ntpd";
-      "openrc_numlock" string => "$(directory_names.fs_config_run_default)/numlock";
-      "openrc_rngd" string => "$(directory_names.fs_config_run_default)/rngd";
-      "openrc_sshd" string => "$(directory_names.fs_config_run_default)/sshd";
-      "openrc_virtlockd" string => "$(directory_names.fs_config_run_default)/virtlockd";
-      "openrc_vixiecron" string => "$(directory_names.fs_config_run_default)/vixie-cron";
-      "openrc_kmod" string => "$(directory_names.fs_config_run_sysinit)/kmod-static-nodes";
-      "proc_mounts" string => "proc/self/mounts";
-      "blkid_app" string => "$(directory_names.fs_admin_apps)/blkid";
-      "storage_pm_site_meta" string => "$(directory_names.fs_storage_pm_site_meta)/layout.conf";
-      "storage_pm_site_repo" string => "$(directory_names.fs_storage_pm_site_profile)/repo_name";
-      "kernel_makefile" string => "$(directory_names.fs_storage_kernel)/Makefile";
-      "cpu2use_app" string => "$(directory_names.fs_standard_apps)/cpuinfo2cpuflags-x86";
-      "dracut_app" string => "$(directory_names.fs_standard_apps)/dracut";
-      "find_app" string => "$(directory_names.fs_standard_apps)/find";
-      "gcc_config_app" string => "$(directory_names.fs_standard_apps)/gcc-config";
-      "layman_app" string => "$(directory_names.fs_standard_apps)/layman";
-      "git_app" string => "$(directory_names.fs_standard_apps)/git";
-      "systemd_app" string => "$(directory_names.fs_standard_apps)/systemctl";
-      "cryptoo_profile" string => "$(directory_names.fs_crypoo_profiles)/repo_name";
-      "pm_machine_meta" string => "$(directory_names.fs_machine_pm_meta)/layout.conf";
-      "pm_machine_repo" string => "$(directory_names.fs_machine_pm_profile)/repo_name";
-      "envupdate_app" string => "$(directory_names.fs_standard_admin_apps)/env-update";
-      "localegen_app" string => "$(directory_names.fs_standard_admin_apps)/locale-gen";
-      "libvirtd_app" string => "$(directory_names.fs_standard_admin_apps)/libvirtd";
-      "pm_site_meta" string => "$(directory_names.fs_storage_pm_site_meta)/layout.conf";
-      "pm_site_repo" string => "$(directory_names.fs_storage_pm_site_profile)/repo_name";
-      "rc_app" string => "$(directory_names.fs_admin_apps)/rc";
-      "pm_installed_sets" string => "$(directory_names.fs_volatile_pm)/world_sets";
-      "openrc_softlevel" string => "$(directory_names.fs_runtime_base)/openrc/softlevel";
-      "template_env_cryptoo" string => "common/env_cryptoo.txt";
-      "template_env_locale" string => "common/env_locale.txt";
-      "template_fstab" string => "common/fstab.txt";
-      "template_make_conf" string => "common/make_conf.txt";
-      "template_local_layout_conf" string => "common/local_layout_conf.txt";
-      "template_local_repo_name" string => "common/local_repo_name.txt";
-      "template_profile_parent" string => "common/profile_parent.txt";
-      "template_world_sets" string => "common/world_sets.txt";
-      "template_crypttab" string => "host/crypttab.txt";
-      "template_dmcrypt" string => "host/dmcrypt.txt";
-      "template_dracut_conf" string => "host/dracut_conf.txt";
-      "template_env_kernel" string => "host/env_kernel.txt";
-      "template_guest_role" string => "host/guest_role.txt";
-      "template_machine_names" string => "host/machine_names.txt";
-      "template_site_config" string => "host/site_config.txt";
-      "template_site_repo_name" string => "host/site_repo_name.txt";
-      "template_subnets" string => "host/subnets.txt";
-      "overlay_conf" string => "$(directory_names.fs_volatile_overlay)/make.conf";
-      "bitcoin_overlay" string => "$(directory_names.fs_bitcoin_overlay)/profiles/repo_name";
+      "chmod_app"
+        string => "$(directory_names.fs_apps_base)/chmod";
+      "chown_app"
+        string => "$(directory_names.fs_apps_base)/chown";
+      "lsblk_app"
+        string => "$(directory_names.fs_apps_base)/lsblk";
+      "mount_app"
+        string => "$(directory_names.fs_apps_base)/mount";
+      "move_app"
+        string => "$(directory_names.fs_apps_base)/mv";
+      "setfattr_app"
+        string => "$(directory_names.fs_apps_base)/setfattr";
+      "dracut_image"
+        string => "$(directory_names.fs_boot_base)/dracut.initramfs.cpio";
+      "dmcrypt_key"
+        string => "$(directory_names.fs_boot_base)/master.key";
+      "crypttab"
+        string => "$(directory_names.fs_config_base)/crypttab";
+      "fstab"
+        string => "$(directory_names.fs_config_base)/fstab";
+      "group"
+        string => "$(directory_names.fs_config_base)/group";
+      "hostname_systemd"
+        string => "$(directory_names.fs_config_base)/hostname";
+      "locale"
+        string => "$(directory_names.fs_config_base)/locale.gen";
+      "localtime"
+        string => "$(directory_names.fs_config_base)/localtime";
+      "mtab"
+        string => "$(directory_names.fs_config_base)/mtab";
+      "passwd"
+        string => "$(directory_names.fs_config_base)/passwd";
+      "dns_config"
+        string => "$(directory_names.fs_config_base)/resolv.conf";
+      "shadow"
+        string => "$(directory_names.fs_config_base)/shadow";
+      "system_bashrc"
+        string => "$(directory_names.fs_config_bash)/bashrc";
+      "system_bash_logout"
+        string => "$(directory_names.fs_config_bash)/bash_logout";
+      "dmcrypt_conf"
+        string => "$(directory_names.fs_config_openrc_env)/dmcrypt";
+      "hostname_openrc"
+        string => "$(directory_names.fs_config_openrc_env)/hostname";
+      "machine_names"
+        string => "$(directory_names.fs_config_cryptoo_incoming)/machine_names.json";
+      "cryptoo_role"
+        string => "$(directory_names.fs_config_cryptoo_incoming)/role";
+      "site_config"
+        string => "$(directory_names.fs_config_cryptoo_incoming)/site_config.json";
+      "subnet_config"
+        string => "$(directory_names.fs_config_cryptoo_incoming)/subnet_config.json";
+      "grub_defaults"
+        string => "$(directory_names.fs_config_default)/grub";
+      "dracut_conf"
+        string => "$(directory_names.fs_config_dracut)/cryptoo.conf";
+      "env_cryptoo"
+        string => "$(directory_names.fs_config_environment)/00cryptoo";
+      "env_locale"
+        string => "$(directory_names.fs_config_environment)/02locale";
+      "env_kernel"
+        string => "$(directory_names.fs_config_environment)/99kernel";
+      "env_gcc_native"
+        string => "$(directory_names.fs_config_gcc_environment)/.NATIVE";
+      "env_gcc_x86_64"
+        string => "$(directory_names.fs_config_gcc_environment)/config-x86_64-pc-linux-gnu";
+      "pm_config"
+        string => "$(directory_names.fs_config_pm)/make.conf";
+      "pm_profile"
+        string => "$(directory_names.fs_config_pm)/make.profile";
+      "pm_env_localdistfiles"
+        string => "$(directory_names.fs_config_pm_env)/local-distfiles.conf";
+      "pm_env_nosandbox"
+        string => "$(directory_names.fs_config_pm_env)/nosandbox.conf";
+      "pm_env_notmpfs"
+        string => "$(directory_names.fs_config_pm_env)/notmpfs.conf";
+      "pm_environment_cryptoo"
+        string => "$(directory_names.fs_config_pm_environments)/cryptoo";
+      "pm_keywords_basicprograms"
+        string => "$(directory_names.fs_config_pm_keywords)/basic-programs";
+      "pm_keywords_bitcoin"
+        string => "$(directory_names.fs_config_pm_keywords)/bitcoin";
+      "pm_keywords_bitmessage"
+        string => "$(directory_names.fs_config_pm_keywords)/bitmessage";
+      "pm_keywords_btcd"
+        string => "$(directory_names.fs_config_pm_keywords)/btcd";
+      "pm_keywords_deluge"
+        string => "$(directory_names.fs_config_pm_keywords)/deluge";
+      "pm_keywords_dns"
+        string => "$(directory_names.fs_config_pm_keywords)/dns";
+      "pm_keywords_freenet"
+        string => "$(directory_names.fs_config_pm_keywords)/freenet";
+      "pm_keywords_i2p"
+        string => "$(directory_names.fs_config_pm_keywords)/i2p";
+      "pm_keywords_mail"
+        string => "$(directory_names.fs_config_pm_keywords)/mail";
+      "pm_keywords_namecoin"
+        string => "$(directory_names.fs_config_pm_keywords)/namecoin";
+      "pm_keywords_router"
+        string => "$(directory_names.fs_config_pm_keywords)/router";
+      "pm_keywords_samba"
+        string => "$(directory_names.fs_config_pm_keywords)/samba";
+      "pm_keywords_tor"
+        string => "$(directory_names.fs_config_pm_keywords)/tor";
+      "pm_keywords_virtualization"
+        string => "$(directory_names.fs_config_pm_keywords)/virtualization";
+      "pm_keywords_vpn"
+        string => "$(directory_names.fs_config_pm_keywords)/vpn";
+      "pm_keywords_znc"
+        string => "$(directory_names.fs_config_pm_keywords)/znc";
+      "pm_mask_basicprograms"
+        string => "$(directory_names.fs_config_pm_mask)/basic-programs";
+      "pm_mask_problematic"
+        string => "$(directory_names.fs_config_pm_mask)/problematic";
+      "pm_unmask_java"
+        string => "$(directory_names.fs_config_pm_unmask)/java";
+      "pm_use_basicprograms"
+        string => "$(directory_names.fs_config_pm_use)/basic-programs";
+      "pm_use_bitcoin"
+        string => "$(directory_names.fs_config_pm_use)/bitcoin";
+      "pm_use_bitcoin_wallet"
+        string => "$(directory_names.fs_config_pm_use)/bitcoin_wallet";
+      "pm_use_deluge"
+        string => "$(directory_names.fs_config_pm_use)/deluge";
+      "pm_use_deluge_server"
+        string => "$(directory_names.fs_config_pm_use)/deluge_server";
+      "pm_use_dns"
+        string => "$(directory_names.fs_config_pm_use)/dns";
+      "pm_use_freenet"
+        string => "$(directory_names.fs_config_pm_use)/freenet";
+      "pm_use_host"
+        string => "$(directory_names.fs_config_pm_use)/host";
+      "pm_use_i2p"
+        string => "$(directory_names.fs_config_pm_use)/i2p";
+      "pm_use_java"
+        string => "$(directory_names.fs_config_pm_use)/java";
+      "pm_use_mail"
+        string => "$(directory_names.fs_config_pm_use)/mail";
+      "pm_use_router"
+        string => "$(directory_names.fs_config_pm_use)/router";
+      "pm_use_samba_server"
+        string => "$(directory_names.fs_config_pm_use)/samba_server";
+      "pm_use_simplegit"
+        string => "$(directory_names.fs_config_pm_use)/simplegit";
+      "pm_use_systemd"
+        string => "$(directory_names.fs_config_pm_use)/systemd";
+      "pm_use_systemdbootstrap"
+        string => "$(directory_names.fs_config_pm_use)/systemd-bootstrap";
+      "pm_use_udev"
+        string => "$(directory_names.fs_config_pm_use)/udev";
+      "pm_use_virtualization"
+        string => "$(directory_names.fs_config_pm_use)/virtualization";
+      "pm_use_tor"
+        string => "$(directory_names.fs_config_pm_use)/tor";
+      "pm_use_vpn"
+        string => "$(directory_names.fs_config_pm_use)/vpn";
+      "pm_use_znc"
+        string => "$(directory_names.fs_config_pm_use)/znc";
+      "pm_profile_provided"
+        string => "$(directory_names.fs_config_pm_profile)/package.provided";
+      "pm_profile_upstream"
+        string => "$(directory_names.fs_config_pm_upstream)/parent";
+      "openrc_acpid"
+        string => "$(directory_names.fs_config_run_boot)/acpid";
+      "openrc_devicemapper"
+        string => "$(directory_names.fs_config_run_boot)/device-mapper";
+      "openrc_dmcrypt"
+        string => "$(directory_names.fs_config_run_boot)/dmcrypt";
+      "openrc_lvm"
+        string => "$(directory_names.fs_config_run_boot)/lvm";
+      "openrc_lvmetad"
+        string => "$(directory_names.fs_config_run_boot)/lvmetad";
+      "openrc_mdraid"
+        string => "$(directory_names.fs_config_run_boot)/mdraid";
+      "openrc_modules"
+        string => "$(directory_names.fs_config_run_boot)/modules";
+      "openrc_cf_execd"
+        string => "$(directory_names.fs_config_run_default)/cf-execd";
+      "openrc_cf_monitord"
+        string => "$(directory_names.fs_config_run_default)/cf-monitord";
+      "openrc_cf_serverd"
+        string => "$(directory_names.fs_config_run_default)/cf-serverd";
+      "openrc_consolefont"
+        string => "$(directory_names.fs_config_run_default)/consolefont";
+      "openrc_dbus"
+        string => "$(directory_names.fs_config_run_default)/dbus";
+      "openrc_gpm"
+        string => "$(directory_names.fs_config_run_default)/gpm";
+      "openrc_libvirtd"
+        string => "$(directory_names.fs_config_run_default)/libvirtd";
+      "openrc_metalog"
+        string => "$(directory_names.fs_config_run_default)/metalog";
+      "openrc_ntpd"
+        string => "$(directory_names.fs_config_run_default)/ntpd";
+      "openrc_numlock"
+        string => "$(directory_names.fs_config_run_default)/numlock";
+      "openrc_rngd"
+        string => "$(directory_names.fs_config_run_default)/rngd";
+      "openrc_sshd"
+        string => "$(directory_names.fs_config_run_default)/sshd";
+      "openrc_virtlockd"
+        string => "$(directory_names.fs_config_run_default)/virtlockd";
+      "openrc_vixiecron"
+        string => "$(directory_names.fs_config_run_default)/vixie-cron";
+      "openrc_kmod"
+        string => "$(directory_names.fs_config_run_sysinit)/kmod-static-nodes";
+      "mount_info"
+        string => "/proc/self/mountstats";
+      "proc_mounts"
+        string => "proc/self/mounts";
+      "openrc_softlevel"
+        string => "$(directory_names.fs_runtime_base)/openrc/softlevel";
+      "blkid_app"
+        string => "$(directory_names.fs_admin_apps)/blkid";
+      "rc_app"
+        string => "$(directory_names.fs_admin_apps)/rc";
+      "storage_pm_site_meta"
+        string => "$(directory_names.fs_storage_pm_site_meta)/layout.conf";
+      "storage_pm_site_repo"
+        string => "$(directory_names.fs_storage_pm_site_profile)/repo_name";
+      "kernel_makefile"
+        string => "$(directory_names.fs_storage_kernel)/Makefile";
+      "cpu2use_app"
+        string => "$(directory_names.fs_standard_apps)/cpuinfo2cpuflags-x86";
+      "dracut_app"
+        string => "$(directory_names.fs_standard_apps)/dracut";
+      "find_app"
+        string => "$(directory_names.fs_standard_apps)/find";
+      "gcc_config_app"
+        string => "$(directory_names.fs_standard_apps)/gcc-config";
+      "git_app"
+        string => "$(directory_names.fs_standard_apps)/git";
+      "layman_app"
+        string => "$(directory_names.fs_standard_apps)/layman";
+      "systemd_app"
+        string => "$(directory_names.fs_standard_apps)/systemctl";
+      "cryptoo_profile"
+        string => "$(directory_names.fs_cryptoo_profiles)/repo_name";
+      "pm_machine_meta"
+        string => "$(directory_names.fs_machine_pm_meta)/layout.conf";
+      "pm_machine_repo"
+        string => "$(directory_names.fs_machine_pm_profile)/repo_name";
+      "envupdate_app"
+        string => "$(directory_names.fs_standard_admin_apps)/env-update";
+      "libvirtd_app"
+        string => "$(directory_names.fs_standard_admin_apps)/libvirtd";
+      "localegen_app"
+        string => "$(directory_names.fs_standard_admin_apps)/locale-gen";
+      "template_env_cryptoo"
+        string => "common/env_cryptoo.txt";
+      "template_env_locale"
+        string => "common/env_locale.txt";
+      "template_fstab"
+        string => "common/fstab.txt";
+      "template_make_conf"
+        string => "common/make_conf.txt";
+      "template_local_layout_conf"
+        string => "common/local_layout_conf.txt";
+      "template_local_repo_name"
+        string => "common/local_repo_name.txt";
+      "template_profile_parent"
+        string => "common/profile_parent.txt";
+      "template_world_sets"
+        string => "common/world_sets.txt";
+      "template_crypttab"
+        string => "host/crypttab.txt";
+      "template_dmcrypt"
+        string => "host/dmcrypt.txt";
+      "template_dracut_conf"
+        string => "host/dracut_conf.txt";
+      "template_env_kernel"
+        string => "host/env_kernel.txt";
+      "template_guest_role"
+        string => "host/guest_role.txt";
+      "template_machine_names"
+        string => "host/machine_names.txt";
+      "template_site_config"
+        string => "host/site_config.txt";
+      "template_site_repo_name"
+        string => "host/site_repo_name.txt";
+      "template_subnets"
+        string => "host/subnets.txt";
+      "overlay_conf"
+        string => "$(directory_names.fs_volatile_overlay)/make.conf";
+      "bitcoin_overlay"
+        string => "$(directory_names.fs_bitcoin_overlay)/profiles/repo_name";
+      "pm_installed_sets"
+        string => "$(directory_names.fs_volatile_pm)/world_sets";
 
 }

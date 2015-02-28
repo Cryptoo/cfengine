@@ -23,6 +23,20 @@ bundle agent template_files(root, role)
 
   files:
 
+    any::
+
+      "$(root)$(file_names.group)"
+        move_obstructions => "true",
+        link_from => host_etc("group");
+
+      "$(root)$(file_names.passwd)"
+        move_obstructions => "true",
+        link_from => host_etc("passwd");
+
+      "$(root)$(file_names.shadow)"
+        move_obstructions => "true",
+        link_from => host_etc("shadow");
+
     template_type_server::
 
       "$(root)$(file_names.pm_profile)"

@@ -50,7 +50,7 @@ bundle common cryptoo
     have_role::
 
       "configured_role"
-        string => readfile("/$(file_names.crypoo_role)","128");
+        string => readfile("/$(file_names.cryptoo_role)","128");
 
     need_role::
 
@@ -99,10 +99,10 @@ bundle common cryptoo
     any::
 
       "have_role"
-        expression => fileexists("/$(file_names.crypoo_role)");
+        expression => fileexists("/$(file_names.cryptoo_role)");
 
       "need_role"
-        not => fileexists("/$(file_names.crypoo_role)");
+        not => fileexists("/$(file_names.cryptoo_role)");
 
       "have_machine_names"
         expression => fileexists("/$(file_names.machine_names)");

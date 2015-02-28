@@ -67,7 +67,7 @@ body link_from cryptoo_profile(x)
 {
      link_type => "symlink";
      when_no_source => "force";
-     source => "/$(directory_names.fs_crypoo_profiles)/$(x)";
+     source => "/$(directory_names.fs_cryptoo_profiles)/$(x)";
 }
 
 body link_from timezone(x)
@@ -108,4 +108,12 @@ body link_from gcc_profile(profile)
      link_type => "symlink";
      when_no_source => "force";
      source => "$(profile)";
+}
+
+body link_from host_etc(x)
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "/$(directory_names.fs_config_base)/$(x)";
 }
