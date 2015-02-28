@@ -6,6 +6,7 @@ body file control
 
   inputs => {
               "cryptoo/common/common.cf",
+              "cryptoo/guest/server_guests/firewall_external.cf",
               "cryptoo/host/host.cf"
             };
 
@@ -33,6 +34,11 @@ bundle agent cryptoo_system
 
       "configure system as a host"
         usebundle => host("x86_64");
+
+    role_firewall_external::
+
+      "configure system as a external firewall"
+        usebundle => firewall_external("/", "x86_64");
 
     local_role::
 

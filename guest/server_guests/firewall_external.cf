@@ -1,0 +1,37 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/util/link_from.cf"
+            };
+
+}
+
+bundle agent firewall_external(root, arch)
+
+{
+
+  files:
+
+    any::
+
+      "$(root)$(cryptoo:file_names.pm_keywords_router)"
+          move_obstructions => "true",
+          link_from => cryptoo:cryptoo_package_keyword("router");
+
+      "$(root)$(cryptoo:file_names.pm_use_router)"
+          move_obstructions => "true",
+          link_from => cryptoo:cryptoo_package_use("router");
+
+  methods:
+
+    any::
+
+      "manage common files"
+        usebundle => cryptoo:cryptoo_filesystem("$(root)","firewall_external","$(arch)","nomultilib");
+
+}
+
