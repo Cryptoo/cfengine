@@ -11,7 +11,7 @@ body file control
 
 }
 
-bundle agent make_conf(root)
+bundle agent make_conf(root, role, multilib)
 
 {
 
@@ -35,10 +35,21 @@ bundle agent make_conf(root)
       "have_layman_conf"
         expression => fileexists("$(root)$(cryptoo:file_names.overlay_conf)");
 
+      "make_conf_role_$(role)"
+        expression => "any";
+
+      "make_conf_$(multilib)"
+        expression => "any";
+
     have_cpu2use_app::
 
       "broken_cpu2use"
         expression => regextract(".*Traceback.*", "$(cpu_flags)", "broken_cpu2use");
+
+    make_conf_role_firewall_external::
+
+      "make_conf_role_guest"
+        expression => "any";
 
   files:
 

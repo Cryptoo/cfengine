@@ -14,6 +14,13 @@ bundle common file_groups
 
     any::
 
+################################################################################
+#                                   Common
+################################################################################
+
+      "make_profile[common]"
+        string => "cryptoo";
+
       "pm_env[common]"
         slist => {
                     "local_distfiles",
@@ -32,13 +39,131 @@ bundle common file_groups
                     "virtualization"
                  };
 
-      "keywords[firewall_external]"
+      "mask[common]"
         slist => {
-                    "router"
+                    "basic_programs",
+                    "problematic"
+                 };
+
+      "unmask[common]"
+        slist => {
+                 };
+
+      "use[common]"
+        slist => {
+                    "basic_programs",
+                    "virtualization"
+                 };
+
+      "profile[common]"
+        slist => {
+                    "package.provided"
+                 };
+
+      "use_udev[common]"
+        slist => {
+#                    "systemd_bootstrap",
+                    "udev"
+                 };
+
+      "use_systemd[common]"
+        slist => {
+                    "systemd"
+                 };
+
+      "unuse_udev[common]"
+        slist => {
+                    "systemd"
+                 };
+
+      "unuse_systemd[common]"
+        slist => {
+                    "systemd_bootstrap",
+                    "udev"
+                 };
+
+################################################################################
+#                                 Undefined
+################################################################################
+
+      "make_profile[undefined]"
+        string => "$(make_profile[common])";
+
+      "pm_env[undefined]"
+        slist => {
+                    "@(pm_env[common])"
+                 };
+
+      "pm_environment[undefined]"
+        slist => {
+                    "@(pm_environment[common])"
+                 };
+
+      "keywords[undefined]"
+        slist => {
+                    "@(keywords[common])"
+                 };
+
+      "mask[undefined]"
+        slist => {
+                    "@(mask[common])"
+                 };
+
+      "unmask[undefined]"
+        slist => {
+                    "@(unmask[common])"
+                 };
+
+      "use[undefined]"
+        slist => {
+                    "@(use[common])"
+                 };
+
+      "profile[undefined]"
+        slist => {
+                    "@(profile[common])"
+                 };
+
+      "use_udev[undefined]"
+        slist => {
+                    "@(use_udev[common])"
+                 };
+
+      "use_systemd[undefined]"
+        slist => {
+                    "@(use_systemd[common])"
+                 };
+
+      "unuse_udev[undefined]"
+        slist => {
+                    "@(unuse_udev[common])"
+                 };
+
+      "unuse_systemd[undefined]"
+        slist => {
+                    "@(unuse_systemd[common])"
+                 };
+
+################################################################################
+#                              template_server
+################################################################################
+
+      "make_profile[template_server]"
+        string => "$(make_profile[common])";
+
+      "pm_env[template_server]"
+        slist => {
+                    "@(pm_env[common])"
+                 };
+
+      "pm_environment[template_server]"
+        slist => {
+                    "@(pm_environment[common])"
                  };
 
       "keywords[template_server]"
         slist => {
+                    "@(keywords[common])",
                     "bitcoin",
                     "bitmessage",
                     "btcd",
@@ -55,46 +180,20 @@ bundle common file_groups
                     "znc"
                  };
 
-      "mask[common]"
+      "mask[template_server]"
         slist => {
-                    "basic_programs",
-                    "problematic"
+                    "@(mask[common])"
                  };
 
       "unmask[template_server]"
         slist => {
+                    "@(unmask[common])",
                     "java"
-                 };
-
-      "use[common]"
-        slist => {
-                    "basic_programs",
-                    "virtualization"
-                 };
-
-      "use[common_udev]"
-        slist => {
-#                    "systemd_bootstrap",
-                    "udev"
-                 };
-
-      "use[common_systemd]"
-        slist => {
-                    "systemd"
-                 };
-
-      "use[firewall_external]"
-        slist => {
-                    "router"
-                 };
-
-      "use[host]"
-        slist => {
-                    "host"
                  };
 
       "use[template_server]"
         slist => {
+                    "@(use[common])",
                     "bitcoin",
                     "bitcoin_wallet",
                     "deluge",
@@ -112,15 +211,343 @@ bundle common file_groups
                     "znc"
                  };
 
-      "unuse[common_udev]"
+      "profile[template_server]"
         slist => {
-                    "systemd"
+                    "@(profile[common])"
                  };
 
-      "unuse[common_systemd]"
+      "use_udev[template_server]"
         slist => {
-                    "systemd_bootstrap",
-                    "udev"
+                    "@(use_udev[common])"
+                 };
+
+      "use_systemd[template_server]"
+        slist => {
+                    "@(use_systemd[common])"
+                 };
+
+      "unuse_udev[template_server]"
+        slist => {
+                    "@(unuse_udev[common])"
+                 };
+
+      "unuse_systemd[template_server]"
+        slist => {
+                    "@(unuse_systemd[common])"
+                 };
+
+################################################################################
+#                              template_desktop
+################################################################################
+
+      "make_profile[template_desktop]"
+        string => "$(make_profile[desktop_host])";
+
+      "pm_env[template_desktop]"
+        slist => {
+                    "@(pm_env[common])"
+                 };
+
+      "pm_environment[template_desktop]"
+        slist => {
+                    "@(pm_environment[common])"
+                 };
+
+      "keywords[template_desktop]"
+        slist => {
+                    "@(keywords[common])"
+                 };
+
+      "mask[template_desktop]"
+        slist => {
+                    "@(mask[common])"
+                 };
+
+      "unmask[template_desktop]"
+        slist => {
+                    "@(unmask[common])"
+                 };
+
+      "use[template_desktop]"
+        slist => {
+                    "@(use[common])"
+                 };
+
+      "profile[template_desktop]"
+        slist => {
+                    "@(profile[common])"
+                 };
+
+      "use_udev[template_desktop]"
+        slist => {
+                    "@(use_udev[common])"
+                 };
+
+      "use_systemd[template_desktop]"
+        slist => {
+                    "@(use_systemd[common])"
+                 };
+
+      "unuse_udev[template_desktop]"
+        slist => {
+                    "@(unuse_udev[common])"
+                 };
+
+      "unuse_systemd[template_desktop]"
+        slist => {
+                    "@(unuse_systemd[common])"
+                 };
+
+################################################################################
+#                                    host
+################################################################################
+
+      "make_profile[host]"
+        string => "$(make_profile[common])";
+
+      "pm_env[host]"
+        slist => {
+                    "@(pm_env[common])"
+                 };
+
+      "pm_environment[host]"
+        slist => {
+                    "@(pm_environment[common])"
+                 };
+
+      "keywords[host]"
+        slist => {
+                    "@(keywords[common])"
+                 };
+
+      "mask[host]"
+        slist => {
+                    "@(mask[common])"
+                 };
+
+      "unmask[host]"
+        slist => {
+                    "@(unmask[common])"
+                 };
+
+      "use[host]"
+        slist => {
+                    "@(use[common])",
+                    "host"
+                 };
+
+      "profile[host]"
+        slist => {
+                    "@(profile[common])"
+                 };
+
+      "use_udev[host]"
+        slist => {
+                    "@(use_udev[common])"
+                 };
+
+      "use_systemd[host]"
+        slist => {
+                    "@(use_systemd[common])"
+                 };
+
+      "unuse_udev[host]"
+        slist => {
+                    "@(unuse_udev[common])"
+                 };
+
+      "unuse_systemd[host]"
+        slist => {
+                    "@(unuse_systemd[common])"
+                 };
+
+################################################################################
+#                                desktop_host
+################################################################################
+
+      "make_profile[desktop_host]"
+        string => "cryptoo/desktop";
+
+      "pm_env[desktop_host]"
+        slist => {
+                    "@(pm_env[common])"
+                 };
+
+      "pm_environment[desktop_host]"
+        slist => {
+                    "@(pm_environment[common])"
+                 };
+
+      "keywords[desktop_host]"
+        slist => {
+                    "@(keywords[common])"
+                 };
+
+      "mask[desktop_host]"
+        slist => {
+                    "@(mask[common])"
+                 };
+
+      "unmask[desktop_host]"
+        slist => {
+                    "@(unmask[common])"
+                 };
+
+      "use[desktop_host]"
+        slist => {
+                    "@(use[common])"
+                 };
+
+      "profile[desktop_host]"
+        slist => {
+                    "@(profile[common])"
+                 };
+
+      "use_udev[desktop_host]"
+        slist => {
+                    "@(use_udev[common])"
+                 };
+
+      "use_systemd[desktop_host]"
+        slist => {
+                    "@(use_systemd[common])"
+                 };
+
+      "unuse_udev[desktop_host]"
+        slist => {
+                    "@(unuse_udev[common])"
+                 };
+
+      "unuse_systemd[desktop_host]"
+        slist => {
+                    "@(unuse_systemd[common])"
+                 };
+
+################################################################################
+#                                   master
+################################################################################
+
+      "make_profile[master]"
+        string => "$(make_profile[host])";
+
+      "pm_env[master]"
+        slist => {
+                    "@(pm_env[host])"
+                 };
+
+      "pm_environment[master]"
+        slist => {
+                    "@(pm_environment[host])"
+                 };
+
+      "keywords[master]"
+        slist => {
+                    "@(keywords[host])"
+                 };
+
+      "mask[master]"
+        slist => {
+                    "@(mask[host])"
+                 };
+
+      "unmask[master]"
+        slist => {
+                    "@(unmask[host])"
+                 };
+
+      "use[master]"
+        slist => {
+                    "@(use[host])",
+                    "master"
+                 };
+
+      "profile[master]"
+        slist => {
+                    "@(profile[host])"
+                 };
+
+      "use_udev[master]"
+        slist => {
+                    "@(use_udev[host])"
+                 };
+
+      "use_systemd[master]"
+        slist => {
+                    "@(use_systemd[host])"
+                 };
+
+      "unuse_udev[master]"
+        slist => {
+                    "@(unuse_udev[host])"
+                 };
+
+      "unuse_systemd[master]"
+        slist => {
+                    "@(unuse_systemd[host])"
+                 };
+
+################################################################################
+#                             firewall_external
+################################################################################
+
+      "make_profile[firewall_external]"
+        string => "$(make_profile[common])";
+
+      "pm_env[firewall_external]"
+        slist => {
+                    "@(pm_env[common])"
+                 };
+
+      "pm_environment[firewall_external]"
+        slist => {
+                    "@(pm_environment[common])"
+                 };
+
+      "keywords[firewall_external]"
+        slist => {
+                    "@(keywords[common])",
+                    "router"
+                 };
+
+      "mask[firewall_external]"
+        slist => {
+                    "@(mask[common])"
+                 };
+
+      "unmask[firewall_external]"
+        slist => {
+                    "@(unmask[common])"
+                 };
+
+      "use[firewall_external]"
+        slist => {
+                    "@(use[common])",
+                    "router"
+                 };
+
+      "profile[firewall_external]"
+        slist => {
+                    "@(profile[common])"
+                 };
+
+      "use_udev[firewall_external]"
+        slist => {
+                    "@(use_udev[common])"
+                 };
+
+      "use_systemd[firewall_external]"
+        slist => {
+                    "@(use_systemd[common])"
+                 };
+
+      "unuse_udev[firewall_external]"
+        slist => {
+                    "@(unuse_udev[common])"
+                 };
+
+      "unuse_systemd[firewall_external]"
+        slist => {
+                    "@(unuse_systemd[common])"
                  };
 
 }

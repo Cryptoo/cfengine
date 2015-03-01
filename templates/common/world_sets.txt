@@ -1,6 +1,8 @@
-[%CFEngine local_role_master:: %]
+[%CFEngine portage_role_master:: %]
 @master
-[%CFEngine local_role_server:: %]
+[%CFEngine portage_role_desktop_host:: %]
+@desktop_host
+[%CFEngine portage_role_template_server:: %]
 @template-server
-[%CFEngine local_role_firewall_external:: %]
+[%CFEngine portage_role_firewall_external:: %]
 @firewall_external

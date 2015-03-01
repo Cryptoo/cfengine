@@ -84,8 +84,6 @@ bundle common file_names
         string => "$(directory_names.fs_config_pm)/make.conf";
       "pm_profile"
         string => "$(directory_names.fs_config_pm)/make.profile";
-      "pm_profile_provided"
-        string => "$(directory_names.fs_config_pm_profile)/package.provided";
       "pm_profile_upstream"
         string => "$(directory_names.fs_config_pm_upstream)/parent";
       "openrc_acpid"

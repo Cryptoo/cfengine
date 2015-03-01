@@ -8,37 +8,41 @@ CFLAGS="-O2 -pipe -march=native"
 CXXFLAGS="${CFLAGS}"
 CHOST="x86_64-pc-linux-gnu"
 
-[%CFEngine local_role_host:: %]
+[%CFEngine !make_conf_role_guest:: %]
 MAKEOPTS="-j8 -l8"
 
-EMERGE_DEFAULT_OPTS="--ask --jobs --load-average 8.0 --keep-going --buildpkg"
-[%CFEngine local_role_guest:: %]
+EMERGE_DEFAULT_OPTS="--ask --jobs --load-average 8.0 --keep-going --usepkg --buildpkg --binpkg-respect-use"
+[%CFEngine make_conf_role_guest:: %]
 MAKEOPTS="-j2 -l1.4"
 
-EMERGE_DEFAULT_OPTS="--ask --jobs --load-average 1.0 --keep-going --usepkgonly --binpkg-respect-use=y"
+EMERGE_DEFAULT_OPTS="--jobs --load-average 1.0 --keep-going --usepkgonly --binpkg-respect-use"
 [%CFEngine any:: %]
 
 #CPU options
-$(cryptoo:cryptoo_filesystem.cpu_flags)
+$(cryptoo:make_conf.cpu_flags)
 USE="${CPU_FLAGS_X86}"
 
 #Local options
 USE="${USE} $(cryptoo:cryptoo.site_config[make.conf][USE])"
 
-[%CFEngine local_role_master:: %]
+[%CFEngine make_conf_role_host|make_conf_role_desktop_host:: %]
 VIDEO_CARDS="$(cryptoo:cryptoo.site_config[make.conf][VIDEO_CARDS])"
-[%CFEngine !local_role_master:: %]
+[%CFEngine (!make_conf_role_host)&(!make_conf_role_desktop_host):: %]
 VIDEO_CARDS="modesetting"
 
-[%CFEngine local_role_master&nomultilib:: %]
+[%CFEngine make_conf_role_host&make_conf_nomultilib:: %]
 PKGDIR="/usr/site-local/packages/host/no-multilib/${ARCH}"
-[%CFEngine local_role_master&multilib:: %]
+[%CFEngine make_conf_role_host&make_conf_multilib:: %]
 PKGDIR="/usr/site-local/packages/host/multilib/${ARCH}"
-[%CFEngine local_role_server&nomultilib:: %]
+[%CFEngine make_conf_role_desktop_host&make_conf_nomultilib:: %]
+PKGDIR="/usr/site-local/packages/desktop-host/no-multilib/${ARCH}"
+[%CFEngine make_conf_role_desktop_host&make_conf_multilib:: %]
+PKGDIR="/usr/site-local/packages/desktop-host/multilib/${ARCH}"
+[%CFEngine make_conf_role_template_server&make_conf_nomultilib:: %]
 PKGDIR="/usr/site-local/packages/server/no-multilib/${ARCH}"
-[%CFEngine local_role_server&multilib:: %]
+[%CFEngine make_conf_role_template_server&make_conf_multilib:: %]
 PKGDIR="/usr/site-local/packages/server/multilib/${ARCH}"
-[%CFEngine local_role_desktop&nomultilib:: %]
+[%CFEngine make_conf_role_template_desktop&make_conf_nomultilib:: %]
 PKGDIR="/usr/site-local/packages/desktop/no-multilib/${ARCH}"
-[%CFEngine local_role_desktop&multilib:: %]
+[%CFEngine make_conf_role_template_desktop&make_conf_multilib:: %]
 PKGDIR="/usr/site-local/packages/desktop/multilib/${ARCH}"

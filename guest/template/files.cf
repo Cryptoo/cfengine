@@ -5,7 +5,7 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
-              "cryptoo/config/file_groups.cf",
+              "cryptoo/config/file_names.cf",
               "cryptoo/util/link_from.cf"
             };
 
@@ -20,48 +20,27 @@ bundle agent template_files(root, role)
     any::
 
       "template_type_$(role)" expression => "any";
-      "need_resolv_conf" expression => makerule ("$(root)$(file_names.dns_config)", "/$(file_names.dns_config)");
+      "need_resolv_conf" expression => makerule ("$(root)$(cryptoo:file_names.dns_config)", "/$(cryptoo:file_names.dns_config)");
 
   files:
 
     any::
 
-      "$(root)$(file_names.group)"
+      "$(root)$(cryptoo:file_names.group)"
         move_obstructions => "true",
-        link_from => host_etc("group");
+        link_from => cryptoo:host_etc("group");
 
-      "$(root)$(file_names.passwd)"
+      "$(root)$(cryptoo:file_names.passwd)"
         move_obstructions => "true",
-        link_from => host_etc("passwd");
+        link_from => cryptoo:host_etc("passwd");
 
-      "$(root)$(file_names.shadow)"
+      "$(root)$(cryptoo:file_names.shadow)"
         move_obstructions => "true",
-        link_from => host_etc("shadow");
-
-      "$(root)$(directory_names.fs_config_pm_keywords)/$(file_groups.keywords[template_$(role)])"
-        move_obstructions => "true",
-        link_from => cryptoo_package_keyword("$(file_groups.keywords[template_$(role)])"),
-        comment => "Link all files in /etc/portage/package.keywords";
-
-      "$(root)$(directory_names.fs_config_pm_unmask)/$(file_groups.use[template_$(role)])"
-        move_obstructions => "true",
-        link_from => cryptoo_package_unmask("$(file_groups.unmask[template_$(role)])"),
-        comment => "Link all files in /etc/portage/package.unmask";
-
-      "$(root)$(directory_names.fs_config_pm_use)/$(file_groups.use[template_$(role)])"
-        move_obstructions => "true",
-        link_from => cryptoo_package_use("$(file_groups.use[template_$(role)])"),
-        comment => "Link all files in /etc/portage/package.use";
-
-    template_type_server::
-
-      "$(root)$(file_names.pm_profile)"
-        move_obstructions => "true",
-        link_from => cryptoo_profile("cryptoo");
+        link_from => cryptoo:host_etc("shadow");
 
     need_resolv_conf::
 
-      "$(root)$(file_names.dns_config)"
+      "$(root)$(cryptoo:file_names.dns_config)"
           move_obstructions => "true",
           copy_from => default:local_cp("/$(cryptoo:file_names.dns_config)");
 

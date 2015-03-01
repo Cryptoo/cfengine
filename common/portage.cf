@@ -1,0 +1,142 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/directory_groups.cf",
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/file_groups.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/templates.cf",
+              "cryptoo/common/make_conf.cf",
+              "cryptoo/util/link_from.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
+bundle agent portage(root, role, arch, multilib)
+
+{
+
+  classes:
+
+    any::
+
+      "portage_$(multilib)"
+        expression => "any";
+
+      "bootstrap_systemd"
+        not => fileexists("$(root)$(cryptoo:file_names.systemd_app)");
+
+      "have_systemd"
+        expression => fileexists("$(root)$(cryptoo:file_names.systemd_app)");
+
+      "portage_role_$(role)"
+        expression => "any";
+
+  files:
+
+    any::
+
+      "$(root)$(cryptoo:directory_groups.common_pm)/."
+        perms => cryptoo:portage,
+        create => "true",
+        comment => "Manage Portage-related system directories";
+
+      "$(root)$(cryptoo:directory_groups.common_pm_open)/."
+        perms => cryptoo:portage_open,
+        create => "true",
+        comment => "Manage Portage-related open directories";
+
+      "$(root)$(cryptoo:directory_names.fs_config_pm_env)/$(cryptoo:file_groups.pm_env[$(role)]).conf"
+        move_obstructions => "true",
+        link_from => cryptoo:cryptoo_portage_env("$(cryptoo:file_groups.pm_env[$(role)]).conf"),
+        comment => "Link all files in /etc/portage/env";
+
+      "$(root)$(cryptoo:directory_names.fs_config_pm_environments)/$(cryptoo:file_groups.pm_environment[$(role)])"
+        move_obstructions => "true",
+        link_from => cryptoo:cryptoo_package_env("$(cryptoo:file_groups.pm_environment[$(role)])"),
+        comment => "Link all files in /etc/portage/package.env";
+
+      "$(root)$(cryptoo:directory_names.fs_config_pm_keywords)/$(cryptoo:file_groups.keywords[$(role)])"
+        move_obstructions => "true",
+        link_from => cryptoo:cryptoo_package_keyword("$(cryptoo:file_groups.keywords[$(role)])"),
+        comment => "Link all files in /etc/portage/package.keywords";
+
+      "$(root)$(cryptoo:directory_names.fs_config_pm_mask)/$(cryptoo:file_groups.mask[$(role)])"
+        move_obstructions => "true",
+        link_from => cryptoo:cryptoo_package_mask("$(cryptoo:file_groups.mask[$(role)])"),
+        comment => "Link all files in /etc/portage/package.mask";
+
+      "$(root)$(cryptoo:directory_names.fs_config_pm_unmask)/$(cryptoo:file_groups.unmask[$(role)])"
+        move_obstructions => "true",
+        link_from => cryptoo:cryptoo_package_unmask("$(cryptoo:file_groups.unmask[$(role)])"),
+        comment => "Link all files in /etc/portage/package.unmask";
+
+      "$(root)$(cryptoo:directory_names.fs_config_pm_use)/$(cryptoo:file_groups.use[$(role)])"
+        move_obstructions => "true",
+        link_from => cryptoo:cryptoo_package_use("$(cryptoo:file_groups.use[$(role)])"),
+        comment => "Link all files in /etc/portage/package.use";
+
+      "$(root)$(cryptoo:directory_names.fs_config_pm_profile)/$(cryptoo:file_groups.profile[$(role)])"
+        move_obstructions => "true",
+        link_from => cryptoo:cryptoo_portage_profile("$(cryptoo:file_groups.profile[$(role)])"),
+        comment => "Link all files in /etc/portage/profile";
+
+      "$(root)$(file_names.pm_profile)"
+        move_obstructions => "true",
+        link_from => cryptoo:cryptoo_profile("$(cryptoo:file_groups.make_profile[$(role)])");
+
+      "$(root)$(cryptoo:file_names.pm_profile_upstream)"
+        perms => cryptoo:system,
+        create => "true",
+        edit_template => "/$(cryptoo:templates.template[profile_parent])";
+
+      "$(root)$(cryptoo:file_names.pm_machine_meta)"
+        perms => cryptoo:system,
+        create => "true",
+        edit_template => "/$(cryptoo:templates.template[local_layout_conf])";
+
+      "$(root)$(cryptoo:file_names.pm_machine_repo)"
+        perms => cryptoo:system,
+        create => "true",
+        edit_template => "/$(cryptoo:templates.template[local_repo_name])";
+
+      "$(root)$(cryptoo:file_names.pm_installed_sets)"
+        perms => cryptoo:system,
+        create => "true",
+        edit_template => "/$(cryptoo:templates.template[world_sets])";
+
+    bootstrap_systemd::
+
+      "$(root)$(cryptoo:directory_names.fs_config_pm_use)/$(cryptoo:file_groups.unuse_udev[$(role)])"
+        delete => default:tidy,
+        comment => "Unlink systemd-related files in /etc/portage/package.use";
+
+      "$(root)$(cryptoo:directory_names.fs_config_pm_use)/$(cryptoo:file_groups.use_udev[$(role)])"
+        move_obstructions => "true",
+        link_from => cryptoo:cryptoo_package_use("$(cryptoo:file_groups.use_udev[$(role)])"),
+        comment => "Link udev-related files in /etc/portage/package.use";
+
+    have_systemd::
+
+      "$(root)$(cryptoo:directory_names.fs_config_pm_use)/$(cryptoo:file_groups.unuse_systemd[$(role)])"
+        delete => default:tidy,
+        comment => "Unlink udev-related files in /etc/portage/package.use";
+
+      "$(root)$(cryptoo:directory_names.fs_config_pm_use)/$(cryptoo:file_groups.use_systemd[$(role)])"
+        move_obstructions => "true",
+        link_from => cryptoo:cryptoo_package_use("$(cryptoo:file_groups.use_systemd[$(role)])"),
+        comment => "Link systemd-related files in /etc/portage/package.use";
+
+  methods:
+
+    any::
+
+      "configure make.conf"
+        usebundle => cryptoo:make_conf("$(root)", "$(role)", "$(multilib)");
+
+}

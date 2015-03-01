@@ -5,9 +5,8 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
-              "cryptoo/config/file_groups.cf",
               "cryptoo/common/gcc.cf",
-              "cryptoo/common/make_conf.cf",
+              "cryptoo/common/portage.cf",
               "cryptoo/guest/template/files.cf",
               "cryptoo/util/contain.cf",
               "cryptoo/util/edit_line.cf",
@@ -31,16 +30,8 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
       "$(arch)"
         expression => "any";
 
-      "$(multilib)" expression => "any";
-
       "have_locale_gen"
         expression => fileexists("$(root)$(file_names.locale)");
-
-      "bootstrap_systemd"
-        not => fileexists("$(root)$(file_names.systemd_app)");
-
-      "have_systemd"
-        expression => fileexists("$(root)$(file_names.systemd_app)");
 
       "have_envupdate_app"
         expression => fileexists("$(root)$(file_names.envupdate_app)");
@@ -48,14 +39,9 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
       "have_localegen_app"
         expression => fileexists("$(root)$(file_names.localegen_app)");
 
-    local_role_master|local_role_desktop|local_role_server::
+    local_role_template_desktop|local_role_template_server::
 
-      "local_role_host"
-        expression => "any";
-
-    local_role_desktop|local_role_server::
-
-      "local_role_template"
+      "template"
         expression => "any";
 
   users:
@@ -99,16 +85,6 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
         create => "true",
         handle => "$(root)$(directory_groups.common_open)";
 
-      "$(root)$(directory_groups.common_pm)/."
-        perms => portage,
-        create => "true",
-        handle => "$(root)$(directory_groups.common_pm)";
-
-      "$(root)$(directory_groups.common_pm_open)/."
-        perms => portage_open,
-        create => "true",
-        handle => "$(root)$(directory_groups.common_pm_open)";
-
       "$(root)$(directory_names.fs_mount_shared)/."
         depends_on => { "user_guest" },
         perms => guest,
@@ -119,58 +95,9 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
         move_obstructions => "true",
         link_from => proc_mounts;
 
-      "$(root)$(directory_names.fs_config_pm_env)/$(file_groups.pm_env[common])"
-        move_obstructions => "true",
-        link_from => cryptoo_portage_env("$(file_groups.pm_env[common]).conf"),
-        comment => "Link all files in /etc/portage/env";
-
-      "$(root)$(directory_names.fs_config_pm_environments)/$(file_groups.pm_environment[common])"
-        move_obstructions => "true",
-        link_from => cryptoo_package_env("$(file_groups.pm_environment[common])"),
-        comment => "Link all files in /etc/portage/package.env";
-
-      "$(root)$(directory_names.fs_config_pm_keywords)/$(file_groups.keywords[common])"
-        move_obstructions => "true",
-        link_from => cryptoo_package_keyword("$(file_groups.keywords[common])"),
-        comment => "Link all files in /etc/portage/package.keywords";
-
-      "$(root)$(directory_names.fs_config_pm_mask)/$(file_groups.mask[common])"
-        move_obstructions => "true",
-        link_from => cryptoo_package_mask("$(file_groups.mask[common])"),
-        comment => "Link all files in /etc/portage/package.mask";
-
-      "$(root)$(directory_names.fs_config_pm_use)/$(file_groups.use[common])"
-        move_obstructions => "true",
-        link_from => cryptoo_package_use("$(file_groups.use[common])"),
-        comment => "Link all files in /etc/portage/package.use";
-
-      "$(root)$(file_names.pm_profile_provided)"
-        move_obstructions => "true",
-        link_from => cryptoo_portage_profile("package.provided");
-
-      "$(root)$(file_names.pm_profile_upstream)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[profile_parent])";
-
-      "$(root)$(file_names.pm_machine_meta)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[local_layout_conf])";
-
-      "$(root)$(file_names.pm_machine_repo)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[local_repo_name])";
-
       "$(root)$(directory_names.fs_standard_kernel)"
         move_obstructions => "true",
         link_from => kernel_dir;
-
-      "$(root)$(file_names.pm_installed_sets)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[world_sets])";
 
       "$(root)$(file_names.localtime)"
         move_obstructions => "true",
@@ -208,28 +135,6 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
         edit_line => default:uncomment_lines_containing("$(cryptoo:cryptoo.site_config[locale])","#"),
         classes => default:u_if_repaired("update_locale");
 
-    bootstrap_systemd::
-
-      "$(root)$(directory_names.fs_config_pm_use)/$(file_groups.unuse[common_udev])"
-        delete => default:tidy,
-        comment => "Unlink systemd-related files in /etc/portage/package.use";
-
-      "$(root)$(directory_names.fs_config_pm_use)/$(file_groups.use[common_udev])"
-        move_obstructions => "true",
-        link_from => cryptoo_package_use("$(file_groups.use[common_udev])"),
-        comment => "Link udev-related files in /etc/portage/package.use";
-
-    have_systemd::
-
-      "$(root)$(directory_names.fs_config_pm_use)/$(file_groups.unuse[common_systemd])"
-        delete => default:tidy,
-        comment => "Unlink udev-related files in /etc/portage/package.use";
-
-      "$(root)$(directory_names.fs_config_pm_use)/$(file_groups.use[common_systemd])"
-        move_obstructions => "true",
-        link_from => cryptoo_package_use("$(file_groups.use[common_systemd])"),
-        comment => "Link systemd-related files in /etc/portage/package.use";
-
   methods:
 
     any::
@@ -237,10 +142,10 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
       "configure gcc profile"
         usebundle => cryptoo:gcc("$(root)", "$(arch)");
 
-      "configure make.conf"
-        usebundle => cryptoo:make_conf("$(root)");
+      "configure portage"
+        usebundle => cryptoo:portage("$(root)", "$(role)", "$(arch)", "$(multilib)");
 
-    local_role_template::
+    template::
 
       "manage template files"
         usebundle => template_files("$(root)", "$(role)");

@@ -1,4 +1,4 @@
-[%CFEngine host:: %]
+[%CFEngine host|desktop_host:: %]
 LABEL=$(cryptoo:cryptoo.machine_names[$(cryptoo:machines.machine_number)])-boot   /$(cryptoo:directory_names.fs_boot_base)                           $(cryptoo:cryptoo.site_config[host_fs][filesystem])        $(cryptoo:cryptoo.site_config[host_fs][options])       1 2
 UUID=$(cryptoo:host.root_uuid)                         /                               $(cryptoo:cryptoo.site_config[host_fs][filesystem])        $(cryptoo:cryptoo.site_config[host_fs][options])       0 1
 /dev/mapper/$(cryptoo:cryptoo.machine_names[$(cryptoo:machines.machine_number)])-swap                              none                            swap        sw            0 0
@@ -6,8 +6,7 @@ UUID=$(cryptoo:host.root_uuid)                         /                        
 
 /$(cryptoo:directory_names.fs_storage_apps)             /usr/site-local/bin             none        bind          0 0
 /$(cryptoo:directory_names.fs_storage_cryptoo)          /$(cryptoo:directory_names.fs_cryptoo)               none        bind          0 0
-#FIXME disabled for development
-#/$(cryptoo:directory_names.fs_storage_srcpkg)           /$(cryptoo:directory_names.fs_site_srcpkg)           none        bind          0 0
+/$(cryptoo:directory_names.fs_storage_srcpkg)           /$(cryptoo:directory_names.fs_site_srcpkg)           none        bind          0 0
 /$(cryptoo:directory_names.fs_storage_overlay)          /$(cryptoo:directory_names.fs_volatile_overlay)      none        bind          0 0
 /$(cryptoo:directory_names.fs_storage_binpkg)           /$(cryptoo:directory_names.fs_site_binpkg)           none        bind          0 0
 /$(cryptoo:directory_names.fs_storage_pm)               /$(cryptoo:directory_names.fs_pm)                    none        bind          0 0
@@ -20,6 +19,7 @@ system-tmp                                              /$(cryptoo:directory_nam
 
 /                                                       /$(cryptoo:directory_names.fs_mount_root)            none        bind          0 0
 
+[%CFEngine host:: %]
 /$(cryptoo:directory_names.fs_volatile_overlay)         /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no-multilib/$(cryptoo:directory_names.fs_volatile_overlay)      none        rbind
 /$(cryptoo:directory_names.fs_cryptoo)                  /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no-multilib/$(cryptoo:directory_names.fs_cryptoo)               none        rbind
 /$(cryptoo:directory_names.fs_pm)                       /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no-multilib/$(cryptoo:directory_names.fs_pm)                    none        rbind
@@ -32,6 +32,7 @@ system-tmp                                              /$(cryptoo:directory_nam
 /$(cryptoo:directory_names.fs_site_binpkg)              /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no-multilib/$(cryptoo:directory_names.fs_site_binpkg)           none        rbind
 server-system-tmp                                       /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no-multilib/$(cryptoo:directory_names.fs_temp_base)             tmpfs       size=1G,nosuid,nodev
 
+[%CFEngine host|desktop_host:: %]
 /$(cryptoo:directory_names.fs_volatile_overlay)         /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/$(cryptoo:directory_names.fs_volatile_overlay)     none        rbind
 /$(cryptoo:directory_names.fs_cryptoo)                  /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/$(cryptoo:directory_names.fs_cryptoo)              none        rbind
 /$(cryptoo:directory_names.fs_pm)                       /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/$(cryptoo:directory_names.fs_pm)                   none        rbind
@@ -44,6 +45,7 @@ server-system-tmp                                       /$(cryptoo:directory_nam
 /$(cryptoo:directory_names.fs_site_binpkg)              /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/$(cryptoo:directory_names.fs_site_binpkg)          none        rbind
 desktop-system-tmp                                      /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/$(cryptoo:directory_names.fs_temp_base)            tmpfs       size=1G,nosuid,nodev
 
+[%CFEngine host:: %]
 /$(cryptoo:directory_names.fs_volatile_overlay)         /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/multilib/$(cryptoo:directory_names.fs_volatile_overlay)        none        rbind
 /$(cryptoo:directory_names.fs_cryptoo)                  /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/multilib/$(cryptoo:directory_names.fs_cryptoo)                 none        rbind
 /$(cryptoo:directory_names.fs_pm)                       /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/multilib/$(cryptoo:directory_names.fs_pm)                      none        rbind

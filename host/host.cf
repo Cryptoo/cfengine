@@ -9,7 +9,6 @@ body file control
               "cryptoo/util/link_from.cf",
               "cryptoo/util/perms.cf",
               "cryptoo/util/setfattr.cf",
-              "cryptoo/config/file_groups.cf",
               "cryptoo/common/common.cf",
               "cryptoo/host/crypttab.cf",
               "cryptoo/host/guest_boxes.cf",
@@ -58,9 +57,6 @@ bundle agent host(arch)
     any::
 
       "$(arch)"
-        expression => "any";
-
-      "$(multilib)"
         expression => "any";
 
       "host"
@@ -172,15 +168,6 @@ bundle agent host(arch)
         classes => default:u_if_repaired("fstab_repaired"),
         comment => "configure /etc/fstab";
 
-      "/$(file_names.pm_profile)"
-        move_obstructions => "true",
-        link_from => cryptoo_profile("cryptoo");
-
-      "$(root)$(directory_names.fs_config_pm_use)/$(file_groups.use[host])"
-        move_obstructions => "true",
-        link_from => cryptoo_package_use("$(file_groups.use[host])"),
-        comment => "Link all files in /etc/portage/package.use";
-
       "/$(directory_names.fs_storage_base)/."
         perms => system,
         create => "true",
@@ -285,13 +272,13 @@ bundle agent host(arch)
         usebundle => openrc("/");
 
       "manage files for the server skeleton"
-        usebundle => cryptoo_filesystem("/$(directory_names.fs_volatile_images)/server/x86_64/no-multilib/","server","x86_64","nomultilib");
+        usebundle => cryptoo_filesystem("/$(directory_names.fs_volatile_images)/server/x86_64/no-multilib/","template_server","x86_64","nomultilib");
 
       "manage files for the desktop skeleton"
-        usebundle => cryptoo_filesystem("/$(directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/","desktop","x86_64","nomultilib");
+        usebundle => cryptoo_filesystem("/$(directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/","template_desktop","x86_64","nomultilib");
 
       "manage files for the desktop-multilib skeleton"
-        usebundle => cryptoo_filesystem("/$(directory_names.fs_volatile_images)/desktop/x86_64/multilib/","desktop","x86_64","multilib");
+        usebundle => cryptoo_filesystem("/$(directory_names.fs_volatile_images)/desktop/x86_64/multilib/","template_desktop","x86_64","multilib");
 
       "manage crypttab"
         usebundle => crypttab;
