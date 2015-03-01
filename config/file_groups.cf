@@ -1,0 +1,126 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+}
+
+bundle common file_groups
+
+{
+
+  vars:
+
+    any::
+
+      "pm_env[common]"
+        slist => {
+                    "local_distfiles",
+                    "nosandbox",
+                    "notmpfs"
+                 };
+
+      "pm_environment[common]"
+        slist => {
+                    "cryptoo"
+                 };
+
+      "keywords[common]"
+        slist => {
+                    "basic_programs",
+                    "virtualization"
+                 };
+
+      "keywords[firewall_external]"
+        slist => {
+                    "router"
+                 };
+
+      "keywords[template_server]"
+        slist => {
+                    "bitcoin",
+                    "bitmessage",
+                    "btcd",
+                    "deluge",
+                    "dns",
+                    "freenet",
+                    "i2p",
+                    "mail",
+                    "namecoin",
+                    "router",
+                    "samba",
+                    "tor",
+                    "vpn",
+                    "znc"
+                 };
+
+      "mask[common]"
+        slist => {
+                    "basic_programs",
+                    "problematic"
+                 };
+
+      "unmask[template_server]"
+        slist => {
+                    "java"
+                 };
+
+      "use[common]"
+        slist => {
+                    "basic_programs",
+                    "virtualization"
+                 };
+
+      "use[common_udev]"
+        slist => {
+#                    "systemd_bootstrap",
+                    "udev"
+                 };
+
+      "use[common_systemd]"
+        slist => {
+                    "systemd"
+                 };
+
+      "use[firewall_external]"
+        slist => {
+                    "router"
+                 };
+
+      "use[host]"
+        slist => {
+                    "host"
+                 };
+
+      "use[template_server]"
+        slist => {
+                    "bitcoin",
+                    "bitcoin_wallet",
+                    "deluge",
+                    "deluge_server",
+                    "dns",
+                    "freenet",
+                    "i2p",
+                    "java",
+                    "mail",
+                    "router",
+                    "samba_server",
+                    "simplegit",
+                    "tor",
+                    "vpn",
+                    "znc"
+                 };
+
+      "unuse[common_udev]"
+        slist => {
+                    "systemd"
+                 };
+
+      "unuse[common_systemd]"
+        slist => {
+                    "systemd_bootstrap",
+                    "udev"
+                 };
+
+}

@@ -9,6 +9,7 @@ body file control
               "cryptoo/util/link_from.cf",
               "cryptoo/util/perms.cf",
               "cryptoo/util/setfattr.cf",
+              "cryptoo/config/file_groups.cf",
               "cryptoo/common/common.cf",
               "cryptoo/host/crypttab.cf",
               "cryptoo/host/guest_boxes.cf",
@@ -175,10 +176,10 @@ bundle agent host(arch)
         move_obstructions => "true",
         link_from => cryptoo_profile("cryptoo");
 
-      "/$(file_names.pm_use_host)"
+      "$(root)$(directory_names.fs_config_pm_use)/$(file_groups.use[host])"
         move_obstructions => "true",
-        link_from => cryptoo_package_use("host"),
-        comment => "create /etc/portage/package.use/host";
+        link_from => cryptoo_package_use("$(file_groups.use[host])"),
+        comment => "Link all files in /etc/portage/package.use";
 
       "/$(directory_names.fs_storage_base)/."
         perms => system,

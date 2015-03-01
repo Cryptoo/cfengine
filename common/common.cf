@@ -5,6 +5,7 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
+              "cryptoo/config/file_groups.cf",
               "cryptoo/common/gcc.cf",
               "cryptoo/common/make_conf.cf",
               "cryptoo/guest/template/files.cf",
@@ -118,45 +119,30 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
         move_obstructions => "true",
         link_from => proc_mounts;
 
-      "$(root)$(file_names.pm_env_localdistfiles)"
+      "$(root)$(directory_names.fs_config_pm_env)/$(file_groups.pm_env[common])"
         move_obstructions => "true",
-        link_from => cryptoo_portage_env("local-distfiles.conf");
+        link_from => cryptoo_portage_env("$(file_groups.pm_env[common]).conf"),
+        comment => "Link all files in /etc/portage/env";
 
-      "$(root)$(file_names.pm_env_nosandbox)"
+      "$(root)$(directory_names.fs_config_pm_environments)/$(file_groups.pm_environment[common])"
         move_obstructions => "true",
-        link_from => cryptoo_portage_env("nosandbox.conf");
+        link_from => cryptoo_package_env("$(file_groups.pm_environment[common])"),
+        comment => "Link all files in /etc/portage/package.env";
 
-      "$(root)$(file_names.pm_env_notmpfs)"
+      "$(root)$(directory_names.fs_config_pm_keywords)/$(file_groups.keywords[common])"
         move_obstructions => "true",
-        link_from => cryptoo_portage_env("notmpfs.conf");
+        link_from => cryptoo_package_keyword("$(file_groups.keywords[common])"),
+        comment => "Link all files in /etc/portage/package.keywords";
 
-      "$(root)$(file_names.pm_environment_cryptoo)"
+      "$(root)$(directory_names.fs_config_pm_mask)/$(file_groups.mask[common])"
         move_obstructions => "true",
-        link_from => cryptoo_package_env("cryptoo");
+        link_from => cryptoo_package_mask("$(file_groups.mask[common])"),
+        comment => "Link all files in /etc/portage/package.mask";
 
-      "$(root)$(file_names.pm_keywords_basicprograms)"
+      "$(root)$(directory_names.fs_config_pm_use)/$(file_groups.use[common])"
         move_obstructions => "true",
-        link_from => cryptoo_package_keyword("basic-programs");
-
-      "$(root)$(file_names.pm_keywords_virtualization)"
-        move_obstructions => "true",
-        link_from => cryptoo_package_keyword("virtualization");
-
-      "$(root)$(file_names.pm_mask_basicprograms)"
-        move_obstructions => "true",
-        link_from => cryptoo_package_mask("basic-programs");
-
-      "$(root)$(file_names.pm_mask_problematic)"
-        move_obstructions => "true",
-        link_from => cryptoo_package_mask("problematic");
-
-      "$(root)$(file_names.pm_use_basicprograms)"
-        move_obstructions => "true",
-        link_from => cryptoo_package_use("basic-programs");
-
-      "$(root)$(file_names.pm_use_virtualization)"
-        move_obstructions => "true",
-        link_from => cryptoo_package_use("virtualization");
+        link_from => cryptoo_package_use("$(file_groups.use[common])"),
+        comment => "Link all files in /etc/portage/package.use";
 
       "$(root)$(file_names.pm_profile_provided)"
         move_obstructions => "true",
@@ -224,25 +210,25 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
 
     bootstrap_systemd::
 
-      "$(root)$(file_names.pm_use_systemd)"
-        delete => default:tidy;
+      "$(root)$(directory_names.fs_config_pm_use)/$(file_groups.unuse[common_udev])"
+        delete => default:tidy,
+        comment => "Unlink systemd-related files in /etc/portage/package.use";
 
-      "$(root)$(file_names.pm_use_udev)"
+      "$(root)$(directory_names.fs_config_pm_use)/$(file_groups.use[common_udev])"
         move_obstructions => "true",
-        link_from => cryptoo_package_use("udev");
-
-      #"$(root)$(file_names.pm_use_systemdbootstrap)"
-      #  move_obstructions => "true",
-      #  link_from => cryptoo_package_use("systemd-bootstrap");
+        link_from => cryptoo_package_use("$(file_groups.use[common_udev])"),
+        comment => "Link udev-related files in /etc/portage/package.use";
 
     have_systemd::
 
-      "$(root)$(file_names.pm_use_systemd)"
-        move_obstructions => "true",
-        link_from => cryptoo_package_use("systemd");
+      "$(root)$(directory_names.fs_config_pm_use)/$(file_groups.unuse[common_systemd])"
+        delete => default:tidy,
+        comment => "Unlink udev-related files in /etc/portage/package.use";
 
-      "$(root)$(file_names.pm_use_systemdbootstrap)"
-        delete => default:tidy;
+      "$(root)$(directory_names.fs_config_pm_use)/$(file_groups.use[common_systemd])"
+        move_obstructions => "true",
+        link_from => cryptoo_package_use("$(file_groups.use[common_systemd])"),
+        comment => "Link systemd-related files in /etc/portage/package.use";
 
   methods:
 
