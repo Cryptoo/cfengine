@@ -37,6 +37,11 @@ bundle agent portage(root, role, arch, multilib)
       "portage_role_$(role)"
         expression => "any";
 
+    portage_role_master|portage_role_desktop_host::
+
+      "portage_host"
+        expression => "any";
+
   files:
 
     any::
@@ -110,7 +115,7 @@ bundle agent portage(root, role, arch, multilib)
         create => "true",
         edit_template => "/$(cryptoo:templates.template[world_sets])";
 
-    bootstrap_systemd::
+    portage_host::
 
       "$(root)$(cryptoo:directory_names.fs_config_pm_use)/$(cryptoo:file_groups.unuse_udev[$(role)])"
         delete => default:tidy,
@@ -121,7 +126,7 @@ bundle agent portage(root, role, arch, multilib)
         link_from => cryptoo:cryptoo_package_use("$(cryptoo:file_groups.use_udev[$(role)])"),
         comment => "Link udev-related files in /etc/portage/package.use";
 
-    have_systemd::
+    !portage_host::
 
       "$(root)$(cryptoo:directory_names.fs_config_pm_use)/$(cryptoo:file_groups.unuse_systemd[$(role)])"
         delete => default:tidy,
