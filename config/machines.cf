@@ -16,11 +16,28 @@ bundle common machines
 
       "machine_number_vars"
         slist => variablesmatching(".*machine_number\[$(cryptoo:cryptoo.configured_role)]");
+
       "machine_number_var_string"
         string => nth("machine_number_vars","0");
 
       "machine_number"
         string => "$($(machine_number_var[1]):$(machine_number_var[2]).$(machine_number_var[3])[$(machine_number_var[4])])";
+
+      "hostname"
+        string => "$(cryptoo:cryptoo.machine_names[$(machine_number)])";
+
+    cryptoo_host::
+
+      "root_dev"
+        string => "/dev/mapper/$(hostname)-root";
+
+      "root_uuid"
+        string => execresult("/$(file_names.blkid_app) -s UUID -o value $(root_dev)","noshell");
+
+    !cryptoo_host::
+
+      "root_uuid"
+        string => execresult("/$(file_names.blkid_app) -s UUID -o value /dev/vda","noshell");
 
   classes:
 
@@ -33,6 +50,6 @@ bundle common machines
 
       "My role is: $(cryptoo:cryptoo.configured_role)";
       "My number is: $(machine_number)";
-      "My hostname is: $(cryptoo:cryptoo.machine_names[$(machine_number)])";
+      "My hostname is: $(hostname)";
 
 }

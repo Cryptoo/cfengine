@@ -29,14 +29,8 @@ bundle agent host(arch)
 
     any::
 
-      "root_dev"
-        string => "/dev/mapper/$(cryptoo.machine_names[$(cryptoo:machines.machine_number)])-root";
-
-      "root_uuid"
-        string => execresult("/$(file_names.blkid_app) -s UUID -o value $(root_dev)","noshell");
-
       "hostname[hostname]"
-        string => "$(cryptoo.machine_names[$(cryptoo:machines.machine_number)])";
+        string => "$(cryptoo:machines.hostname)";
 
       "layman_cache_list"
         slist => findfiles("/$(directory_names.fs_volatile_overlay)/cache_*.xml");

@@ -132,4 +132,9 @@ bundle common cryptoo
       "role_undefined"
         expression => "any";
 
+    role_master|role_desktop_host::
+
+      "cryptoo_host"
+        expression => "any";
+
 }
