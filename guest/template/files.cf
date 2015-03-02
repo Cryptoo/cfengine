@@ -21,27 +21,30 @@ bundle agent template_files(root, role)
 
       "template_type_$(role)" expression => "any";
       "need_resolv_conf" expression => makerule ("$(root)$(cryptoo:file_names.dns_config)", "/$(cryptoo:file_names.dns_config)");
+      "need_group" not => fileexists("$(root)$(cryptoo:file_names.group)");
+      "need_passwd" not => fileexists("$(root)$(cryptoo:file_names.passwd)");
+      "need_shadow" not => fileexists("$(root)$(cryptoo:file_names.shadow)");
 
   files:
 
-    any::
+    need_group::
 
       "$(root)$(cryptoo:file_names.group)"
-        move_obstructions => "true",
-        link_from => cryptoo:host_etc("group");
+        copy_from => default:local_cp("/$(cryptoo:file_names.group)");
+
+    need_passwd::
 
       "$(root)$(cryptoo:file_names.passwd)"
-        move_obstructions => "true",
-        link_from => cryptoo:host_etc("passwd");
+        copy_from => default:local_cp("/$(cryptoo:file_names.passwd)");
+
+    need_shadow::
 
       "$(root)$(cryptoo:file_names.shadow)"
-        move_obstructions => "true",
-        link_from => cryptoo:host_etc("shadow");
+        copy_from => default:local_cp("/$(cryptoo:file_names.shadow)");
 
     need_resolv_conf::
 
       "$(root)$(cryptoo:file_names.dns_config)"
-          move_obstructions => "true",
           copy_from => default:local_cp("/$(cryptoo:file_names.dns_config)");
 
 }
