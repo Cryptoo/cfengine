@@ -1316,4 +1316,11 @@ bundle common config
       "virtfs[mode][0755]"
         string => "0s7YEAAA==";
 
+      "machine_number[undefined]"
+        string => "-1";
+      "machine_number[master]"
+        string => "1";
+      "machine_number[firewall_external]"
+        string => "10";
+
 }

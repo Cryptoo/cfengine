@@ -12,33 +12,27 @@ bundle common machines
 
   vars:
 
-    role_undefined::
+    any::
+
+      "machine_number_vars"
+        slist => variablesmatching(".*machine_number\[$(cryptoo:cryptoo.configured_role)]");
+      "machine_number_var_string"
+        string => nth("machine_number_vars","0");
 
       "machine_number"
-        string => "-1";
+        string => "$($(machine_number_var[1]):$(machine_number_var[2]).$(machine_number_var[3])[$(machine_number_var[4])])";
 
-    role_master::
+  classes:
 
-      "machine_number"
-        string => "1";
-
-    role_firewall_external::
-
-      "machine_number"
-        string => "10";
-
-    local_role::
-
-      "machine_number"
-        string => "$(local:machines.machine_number[$(cryptoo:cryptoo.configured_role)])";
-
+    "have_machine_number"
+      expression => regextract("(.*):(.*)\.(.*)\[(.*)\]", "$(machine_number_var_string)", "machine_number_var");
 
   reports:
 
-    any::
+    have_machine_number::
 
       "My role is: $(cryptoo:cryptoo.configured_role)";
-      "My number is: $(cryptoo:machines.machine_number)";
+      "My number is: $(machine_number)";
       "My hostname is: $(cryptoo:cryptoo.machine_names[$(machine_number)])";
 
 }

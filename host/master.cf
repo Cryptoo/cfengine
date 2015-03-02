@@ -1,0 +1,28 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/host/host.cf"
+            };
+
+}
+
+bundle agent master
+
+{
+
+  meta:
+
+    "tags" slist => { "cryptoo_role" };
+
+  methods:
+
+    any::
+
+      "configure system as a host"
+        usebundle => host("x86_64");
+
+}
