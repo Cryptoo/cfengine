@@ -66,7 +66,7 @@ desktop-system-tmp                                      /$(cryptoo:directory_nam
 /$(cryptoo:directory_names.fs_site_srcpkg)              /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/multilib/$(cryptoo:directory_names.fs_site_srcpkg)             none        rbind
 /$(cryptoo:directory_names.fs_site_binpkg)              /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/multilib/$(cryptoo:directory_names.fs_site_binpkg)             none        rbind
 multilib-system-tmp                                     /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/multilib/$(cryptoo:directory_names.fs_temp_base)               tmpfs       size=1G,nosuid,nodev
-[%CFEngine server_guest:: %]
+[%CFEngine server_guest|desktop_guest:: %]
 /dev/vda        /                               $(cryptoo:cryptoo.site_config[guest_fs][filesystem])    $(cryptoo:cryptoo.site_config[guest_fs][options])                                                0 1
 
 /bin            /$(cryptoo:directory_names.fs_site_apps)                     9p      trans=virtio,version=9p2000.L,ro,nodev,nosuid,noatime           0 0
