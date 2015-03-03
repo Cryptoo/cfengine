@@ -65,7 +65,7 @@ bundle agent guest_boxes
         usebundle => cryptoo:setfattr("user.virtfs.gid", "$(cryptoo:config.virtfs[uid_gid][0])", "/$(cryptoo:directory_names.fs_config_guest_inboxes)", "$(cryptoo:config.server_guests)");
 
       "set virtfs permissions on guest inboxes"
-        usebundle => cryptoo:setfattr("user.virtfs.mode", "$(cryptoo:config.virtfs[mode][0700])", "/$(cryptoo:directory_names.fs_config_guest_inboxes)", "$(cryptoo:config.server_guests)");
+        usebundle => cryptoo:setfattr("user.virtfs.mode", "$(cryptoo:config.virtfs[mode][dir][0700])", "/$(cryptoo:directory_names.fs_config_guest_inboxes)", "$(cryptoo:config.server_guests)");
 
   commands:
 

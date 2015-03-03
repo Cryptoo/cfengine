@@ -1290,31 +1290,41 @@ bundle common config
         string => "quiet";
 
       "virtfs[uid_gid][0]"
-        string => "0sAAAAAA==";
+        string => "0x00000000";
 
       "virtfs[uid_gid][100]"
-        string => "0sZAAAAA==";
+        string => "0x64000000";
 
       "virtfs[uid_gid][250]"
-        string => "0s+gAAAA==";
+        string => "0xfa000000";
 
       "virtfs[uid_gid][405]"
-        string => "0slQEAAA==";
+        string => "0x95010000";
 
-      "virtfs[mode][0644]"
-        string => "0spIEAAA==";
+      "virtfs[mode][dir][0644]"
+        string => "0xa4810000";
+      "virtfs[mode][file][0644]"
+        string => "0xa4410000";
 
-      "virtfs[mode][0660]"
-        string => "0ssIEAAA==";
+      "virtfs[mode][dir][0664]"
+        string => "0xb4810000";
+      "virtfs[mode][file][0664]"
+        string => "0xb4410000";
 
-      "virtfs[mode][0600]"
-        string => "0sgIEAAA==";
+      "virtfs[mode][dir][0700]"
+        string => "0xc0410000";
+      "virtfs[mode][file][0700]"
+        string => "0xc0810000";
 
-      "virtfs[mode][0700]"
-        string => "0swIEAAA==";
+      "virtfs[mode][dir][0755]"
+        string => "0xed810000";
+      "virtfs[mode][file][0755]"
+        string => "0xed410000";
 
-      "virtfs[mode][0755]"
-        string => "0s7YEAAA==";
+      "virtfs[mode][dir][0775]"
+        string => "0xfd810000";
+      "virtfs[mode][file][0775]"
+        string => "0xfd410000";
 
       "machine_number[undefined]"
         string => "-1";
