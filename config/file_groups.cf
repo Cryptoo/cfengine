@@ -62,7 +62,7 @@ bundle common file_groups
 
       "use_udev[common]"
         slist => {
-#                    "systemd_bootstrap",
+                    "systemd_bootstrap",
                     "udev"
                  };
 
@@ -255,7 +255,8 @@ bundle common file_groups
 
       "keywords[template_desktop]"
         slist => {
-                    "@(keywords[common])"
+                    "@(keywords[common])",
+                    "X"
                  };
 
       "mask[template_desktop]"
@@ -270,7 +271,8 @@ bundle common file_groups
 
       "use[template_desktop]"
         slist => {
-                    "@(use[common])"
+                    "@(use[common])",
+                    "X"
                  };
 
       "profile[template_desktop]"
@@ -333,6 +335,7 @@ bundle common file_groups
       "use[host]"
         slist => {
                     "@(use[common])",
+                    "udev",
                     "host"
                  };
 

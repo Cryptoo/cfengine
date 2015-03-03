@@ -121,12 +121,18 @@ bundle agent portage(root, role, arch, multilib)
         delete => default:tidy,
         comment => "Unlink systemd-related files in /etc/portage/package.use";
 
+    (!portage_host)&bootstrap_systemd::
+
+      "$(root)$(cryptoo:directory_names.fs_config_pm_use)/$(cryptoo:file_groups.unuse_udev[$(role)])"
+        delete => default:tidy,
+        comment => "Unlink systemd-related files in /etc/portage/package.use";
+
       "$(root)$(cryptoo:directory_names.fs_config_pm_use)/$(cryptoo:file_groups.use_udev[$(role)])"
         move_obstructions => "true",
         link_from => cryptoo:cryptoo_package_use("$(cryptoo:file_groups.use_udev[$(role)])"),
         comment => "Link udev-related files in /etc/portage/package.use";
 
-    !portage_host::
+    (!portage_host)&have_systemd::
 
       "$(root)$(cryptoo:directory_names.fs_config_pm_use)/$(cryptoo:file_groups.unuse_systemd[$(role)])"
         delete => default:tidy,
