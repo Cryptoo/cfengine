@@ -19,7 +19,7 @@ bundle agent make_conf(root, role, multilib)
 
     have_cpu2use_app&(!broken_cpu2use)::
 
-      "cpu_flags" string => execresult("$(root)$(cryptoo:file_names.cpu2use_app)","noshell");
+      "cpu_flags" string => execresult("/$(cryptoo:file_names.cpu2use_app)","noshell");
 
     (!have_cpu2use_app)|(broken_cpu2use)::
 
@@ -30,7 +30,7 @@ bundle agent make_conf(root, role, multilib)
     any::
 
       "have_cpu2use_app"
-        expression => fileexists("$(root)$(cryptoo:file_names.cpu2use_app)");
+        expression => fileexists("/$(cryptoo:file_names.cpu2use_app)");
 
       "have_layman_conf"
         expression => fileexists("$(root)$(cryptoo:file_names.overlay_conf)");
