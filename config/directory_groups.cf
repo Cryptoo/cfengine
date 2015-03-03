@@ -48,7 +48,6 @@ bundle common directory_groups
                     $(directory_names.fs_admin_apps),
                     $(directory_names.fs_standard_base),
                     $(directory_names.fs_standard_apps),
-                    $(directory_names.fs_cryptoo),
                     $(directory_names.fs_standard_admin_apps),
                     $(directory_names.fs_standard_share),
                     $(directory_names.fs_standard_timezones),
@@ -85,6 +84,7 @@ bundle common directory_groups
 
       "common_pm"
         slist => {
+                    $(directory_names.fs_cryptoo),
                     $(directory_names.fs_machine_pm),
                     $(directory_names.fs_machine_pm_meta),
                     $(directory_names.fs_machine_pm_profile),
