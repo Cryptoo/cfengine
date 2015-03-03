@@ -6,6 +6,10 @@
                  },
     "locale": "en_US",
     "timezone": "UTC",
+    "boot_fs": {
+                "filesystem": "ext4",
+                "options": "defaults,noatime"
+              }
     "host_fs": {
                 "filesystem": "ext4",
                 "options": "defaults,noatime"
