@@ -21,6 +21,13 @@ bundle agent portage(root, role, arch, multilib)
 
 {
 
+  vars:
+
+    any::
+
+      "configured_role"
+        string => "$(role)";
+
   classes:
 
     any::

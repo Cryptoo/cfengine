@@ -1,10 +1,1 @@
-[%CFEngine portage_role_master:: %]
-@master
-[%CFEngine portage_role_desktop_host:: %]
-@desktop_host
-[%CFEngine portage_role_template_server:: %]
-@template_server
-[%CFEngine portage_role_template_desktop:: %]
-@template_desktop
-[%CFEngine portage_role_firewall_external:: %]
-@firewall_external
+$(cryptoo:portage.configured_role)
