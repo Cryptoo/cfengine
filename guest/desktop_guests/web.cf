@@ -1,0 +1,28 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/guest/desktop_guests/desktop_guest.cf"
+            };
+
+}
+
+bundle agent web
+
+{
+
+  meta:
+
+    "tags" slist => { "cryptoo_role" };
+
+  methods:
+
+    any::
+
+      "configure system as a web browser guest"
+        usebundle => cryptoo:desktop_guest("/", "web", "x86_64", "nomultilib");
+
+}

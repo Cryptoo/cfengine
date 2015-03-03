@@ -1,0 +1,51 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/common/common.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/templates.cf",
+              "cryptoo/host/mounts.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
+bundle agent desktop_guest(root, role, arch, multilib)
+
+{
+
+  classes:
+
+    any::
+
+      "desktop_guest"
+        expression => "any";
+
+  files:
+
+    any::
+
+      "/$(cryptoo:file_names.fstab)"
+        perms => cryptoo:system,
+        create => "true",
+        edit_template => "/$(cryptoo:templates.template[fstab])",
+        classes => default:u_if_repaired("fstab_repaired"),
+        comment => "configure /etc/fstab";
+
+  methods:
+
+    any::
+
+      "manage common files"
+        usebundle => cryptoo:cryptoo_filesystem("$(root)","$(role)","$(arch)","$(multilib)");
+
+    fstab_repaired::
+
+      "activate all mountpoints"
+        usebundle => cryptoo:mount_all;
+
+}

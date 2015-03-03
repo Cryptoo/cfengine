@@ -7,6 +7,7 @@ body file control
   inputs => {
               "cryptoo/common/undefined.cf",
               "cryptoo/guest/server_guests/firewall_external.cf",
+              "cryptoo/guest/desktop_guests/web.cf",
               "cryptoo/host/master.cf"
             };
 
