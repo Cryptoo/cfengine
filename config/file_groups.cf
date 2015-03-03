@@ -256,6 +256,8 @@ bundle common file_groups
       "keywords[template_desktop]"
         slist => {
                     "@(keywords[common])",
+                    "browsers",
+                    "desktop",
                     "X"
                  };
 
@@ -272,6 +274,8 @@ bundle common file_groups
       "use[template_desktop]"
         slist => {
                     "@(use[common])",
+                    "browsers",
+                    "desktop",
                     "X"
                  };
 
