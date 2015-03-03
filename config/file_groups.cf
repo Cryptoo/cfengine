@@ -563,20 +563,20 @@ bundle common file_groups
 #                                     web
 ################################################################################
 
-      "make_profile[template_desktop]"
+      "make_profile[web]"
         string => "$(make_profile[desktop_host])";
 
-      "pm_env[template_desktop]"
+      "pm_env[web]"
         slist => {
                     "@(pm_env[common])"
                  };
 
-      "pm_environment[template_desktop]"
+      "pm_environment[web]"
         slist => {
                     "@(pm_environment[common])"
                  };
 
-      "keywords[template_desktop]"
+      "keywords[web]"
         slist => {
                     "@(keywords[common])",
                     "browsers",
@@ -584,17 +584,17 @@ bundle common file_groups
                     "X"
                  };
 
-      "mask[template_desktop]"
+      "mask[web]"
         slist => {
                     "@(mask[common])"
                  };
 
-      "unmask[template_desktop]"
+      "unmask[web]"
         slist => {
                     "@(unmask[common])"
                  };
 
-      "use[template_desktop]"
+      "use[web]"
         slist => {
                     "@(use[common])",
                     "browsers",
@@ -602,27 +602,27 @@ bundle common file_groups
                     "X"
                  };
 
-      "profile[template_desktop]"
+      "profile[web]"
         slist => {
                     "@(profile[common])"
                  };
 
-      "use_udev[template_desktop]"
+      "use_udev[web]"
         slist => {
                     "@(use_udev[common])"
                  };
 
-      "use_systemd[template_desktop]"
+      "use_systemd[web]"
         slist => {
                     "@(use_systemd[common])"
                  };
 
-      "unuse_udev[template_desktop]"
+      "unuse_udev[web]"
         slist => {
                     "@(unuse_udev[common])"
                  };
 
-      "unuse_systemd[template_desktop]"
+      "unuse_systemd[web]"
         slist => {
                     "@(unuse_systemd[common])"
                  };
@@ -631,20 +631,20 @@ bundle common file_groups
 #                                 mail_client
 ################################################################################
 
-      "make_profile[template_desktop]"
+      "make_profile[mail_client]"
         string => "$(make_profile[desktop_host])";
 
-      "pm_env[template_desktop]"
+      "pm_env[mail_client]"
         slist => {
                     "@(pm_env[common])"
                  };
 
-      "pm_environment[template_desktop]"
+      "pm_environment[mail_client]"
         slist => {
                     "@(pm_environment[common])"
                  };
 
-      "keywords[template_desktop]"
+      "keywords[mail_client]"
         slist => {
                     "@(keywords[common])",
                     "desktop",
@@ -652,17 +652,17 @@ bundle common file_groups
                     "X"
                  };
 
-      "mask[template_desktop]"
+      "mask[mail_client]"
         slist => {
                     "@(mask[common])"
                  };
 
-      "unmask[template_desktop]"
+      "unmask[mail_client]"
         slist => {
                     "@(unmask[common])"
                  };
 
-      "use[template_desktop]"
+      "use[mail_client]"
         slist => {
                     "@(use[common])",
                     "desktop",
@@ -670,27 +670,27 @@ bundle common file_groups
                     "X"
                  };
 
-      "profile[template_desktop]"
+      "profile[mail_client]"
         slist => {
                     "@(profile[common])"
                  };
 
-      "use_udev[template_desktop]"
+      "use_udev[mail_client]"
         slist => {
                     "@(use_udev[common])"
                  };
 
-      "use_systemd[template_desktop]"
+      "use_systemd[mail_client]"
         slist => {
                     "@(use_systemd[common])"
                  };
 
-      "unuse_udev[template_desktop]"
+      "unuse_udev[mail_client]"
         slist => {
                     "@(unuse_udev[common])"
                  };
 
-      "unuse_systemd[template_desktop]"
+      "unuse_systemd[mail_client]"
         slist => {
                     "@(unuse_systemd[common])"
                  };
