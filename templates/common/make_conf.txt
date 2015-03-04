@@ -15,7 +15,7 @@ EMERGE_DEFAULT_OPTS="--ask --jobs --load-average 8.0 --keep-going --usepkg --bui
 [%CFEngine make_conf_role_guest:: %]
 MAKEOPTS="-j2 -l1.4"
 
-EMERGE_DEFAULT_OPTS="--jobs --load-average 1.0 --keep-going --usepkgonly --binpkg-respect-use"
+EMERGE_DEFAULT_OPTS="--quiet --jobs --load-average 1.0 --keep-going --usepkgonly --binpkg-respect-use"
 [%CFEngine any:: %]
 
 #CPU options
