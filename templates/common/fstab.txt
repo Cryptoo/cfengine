@@ -19,7 +19,6 @@ system-tmp                                              /$(cryptoo:directory_nam
 
 /                                                       /$(cryptoo:directory_names.fs_mount_root)            none        bind          0 0
 
-[%CFEngine host:: %]
 /$(cryptoo:file_names.group)                            /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no-multilib/$(cryptoo:file_names.group)                         none        bind
 /$(cryptoo:file_names.passwd)                           /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no-multilib/$(cryptoo:file_names.passwd)                        none        bind
 /$(cryptoo:file_names.shadow)                           /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no-multilib/$(cryptoo:file_names.shadow)                        none        bind
@@ -35,7 +34,6 @@ system-tmp                                              /$(cryptoo:directory_nam
 /$(cryptoo:directory_names.fs_site_binpkg)              /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no-multilib/$(cryptoo:directory_names.fs_site_binpkg)           none        rbind
 server-system-tmp                                       /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no-multilib/$(cryptoo:directory_names.fs_temp_base)             tmpfs       size=1G,nosuid,nodev
 
-[%CFEngine host|desktop_host:: %]
 /$(cryptoo:file_names.group)                            /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/$(cryptoo:file_names.group)                        none        bind
 /$(cryptoo:file_names.passwd)                           /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/$(cryptoo:file_names.passwd)                       none        bind
 /$(cryptoo:file_names.shadow)                           /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/$(cryptoo:file_names.shadow)                       none        bind
@@ -51,7 +49,6 @@ server-system-tmp                                       /$(cryptoo:directory_nam
 /$(cryptoo:directory_names.fs_site_binpkg)              /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/$(cryptoo:directory_names.fs_site_binpkg)          none        rbind
 desktop-system-tmp                                      /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/$(cryptoo:directory_names.fs_temp_base)            tmpfs       size=1G,nosuid,nodev
 
-[%CFEngine host:: %]
 /$(cryptoo:file_names.group)                            /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/multilib/$(cryptoo:file_names.group)                           none        bind
 /$(cryptoo:file_names.passwd)                           /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/multilib/$(cryptoo:file_names.passwd)                          none        bind
 /$(cryptoo:file_names.shadow)                           /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/multilib/$(cryptoo:file_names.shadow)                          none        bind
