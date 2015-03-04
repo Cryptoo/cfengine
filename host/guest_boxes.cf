@@ -8,6 +8,9 @@ body file control
               "cryptoo/config/config.cf",
               "cryptoo/config/directory_names.cf",
               "cryptoo/config/file_names.cf",
+              "cryptoo/host/guest_role.cf",
+              "cryptoo/util/perms.cf",
+              "cryptoo/util/setfattr.cf"
             };
 
 }
@@ -28,24 +31,24 @@ bundle agent guest_boxes
     any::
 
       "/$(cryptoo:directory_names.fs_config_guest_inboxes)/$(cryptoo:config.server_guests)/."
-        perms => root_qemu,
+        perms => cryptoo:root_qemu,
         create => "true",
         comment => "guest inboxes";
 
       "/$(cryptoo:directory_names.fs_config_guest_inboxes)/$(cryptoo:config.server_guests)/machine_names.json"
-        perms => root_qemu,
+        perms => cryptoo:root_qemu,
         move_obstructions => "true",
         copy_from => default:local_cp("/$(cryptoo:file_names.machine_names)"),
         comment => "guest machine names";
 
       "/$(cryptoo:directory_names.fs_config_guest_inboxes)/$(cryptoo:config.server_guests)/subnet_config.json"
-        perms => root_qemu,
+        perms => cryptoo:root_qemu,
         move_obstructions => "true",
         copy_from => default:local_cp("/$(cryptoo:file_names.subnet_config)"),
         comment => "guest subnet config";
 
       "/$(cryptoo:directory_names.fs_config_guest_outboxes)/$(cryptoo:config.server_guests)/."
-        perms => root_qemu,
+        perms => cryptoo:root_qemu,
         create => "true",
         comment => "guest outboxes";
 

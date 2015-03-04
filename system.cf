@@ -5,6 +5,7 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
+              "cryptoo/cryptoo.cf",
               "cryptoo/common/undefined.cf",
               "cryptoo/guest/server_guests/firewall_external.cf",
               "cryptoo/guest/desktop_guests/web.cf",
@@ -22,7 +23,7 @@ bundle agent cryptoo_system
     any::
 
       "role_bundle"
-        slist => bundlesmatching(".*:$(cryptoo.configured_role)", "cryptoo_role");
+        slist => bundlesmatching(".*:$(cryptoo:cryptoo.configured_role)", "cryptoo_role");
 
   methods:
 

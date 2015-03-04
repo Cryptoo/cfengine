@@ -5,18 +5,25 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
-              "cryptoo/util/classes.cf",
-              "cryptoo/util/link_from.cf",
-              "cryptoo/util/perms.cf",
-              "cryptoo/util/setfattr.cf",
+              "cryptoo/cryptoo.cf",
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/directory_groups.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/machines.cf",
+              "cryptoo/config/templates.cf",
               "cryptoo/common/common.cf",
               "cryptoo/host/crypttab.cf",
               "cryptoo/host/guest_boxes.cf",
-              "cryptoo/host/guest_role.cf",
               "cryptoo/host/kernel.cf",
               "cryptoo/host/mounts.cf",
               "cryptoo/host/openrc.cf",
+              "cryptoo/util/perms.cf",
               "cryptoo/host/subnet.cf",
+
+              "cryptoo/util/classes.cf",
+              "cryptoo/util/link_from.cf",
+              "cryptoo/util/setfattr.cf",
+              "cryptoo/host/guest_role.cf",
             };
 
 }
@@ -33,17 +40,17 @@ bundle agent host(arch)
         string => "$(cryptoo:machines.hostname)";
 
       "layman_cache_list"
-        slist => findfiles("/$(directory_names.fs_volatile_overlay)/cache_*.xml");
+        slist => findfiles("/$(cryptoo:directory_names.fs_volatile_overlay)/cache_*.xml");
 
       "layman_cache"
         string => nth("layman_cache_list", 0);
 
       "portage_cleanup_command"
-        string => "/$(file_names.find_app) /$(directory_names.fs_mount_root)/$(directory_names.fs_pm) -mindepth 1 -maxdepth 1 -name * -exec /$(file_names.move_app) {} /$(directory_names.fs_storage_pm) ;",
+        string => "/$(cryptoo:file_names.find_app) /$(cryptoo:directory_names.fs_mount_root)/$(cryptoo:directory_names.fs_pm) -mindepth 1 -maxdepth 1 -name * -exec /$(cryptoo:file_names.move_app) {} /$(cryptoo:directory_names.fs_storage_pm) ;",
         comment => "this command moves /mnt/root/usr/portage/* /usr/portage/. It's needed for bootstrapping, because /usr/portage is populated before it's mounted in the proper location";
 
       "distfiles_cleanup_command"
-        string => "/$(file_names.find_app) /$(directory_names.fs_storage_pm)/distfiles -mindepth 1 -maxdepth 1 -name * -exec /$(file_names.move_app) {} /$(directory_names.fs_storage_srcpkg) ;",
+        string => "/$(cryptoo:file_names.find_app) /$(cryptoo:directory_names.fs_storage_pm)/distfiles -mindepth 1 -maxdepth 1 -name * -exec /$(cryptoo:file_names.move_app) {} /$(cryptoo:directory_names.fs_storage_srcpkg) ;",
         comment => "this command moves the contents of /usr/portage/distfiles to /usr/site-local/distfiles. Also needed for bootstrapping";
 
   classes:
@@ -57,39 +64,39 @@ bundle agent host(arch)
         expression => "any";
 
       "root_bind_mount"
-        expression => regline("device /dev/mapper/$(cryptoo.machine_names[$(cryptoo:machines.machine_number)])-root mounted on /$(directory_names.fs_mount_root).*", "$(file_names.mount_info)"),
+        expression => regline("device /dev/mapper/$(cryptoo:machines.hostname)-root mounted on /$(cryptoo:directory_names.fs_mount_root).*", "$(cryptoo:file_names.mount_info)"),
         comment => "/ is mounted as a bind mount on /mnt/root. Gives access to underlying rootfs";
 
       "srv_mounted"
-        expression => regline("device /dev/mapper/$(cryptoo.machine_names[$(cryptoo:machines.machine_number)])-storage mounted on /$(directory_names.fs_storage_base).*", "$(file_names.mount_info)"),
+        expression => regline("device /dev/mapper/$(cryptoo:machines.hostname)-storage mounted on /$(cryptoo:directory_names.fs_storage_base).*", "$(cryptoo:file_names.mount_info)"),
         comment => "backing LV is mounted for /srv";
 
       "have_grub"
-        expression => fileexists("/$(file_names.grub_defaults)");
+        expression => fileexists("/$(cryptoo:file_names.grub_defaults)");
 
       "have_cryptoo"
-        expression => fileexists("/$(file_names.cryptoo_profile)");
+        expression => fileexists("/$(cryptoo:file_names.cryptoo_profile)");
 
       "need_cryptoo"
-        not => fileexists("/$(file_names.cryptoo_profile)");
+        not => fileexists("/$(cryptoo:file_names.cryptoo_profile)");
 
       "have_crypttab"
-        expression => fileexists("/$(file_names.crypttab)");
+        expression => fileexists("/$(cryptoo:file_names.crypttab)");
 
       "need_crypttab"
-        not => fileexists("/$(file_names.crypttab)");
+        not => fileexists("/$(cryptoo:file_names.crypttab)");
 
       "have_dracut_app"
-        expression => fileexists("/$(file_names.dracut_app)");
+        expression => fileexists("/$(cryptoo:file_names.dracut_app)");
 
       "have_dracut_image"
-        expression => fileexists("/$(file_names.dracut_image)");
+        expression => fileexists("/$(cryptoo:file_names.dracut_image)");
 
       "need_dracut_image"
-        not => fileexists("/$(file_names.dracut_image)");
+        not => fileexists("/$(cryptoo:file_names.dracut_image)");
 
       "have_layman_app"
-        expression => fileexists("/$(file_names.layman_app)");
+        expression => fileexists("/$(cryptoo:file_names.layman_app)");
 
       "have_layman_cache"
          expression => fileexists("$(layman_cache)");
@@ -98,10 +105,10 @@ bundle agent host(arch)
          not => fileexists("$(layman_cache)");
 
       "need_bitcoin_overlay"
-        not => fileexists("/$(file_names.bitcoin_overlay)");
+        not => fileexists("/$(cryptoo:file_names.bitcoin_overlay)");
 
       "have_libvirtd_app"
-        expression => fileexists("/$(file_names.libvirtd_app)");
+        expression => fileexists("/$(cryptoo:file_names.libvirtd_app)");
 
     srv_started&(!srv_failed)::
 
@@ -119,143 +126,143 @@ bundle agent host(arch)
 
     any::
 
-      "/$(directory_groups.host_system)/."
-        perms => system,
+      "/$(cryptoo:directory_groups.host_system)/."
+        perms => cryptoo:system,
         create => "true",
-        handle => "done_$(directory_groups.host_system)",
+        handle => "done_$(cryptoo:directory_groups.host_system)",
         comment => "create host-specific directories";
 
-      "/$(directory_groups.host_system_private)/."
-        perms => root,
+      "/$(cryptoo:directory_groups.host_system_private)/."
+        perms => cryptoo:root,
         create => "true",
-        handle => "done_$(directory_groups.host_system)",
+        handle => "done_$(cryptoo:directory_groups.host_system)",
         comment => "create host-specific root-only directories";
 
-      "/$(file_names.dmcrypt_key)"
-        perms => root,
+      "/$(cryptoo:file_names.dmcrypt_key)"
+        perms => cryptoo:root,
         create => "false",
         comment => "ensure master HD encryption key is root-only";
 
-      "/$(directory_groups.host_root_qemu)/."
-        perms => root_qemu,
+      "/$(cryptoo:directory_groups.host_root_qemu)/."
+        perms => cryptoo:root_qemu,
         create => "true",
         comment => "/etc/cryptoo/guest/{inbox,outbox}";
 
-      "/$(file_names.dracut_conf)"
-        perms => system,
+      "/$(cryptoo:file_names.dracut_conf)"
+        perms => cryptoo:system,
         create => "true",
-        edit_template => "/$(templates.template[dracut_conf])",
+        edit_template => "/$(cryptoo:templates.template[dracut_conf])",
         classes => default:u_if_repaired("update_dracut"),
         comment => "configure dracut";
 
-      "/$(file_names.env_kernel)"
-        perms => system,
+      "/$(cryptoo:file_names.env_kernel)"
+        perms => cryptoo:system,
         create => "true",
-        edit_template => "/$(templates.template[env_kernel])",
+        edit_template => "/$(cryptoo:templates.template[env_kernel])",
         classes => default:u_if_repaired("update_env"),
         comment => "create /etc/env.d/99kernel";
 
-      "/$(file_names.fstab)"
-        perms => system,
+      "/$(cryptoo:file_names.fstab)"
+        perms => cryptoo:system,
         create => "true",
-        edit_template => "/$(templates.template[fstab])",
+        edit_template => "/$(cryptoo:templates.template[fstab])",
         classes => default:u_if_repaired("fstab_repaired"),
         comment => "configure /etc/fstab";
 
-      "/$(directory_names.fs_storage_base)/."
-        perms => system,
+      "/$(cryptoo:directory_names.fs_storage_base)/."
+        perms => cryptoo:system,
         create => "true",
         classes => srv,
         comment => "create /srv mountpoint";
 
     have_grub::
 
-      "/$(file_names.grub_defaults)"
-        perms => system,
+      "/$(cryptoo:file_names.grub_defaults)"
+        perms => cryptoo:system,
         create => "false",
         edit_line => default:delete_lines_matching("# GRUB_CMDLINE_LINUX=.*"),
         comment => "remove some example comments that interfere with the next promise";
 
-      "/$(file_names.grub_defaults)"
-        perms => system,
+      "/$(cryptoo:file_names.grub_defaults)"
+        perms => cryptoo:system,
         create => "false",
         edit_line => default:set_quoted_values("cryptoo:config.grub"),
         comment => "configure /etc/default/grub";
 
     root_bind_mount::
 
-      "/$(directory_names.fs_mount_root)/$(file_names.dmcrypt_key)"
-        perms => root,
+      "/$(cryptoo:directory_names.fs_mount_root)/$(cryptoo:file_names.dmcrypt_key)"
+        perms => cryptoo:root,
         copy_from => default:local_cp("/$(cryptoo:file_names.dmcrypt_key)"),
         comment => "put a backup copy of the master HD encryption inside the encrypted volume";
 
     srv_mounted::
 
-      "/$(directory_groups.host_system_storage)/."
-        perms => system,
+      "/$(cryptoo:directory_groups.host_system_storage)/."
+        perms => cryptoo:system,
         create => "true",
         classes => srv_ready,
         comment => "create system directories under /srv";
 
-      "/$(directory_groups.host_pm)/."
-        perms => portage,
+      "/$(cryptoo:directory_groups.host_pm)/."
+        perms => cryptoo:portage,
         create => "true",
         classes => srv_ready,
         comment => "create Portage-owned directories under /srv";
 
-      "/$(directory_groups.host_pm_open)/."
-        perms => portage_open,
+      "/$(cryptoo:directory_groups.host_pm_open)/."
+        perms => cryptoo:portage_open,
         create => "true",
         classes => srv_ready,
-        handle => "done_$(directory_groups.host_pm_open)",
+        handle => "done_$(cryptoo:directory_groups.host_pm_open)",
         comment => "create Portage-owned writables directories under /srv";
 
-      "/$(directory_names.fs_storage_shared)/."
+      "/$(cryptoo:directory_names.fs_storage_shared)/."
         depends_on => { "user_guest" },
-        perms => guest,
+        perms => cryptoo:guest,
         create => "true",
         classes => srv_ready,
         comment => "create master common storage directory";
 
-      "/$(file_names.storage_pm_site_meta)"
-        perms => system,
+      "/$(cryptoo:file_names.storage_pm_site_meta)"
+        perms => cryptoo:system,
         create => "true",
-        edit_template => "/$(templates.template[local_layout_conf])";
+        edit_template => "/$(cryptoo:templates.template[local_layout_conf])";
 
-      "/$(file_names.storage_pm_site_repo)"
-        perms => system,
+      "/$(cryptoo:file_names.storage_pm_site_repo)"
+        perms => cryptoo:system,
         create => "true",
-        edit_template => "/$(templates.template[site_repo_name])";
+        edit_template => "/$(cryptoo:templates.template[site_repo_name])";
 
     need_machine_names::
 
-      "/$(file_names.machine_names)"
-        perms => system,
+      "/$(cryptoo:file_names.machine_names)"
+        perms => cryptoo:system,
         create => "true",
-        edit_template => "/$(templates.template[machine_names])";
+        edit_template => "/$(cryptoo:templates.template[machine_names])";
 
     need_site_config::
 
-      "/$(file_names.site_config)"
-        perms => system,
+      "/$(cryptoo:file_names.site_config)"
+        perms => cryptoo:system,
         create => "true",
-        edit_template => "/$(templates.template[site_config])",
+        edit_template => "/$(cryptoo:templates.template[site_config])",
         classes => default:u_if_repaired("site_config_available");
 
     have_libvirtd_app::
 
-      "/$(directory_groups.host_qemu)/."
-        perms => qemu,
+      "/$(cryptoo:directory_groups.host_qemu)/."
+        perms => cryptoo:guest,
         create => "true",
-        handle => "done_$(directory_groups.host_qemu)",
+        handle => "done_$(cryptoo:directory_groups.host_qemu)",
         comment => "create qemu storage directories";
 
     have_libvirtd_app&srv_mounted::
 
-      "/$(directory_names.fs_storage_qemu)/."
-        perms => qemu,
+      "/$(cryptoo:directory_names.fs_storage_qemu)/."
+        perms => cryptoo:guest,
         create => "true",
-        handle => "done_$(directory_names.fs_storage_qemu)",
+        handle => "done_$(cryptoo:directory_names.fs_storage_qemu)",
         comment => "create base qemu storage directory";
 
   methods:
@@ -263,19 +270,19 @@ bundle agent host(arch)
     any::
 
       "configure OpenRC"
-        usebundle => openrc("/");
+        usebundle => cryptoo:openrc("/");
 
       "manage files for the server skeleton"
-        usebundle => cryptoo_filesystem("/$(directory_names.fs_volatile_images)/server/x86_64/no-multilib/","template_server","x86_64","nomultilib");
+        usebundle => cryptoo:cryptoo_filesystem("/$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no-multilib/","template_server","x86_64","nomultilib");
 
       "manage files for the desktop skeleton"
-        usebundle => cryptoo_filesystem("/$(directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/","template_desktop","x86_64","nomultilib");
+        usebundle => cryptoo:cryptoo_filesystem("/$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/","template_desktop","x86_64","nomultilib");
 
       "manage files for the desktop-multilib skeleton"
-        usebundle => cryptoo_filesystem("/$(directory_names.fs_volatile_images)/desktop/x86_64/multilib/","template_desktop","x86_64","multilib");
+        usebundle => cryptoo:cryptoo_filesystem("/$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/multilib/","template_desktop","x86_64","multilib");
 
       "manage crypttab"
-        usebundle => crypttab;
+        usebundle => cryptoo:crypttab;
 
       "manage guest inboxes and outboxes"
         usebundle => cryptoo:guest_boxes;
@@ -283,57 +290,57 @@ bundle agent host(arch)
     (all_mounted)|(all_ready)::
 
       "manage common files"
-        usebundle => cryptoo_filesystem("/","master","$(arch)","nomultilib");
+        usebundle => cryptoo:cryptoo_filesystem("/","master","$(arch)","nomultilib");
 
       "configure kernel"
-        usebundle => kconfig("host", "$(arch)"),
+        usebundle => cryptoo:kconfig("host", "$(arch)"),
         classes => default:if_ok("kernel_ok");
 
     srv_created::
 
       "mount storage device"
-        usebundle => mount_types("ext4"),
+        usebundle => cryptoo:mount_types("ext4"),
         classes => default:if_ok("srv_mounted");
 
     srv_ready&srv_created::
 
       "ensure all mounts are active"
-        usebundle => mount_all,
+        usebundle => cryptoo:mount_all,
         classes => default:if_ok("all_mounted");
 
     fstab_repaired::
 
       "activate all mountpoints"
-        usebundle => mount_all,
+        usebundle => cryptoo:mount_all,
         depends_on=> { "srv_ok" };
 
     need_subnet_config::
 
       "generate random subnets"
-        usebundle => subnet,
+        usebundle => cryptoo:subnet,
         classes => default:if_ok("subnet_config_available");
 
   commands:
 
     update_env::
 
-      "/$(file_names.envupdate_app)";
+      "/$(cryptoo:file_names.envupdate_app)";
 
     need_cryptoo&(all_mounted|all_ready)::
 
-      "/$(file_names.git_app) clone -b dev $(cryptoo.overlay_git) /$(directory_names.fs_storage_cryptoo)";
+      "/$(cryptoo:file_names.git_app) clone -b dev $(cryptoo:cryptoo.overlay_git) /$(cryptoo:directory_names.fs_storage_cryptoo)";
 
     (need_dracut_image|update_dracut)&(have_dracut_app&have_crypttab)::
 
-      "/$(file_names.dracut_app) --force --no-compress /$(file_names.dracut_image)";
+      "/$(cryptoo:file_names.dracut_app) --force --no-compress /$(cryptoo:file_names.dracut_image)";
 
     need_layman_cache&have_layman_app::
 
-    "/$(file_names.layman_app) -f";
+    "/$(cryptoo:file_names.layman_app) -f";
 
     need_bitcoin_overlay&have_layman_cache::
 
-      "/$(file_names.layman_app) -a bitcoin";
+      "/$(cryptoo:file_names.layman_app) -a bitcoin";
 
     all_mounted::
 

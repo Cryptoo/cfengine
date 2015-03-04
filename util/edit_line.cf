@@ -17,12 +17,12 @@ bundle edit_line bashrc
     replace_patterns:
 
       "(.*PS1=.*)W(.*)"
-        replace_with => PS1_small_w;
+        replace_with => cryptoo:PS1_small_w;
 
     insert_lines:
 
       "alias ls='ls -FADv -I .keep --color=auto'$(const.n)alias nano='nano -w'"
-        location => after_unset;
+        location => cryptoo:after_unset;
 }
 
 bundle edit_line enable_kconfig(symbol, file)
@@ -30,22 +30,25 @@ bundle edit_line enable_kconfig(symbol, file)
 {
      classes:
 
-       "exists_disabled" expression => regline("# CONFIG_$(symbol) is not set", "$(file)");
-       "missing_from_file" not => "exists_disabled";
+       "exists_disabled"
+         expression => regline("# CONFIG_$(symbol) is not set", "$(file)");
+
+       "missing_from_file"
+         not => "exists_disabled";
  
      replace_patterns:
 
       exists_disabled::
 
        "# CONFIG_$(symbol) is not set"
-         replace_with => enable_kernel_symbol("$(symbol)");
+         replace_with => cryptoo:enable_kernel_symbol("$(symbol)");
 
      insert_lines:
 
       missing_from_file::
 
        "CONFIG_$(symbol)=y"
-         location => first_line;
+         location => cryptoo:first_line;
 
      reports:
 
@@ -58,22 +61,25 @@ bundle edit_line disable_kconfig(symbol,file)
 {
      classes:
 
-       "exists_enabled" expression => regline("CONFIG_$(symbol)=.*", "$(file)");
-       "missing_from_file" not => "exists_enabled";
+       "exists_enabled"
+         expression => regline("CONFIG_$(symbol)=.*", "$(file)");
+
+       "missing_from_file"
+         not => "exists_enabled";
  
      replace_patterns:
 
       exists_enabled::
 
        "CONFIG_$(symbol)=y"
-         replace_with => disable_kernel_symbol("$(symbol)");
+         replace_with => cryptoo:disable_kernel_symbol("$(symbol)");
 
      insert_lines:
 
       missing_from_file::
 
        "# CONFIG_$(symbol) is not set"
-         location => first_line;
+         location => cryptoo:first_line;
 
      reports:
 
@@ -86,4 +92,3 @@ bundle edit_line disable_kconfig(symbol,file)
         "added CONFIG_$(symbol)";
 
 }
-

@@ -4,6 +4,11 @@ body file control
 
   namespace => "cryptoo";
 
+  inputs => {
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/file_names.cf"
+            };
+
 }
 
 bundle common templates
@@ -36,8 +41,8 @@ bundle common templates
                  };
 
       "template[$(template_list)]"
-        string => ifelse("local_template_$(template_list)", "$(directory_names.fs_volatile_local_templates)/$(file_names.template_$(template_list))",
-                         "!local_template_$(template_list)", "$(directory_names.fs_volatile_cf_templates)/$(file_names.template_$(template_list))",
+        string => ifelse("local_template_$(template_list)", "$(cryptoo:directory_names.fs_volatile_local_templates)/$(cryptoo:file_names.template_$(template_list))",
+                         "!local_template_$(template_list)", "$(cryptoo:directory_names.fs_volatile_cf_templates)/$(cryptoo:file_names.template_$(template_list))",
                          "missing");
 
   classes:
@@ -45,6 +50,6 @@ bundle common templates
     any::
 
       "local_template_$(template_list)"
-        expression => fileexists("/$(directory_names.fs_volatile_local_templates)/$(file_names.template_$(template_list))");
+        expression => fileexists("/$(cryptoo:directory_names.fs_volatile_local_templates)/$(cryptoo:file_names.template_$(template_list))");
 
 }

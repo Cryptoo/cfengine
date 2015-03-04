@@ -4,6 +4,10 @@ body file control
 
   namespace => "cryptoo";
 
+  inputs => {
+              "cryptoo/config/file_names.cf"
+            };
+
 }
 
 bundle agent mount_types(fs)
@@ -14,7 +18,7 @@ bundle agent mount_types(fs)
 
     any::
 
-      "/$(file_names.mount_app) -a -t $(fs)";
+      "/$(cryptoo:file_names.mount_app) -a -t $(fs)";
 
 }
 
@@ -26,6 +30,6 @@ bundle agent mount_all
 
     any::
 
-      "/$(file_names.mount_app) -a";
+      "/$(cryptoo:file_names.mount_app) -a";
 
 }

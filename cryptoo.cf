@@ -50,7 +50,7 @@ bundle common cryptoo
     have_role::
 
       "configured_role"
-        string => readfile("/$(file_names.cryptoo_role)","128");
+        string => readfile("/$(cryptoo:file_names.cryptoo_role)","128");
 
     need_role::
 
@@ -60,29 +60,29 @@ bundle common cryptoo
     have_machine_names::
 
       "machine_names"
-        data => readjson("/$(file_names.machine_names)", 1M);
+        data => readjson("/$(cryptoo:file_names.machine_names)", 1M);
 
     need_machine_names::
 
       "machine_names"
-        data => readjson("/$(templates.template[machine_names])", 1M);
+        data => readjson("/$(cryptoo:templates.template[machine_names])", 1M);
 
     have_site_config::
 
       "site_config"
-        data => readjson("/$(file_names.site_config)", 1M),
+        data => readjson("/$(cryptoo:file_names.site_config)", 1M),
         classes => default:if_ok("site_config_available");
 
     need_site_config::
 
       "site_config"
-        data => readjson("/$(templates.template[site_config])", 1M),
+        data => readjson("/$(cryptoo:templates.template[site_config])", 1M),
         classes => default:if_ok("site_config_available");
 
     have_subnet_config::
 
       "subnet_config"
-        data => readjson("/$(file_names.subnet_config)", 1M),
+        data => readjson("/$(cryptoo:file_names.subnet_config)", 1M),
         classes => default:if_ok("subnet_config_available");
 
       "local_subnets"
@@ -99,28 +99,28 @@ bundle common cryptoo
     any::
 
       "have_role"
-        expression => fileexists("/$(file_names.cryptoo_role)");
+        expression => fileexists("/$(cryptoo:file_names.cryptoo_role)");
 
       "need_role"
-        not => fileexists("/$(file_names.cryptoo_role)");
+        not => fileexists("/$(cryptoo:file_names.cryptoo_role)");
 
       "have_machine_names"
-        expression => fileexists("/$(file_names.machine_names)");
+        expression => fileexists("/$(cryptoo:file_names.machine_names)");
 
       "need_machine_names"
-        not => fileexists("/$(file_names.machine_names)");
+        not => fileexists("/$(cryptoo:file_names.machine_names)");
 
       "have_site_config"
-        expression => fileexists("/$(file_names.site_config)");
+        expression => fileexists("/$(cryptoo:file_names.site_config)");
 
       "need_site_config"
-        not => fileexists("/$(file_names.site_config)");
+        not => fileexists("/$(cryptoo:file_names.site_config)");
 
       "have_subnet_config"
-        expression => fileexists("/$(file_names.subnet_config)");
+        expression => fileexists("/$(cryptoo:file_names.subnet_config)");
 
       "need_subnet_config"
-        not => fileexists("/$(file_names.subnet_config)");
+        not => fileexists("/$(cryptoo:file_names.subnet_config)");
 
     have_role::
 

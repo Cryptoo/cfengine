@@ -4,6 +4,10 @@ body file control
 
   namespace => "cryptoo";
 
+  inputs => {
+              "cryptoo/config/directory_names.cf",
+            };
+
 }
 
 bundle common directory_groups
@@ -16,138 +20,138 @@ bundle common directory_groups
 
       "common_system"
         slist => {
-                    $(directory_names.fs_apps_base),
-                    $(directory_names.fs_boot_base),
-                    $(directory_names.fs_dev_base),
-                    $(directory_names.fs_config_base),
-                    $(directory_names.fs_config_bash),
-                    $(directory_names.fs_config_openrc_env),
-                    $(directory_names.fs_config_cryptoo_root),
-                    $(directory_names.fs_config_default),
-                    $(directory_names.fs_config_environment),
-                    $(directory_names.fs_config_gcc_environment),
-                    $(directory_names.fs_config_openrc),
-                    $(directory_names.fs_config_pm),
-                    $(directory_names.fs_config_pm_env),
-                    $(directory_names.fs_config_pm_environments),
-                    $(directory_names.fs_config_pm_keywords),
-                    $(directory_names.fs_config_pm_mask),
-                    $(directory_names.fs_config_pm_unmask),
-                    $(directory_names.fs_config_pm_use),
-                    $(directory_names.fs_config_pm_patches),
-                    $(directory_names.fs_config_pm_profile),
-                    $(directory_names.fs_config_pm_upstream),
-                    $(directory_names.fs_config_run_base),
-                    $(directory_names.fs_config_run_boot),
-                    $(directory_names.fs_config_run_default),
-                    $(directory_names.fs_config_run_sysinit),
-                    $(directory_names.fs_mount_base),
-                    $(directory_names.fs_mount_root),
-                    $(directory_names.fs_mount_temp),
-                    $(directory_names.fs_runtime_base),
-                    $(directory_names.fs_admin_apps),
-                    $(directory_names.fs_standard_base),
-                    $(directory_names.fs_standard_apps),
-                    $(directory_names.fs_standard_admin_apps),
-                    $(directory_names.fs_standard_share),
-                    $(directory_names.fs_standard_timezones),
-                    $(directory_names.fs_machine_base),
-                    $(directory_names.fs_site_base),
-                    $(directory_names.fs_site_apps),
-                    $(directory_names.fs_site_sources),
-                    $(directory_names.fs_standard_sources),
-                    $(directory_names.fs_volatile_base),
-                    $(directory_names.fs_volatile_library)
+                    $(cryptoo:directory_names.fs_apps_base),
+                    $(cryptoo:directory_names.fs_boot_base),
+                    $(cryptoo:directory_names.fs_dev_base),
+                    $(cryptoo:directory_names.fs_config_base),
+                    $(cryptoo:directory_names.fs_config_bash),
+                    $(cryptoo:directory_names.fs_config_openrc_env),
+                    $(cryptoo:directory_names.fs_config_cryptoo_root),
+                    $(cryptoo:directory_names.fs_config_default),
+                    $(cryptoo:directory_names.fs_config_environment),
+                    $(cryptoo:directory_names.fs_config_gcc_environment),
+                    $(cryptoo:directory_names.fs_config_openrc),
+                    $(cryptoo:directory_names.fs_config_pm),
+                    $(cryptoo:directory_names.fs_config_pm_env),
+                    $(cryptoo:directory_names.fs_config_pm_environments),
+                    $(cryptoo:directory_names.fs_config_pm_keywords),
+                    $(cryptoo:directory_names.fs_config_pm_mask),
+                    $(cryptoo:directory_names.fs_config_pm_unmask),
+                    $(cryptoo:directory_names.fs_config_pm_use),
+                    $(cryptoo:directory_names.fs_config_pm_patches),
+                    $(cryptoo:directory_names.fs_config_pm_profile),
+                    $(cryptoo:directory_names.fs_config_pm_upstream),
+                    $(cryptoo:directory_names.fs_config_run_base),
+                    $(cryptoo:directory_names.fs_config_run_boot),
+                    $(cryptoo:directory_names.fs_config_run_default),
+                    $(cryptoo:directory_names.fs_config_run_sysinit),
+                    $(cryptoo:directory_names.fs_mount_base),
+                    $(cryptoo:directory_names.fs_mount_root),
+                    $(cryptoo:directory_names.fs_mount_temp),
+                    $(cryptoo:directory_names.fs_runtime_base),
+                    $(cryptoo:directory_names.fs_admin_apps),
+                    $(cryptoo:directory_names.fs_standard_base),
+                    $(cryptoo:directory_names.fs_standard_apps),
+                    $(cryptoo:directory_names.fs_standard_admin_apps),
+                    $(cryptoo:directory_names.fs_standard_share),
+                    $(cryptoo:directory_names.fs_standard_timezones),
+                    $(cryptoo:directory_names.fs_machine_base),
+                    $(cryptoo:directory_names.fs_site_base),
+                    $(cryptoo:directory_names.fs_site_apps),
+                    $(cryptoo:directory_names.fs_site_sources),
+                    $(cryptoo:directory_names.fs_standard_sources),
+                    $(cryptoo:directory_names.fs_volatile_base),
+                    $(cryptoo:directory_names.fs_volatile_library)
                  };
 
       "common_system_restricted"
         slist => {
-                    $(directory_names.fs_proc_base),
-                    $(directory_names.fs_sys_base)
+                    $(cryptoo:directory_names.fs_proc_base),
+                    $(cryptoo:directory_names.fs_sys_base)
                  };
 
       "common_system_private"
         slist => {
-                    $(directory_names.fs_config_cryptoo_incoming),
-                    $(directory_names.fs_config_cryptoo_outgoing),
-                    $(directory_names.fs_admin_base),
-                    $(directory_names.fs_volatile_cfengine),
-                    $(directory_names.fs_volatile_cf_inputs),
-                    $(directory_names.fs_volatile_cf_templates)
+                    $(cryptoo:directory_names.fs_config_cryptoo_incoming),
+                    $(cryptoo:directory_names.fs_config_cryptoo_outgoing),
+                    $(cryptoo:directory_names.fs_admin_base),
+                    $(cryptoo:directory_names.fs_volatile_cfengine),
+                    $(cryptoo:directory_names.fs_volatile_cf_inputs),
+                    $(cryptoo:directory_names.fs_volatile_cf_templates)
                  };
 
       "common_open"
         slist => {
-                    $(directory_names.fs_temp_base),
-                    $(directory_names.fs_volatile_temp)
+                    $(cryptoo:directory_names.fs_temp_base),
+                    $(cryptoo:directory_names.fs_volatile_temp)
                  };
 
       "common_pm"
         slist => {
-                    $(directory_names.fs_cryptoo),
-                    $(directory_names.fs_machine_pm),
-                    $(directory_names.fs_machine_pm_meta),
-                    $(directory_names.fs_machine_pm_profile),
-                    $(directory_names.fs_pm),
-                    $(directory_names.fs_site_pm),
-                    $(directory_names.fs_volatile_pm),
-                    $(directory_names.fs_volatile_overlay)
+                    $(cryptoo:directory_names.fs_cryptoo),
+                    $(cryptoo:directory_names.fs_machine_pm),
+                    $(cryptoo:directory_names.fs_machine_pm_meta),
+                    $(cryptoo:directory_names.fs_machine_pm_profile),
+                    $(cryptoo:directory_names.fs_pm),
+                    $(cryptoo:directory_names.fs_site_pm),
+                    $(cryptoo:directory_names.fs_volatile_pm),
+                    $(cryptoo:directory_names.fs_volatile_overlay)
                  };
 
       "common_pm_open"
         slist => {
-                    $(directory_names.fs_site_srcpkg),
-                    $(directory_names.fs_site_binpkg)
+                    $(cryptoo:directory_names.fs_site_srcpkg),
+                    $(cryptoo:directory_names.fs_site_binpkg)
                  };
 
       "host_system"
         slist => {
-                    $(directory_names.fs_config_dracut),
-                    $(directory_names.fs_volatile_kernel),
-                    $(directory_names.fs_volatile_libvirt)
+                    $(cryptoo:directory_names.fs_config_dracut),
+                    $(cryptoo:directory_names.fs_volatile_kernel),
+                    $(cryptoo:directory_names.fs_volatile_libvirt)
                  };
 
       "host_system_private"
         slist => {
-                    $(directory_names.fs_volatile_images)
+                    $(cryptoo:directory_names.fs_volatile_images)
                  };
 
       "host_system_storage"
         slist => {
-                    $(directory_names.fs_storage_nfs),
-                    $(directory_names.fs_storage_site),
-                    $(directory_names.fs_storage_apps),
-                    $(directory_names.fs_storage_cryptoo),
-                    $(directory_names.fs_storage_sources),
-                    $(directory_names.fs_storage_kernel)
+                    $(cryptoo:directory_names.fs_storage_nfs),
+                    $(cryptoo:directory_names.fs_storage_site),
+                    $(cryptoo:directory_names.fs_storage_apps),
+                    $(cryptoo:directory_names.fs_storage_cryptoo),
+                    $(cryptoo:directory_names.fs_storage_sources),
+                    $(cryptoo:directory_names.fs_storage_kernel)
                  };
 
       "host_pm"
         slist => {
-                    $(directory_names.fs_storage_overlay),
-                    $(directory_names.fs_storage_pm),
-                    $(directory_names.fs_storage_pm_site),
-                    $(directory_names.fs_storage_pm_site_meta),
-                    $(directory_names.fs_storage_pm_site_profile),
-                    $(directory_names.fs_bitcoin_overlay),
+                    $(cryptoo:directory_names.fs_storage_overlay),
+                    $(cryptoo:directory_names.fs_storage_pm),
+                    $(cryptoo:directory_names.fs_storage_pm_site),
+                    $(cryptoo:directory_names.fs_storage_pm_site_meta),
+                    $(cryptoo:directory_names.fs_storage_pm_site_profile),
+                    $(cryptoo:directory_names.fs_bitcoin_overlay),
                  };
 
       "host_pm_open"
         slist => {
-                    $(directory_names.fs_storage_srcpkg),
-                    $(directory_names.fs_storage_binpkg)
+                    $(cryptoo:directory_names.fs_storage_srcpkg),
+                    $(cryptoo:directory_names.fs_storage_binpkg)
                  };
 
       "host_qemu"
         slist => {
-                    $(directory_names.fs_libvirt_images),
-                    $(directory_names.fs_libvirt_extra_images),
+                    $(cryptoo:directory_names.fs_libvirt_images),
+                    $(cryptoo:directory_names.fs_libvirt_extra_images),
                  };
 
       "host_root_qemu"
         slist => {
-                    $(directory_names.fs_config_cryptoo_guests),
-                    $(directory_names.fs_config_guest_inboxes),
-                    $(directory_names.fs_config_guest_outboxes)
+                    $(cryptoo:directory_names.fs_config_cryptoo_guests),
+                    $(cryptoo:directory_names.fs_config_guest_inboxes),
+                    $(cryptoo:directory_names.fs_config_guest_outboxes)
                  };
 }

@@ -5,6 +5,8 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
+              "cryptoo/common/common.cf",
+              "cryptoo/config/file_names.cf",
               "cryptoo/config/templates.cf",
               "cryptoo/host/mounts.cf",
               "cryptoo/util/perms.cf"
@@ -27,7 +29,7 @@ bundle agent server_guest(root, role, arch)
 
     any::
 
-      "/$(file_names.fstab)"
+      "/$(cryptoo:file_names.fstab)"
         perms => cryptoo:system,
         create => "true",
         edit_template => "/$(cryptoo:templates.template[fstab])",

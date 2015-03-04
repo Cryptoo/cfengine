@@ -5,6 +5,8 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/templates.cf",
               "cryptoo/util/perms.cf"
             };
 
@@ -18,23 +20,35 @@ bundle agent subnet
 
     !done::
 
-      "subnet[ispdmz]" int => randomint(2,53);
-      "subnet[tor]" int => randomint(53, 103);
-      "subnet[i2p]" int => randomint(103, 154);
-      "subnet[vpndmz]" int => randomint(154, 204);
-      "subnet[lan]" int => randomint(204, 255);
+      "subnet[ispdmz]"
+        int => randomint(2,53);
 
-      "subnet_data" data => mergedata("subnet");
-      "subnet_json" string => storejson("subnet_data");
+      "subnet[tor]"
+        int => randomint(53, 103);
+
+      "subnet[i2p]"
+        int => randomint(103, 154);
+
+      "subnet[vpndmz]"
+        int => randomint(154, 204);
+
+      "subnet[lan]"
+        int => randomint(204, 255);
+
+      "subnet_data"
+        data => mergedata("subnet");
+
+      "subnet_json"
+        string => storejson("subnet_data");
 
   files:
 
     !done::
 
-      "/$(file_names.subnet_config)"
-        perms => system,
+      "/$(cryptoo:file_names.subnet_config)"
+        perms => cryptoo:system,
         create => "true",
-        edit_template => "/$(templates.template[subnets])",
+        edit_template => "/$(cryptoo:templates.template[subnets])",
         classes => default:u_if_repaired("done");
 
 }

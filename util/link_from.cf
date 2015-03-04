@@ -4,6 +4,10 @@ body file control
 
   namespace => "cryptoo";
 
+  inputs => {
+              "cryptoo/config/directory_names.cf"
+            };
+
 }
 
 body link_from cryptoo_portage_env(x)
@@ -11,7 +15,7 @@ body link_from cryptoo_portage_env(x)
 {
      link_type => "symlink";
      when_no_source => "force";
-     source => "/$(directory_names.fs_cryptoo_pm_env)/$(x)";
+     source => "/$(cryptoo:directory_names.fs_cryptoo_pm_env)/$(x)";
 }
 
 body link_from cryptoo_package_env(x)
@@ -19,7 +23,7 @@ body link_from cryptoo_package_env(x)
 {
      link_type => "symlink";
      when_no_source => "force";
-     source => "/$(directory_names.fs_cryptoo_pm_environments)/$(x)";
+     source => "/$(cryptoo:directory_names.fs_cryptoo_pm_environments)/$(x)";
 }
 
 body link_from cryptoo_package_keyword(x)
@@ -27,7 +31,7 @@ body link_from cryptoo_package_keyword(x)
 {
      link_type => "symlink";
      when_no_source => "force";
-     source => "/$(directory_names.fs_cryptoo_pm_keywords)/$(x)";
+     source => "/$(cryptoo:directory_names.fs_cryptoo_pm_keywords)/$(x)";
 }
 
 body link_from cryptoo_package_mask(x)
@@ -35,7 +39,7 @@ body link_from cryptoo_package_mask(x)
 {
      link_type => "symlink";
      when_no_source => "force";
-     source => "/$(directory_names.fs_cryptoo_pm_mask)/$(x)";
+     source => "/$(cryptoo:directory_names.fs_cryptoo_pm_mask)/$(x)";
 }
 
 body link_from cryptoo_package_unmask(x)
@@ -43,7 +47,7 @@ body link_from cryptoo_package_unmask(x)
 {
      link_type => "symlink";
      when_no_source => "force";
-     source => "/$(directory_names.fs_cryptoo_pm_unmask)/$(x)";
+     source => "/$(cryptoo:directory_names.fs_cryptoo_pm_unmask)/$(x)";
 }
 
 body link_from cryptoo_package_use(x)
@@ -51,7 +55,7 @@ body link_from cryptoo_package_use(x)
 {
      link_type => "symlink";
      when_no_source => "force";
-     source => "/$(directory_names.fs_cryptoo_pm_use)/$(x)";
+     source => "/$(cryptoo:directory_names.fs_cryptoo_pm_use)/$(x)";
 }
 
 body link_from cryptoo_portage_profile(x)
@@ -59,7 +63,7 @@ body link_from cryptoo_portage_profile(x)
 {
      link_type => "symlink";
      when_no_source => "force";
-     source => "/$(directory_names.fs_cryptoo_pm_profile)/$(x)";
+     source => "/$(cryptoo:directory_names.fs_cryptoo_pm_profile)/$(x)";
 }
 
 body link_from cryptoo_profile(x)
@@ -67,7 +71,7 @@ body link_from cryptoo_profile(x)
 {
      link_type => "symlink";
      when_no_source => "force";
-     source => "/$(directory_names.fs_cryptoo_profiles)/$(x)";
+     source => "/$(cryptoo:directory_names.fs_cryptoo_profiles)/$(x)";
 }
 
 body link_from timezone(x)
@@ -75,7 +79,7 @@ body link_from timezone(x)
 {
      link_type => "symlink";
      when_no_source => "force";
-     source => "/$(directory_names.fs_standard_timezones)/$(x)";
+     source => "/$(cryptoo:directory_names.fs_standard_timezones)/$(x)";
 }
 
 body link_from kernel_dir
@@ -83,7 +87,7 @@ body link_from kernel_dir
 {
      link_type => "symlink";
      when_no_source => "force";
-     source => "/$(directory_names.fs_site_kernel)";
+     source => "/$(cryptoo:directory_names.fs_site_kernel)";
 }
 
 body link_from proc_mounts
@@ -99,7 +103,7 @@ body link_from openrc(service)
 {
      link_type => "symlink";
      when_no_source => "force";
-     source => "/$(directory_names.fs_config_openrc)/$(service)";
+     source => "/$(cryptoo:directory_names.fs_config_openrc)/$(service)";
 }
 
 body link_from gcc_profile(profile)
@@ -115,5 +119,5 @@ body link_from host_etc(x)
 {
      link_type => "symlink";
      when_no_source => "force";
-     source => "/$(directory_names.fs_config_base)/$(x)";
+     source => "/$(cryptoo:directory_names.fs_config_base)/$(x)";
 }

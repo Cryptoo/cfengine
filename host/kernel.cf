@@ -5,6 +5,8 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/file_names.cf",
               "cryptoo/util/edit_line.cf",
               "cryptoo/util/perms.cf"
             };
@@ -19,26 +21,43 @@ bundle agent kconfig(target, arch)
 
     any::
 
-      "kconfig_target" slist => variablesmatching(".*config\.kconfig\[.*]", "$(target)");
-      "kconfig_enabled" slist => variablesmatching(".*config\.kconfig\[.*]", "enabled");
-      "kconfig_disabled" slist => variablesmatching(".*config\.kconfig\[.*]", "disabled");
+      "kconfig_target"
+        slist => variablesmatching(".*config\.kconfig\[.*]", "$(target)");
 
-      "kconfig_target_enabled" slist => intersection(kconfig_target, kconfig_enabled);
-      "kconfig_target_disabled" slist => intersection(kconfig_target, kconfig_disabled);
+      "kconfig_enabled"
+        slist => variablesmatching(".*config\.kconfig\[.*]", "enabled");
 
-      "kconfig_target_enabled_array[$($(kconfig_target_enabled))]" string => "$($(kconfig_target_enabled))";
-      "kconfig_target_disabled_array[$($(kconfig_target_disabled))]" string => "$($(kconfig_target_disabled))";
+      "kconfig_disabled"
+        slist => variablesmatching(".*config\.kconfig\[.*]", "disabled");
 
-      "kconfig_target_enabled_symbols" slist => getindices(kconfig_target_enabled_array);
-      "kconfig_target_disabled_symbols" slist => getindices(kconfig_target_disabled_array);
+      "kconfig_target_enabled"
+        slist => intersection(kconfig_target, kconfig_enabled);
 
-      "kconfig_file" string => "/$(directory_names.fs_volatile_kernel)/$(target)/$(arch)/.config";
+      "kconfig_target_disabled"
+        slist => intersection(kconfig_target, kconfig_disabled);
+
+      "kconfig_target_enabled_array[$($(kconfig_target_enabled))]"
+        string => "$($(kconfig_target_enabled))";
+
+      "kconfig_target_disabled_array[$($(kconfig_target_disabled))]"
+        string => "$($(kconfig_target_disabled))";
+
+      "kconfig_target_enabled_symbols"
+        slist => getindices(kconfig_target_enabled_array);
+
+      "kconfig_target_disabled_symbols"
+        slist => getindices(kconfig_target_disabled_array);
+
+      "kconfig_file"
+        string => "/$(cryptoo:directory_names.fs_volatile_kernel)/$(target)/$(arch)/.config";
 
 #      FIXME: This is the real command. It is tested and works, but it's too slow to use during development
-#      "kernel_clone_command" string => "/$(file_names.git_app) clone $(cryptoo.kernel_git) /$(directory_names.fs_storage_kernel)";
+#      "kernel_clone_command"
+#        string => "/$(cryptoo:file_names.git_app) clone $(cryptoo:cryptoo.kernel_git) /$(cryptoo:directory_names.fs_storage_kernel)";
 
 #      FIXME: Cloning from virtfs is much faster than cloning over the 'net
-      "kernel_clone_command" string => "/usr/bin/rsync -a --exclude .git /usr/src/linux-host/ /$(directory_names.fs_storage_kernel)";
+      "kernel_clone_command"
+        string => "/usr/bin/rsync -a --exclude .git /usr/src/linux-host/ /$(cryptoo:directory_names.fs_storage_kernel)";
 
   classes:
 
@@ -48,13 +67,13 @@ bundle agent kconfig(target, arch)
         expression => "any";
 
       "have_cryptoo"
-        expression => fileexists("/$(file_names.cryptoo_profile)");
+        expression => fileexists("/$(cryptoo:file_names.cryptoo_profile)");
 
       "have_kernel_src"
-        expression => fileexists("/$(file_names.kernel_makefile)");
+        expression => fileexists("/$(cryptoo:file_names.kernel_makefile)");
 
       "need_kernel_src"
-        not => fileexists("/$(file_names.kernel_makefile)");
+        not => fileexists("/$(cryptoo:file_names.kernel_makefile)");
 
       "have_target_kconfig"
         expression => fileexists("$(kconfig_file)");
@@ -83,7 +102,7 @@ bundle agent kconfig(target, arch)
 
       "$(kconfig_file)"
         ifvarclass => "target_kconfig_disabled_$(kconfig_target_enabled_symbols)",
-        perms => system,
+        perms => cryptoo:system,
         create => "false",
         edit_line => enable_kconfig("$(kconfig_target_enabled_symbols)","$(kconfig_file)"),
         classes => default:u_if_repaired("target_kconfig_changed"),
@@ -91,7 +110,7 @@ bundle agent kconfig(target, arch)
 
       "$(kconfig_file)"
         ifvarclass => "!target_kconfig_enabled_$(kconfig_target_enabled_symbols)",
-        perms => system,
+        perms => cryptoo:system,
         create => "false",
         edit_line => enable_kconfig("$(kconfig_target_enabled_symbols)","$(kconfig_file)"),
         classes => default:u_if_repaired("target_kconfig_changed"),
@@ -99,7 +118,7 @@ bundle agent kconfig(target, arch)
 
       "$(kconfig_file)"
         ifvarclass => "target_kconfig_enabled_$(kconfig_target_disabled_symbols)",
-        perms => system,
+        perms => cryptoo:system,
         create => "false",
         edit_line => disable_kconfig("$(kconfig_target_disabled_symbols)","$(kconfig_file)"),
         classes => default:u_if_repaired("target_kconfig_changed"),
@@ -107,7 +126,7 @@ bundle agent kconfig(target, arch)
 
       "$(kconfig_file)"
         ifvarclass => "!target_kconfig_disabled_$(kconfig_target_disabled_symbols)",
-        perms => system,
+        perms => cryptoo:system,
         create => "false",
         edit_line => disable_kconfig("$(kconfig_target_disabled_symbols)","$(kconfig_file)"),
         classes => default:u_if_repaired("target_kconfig_changed"),

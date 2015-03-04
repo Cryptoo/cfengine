@@ -5,6 +5,8 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/templates.cf",
               "cryptoo/util/perms.cf"
             };
 
@@ -18,21 +20,21 @@ bundle agent crypttab
 
     any::
 
-      "luks" string => execresult("/$(file_names.blkid_app) -t TYPE=crypto_LUKS -s UUID -o value","noshell");
+      "luks" string => execresult("/$(cryptoo:file_names.blkid_app) -t TYPE=crypto_LUKS -s UUID -o value","noshell");
       "uuids" slist => string_split("$(luks)","\n",16);
 
   files:
 
     any::
 
-      "/$(file_names.crypttab)"
-        perms => root,
+      "/$(cryptoo:file_names.crypttab)"
+        perms => cryptoo:root,
         create => "true",
-        edit_template => "/$(templates.template[crypttab])";
+        edit_template => "/$(cryptoo:templates.template[crypttab])";
 
-      "/$(file_names.dmcrypt_conf)"
-        perms => root,
+      "/$(cryptoo:file_names.dmcrypt_conf)"
+        perms => cryptoo:root,
         create => "true",
-        edit_template => "/$(templates.template[dmcrypt])";
+        edit_template => "/$(cryptoo:templates.template[dmcrypt])";
 
 }
