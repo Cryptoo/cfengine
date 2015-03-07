@@ -149,7 +149,7 @@ bundle common file_groups
 ################################################################################
 
       "make_profile[desktop_guest]"
-        string => "$(make_profile[desktop_host])";
+        string => "$(cryptoo/desktop)";
 
       "pm_env[desktop_guest]"
         slist => {
@@ -437,7 +437,7 @@ bundle common file_groups
 ################################################################################
 
       "make_profile[desktop_host]"
-        string => "cryptoo/desktop";
+        string => "cryptoo/desktop/kde";
 
       "pm_env[desktop_host]"
         slist => {
