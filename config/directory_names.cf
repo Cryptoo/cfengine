@@ -56,6 +56,7 @@ bundle common directory_names
       "fs_admin_apps" string => "sbin";
       "fs_storage_base" string => "srv";
       "fs_storage_nfs" string => "$(fs_storage_base)/nfs";
+      "fs_storage_backup" string => "$(fs_storage_nfs)/backup";
       "fs_storage_site" string => "$(fs_storage_nfs)/site-local";
       "fs_storage_apps" string => "$(fs_storage_site)/bin";
       "fs_storage_cryptoo" string => "$(fs_storage_site)/cryptoo";
@@ -111,7 +112,6 @@ bundle common directory_names
       "fs_volatile_library" string => "$(fs_volatile_base)/lib";
       "fs_volatile_libvirt" string => "$(fs_volatile_library)/libvirt";
       "fs_libvirt_images" string => "$(fs_volatile_libvirt)/images";
-      "fs_libvirt_extra_images" string => "$(fs_libvirt_images)/extra";
       "fs_volatile_pm" string => "$(fs_volatile_library)/$(pm)";
       "fs_volatile_overlay" string => "$(fs_volatile_library)/layman";
       "fs_bitcoin_overlay" string => "$(fs_volatile_overlay)/bitcoin";

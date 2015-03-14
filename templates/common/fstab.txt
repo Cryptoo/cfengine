@@ -13,7 +13,6 @@ UUID=$(cryptoo:machines.root_uuid)                         /                    
 /$(cryptoo:directory_names.fs_storage_pm_site)          /$(cryptoo:directory_names.fs_site_pm)               none        bind          0 0
 /$(cryptoo:directory_names.fs_storage_shared)           /$(cryptoo:directory_names.fs_mount_shared)          none        bind          0 0
 /$(cryptoo:directory_names.fs_storage_sources)          /$(cryptoo:directory_names.fs_site_sources)          none        bind          0 0
-/$(cryptoo:directory_names.fs_storage_qemu)             /$(cryptoo:directory_names.fs_libvirt_extra_images)  none        bind          0 0
 
 system-tmp                                              /$(cryptoo:directory_names.fs_temp_base)             tmpfs       size=1G       0 0
 
