@@ -47,7 +47,7 @@ PKGDIR="/usr/site-local/packages/desktop-host/multilib/${ARCH}"
 PKGDIR="/usr/site-local/packages/server/no-multilib/${ARCH}"
 [%CFEngine make_conf_role_template_server&make_conf_multilib:: %]
 PKGDIR="/usr/site-local/packages/server/multilib/${ARCH}"
-[%CFEngine make_conf_role_template_desktop&make_conf_nomultilib:: %]
+[%CFEngine make_conf_group_desktop_guest&make_conf_nomultilib:: %]
 PKGDIR="/usr/site-local/packages/desktop/no-multilib/${ARCH}"
 [%CFEngine make_conf_role_template_desktop&make_conf_multilib:: %]
 PKGDIR="/usr/site-local/packages/desktop/multilib/${ARCH}"
