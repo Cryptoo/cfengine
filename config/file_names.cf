@@ -62,6 +62,8 @@ bundle common file_names
         string => "$(cryptoo:directory_names.fs_config_openrc_env)/dmcrypt";
       "hostname_openrc"
         string => "$(cryptoo:directory_names.fs_config_openrc_env)/hostname";
+      "cryptoo_hostname"
+        string => "$(cryptoo:directory_names.fs_config_cryptoo_incoming)/hostname";
       "machine_names"
         string => "$(cryptoo:directory_names.fs_config_cryptoo_incoming)/machine_names.json";
       "cryptoo_role"

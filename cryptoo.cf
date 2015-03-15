@@ -52,6 +52,11 @@ bundle common cryptoo
       "configured_role"
         string => readfile("/$(cryptoo:file_names.cryptoo_role)","128");
 
+    have_hostname::
+
+      "configured_hostname"
+        string => readfile("/$(cryptoo:file_names.cryptoo_hostname)","128");
+
     need_role::
 
       "configured_role"
@@ -61,6 +66,12 @@ bundle common cryptoo
 
       "machine_names"
         data => readjson("/$(cryptoo:file_names.machine_names)", 1M);
+
+      "machine_names_idx"
+        slist => getindices("machine_names");
+
+      "machine_names_inverse[$(machine_names[$(machine_names_idx)])]"
+        string => "$(machine_names_idx)";
 
     need_machine_names::
 
@@ -104,6 +115,9 @@ bundle common cryptoo
       "need_role"
         not => fileexists("/$(cryptoo:file_names.cryptoo_role)");
 
+      "have_hostname"
+        expression => fileexists("/$(cryptoo:file_names.cryptoo_hostname)");
+
       "have_machine_names"
         expression => fileexists("/$(cryptoo:file_names.machine_names)");
 
@@ -137,4 +151,4 @@ bundle common cryptoo
       "cryptoo_host"
         expression => "any";
 
-}
+q}
