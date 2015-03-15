@@ -170,7 +170,8 @@ bundle common file_groups
 
       "mask[desktop_guest]"
         slist => {
-                    "@(mask[common])"
+                    "@(mask[common])",
+                    "desktop_guest"
                  };
 
       "unmask[desktop_guest]"
