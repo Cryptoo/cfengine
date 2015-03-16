@@ -1,0 +1,28 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/guest/desktop_guests/desktop_guest.cf"
+            };
+
+}
+
+bundle agent mail_client
+
+{
+
+  meta:
+
+    "tags" slist => { "cryptoo_role" };
+
+  methods:
+
+    any::
+
+      "configure system as a mail client guest"
+        usebundle => cryptoo:desktop_guest("/", "mail_client", "x86_64", "nomultilib");
+
+}
