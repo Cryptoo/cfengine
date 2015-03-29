@@ -16,6 +16,13 @@ bundle agent openrc(root)
 
 {
 
+  vars:
+
+    any::
+
+      "hostname[hostname]"
+        string => "$(cryptoo:machines.hostname)";
+
   classes:
 
     any::
@@ -64,7 +71,7 @@ bundle agent openrc(root)
       "$(root)$(cryptoo:file_names.hostname_openrc)"
         perms => cryptoo:system,
         create => "true",
-        edit_line => default:set_quoted_values("cryptoo:host.hostname");
+        edit_line => default:set_quoted_values("hostname");
 
   commands:
 

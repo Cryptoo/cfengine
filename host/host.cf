@@ -36,9 +36,6 @@ bundle agent host(arch)
 
     any::
 
-      "hostname[hostname]"
-        string => "$(cryptoo:machines.hostname)";
-
       "layman_cache_list"
         slist => findfiles("/$(cryptoo:directory_names.fs_volatile_overlay)/cache_*.xml");
 
