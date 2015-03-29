@@ -61,7 +61,7 @@ bundle common machines
 
   reports:
 
-    have_machine_number|(have_hostname&(!have_machine_number))::
+    verbose_mode&(have_machine_number|(have_hostname&(!have_machine_number)))::
 
       "My role is: $(cryptoo:cryptoo.configured_role)";
       "My number is: $(machine_number)";
