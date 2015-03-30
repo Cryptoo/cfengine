@@ -66,6 +66,11 @@ bundle agent make_conf(root, role, multilib)
       "make_conf_group_desktop_guest"
         expression => "any";
 
+    make_conf_role_template_desktop|make_conf_role_template_server|make_conf_group_desktop_guest::
+
+      "make_conf_group_guest"
+        expression => "any";
+
   files:
 
     !broken_cpu2use::

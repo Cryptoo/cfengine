@@ -2,7 +2,8 @@
     "make.conf": {
                    "USE": "",
                    "VIDEO_CARDS": "",
-                   "ALSA_CARDS": ""
+                   "ALSA_CARDS": "",
+                   "guest_march": "native"
                  },
     "locale": "en_US",
     "timezone": "UTC",

@@ -4,7 +4,11 @@ source /$(cryptoo:file_names.overlay_conf)
 [%CFEngine any:: %]
 PORTDIR_OVERLAY="/usr/local/portage ${PORTDIR_OVERLAY}"
 
+[%CFEngine !(make_conf_group_guest):: %]
 CFLAGS="-O2 -pipe -march=native"
+[%CFEngine make_conf_group_guest:: %]
+CFLAGS="-O2 -pipe -march=$(cryptoo:cryptoo.site_config[make.conf][guest_march]) -mtune=native"
+[%CFEngine any:: %]
 CXXFLAGS="${CFLAGS}"
 CHOST="x86_64-pc-linux-gnu"
 
