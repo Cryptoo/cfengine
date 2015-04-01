@@ -30,18 +30,18 @@ USE="${CPU_FLAGS_X86}"
 USE="${USE} $(cryptoo:cryptoo.site_config[make.conf][USE])"
 
 INPUT_DEVICES="evdev"
-[%CFEngine make_conf_role_host|make_conf_role_desktop_host:: %]
+[%CFEngine make_conf_role_master|make_conf_role_desktop_host:: %]
 VIDEO_CARDS="$(cryptoo:cryptoo.site_config[make.conf][VIDEO_CARDS])"
-[%CFEngine (!make_conf_role_host)&(!make_conf_role_desktop_host):: %]
+[%CFEngine (!make_conf_role_master)&(!make_conf_role_desktop_host):: %]
 VIDEO_CARDS="modesetting"
 [%CFEngine make_conf_role_desktop_host:: %]
 ALSA_CARDS="$(cryptoo:cryptoo.site_config[make.conf][ALSA_CARDS])"
 [%CFEngine make_conf_role_template_desktop&make_conf_multilib:: %]
 ALSA_CARDS="ac97"
 
-[%CFEngine make_conf_role_host&make_conf_nomultilib:: %]
+[%CFEngine make_conf_role_master&make_conf_nomultilib:: %]
 PKGDIR="/usr/site-local/packages/host/no-multilib/${ARCH}"
-[%CFEngine make_conf_role_host&make_conf_multilib:: %]
+[%CFEngine make_conf_role_master&make_conf_multilib:: %]
 PKGDIR="/usr/site-local/packages/host/multilib/${ARCH}"
 [%CFEngine make_conf_role_desktop_host&make_conf_nomultilib:: %]
 PKGDIR="/usr/site-local/packages/desktop-host/no-multilib/${ARCH}"
