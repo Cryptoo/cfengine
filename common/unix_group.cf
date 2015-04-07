@@ -1,0 +1,48 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/file_names.cf"
+            };
+
+}
+
+bundle agent unix_group(root, group, gid)
+
+{
+
+  vars:
+  
+    user_group::
+    
+      "group_type"
+	string => "";
+
+    system_group::
+    
+      "group_type"
+	string => "--system";
+
+  classes:
+
+    any::
+    
+      "need_group"
+        not => regline("$(group):.*:.*", "$(root)/$(cryptoo:file_names.group)");
+
+      "user_group"
+	expression => isgreaterthan("$(gid)", "$(cryptoo:config.login_def[SYS_GID_MAX])");
+
+      "system_group"
+	expression => islessthan("$(gid)", "$(cryptoo:config.login_def[GID_MIN])");
+
+  commands:
+  
+    need_group::
+    
+      "/$(cryptoo:file_names.groupadd_app) --gid $(gid) $(group_type) --root $(root) $(group)";
+
+}

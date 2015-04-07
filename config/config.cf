@@ -1333,4 +1333,13 @@ bundle common config
       "machine_number[firewall_external]"
         string => "10";
 
+      "login_def[SYS_GID_MIN]"
+	int => "100";
+      "login_def[SYS_GID_MAX]"
+	int => "999";
+      "login_def[GID_MIN]"
+	int => "1000";
+      "login_def[GID_MAX]"
+	int => "60000";
+
 }

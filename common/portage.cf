@@ -11,6 +11,7 @@ body file control
               "cryptoo/config/file_names.cf",
               "cryptoo/config/templates.cf",
               "cryptoo/common/make_conf.cf",
+              "cryptoo/common/unix_group.cf",
               "cryptoo/util/link_from.cf",
               "cryptoo/util/perms.cf"
             };
