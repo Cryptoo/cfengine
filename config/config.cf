@@ -1334,12 +1334,60 @@ bundle common config
         string => "10";
 
       "login_def[SYS_GID_MIN]"
-	int => "100";
+				int => "100";
       "login_def[SYS_GID_MAX]"
-	int => "999";
+				int => "999";
       "login_def[GID_MIN]"
-	int => "1000";
+				int => "1000";
       "login_def[GID_MAX]"
-	int => "60000";
+				int => "60000";
 
+			"gid[users]"
+				int => "100";
+			"gid[portage]"
+				int => "250";
+			"gid[qemu]"
+				int => "300";
+			"gid[dhcp]"
+				int => "301";
+			"gid[openvpn]"
+				int => "302";
+			"gid[dnsmasq]"
+				int => "303";
+			"gid[tor]"
+				int => "304";
+			"gid[polipo]"
+				int => "305";
+			"gid[i2p]"
+				int => "306";
+			"gid[privoxy]"
+				int => "307";
+			"gid[unbound]"
+				int => "308";
+			"gid[znc]"
+				int => "309";
+			"gid[freenet]"
+				int => "310";
+			"gid[bitmessage]"
+				int => "311";
+			"gid[postmaster]"
+				int => "312";
+			"gid[postfix]"
+				int => "313";
+			"gid[postdrop]"
+				int => "314";
+			"gid[dovecot]"
+				int => "315";
+			"gid[dovenull]"
+				int => "316";
+			"gid[fetchmail]"
+				int => "317";
+			"gid[bitcoin]"
+				int => "318";
+			"gid[namecoin]"
+				int => "319";
+			"gid[bittorrent]"
+				int => "320";
+			"gid[cryptoo]"
+				int => "1000";
 }

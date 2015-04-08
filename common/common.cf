@@ -7,6 +7,7 @@ body file control
   inputs => {
               "cryptoo/common/gcc.cf",
               "cryptoo/common/portage.cf",
+              "cryptoo/common/unix_group.cf",
               "cryptoo/guest/template/files.cf",
               "cryptoo/util/contain.cf",
               "cryptoo/util/edit_line.cf",
