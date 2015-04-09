@@ -1,0 +1,67 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/file_names.cf",
+              "cryptoo/util/contain.cf"
+            };
+
+}
+
+bundle agent unix_user(root, user)
+
+{
+
+  vars:
+
+    any::
+
+      "uid"
+        int => "$(cryptoo:config.users[$(user)][uid])";
+
+      "home"
+        string => "$(cryptoo:config.users[$(user)][home])";
+  
+      "group"
+        string => "$(cryptoo:config.users[$(user)][group])";
+  
+      "shell"
+        string => "$(cryptoo:config.users[$(user)][shell])";
+  
+    normal_user::
+    
+      "user_type"
+        string => "";
+
+    system_user::
+    
+      "user_type"
+        string => "--system";
+
+  classes:
+
+    any::
+    
+      "need_user"
+        not => regline("$(user):.*:.*", "$(root)/$(cryptoo:file_names.passwd)");
+
+      "normal_user"
+        expression => isgreaterthan("$(uid)", "$(cryptoo:config.login_def[SYS_UID_MAX])");
+
+      "system_user"
+        expression => islessthan("$(uid)", "$(cryptoo:config.login_def[UID_MIN])");
+
+      "have_useradd"
+        expression => fileexists("$(root)$(cryptoo:file_names.useradd_app)");
+
+  commands:
+  
+    need_user&have_useradd::
+    
+      "/$(cryptoo:file_names.useradd_app) --uid $(uid) --gid $(group) --home-dir $(home) --no-create-home --shell $(shell) $(user_type) $(user)"
+        contain => basic_chroot($(root));
+
+}

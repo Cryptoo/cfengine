@@ -1344,6 +1344,14 @@ bundle common config
 				int => "1000";
       "login_def[GID_MAX]"
 				int => "60000";
+      "login_def[SYS_UID_MIN]"
+        int => "100";
+      "login_def[SYS_UID_MAX]"
+        int => "999";
+      "login_def[UID_MIN]"
+        int => "1000";
+      "login_def[UID_MAX]"
+        int => "60000";
 
       "gid[mail]"
         int => "12";

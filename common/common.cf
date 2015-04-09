@@ -8,6 +8,7 @@ body file control
               "cryptoo/common/gcc.cf",
               "cryptoo/common/portage.cf",
               "cryptoo/common/unix_group.cf",
+              "cryptoo/common/unix_user.cf",
               "cryptoo/guest/template/files.cf",
               "cryptoo/util/contain.cf",
               "cryptoo/util/edit_line.cf",
@@ -27,6 +28,9 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
 
       "groups"
         slist => getindices("cryptoo:config.gid");
+
+      "users"
+        slist => getindices("cryptoo:config.users");
 
   classes:
 
@@ -82,7 +86,7 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
         handle => "$(root)$(directory_groups.common_open)";
 
       "$(root)$(directory_names.fs_mount_shared)/."
-        depends_on => { "user_guest" },
+        depends_on => { "users_ok" },
         perms => guest,
         create => "true",
         handle => "$(root)$(directory_names.fs_mount_shared)";
@@ -143,6 +147,10 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
 
       "set up groups"
         usebundle => cryptoo:unix_group("$(root)", "$(groups)");
+
+      "set up users"
+        usebundle => cryptoo:unix_user("$(root)", "$(users)"),
+        classes => default:if_ok("users_ok");
 
     template::
 

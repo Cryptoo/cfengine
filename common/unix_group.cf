@@ -5,7 +5,8 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
-              "cryptoo/config/file_names.cf"
+              "cryptoo/config/file_names.cf",
+              "cryptoo/util/contain.cf"
             };
 
 }

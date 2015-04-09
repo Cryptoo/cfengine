@@ -215,7 +215,7 @@ bundle agent host(arch)
         comment => "create Portage-owned writables directories under /srv";
 
       "/$(cryptoo:directory_names.fs_storage_shared)/."
-        depends_on => { "user_guest" },
+        depends_on => { "users_ok" },
         perms => cryptoo:guest,
         create => "true",
         classes => srv_ready,
