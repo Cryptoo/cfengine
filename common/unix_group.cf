@@ -34,15 +34,19 @@ bundle agent unix_group(root, group, gid)
         not => regline("$(group):.*:.*", "$(root)/$(cryptoo:file_names.group)");
 
       "user_group"
-	expression => isgreaterthan("$(gid)", "$(cryptoo:config.login_def[SYS_GID_MAX])");
+        expression => isgreaterthan("$(gid)", "$(cryptoo:config.login_def[SYS_GID_MAX])");
 
       "system_group"
-	expression => islessthan("$(gid)", "$(cryptoo:config.login_def[GID_MIN])");
+        expression => islessthan("$(gid)", "$(cryptoo:config.login_def[GID_MIN])");
+
+      "have_groupadd"
+        expression => fileexists("$(root)$(cryptoo:file_names.groupadd_app)");
 
   commands:
   
-    need_group::
+    need_group&have_groupadd::
     
-      "/$(cryptoo:file_names.groupadd_app) --gid $(gid) $(group_type) --root $(root) $(group)";
+      "/$(cryptoo:file_names.groupadd_app) --gid $(gid) $(group_type) $(group)"
+				contain => basic_chroot($(root));
 
 }
