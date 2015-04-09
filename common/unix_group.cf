@@ -15,6 +15,11 @@ bundle agent unix_group(root, group)
 {
 
   vars:
+
+    any::
+
+      "gid"
+        int => "$(cryptoo:config.gid[$(group)])";
   
     user_group::
     
@@ -46,7 +51,7 @@ bundle agent unix_group(root, group)
   
     need_group&have_groupadd::
     
-      "/$(cryptoo:file_names.groupadd_app) --gid $(cryptoo:config.gid[$(group)]) $(group_type) $(group)"
+      "/$(cryptoo:file_names.groupadd_app) --gid $(gid) $(group_type) $(group)"
 				contain => basic_chroot($(root));
 
 }

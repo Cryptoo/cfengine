@@ -21,6 +21,13 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
 
 {
 
+  vars:
+
+    any::
+
+      "groups"
+        slist => getindices("cryptoo:config.gid");
+
   classes:
 
     any::
@@ -145,6 +152,9 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
 
       "configure portage"
         usebundle => cryptoo:portage("$(root)", "$(role)", "$(arch)", "$(multilib)");
+
+      "set up groups"
+        usebundle => cryptoo:unix_group("$(root)", "$(groups)");
 
     template::
 
