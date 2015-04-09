@@ -10,7 +10,7 @@ body file control
 
 }
 
-bundle agent unix_group(root, group, gid)
+bundle agent unix_group(root, group)
 
 {
 
@@ -19,12 +19,12 @@ bundle agent unix_group(root, group, gid)
     user_group::
     
       "group_type"
-	string => "";
+        string => "";
 
     system_group::
     
       "group_type"
-	string => "--system";
+        string => "--system";
 
   classes:
 
@@ -46,7 +46,7 @@ bundle agent unix_group(root, group, gid)
   
     need_group&have_groupadd::
     
-      "/$(cryptoo:file_names.groupadd_app) --gid $(gid) $(group_type) $(group)"
+      "/$(cryptoo:file_names.groupadd_app) --gid $(cryptoo:config.gid[$(group)]) $(group_type) $(group)"
 				contain => basic_chroot($(root));
 
 }
