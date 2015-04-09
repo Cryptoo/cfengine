@@ -94,7 +94,7 @@ bundle common config
 
       "kconfig[NO_HZ_IDLE]"
         string => "NO_HZ_IDLE",
-        meta => { "enabled", "host" };
+        meta => { "disabled", "host" };
 
       "kconfig[UTS_NS]"
         string => "UTS_NS",
@@ -336,13 +336,17 @@ bundle common config
         string => "BRIDGE_NETFILTER",
         meta => { "enabled", "host" };
 
+      "kconfig[NF_CONNTRACK_PROCFS]"
+        string => "NF_CONNTRACK_PROCFS",
+        meta => { "enabled", "host" };
+
       "kconfig[NF_CONNTRACK]"
         string => "NF_CONNTRACK",
         meta => { "enabled", "host" };
 
       "kconfig[NF_CONNTRACK_PROC_COMPAT]"
         string => "NF_CONNTRACK_PROC_COMPAT",
-        meta => { "disabled", "host" };
+        meta => { "enabled", "host" };
 
       "kconfig[NF_CT_PROTO_UDPLITE]"
         string => "NF_CT_PROTO_UDPLITE",
@@ -1190,10 +1194,6 @@ bundle common config
 
       "kconfig[DEBUG_KERNEL]"
         string => "DEBUG_KERNEL",
-        meta => { "disabled", "host" };
-
-      "kconfig[DEBUG_FS]"
-        string => "DEBUG_FS",
         meta => { "disabled", "host" };
 
       "kconfig[STRICT_DEVMEM]"
