@@ -52,18 +52,6 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
       "template"
         expression => "any";
 
-  users:
-
-    any::
-
-      "guest"
-        handle => "user_guest",
-        policy => "present",
-        home_dir => "/mnt/shared",
-        uid => "405",
-        group_primary => "users",
-        shell => "/sbin/nologin";
-
   files:
 
     any::

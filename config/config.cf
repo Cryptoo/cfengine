@@ -14,8 +14,11 @@ bundle common config
 
     any::
 
-      "server_guests"
-        slist => {
+    "users"
+      data => readjson("/var/cfengine/inputs/cryptoo/config/users.json", 1M);
+
+    "server_guests"
+       slist => {
                    "firewall_external",
                    "vpn_primary",
                    "firewall_internal",
@@ -1342,6 +1345,10 @@ bundle common config
       "login_def[GID_MAX]"
 				int => "60000";
 
+      "gid[mail]"
+        int => "12";
+      "gid[dovecot]"
+        int => "97";
 			"gid[users]"
 				int => "100";
 			"gid[portage]"
@@ -1376,18 +1383,16 @@ bundle common config
 				int => "313";
 			"gid[postdrop]"
 				int => "314";
-			"gid[dovecot]"
-				int => "315";
 			"gid[dovenull]"
-				int => "316";
+				int => "315";
 			"gid[fetchmail]"
-				int => "317";
+				int => "316";
 			"gid[bitcoin]"
-				int => "318";
+				int => "317";
 			"gid[namecoin]"
-				int => "319";
+				int => "318";
 			"gid[bittorrent]"
-				int => "320";
+				int => "319";
 			"gid[cryptoo]"
 				int => "1000";
 }

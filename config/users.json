@@ -1,0 +1,146 @@
+{
+    "mail": {
+                   "home": "/var/spool/mail",
+                   "uid": "8",
+                   "group": "mail",
+                   "shell": "/sbin/nologin"
+                 },
+    "postmaster": {
+                   "home": "/dev/null",
+                   "uid": "14",
+                   "group": "postmaster",
+                   "shell": "/sbin/nologin"
+                 },
+    "dovecot": {
+                   "home": "/dev/null",
+                   "uid": "97",
+                   "group": "dovecot",
+                   "shell": "/sbin/nologin"
+                 },
+    "portage": {
+                   "home": "/var/tmp/portage",
+                   "uid": "250",
+                   "group": "portage",
+                   "shell": "/sbin/nologin"
+                 },
+    "qemu": {
+                   "home": "/dev/null",
+                   "uid": "300",
+                   "group": "qemu",
+                   "shell": "/sbin/nologin"
+                 },
+    "dhcp": {
+                   "home": "/var/lib/dhcp",
+                   "uid": "301",
+                   "group": "dhcp",
+                   "shell": "/sbin/nologin"
+                 },
+    "openvpn": {
+                   "home": "/dev/null",
+                   "uid": "302",
+                   "group": "openvpn",
+                   "shell": "/sbin/nologin"
+                 },
+    "dnsmasq": {
+                   "home": "/dev/null",
+                   "uid": "303",
+                   "group": "dnsmasq",
+                   "shell": "/sbin/nologin"
+                 },
+    "tor": {
+                   "home": "/var/lib/tor",
+                   "uid": "304",
+                   "group": "tor",
+                   "shell": "/sbin/nologin"
+                 },
+    "polipo": {
+                   "home": "/var/cache/polipo",
+                   "uid": "305",
+                   "group": "polipo",
+                   "shell": "/sbin/nologin"
+                 },
+    "i2p": {
+                   "home": "/opt/i2p",
+                   "uid": "306",
+                   "group": "i2p",
+                   "shell": "/sbin/nologin"
+                 },
+    "privoxy": {
+                   "home": "/etc/privoxy",
+                   "uid": "307",
+                   "group": "privoxy",
+                   "shell": "/sbin/nologin"
+                 },
+    "unbound": {
+                   "home": "/etc/unbound",
+                   "uid": "308",
+                   "group": "unbound",
+                   "shell": "/sbin/nologin"
+                 },
+    "znc": {
+                   "home": "/dev/null",
+                   "uid": "309",
+                   "group": "znc",
+                   "shell": "/sbin/nologin"
+                 },
+    "freenet": {
+                   "home": "/opt/freenet",
+                   "uid": "310",
+                   "group": "freenet",
+                   "shell": "/sbin/nologin"
+                 },
+    "bitmessage": {
+                   "home": "/var/lib/bitmessage",
+                   "uid": "311",
+                   "group": "bitmessage",
+                   "shell": "/sbin/nologin"
+                 },
+    "postfix": {
+                   "home": "/dev/null",
+                   "uid": "313",
+                   "group": "postfix",
+                   "shell": "/sbin/nologin"
+                 },
+    "postdrop": {
+                   "home": "/dev/null",
+                   "uid": "314",
+                   "group": "postdrop",
+                   "shell": "/sbin/nologin"
+                 },
+    "dovenull": {
+                   "home": "/dev/null",
+                   "uid": "315",
+                   "group": "dovenull",
+                   "shell": "/sbin/nologin"
+                 },
+    "fetchmail": {
+                   "home": "/var/lib/fetchmail",
+                   "uid": "316",
+                   "group": "fetchmail",
+                   "shell": "/sbin/nologin"
+                 },
+    "bitcoin": {
+                   "home": "/var/lib/bitcoin",
+                   "uid": "317",
+                   "group": "bitcoin",
+                   "shell": "/sbin/nologin"
+                 },
+    "namecoin": {
+                   "home": "/var/lib/namecoin",
+                   "uid": "318",
+                   "group": "namecoin",
+                   "shell": "/sbin/nologin"
+                 },
+    "bittorrent": {
+                   "home": "/var/lib/deluge",
+                   "uid": "319",
+                   "group": "bittorrent",
+                   "shell": "/sbin/nologin"
+                 },
+    "guest": {
+                   "home": "/mnt/shared",
+                   "uid": "405",
+                   "group": "users",
+                   "shell": "/sbin/nologin"
+                 }
+}
