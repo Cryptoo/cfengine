@@ -61,6 +61,11 @@ bundle agent make_conf(root, role, multilib)
       "make_conf_role_guest"
         expression => "any";
 
+    make_conf_role_firewall_external|make_conf_role_template_server::
+
+      "make_conf_group_server_guest"
+        expression => "any";
+
     make_conf_role_web|make_conf_role_mail_client|make_conf_role_template_desktop::
 
       "make_conf_group_desktop_guest"
