@@ -1335,6 +1335,12 @@ bundle common config
         string => "1";
       "machine_number[firewall_external]"
         string => "10";
+      "machine_number[vpn_primary]"
+        string => "11";
+      "machine_number[firewall_internal]"
+        string => "12";
+      "machine_number[vpn_server]"
+        string => "13";
 
       "login_def[SYS_GID_MIN]"
 				int => "100";

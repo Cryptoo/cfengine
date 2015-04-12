@@ -623,6 +623,196 @@ bundle common file_groups
                  };
 
 ################################################################################
+#                             vpn_primary
+################################################################################
+
+      "make_profile[vpn_primary]"
+        string => "$(make_profile[common])";
+
+      "pm_env[vpn_primary]"
+        slist => {
+                    "@(pm_env[common])"
+                 };
+
+      "pm_environment[vpn_primary]"
+        slist => {
+                    "@(pm_environment[common])"
+                 };
+
+      "keywords[vpn_primary]"
+        slist => {
+                    "@(keywords[common])",
+                    "router"
+                 };
+
+      "mask[vpn_primary]"
+        slist => {
+                    "@(mask[common])"
+                 };
+
+      "unmask[vpn_primary]"
+        slist => {
+                    "@(unmask[common])"
+                 };
+
+      "use[vpn_primary]"
+        slist => {
+                    "@(use[common])",
+                    "router"
+                 };
+
+      "profile[vpn_primary]"
+        slist => {
+                    "@(profile[common])"
+                 };
+
+      "use_udev[vpn_primary]"
+        slist => {
+                    "@(use_udev[common])"
+                 };
+
+      "use_systemd[vpn_primary]"
+        slist => {
+                    "@(use_systemd[common])"
+                 };
+
+      "unuse_udev[vpn_primary]"
+        slist => {
+                    "@(unuse_udev[common])"
+                 };
+
+      "unuse_systemd[firewall_external]"
+        slist => {
+                    "@(unuse_systemd[common])"
+                 };
+
+################################################################################
+#                              firewall_internal
+################################################################################
+
+      "make_profile[firewall_internal]"
+        string => "$(make_profile[common])";
+
+      "pm_env[firewall_internal]"
+        slist => {
+                    "@(pm_env[common])"
+                 };
+
+      "pm_environment[firewall_internal]"
+        slist => {
+                    "@(pm_environment[common])"
+                 };
+
+      "keywords[firewall_internal]"
+        slist => {
+                    "@(keywords[common])"
+                 };
+
+      "mask[firewall_internal]"
+        slist => {
+                    "@(mask[common])"
+                 };
+
+      "unmask[firewall_internal]"
+        slist => {
+                    "@(unmask[common])"
+                 };
+
+      "use[firewall_internal]"
+        slist => {
+                    "@(use[common])"
+                 };
+
+      "profile[firewall_internal]"
+        slist => {
+                    "@(profile[common])"
+                 };
+
+      "use_udev[firewall_internal]"
+        slist => {
+                    "@(use_udev[common])"
+                 };
+
+      "use_systemd[firewall_internal]"
+        slist => {
+                    "@(use_systemd[common])"
+                 };
+
+      "unuse_udev[firewall_internal]"
+        slist => {
+                    "@(unuse_udev[common])"
+                 };
+
+      "unuse_systemd[firewall_internal]"
+        slist => {
+                    "@(unuse_systemd[common])"
+                 };
+
+################################################################################
+#                              vpn_server
+################################################################################
+
+      "make_profile[vpn_server]"
+        string => "$(make_profile[common])";
+
+      "pm_env[vpn_server]"
+        slist => {
+                    "@(pm_env[common])"
+                 };
+
+      "pm_environment[vpn_server]"
+        slist => {
+                    "@(pm_environment[common])"
+                 };
+
+      "keywords[vpn_server]"
+        slist => {
+                    "@(keywords[common])",
+                    "vpn"
+                 };
+
+      "mask[vpn_server]"
+        slist => {
+                    "@(mask[common])"
+                 };
+
+      "unmask[vpn_server]"
+        slist => {
+                    "@(unmask[common])"
+                 };
+
+      "use[vpn_server]"
+        slist => {
+                    "@(use[common])",
+                    "vpn"
+                 };
+
+      "profile[vpn_server]"
+        slist => {
+                    "@(profile[common])"
+                 };
+
+      "use_udev[vpn_server]"
+        slist => {
+                    "@(use_udev[common])"
+                 };
+
+      "use_systemd[vpn_server]"
+        slist => {
+                    "@(use_systemd[common])"
+                 };
+
+      "unuse_udev[vpn_server]"
+        slist => {
+                    "@(unuse_udev[common])"
+                 };
+
+      "unuse_systemd[vpn_server]"
+        slist => {
+                    "@(unuse_systemd[common])"
+                 };
+
+################################################################################
 #                                     web
 ################################################################################
 
