@@ -52,6 +52,7 @@ bundle common file_groups
       "use[common]"
         slist => {
                     "basic_programs",
+                    "simplegit",
                     "virtualization"
                  };
 
@@ -272,7 +273,6 @@ bundle common file_groups
                     "mail",
                     "router",
                     "samba_server",
-                    "simplegit",
                     "tor",
                     "vpn",
                     "znc"
