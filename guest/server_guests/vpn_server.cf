@@ -1,0 +1,28 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/guest/server_guests/server_guest.cf"
+            };
+
+}
+
+bundle agent vpn_server
+
+{
+
+  meta:
+
+    "tags" slist => { "cryptoo_role" };
+
+  methods:
+
+    any::
+
+      "configure system as a VPN server"
+        usebundle => server_guest("/", "vpn_server", "x86_64");
+
+}

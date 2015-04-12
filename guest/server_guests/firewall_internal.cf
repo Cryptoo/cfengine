@@ -1,0 +1,28 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/guest/server_guests/server_guest.cf"
+            };
+
+}
+
+bundle agent firewall_internal
+
+{
+
+  meta:
+
+    "tags" slist => { "cryptoo_role" };
+
+  methods:
+
+    any::
+
+      "configure system as an internal firewall"
+        usebundle => server_guest("/", "firewall_internal", "x86_64");
+
+}
