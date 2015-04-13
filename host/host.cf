@@ -19,7 +19,6 @@ body file control
               "cryptoo/host/openrc.cf",
               "cryptoo/util/perms.cf",
               "cryptoo/host/subnet.cf",
-
               "cryptoo/util/classes.cf",
               "cryptoo/util/link_from.cf",
               "cryptoo/util/setfattr.cf",

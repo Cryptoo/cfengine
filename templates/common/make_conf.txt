@@ -4,19 +4,19 @@ source /$(cryptoo:file_names.overlay_conf)
 [%CFEngine any:: %]
 PORTDIR_OVERLAY="/usr/local/portage ${PORTDIR_OVERLAY}"
 
-[%CFEngine !(make_conf_group_guest):: %]
+[%CFEngine makeopts_host:: %]
 CFLAGS="-O2 -pipe -march=native"
-[%CFEngine make_conf_group_guest:: %]
+[%CFEngine makeopts_guest:: %]
 CFLAGS="-O2 -pipe -march=$(cryptoo:cryptoo.site_config[make.conf][guest_march]) -mtune=native"
 [%CFEngine any:: %]
 CXXFLAGS="${CFLAGS}"
 CHOST="x86_64-pc-linux-gnu"
 
-[%CFEngine !make_conf_role_guest:: %]
+[%CFEngine makeopts_host:: %]
 MAKEOPTS="-j8 -l8"
 
 EMERGE_DEFAULT_OPTS="--ask --jobs --load-average 8.0 --keep-going --usepkg --buildpkg --binpkg-respect-use"
-[%CFEngine make_conf_role_guest:: %]
+[%CFEngine makeopts_guest:: %]
 MAKEOPTS="-j2 -l1.4"
 
 EMERGE_DEFAULT_OPTS="--quiet --jobs --load-average 1.0 --keep-going --usepkgonly --binpkg-respect-use"
@@ -29,29 +29,30 @@ USE="${CPU_FLAGS_X86}"
 #Local options
 USE="${USE} $(cryptoo:cryptoo.site_config[make.conf][USE])"
 
+[%CFEngine make_conf_graphical:: %]
 INPUT_DEVICES="evdev"
-[%CFEngine make_conf_role_master|make_conf_role_desktop_host:: %]
+[%CFEngine make_conf_graphical|makeopts_host:: %]
 VIDEO_CARDS="$(cryptoo:cryptoo.site_config[make.conf][VIDEO_CARDS])"
-[%CFEngine (!make_conf_role_master)&(!make_conf_role_desktop_host):: %]
+[%CFEngine make_conf_graphical|makeopts_guest:: %]
 VIDEO_CARDS="modesetting"
-[%CFEngine make_conf_role_desktop_host:: %]
+[%CFEngine make_conf_graphical|makeopts_host:: %]
 ALSA_CARDS="$(cryptoo:cryptoo.site_config[make.conf][ALSA_CARDS])"
-[%CFEngine make_conf_role_template_desktop&make_conf_multilib:: %]
+[%CFEngine make_conf_graphical|makeopts_guest:: %]
 ALSA_CARDS="ac97"
 
-[%CFEngine make_conf_role_master&make_conf_nomultilib:: %]
+[%CFEngine pkgdir_master&make_conf_nomultilib:: %]
 PKGDIR="/usr/site-local/packages/host/no-multilib/${ARCH}"
-[%CFEngine make_conf_role_master&make_conf_multilib:: %]
+[%CFEngine pkgdir_master&make_conf_multilib:: %]
 PKGDIR="/usr/site-local/packages/host/multilib/${ARCH}"
-[%CFEngine make_conf_role_desktop_host&make_conf_nomultilib:: %]
+[%CFEngine pkgdir_desktop_host&make_conf_nomultilib:: %]
 PKGDIR="/usr/site-local/packages/desktop-host/no-multilib/${ARCH}"
-[%CFEngine make_conf_role_desktop_host&make_conf_multilib:: %]
+[%CFEngine pkgdir_desktop_host&make_conf_multilib:: %]
 PKGDIR="/usr/site-local/packages/desktop-host/multilib/${ARCH}"
-[%CFEngine make_conf_group_server_guest&make_conf_nomultilib:: %]
+[%CFEngine pkgdir_server_guest&make_conf_nomultilib:: %]
 PKGDIR="/usr/site-local/packages/server/no-multilib/${ARCH}"
-[%CFEngine make_conf_group_server_guest&make_conf_multilib:: %]
+[%CFEngine pkgdir_server_guest&make_conf_multilib:: %]
 PKGDIR="/usr/site-local/packages/server/multilib/${ARCH}"
-[%CFEngine make_conf_group_desktop_guest&make_conf_nomultilib:: %]
+[%CFEngine pkgdir_desktop_guest&make_conf_nomultilib:: %]
 PKGDIR="/usr/site-local/packages/desktop/no-multilib/${ARCH}"
-[%CFEngine make_conf_role_template_desktop&make_conf_multilib:: %]
+[%CFEngine pkgdir_desktop_guest&make_conf_multilib:: %]
 PKGDIR="/usr/site-local/packages/desktop/multilib/${ARCH}"
