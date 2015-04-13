@@ -46,7 +46,7 @@ bundle agent make_conf(root, role, multilib)
       "broken_cpu2use"
         expression => regextract(".*Traceback.*", "$(cpu_flags)", "broken_cpu2use");
 
-    make_conf_role_firewall_external::
+    make_conf_role_firewall_external|vpn_primary|firewall_internal|vpn_server::
 
       "make_conf_role_guest"
         expression => "any";
@@ -61,7 +61,7 @@ bundle agent make_conf(root, role, multilib)
       "make_conf_role_guest"
         expression => "any";
 
-    make_conf_role_firewall_external|make_conf_role_template_server::
+    make_conf_role_firewall_external|make_conf_role_vpn_primary|make_conf_role_firewall_internal|make_conf_role_vpn_server|make_conf_role_template_server::
 
       "make_conf_group_server_guest"
         expression => "any";
@@ -71,7 +71,7 @@ bundle agent make_conf(root, role, multilib)
       "make_conf_group_desktop_guest"
         expression => "any";
 
-    make_conf_role_template_desktop|make_conf_role_template_server|make_conf_group_desktop_guest::
+    make_conf_role_template_desktop|make_conf_role_template_server|make_conf_group_desktop_guest|make_conf_group_server_guest::
 
       "make_conf_group_guest"
         expression => "any";
