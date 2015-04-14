@@ -31,13 +31,13 @@ USE="${USE} $(cryptoo:cryptoo.site_config[make.conf][USE])"
 
 [%CFEngine make_conf_graphical:: %]
 INPUT_DEVICES="evdev"
-[%CFEngine make_conf_graphical|makeopts_host:: %]
+[%CFEngine make_conf_graphical&makeopts_host:: %]
 VIDEO_CARDS="$(cryptoo:cryptoo.site_config[make.conf][VIDEO_CARDS])"
-[%CFEngine make_conf_graphical|makeopts_guest:: %]
+[%CFEngine make_conf_graphical&makeopts_guest:: %]
 VIDEO_CARDS="modesetting"
-[%CFEngine make_conf_graphical|makeopts_host:: %]
+[%CFEngine make_conf_graphical&makeopts_host:: %]
 ALSA_CARDS="$(cryptoo:cryptoo.site_config[make.conf][ALSA_CARDS])"
-[%CFEngine make_conf_graphical|makeopts_guest:: %]
+[%CFEngine make_conf_graphical&makeopts_guest:: %]
 ALSA_CARDS="ac97"
 
 [%CFEngine pkgdir_master&make_conf_nomultilib:: %]
