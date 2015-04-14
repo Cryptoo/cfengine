@@ -142,5 +142,11 @@
                    "uid": "405",
                    "group": "users",
                    "shell": "/sbin/nologin"
+                 },
+    "cryptoo": {
+                   "home": "/home/cryptoo",
+                   "uid": "1000",
+                   "group": "cryptoo",
+                   "shell": "/bin/bash"
                  }
 }
