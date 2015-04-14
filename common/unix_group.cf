@@ -21,21 +21,21 @@ bundle agent unix_group(root, group)
 
       "gid"
         int => "$(cryptoo:config.gid[$(group)])";
-  
+
     user_group::
-    
+
       "group_type"
         string => "";
 
     system_group::
-    
+
       "group_type"
         string => "--system";
 
   classes:
 
     any::
-    
+
       "need_group"
         not => regline("$(group):.*:.*", "$(root)/$(cryptoo:file_names.group)");
 
@@ -49,10 +49,11 @@ bundle agent unix_group(root, group)
         expression => fileexists("$(root)$(cryptoo:file_names.groupadd_app)");
 
   commands:
-  
+
     need_group&have_groupadd::
-    
+
       "/$(cryptoo:file_names.groupadd_app) --gid $(gid) $(group_type) $(group)"
-				contain => basic_chroot($(root));
+        contain => basic_chroot($(root));
+
 
 }

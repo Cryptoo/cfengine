@@ -96,6 +96,11 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
         move_obstructions => "true",
         link_from => proc_mounts;
 
+      "$(root)$(file_names.networks)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[networks])";
+
       "$(root)$(directory_names.fs_standard_kernel)"
         move_obstructions => "true",
         link_from => kernel_dir;

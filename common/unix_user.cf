@@ -24,27 +24,27 @@ bundle agent unix_user(root, user)
 
       "home"
         string => "$(cryptoo:config.users[$(user)][home])";
-  
+
       "group"
         string => "$(cryptoo:config.users[$(user)][group])";
-  
+
       "shell"
         string => "$(cryptoo:config.users[$(user)][shell])";
-  
+
     normal_user::
-    
+
       "user_type"
         string => "";
 
     system_user::
-    
+
       "user_type"
         string => "--system";
 
   classes:
 
     any::
-    
+
       "need_user"
         not => regline("$(user):.*:.*", "$(root)/$(cryptoo:file_names.passwd)");
 
@@ -58,9 +58,9 @@ bundle agent unix_user(root, user)
         expression => fileexists("$(root)$(cryptoo:file_names.useradd_app)");
 
   commands:
-  
+
     need_user&have_useradd::
-    
+
       "/$(cryptoo:file_names.useradd_app) --uid $(uid) --gid $(group) --home-dir $(home) --no-create-home --shell $(shell) $(user_type) $(user)"
         contain => basic_chroot($(root));
 

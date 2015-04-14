@@ -50,6 +50,8 @@ bundle common file_names
         string => "$(cryptoo:directory_names.fs_config_base)/localtime";
       "mtab"
         string => "$(cryptoo:directory_names.fs_config_base)/mtab";
+      "networks"
+        string => "$(cryptoo:directory_names.fs_config_base)/networks";
       "passwd"
         string => "$(cryptoo:directory_names.fs_config_base)/passwd";
       "dns_config"
