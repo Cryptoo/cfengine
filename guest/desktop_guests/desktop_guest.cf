@@ -36,6 +36,11 @@ bundle agent desktop_guest(root, role, arch, multilib)
         classes => default:u_if_repaired("fstab_repaired"),
         comment => "configure /etc/fstab";
 
+      "$(root)$(directory_groups.guest_system_private)/."
+        perms => root,
+        create => "true",
+        handle => "$(root)$(directory_groups.guest_system_private)";
+
   methods:
 
     any::

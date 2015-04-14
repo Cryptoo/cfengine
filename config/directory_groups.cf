@@ -72,8 +72,6 @@ bundle common directory_groups
 
       "common_system_private"
         slist => {
-                    $(cryptoo:directory_names.fs_config_cryptoo_incoming),
-                    $(cryptoo:directory_names.fs_config_cryptoo_outgoing),
                     $(cryptoo:directory_names.fs_admin_base),
                     $(cryptoo:directory_names.fs_volatile_cfengine),
                     $(cryptoo:directory_names.fs_volatile_cf_inputs),
@@ -113,6 +111,8 @@ bundle common directory_groups
 
       "host_system_private"
         slist => {
+                    $(cryptoo:directory_names.fs_config_cryptoo_incoming),
+                    $(cryptoo:directory_names.fs_config_cryptoo_outgoing),
                     $(cryptoo:directory_names.fs_volatile_images)
                  };
 
@@ -153,5 +153,11 @@ bundle common directory_groups
                     $(cryptoo:directory_names.fs_config_cryptoo_guests),
                     $(cryptoo:directory_names.fs_config_guest_inboxes),
                     $(cryptoo:directory_names.fs_config_guest_outboxes)
+                 };
+
+      "guest_system_private"
+        slist => {
+                    "$(cryptoo:directory_names.fs_mount_root)/$(cryptoo:directory_names.fs_config_cryptoo_incoming)",
+                    "$(cryptoo:directory_names.fs_mount_root)/$(cryptoo:directory_names.fs_config_cryptoo_outgoing)"
                  };
 }
