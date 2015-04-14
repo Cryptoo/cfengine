@@ -14,8 +14,11 @@ bundle common config
 
     any::
 
+    "ssh"
+      data => readjson("$(sys.inputdir)/cryptoo/config/ssh.json", 1M);
+
     "users"
-      data => readjson("/var/cfengine/inputs/cryptoo/config/users.json", 1M);
+      data => readjson("$(sys.inputdir)/cryptoo/config/users.json", 1M);
 
     "server_guests"
        slist => {

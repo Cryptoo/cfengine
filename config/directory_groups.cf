@@ -45,6 +45,7 @@ bundle common directory_groups
                     $(cryptoo:directory_names.fs_config_run_boot),
                     $(cryptoo:directory_names.fs_config_run_default),
                     $(cryptoo:directory_names.fs_config_run_sysinit),
+                    $(cryptoo:directory_names.fs_config_ssh),
                     $(cryptoo:directory_names.fs_home),
                     $(cryptoo:directory_names.fs_mount_base),
                     $(cryptoo:directory_names.fs_mount_root),

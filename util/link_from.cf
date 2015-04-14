@@ -121,3 +121,11 @@ body link_from host_etc(x)
      when_no_source => "force";
      source => "/$(cryptoo:directory_names.fs_config_base)/$(x)";
 }
+
+body link_from null
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "/$(cryptoo:file_names.null)";
+}
