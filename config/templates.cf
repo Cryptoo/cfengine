@@ -37,7 +37,8 @@ bundle common templates
                     "machine_names",
                     "site_config",
                     "site_repo_name",
-                    "subnets"
+                    "subnets",
+                    "networks"
                  };
 
       "template[$(template_list)]"

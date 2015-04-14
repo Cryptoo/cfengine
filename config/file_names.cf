@@ -206,6 +206,8 @@ bundle common file_names
         string => "common/local_layout_conf.txt";
       "template_local_repo_name"
         string => "common/local_repo_name.txt";
+      "template_networks"
+        string => "common/networks.txt";
       "template_profile_parent"
         string => "common/profile_parent.txt";
       "template_world_sets"
