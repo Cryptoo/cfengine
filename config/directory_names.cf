@@ -46,6 +46,7 @@ bundle common directory_names
       "fs_config_run_boot" string => "$(fs_config_run_base)/boot";
       "fs_config_run_default" string => "$(fs_config_run_base)/default";
       "fs_config_run_sysinit" string => "$(fs_config_run_base)/sysinit";
+      "fs_home" string => "home";
       "fs_mount_base" string => "mnt";
       "fs_mount_root" string => "$(fs_mount_base)/root";
       "fs_mount_shared" string => "$(fs_mount_base)/shared";
@@ -61,6 +62,7 @@ bundle common directory_names
       "fs_storage_apps" string => "$(fs_storage_site)/bin";
       "fs_storage_cryptoo" string => "$(fs_storage_site)/cryptoo";
       "fs_storage_srcpkg" string => "$(fs_storage_site)/distfiles";
+      "fs_storage_home" string => "$(fs_storage_site)/$(fs_home)";
       "fs_storage_overlay" string => "$(fs_storage_site)/layman";
       "fs_storage_binpkg" string => "$(fs_storage_site)/packages";
       "fs_storage_pm" string => "$(fs_storage_site)/portage";

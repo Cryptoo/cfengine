@@ -6,6 +6,7 @@ UUID=$(cryptoo:machines.root_uuid)                         /                    
 
 /$(cryptoo:directory_names.fs_storage_apps)             /usr/site-local/bin             none        bind          0 0
 /$(cryptoo:directory_names.fs_storage_cryptoo)          /$(cryptoo:directory_names.fs_cryptoo)               none        bind          0 0
+/$(cryptoo:directory_names.fs_storage_home)             /$(cryptoo:directory_names.fs_home)                  none        bind          0 0
 /$(cryptoo:directory_names.fs_storage_srcpkg)           /$(cryptoo:directory_names.fs_site_srcpkg)           none        bind          0 0
 /$(cryptoo:directory_names.fs_storage_overlay)          /$(cryptoo:directory_names.fs_volatile_overlay)      none        bind          0 0
 /$(cryptoo:directory_names.fs_storage_binpkg)           /$(cryptoo:directory_names.fs_site_binpkg)           none        bind          0 0
