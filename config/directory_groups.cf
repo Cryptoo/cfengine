@@ -157,6 +157,13 @@ bundle common directory_groups
                     $(cryptoo:directory_names.fs_config_guest_outboxes)
                  };
 
+      "guest_system"
+        slist => {
+                    $(cryptoo:directory_names.fs_config_systemd),
+                    $(cryptoo:directory_names.fs_config_network),
+                    $(cryptoo:directory_names.fs_config_units)
+                 };
+
       "guest_system_private"
         slist => {
                     "$(cryptoo:directory_names.fs_mount_root)/$(cryptoo:directory_names.fs_config_cryptoo_incoming)",

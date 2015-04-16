@@ -47,6 +47,9 @@ bundle common directory_names
       "fs_config_run_default" string => "$(fs_config_run_base)/default";
       "fs_config_run_sysinit" string => "$(fs_config_run_base)/sysinit";
       "fs_config_ssh" string => "$(fs_config_base)/ssh";
+      "fs_config_systemd" string => "$(fs_config_base)/systemd";
+      "fs_config_network" string => "$(fs_config_systemd)/network";
+      "fs_config_units" string => "$(fs_config_systemd)/system";
       "fs_home" string => "home";
       "fs_mount_base" string => "mnt";
       "fs_mount_root" string => "$(fs_mount_base)/root";

@@ -38,7 +38,9 @@ bundle common templates
                     "site_config",
                     "site_repo_name",
                     "subnets",
-                    "networks"
+                    "networks",
+                    "wan_network",
+                    "ispdmz_network"
                  };
 
       "template[$(template_list)]"

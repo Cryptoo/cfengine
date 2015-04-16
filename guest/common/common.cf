@@ -1,0 +1,32 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/directory_groups.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
+bundle agent common_guest(root, role, arch)
+
+{
+
+  files:
+
+    any::
+
+      "$(root)$(directory_groups.guest_system)/."
+        perms => cryptoo:system,
+        create => "true",
+        handle => "$(root)$(directory_groups.guest_system)";
+
+      "$(root)$(directory_groups.guest_system_private)/."
+        perms => cryptoo:root,
+        create => "true",
+        handle => "$(root)$(directory_groups.guest_system_private)";
+
+}

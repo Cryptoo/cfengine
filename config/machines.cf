@@ -56,8 +56,10 @@ bundle common machines
 
   classes:
 
-    "have_machine_number"
-      expression => regextract("(.*):(.*)\.(.*)\[(.*)\]", "$(machine_number_var_string)", "machine_number_var");
+    any::
+
+      "have_machine_number"
+        expression => regextract("(.*):(.*)\.(.*)\[(.*)\]", "$(machine_number_var_string)", "machine_number_var");
 
   reports:
 

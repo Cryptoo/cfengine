@@ -5,7 +5,10 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
-              "cryptoo/guest/server_guests/server_guest.cf"
+              "cryptoo/config/config.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/guest/server_guests/server_guest.cf",
+              "cryptoo/util/perms.cf"
             };
 
 }
@@ -17,6 +20,42 @@ bundle agent firewall_external
   meta:
 
     "tags" slist => { "cryptoo_role" };
+
+  vars:
+
+    any::
+
+      "machine_number_vars"
+        slist => variablesmatching(".*machine_number\[firewall_external]");
+
+      "machine_number_var_string"
+        string => nth("machine_number_vars","0");
+
+    have_machine_number::
+
+      "machine_number"
+        string => "$($(machine_number_var[1]):$(machine_number_var[2]).$(machine_number_var[3])[$(machine_number_var[4])])";
+
+  classes:
+
+    any::
+
+      "guest_firewall_external"
+        expression => "any";
+
+  files:
+
+    any::
+
+      "/$(file_names.wan_network)"
+        perms => cryptoo:system,
+        create => "true",
+        edit_template => "/$(templates.template[wan_network])";
+
+      "/$(file_names.ispdmz_network)"
+        perms => cryptoo:system,
+        create => "true",
+        edit_template => "/$(templates.template[ispdmz_network])";
 
   methods:
 

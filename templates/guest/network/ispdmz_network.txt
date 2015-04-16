@@ -1,0 +1,34 @@
+[Match]
+[%CFEngine guest_firewall_external:: %]
+Name=eth1
+[%CFEngine !guest_firewall_external:: %]
+Name=eth0
+[%CFEngine any:: %]
+
+[Network]
+DHCP=false
+Address=192.168.$(cryptoo:cryptoo.subnet_config[ispdmz]).$(machine_number)/24
+[%CFEngine guest_firewall_external:: %]
+IPForward=ipv4
+[%CFEngine any:: %]
+
+[%CFEngine guest_firewall_external:: %]
+[Route]
+Gateway=192.168.$(cryptoo:cryptoo.subnet_config[ispdmz]).$(cryptoo:config.machine_number[vpn_primary])
+Destination=$(cryptoo:config.transparent_proxy_net[tor])
+
+[Route]
+Gateway=192.168.$(cryptoo:cryptoo.subnet_config[ispdmz]).$(cryptoo:config.machine_number[vpn_primary])
+Destination=$(cryptoo:config.transparent_proxy_net[i2p])
+
+[Route]
+Gateway=192.168.$(cryptoo:cryptoo.subnet_config[ispdmz]).$(cryptoo:config.machine_number[vpn_primary])
+Destination=192.168.$(cryptoo:cryptoo.subnet_config[tor]).0/24
+
+[Route]
+Gateway=192.168.$(cryptoo:cryptoo.subnet_config[ispdmz]).$(cryptoo:config.machine_number[vpn_primary])
+Destination=192.168.$(cryptoo:cryptoo.subnet_config[i2p]).0/24
+
+[Route]
+Gateway=192.168.$(cryptoo:cryptoo.subnet_config[ispdmz]).$(cryptoo:config.machine_number[vpn_primary])
+Destination=192.168.$(cryptoo:cryptoo.subnet_config[lan]).0/24

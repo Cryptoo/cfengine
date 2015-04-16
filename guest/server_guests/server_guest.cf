@@ -8,6 +8,7 @@ body file control
               "cryptoo/common/common.cf",
               "cryptoo/config/file_names.cf",
               "cryptoo/config/templates.cf",
+              "cryptoo/guest/common/common.cf",
               "cryptoo/host/mounts.cf",
               "cryptoo/util/perms.cf"
             };
@@ -36,17 +37,15 @@ bundle agent server_guest(root, role, arch)
         classes => default:u_if_repaired("fstab_repaired"),
         comment => "configure /etc/fstab";
 
-      "$(root)$(directory_groups.guest_system_private)/."
-        perms => root,
-        create => "true",
-        handle => "$(root)$(directory_groups.guest_system_private)";
-
   methods:
 
     any::
 
       "manage common files"
         usebundle => cryptoo:cryptoo_filesystem("$(root)","$(role)","$(arch)","nomultilib");
+
+      "manage guest files"
+        usebundle => cryptoo:common_guest("$(root)","$(role)","$(arch)");
 
     fstab_repaired::
 

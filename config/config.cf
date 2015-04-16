@@ -1412,4 +1412,10 @@ bundle common config
 				int => "319";
 			"gid[cryptoo]"
 				int => "1000";
+
+      "transparent_proxy_net[tor]"
+        string => "10.192.0.0/10";
+      "transparent_proxy_net[i2p]"
+        string => "10.128.0.0/10";
+
 }

@@ -146,6 +146,10 @@ bundle common file_names
         string => "$(cryptoo:directory_names.fs_config_ssh)/sshd_config";
       "ssh_config"
         string => "$(cryptoo:directory_names.fs_config_ssh)/ssh_config";
+      "ispdmz_network"
+        string => "$(cryptoo:directory_names.fs_config_network)/ispdmz.network";
+      "wan_network"
+        string => "$(cryptoo:directory_names.fs_config_network)/wan.network";
       "proc_mounts"
         string => "proc/self/mounts";
       "openrc_softlevel"
@@ -212,6 +216,10 @@ bundle common file_names
         string => "common/profile_parent.txt";
       "template_world_sets"
         string => "common/world_sets.txt";
+      "template_wan_network"
+        string => "guest/network/wan_network.txt";
+      "template_ispdmz_network"
+        string => "guest/network/ispdmz_network.txt";
       "template_crypttab"
         string => "host/crypttab.txt";
       "template_dmcrypt"
