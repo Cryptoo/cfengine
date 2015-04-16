@@ -54,6 +54,9 @@ bundle agent make_conf(root, role, multilib)
       "pkgdir_master"
         expression => "any";
 
+      "runtime_host"
+        expression => "any";
+
     make_conf_role_desktop_host::
 
       "makeopts_host"
@@ -65,12 +68,18 @@ bundle agent make_conf(root, role, multilib)
       "make_conf_graphical"
         expression => "any";
 
+      "runtime_host"
+        expression => "any";
+
     make_conf_role_template_server::
 
       "makeopts_host"
         expression => "any";
 
       "pkgdir_server_guest"
+        expression => "any";
+
+      "runtime_guest"
         expression => "any";
 
     make_conf_role_template_desktop::
@@ -84,12 +93,18 @@ bundle agent make_conf(root, role, multilib)
       "make_conf_graphical"
         expression => "any";
 
+      "runtime_guest"
+        expression => "any";
+
     make_conf_role_firewall_external::
 
       "makeopts_guest"
         expression => "any";
 
       "pkgdir_server_guest"
+        expression => "any";
+
+      "runtime_guest"
         expression => "any";
 
     make_conf_role_vpn_primary::
@@ -100,6 +115,9 @@ bundle agent make_conf(root, role, multilib)
       "pkgdir_server_guest"
         expression => "any";
 
+      "runtime_guest"
+        expression => "any";
+
     make_conf_role_firewall_internal::
 
       "makeopts_guest"
@@ -108,12 +126,18 @@ bundle agent make_conf(root, role, multilib)
       "pkgdir_server_guest"
         expression => "any";
 
+      "runtime_guest"
+        expression => "any";
+
     make_conf_role_vpn_server::
 
       "makeopts_guest"
         expression => "any";
 
       "pkgdir_server_guest"
+        expression => "any";
+
+      "runtime_guest"
         expression => "any";
 
     make_conf_role_web::
@@ -127,6 +151,9 @@ bundle agent make_conf(root, role, multilib)
       "make_conf_graphical"
         expression => "any";
 
+      "runtime_guest"
+        expression => "any";
+
     make_conf_role_mail_client::
 
       "makeopts_guest"
@@ -136,6 +163,9 @@ bundle agent make_conf(root, role, multilib)
         expression => "any";
 
       "make_conf_graphical"
+        expression => "any";
+
+      "runtime_guest"
         expression => "any";
 
   files:
