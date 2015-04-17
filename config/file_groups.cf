@@ -239,6 +239,7 @@ bundle common file_groups
                     "dns",
                     "freenet",
                     "i2p",
+                    "java",
                     "mail",
                     "namecoin",
                     "router",
