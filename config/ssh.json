@@ -1,5 +1,6 @@
 {
     "sshd": {
+                      "HostKey": "/etc/ssh/ssh_host_ed25519_key",
                       "ChallengeResponseAuthentication": "no",
                       "KexAlgorithms": "curve25519-sha256@libssh.org",
                       "Ciphers": "chacha20-poly1305@openssh.com",
