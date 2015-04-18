@@ -83,14 +83,14 @@ bundle agent firewall_external
                    "values":
                      [
                        { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.vpn_primary)" },
-                       { "LHS": "Destination", "RHS": "192.168.$(this.onion_subnet)" }
+                       { "LHS": "Destination", "RHS": "$(this.onion_subnet)" }
                      ]
                  },
                  { "section": "Route",
                    "values":
                      [
                        { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.vpn_primary)" },
-                       { "LHS": "Destination", "RHS": "192.168.$(this.eep_subnet)" }
+                       { "LHS": "Destination", "RHS": "$(this.eep_subnet)" }
                      ]
                  },
                  { "section": "Route",
