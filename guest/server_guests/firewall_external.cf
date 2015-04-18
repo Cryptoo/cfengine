@@ -31,10 +31,99 @@ bundle agent firewall_external
       "machine_number_var_string"
         string => nth("machine_number_vars","0");
 
+      "ispdmz_subnet"
+        string => "$(cryptoo:cryptoo.subnet_config[ispdmz])";
+
+      "onion_subnet"
+        string => "$(cryptoo:config.transparent_proxy_net[tor])";
+
+      "eep_subnet"
+        string => "$(cryptoo:config.transparent_proxy_net[i2p])";
+
+      "tor_subnet"
+        string => "$(cryptoo:cryptoo.subnet_config[tor])";
+
+      "i2p_subnet"
+        string => "$(cryptoo:cryptoo.subnet_config[i2p])";
+
+      "vpndmz_subnet"
+        string => "$(cryptoo:cryptoo.subnet_config[vpndmz])";
+
+      "lan_subnet"
+        string => "$(cryptoo:cryptoo.subnet_config[lan])";
+
+      "vpn_primary"
+        string => "$(cryptoo:config.machine_number[vpn_primary])";
+
     have_machine_number::
 
       "machine_number"
         string => "$($(machine_number_var[1]):$(machine_number_var[2]).$(machine_number_var[3])[$(machine_number_var[4])])";
+
+      "ispdmz_json"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "Match",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "eth1" }
+                     ]
+                 },
+                 { "section": "Network",
+                   "values":
+                     [
+                       { "LHS": "DHCP", "RHS": "false" },
+                       { "LHS": "Address", "RHS": "192.168.$(this.ispdmz_subnet).$(this.machine_number)/24" },
+                       { "LHS": "IPForward", "RHS": "ipv4" }
+                     ]
+                 },
+                 { "section": "Route",
+                   "values":
+                     [
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.vpn_primary)" },
+                       { "LHS": "Destination", "RHS": "192.168.$(this.onion_subnet)" }
+                     ]
+                 },
+                 { "section": "Route",
+                   "values":
+                     [
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.vpn_primary)" },
+                       { "LHS": "Destination", "RHS": "192.168.$(this.eep_subnet)" }
+                     ]
+                 },
+                 { "section": "Route",
+                   "values":
+                     [
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.vpn_primary)" },
+                       { "LHS": "Destination", "RHS": "192.168.$(this.tor_subnet).0/24" }
+                     ]
+                 },
+                 { "section": "Route",
+                   "values":
+                     [
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.vpn_primary)" },
+                       { "LHS": "Destination", "RHS": "192.168.$(this.i2p_subnet).0/24" }
+                     ]
+                 },
+                 { "section": "Route",
+                   "values":
+                     [
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.vpn_primary)" },
+                       { "LHS": "Destination", "RHS": "192.168.$(this.vpndmz_subnet).0/24" }
+                     ]
+                 },
+                 { "section": "Route",
+                   "values":
+                     [
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.vpn_primary)" },
+                       { "LHS": "Destination", "RHS": "192.168.$(this.lan_subnet).0/24" }
+                     ]
+                 }
+               ]
+          }
+        ';
 
   classes:
 
@@ -60,62 +149,7 @@ bundle agent firewall_external
         create => "true",
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
-        template_data => parsejson('
-          {
-            "sections":
-               [
-                 { "section": "Match",
-                   "values":
-                     [
-                       { "LHS": "Name", "RHS": "eth1" }
-                     ]
-                 },
-                 { "section": "Network",
-                   "values":
-                     [
-                       { "LHS": "DHCP", "RHS": "false" },
-                       { "LHS": "Address", "RHS": "192.168.$(cryptoo:cryptoo.subnet_config[ispdmz]).$(machine_number)/24" },
-                       { "LHS": "IPForward", "RHS": "ipv4" }
-                     ]
-                 },
-                 { "section": "Route",
-                   "values":
-                     [
-                       { "LHS": "Gateway", "RHS": "192.168.$(cryptoo:cryptoo.subnet_config[ispdmz]).$(cryptoo:config.machine_number[vpn_primary])" },
-                       { "LHS": "Destination", "RHS": "$(cryptoo:config.transparent_proxy_net[tor])" }
-                     ]
-                 },
-                 { "section": "Route",
-                   "values":
-                     [
-                       { "LHS": "Gateway", "RHS": "192.168.$(cryptoo:cryptoo.subnet_config[ispdmz]).$(cryptoo:config.machine_number[vpn_primary])" },
-                       { "LHS": "Destination", "RHS": "$(cryptoo:config.transparent_proxy_net[i2p])" }
-                     ]
-                 },
-                 { "section": "Route",
-                   "values":
-                     [
-                       { "LHS": "Gateway", "RHS": "192.168.$(cryptoo:cryptoo.subnet_config[ispdmz]).$(cryptoo:config.machine_number[vpn_primary])" },
-                       { "LHS": "Destination", "RHS": "192.168.$(cryptoo:cryptoo.subnet_config[tor]).0/24" }
-                     ]
-                 },
-                 { "section": "Route",
-                   "values":
-                     [
-                       { "LHS": "Gateway", "RHS": "192.168.$(cryptoo:cryptoo.subnet_config[ispdmz]).$(cryptoo:config.machine_number[vpn_primary])" },
-                       { "LHS": "Destination", "RHS": "192.168.$(cryptoo:cryptoo.subnet_config[i2p]).0/24" }
-                     ]
-                 },
-                 { "section": "Route",
-                   "values":
-                     [
-                       { "LHS": "Gateway", "RHS": "192.168.$(cryptoo:cryptoo.subnet_config[ispdmz]).$(cryptoo:config.machine_number[vpn_primary])" },
-                       { "LHS": "Destination", "RHS": "192.168.$(cryptoo:cryptoo.subnet_config[lan]).0/24" }
-                     ]
-                 }
-               ]
-          }
-        ');
+        template_data => parsejson($(this.ispdmz_json));
 
   methods:
 
