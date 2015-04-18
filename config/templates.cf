@@ -40,7 +40,7 @@ bundle common templates
                     "subnets",
                     "networks",
                     "wan_network",
-                    "ispdmz_network"
+                    "ini"
                  };
 
       "template[$(template_list)]"

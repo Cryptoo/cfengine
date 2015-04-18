@@ -58,7 +58,7 @@ bundle agent firewall_external
       "/$(file_names.ispdmz_network)"
         perms => cryptoo:system,
         create => "true",
-        edit_template => "/$(templates.template[ispdmz_network])",
+        edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
         template_data => parsejson('
           {

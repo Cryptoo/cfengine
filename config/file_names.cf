@@ -204,12 +204,14 @@ bundle common file_names
         string => "common/env_locale.txt";
       "template_fstab"
         string => "common/fstab.txt";
-      "template_make_conf"
-        string => "common/make_conf.txt";
+      "template_ini"
+        string => "common/ini_mustache.txt";
       "template_local_layout_conf"
         string => "common/local_layout_conf.txt";
       "template_local_repo_name"
         string => "common/local_repo_name.txt";
+      "template_make_conf"
+        string => "common/make_conf.txt";
       "template_networks"
         string => "common/networks.txt";
       "template_profile_parent"
@@ -218,8 +220,6 @@ bundle common file_names
         string => "common/world_sets.txt";
       "template_wan_network"
         string => "guest/network/wan_network.txt";
-      "template_ispdmz_network"
-        string => "guest/network/ispdmz_network.txt";
       "template_crypttab"
         string => "host/crypttab.txt";
       "template_dmcrypt"
