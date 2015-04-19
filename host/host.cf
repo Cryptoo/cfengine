@@ -288,8 +288,12 @@ bundle agent host(arch)
       "manage common files"
         usebundle => cryptoo:cryptoo_filesystem("/","master","$(arch)","nomultilib");
 
-      "configure kernel"
+      "configure host kernel"
         usebundle => cryptoo:kconfig("host", "$(arch)"),
+        classes => default:if_ok("kernel_ok");
+
+      "configure guest kernel"
+        usebundle => cryptoo:kconfig("guest", "$(arch)"),
         classes => default:if_ok("kernel_ok");
 
     srv_created::
