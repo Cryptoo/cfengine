@@ -1387,13 +1387,13 @@ bundle common config
         meta => { "enabled", "host" };
 
       "kconfig_string_host[CONFIG_INITRAMFS_SOURCE]"
-        string => "/boot/dracut.initramfs.cpio";
+        string => "\"/boot/dracut.initramfs.cpio\"";
 
       "kconfig_string_guest[CONFIG_CMDLINE]"
-        string => "root=/dev/vda net.ifnames=0 console=ttyS0,115200n8 init=/usr/lib64/systemd/systemd";
+        string => "\"root=/dev/vda net.ifnames=0 console=ttyS0,115200n8 init=/usr/lib64/systemd/systemd\"";
 
       "kconfig_string_guest[CONFIG_DEFAULT_HOSTNAME]"
-        string => "qemu-guest";
+        string => "\"qemu-guest\"";
 
       "grub[GRUB_CMDLINE_LINUX]" 
         string => "rd.auto";

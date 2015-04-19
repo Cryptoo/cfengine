@@ -130,14 +130,14 @@ bundle agent kconfig(target, arch)
   host&have_target_kconfig::
 
       "$(kconfig_file)"
-        edit_line => default:set_quoted_values("cryptoo:config.kconfig_string_host"),
+        edit_line => default:set_line_based("cryptoo:config.kconfig_string_host", "=", "\s*=\s*", ".*", "\s*#\s*"),
         classes => default:u_if_repaired("target_kconfig_changed"),
         comment => "set kconfig strings";
 
   guest&have_target_kconfig::
 
       "$(kconfig_file)"
-        edit_line => default:set_quoted_values("cryptoo:config.kconfig_string_guest"),
+        edit_line => default:set_line_based("cryptoo:config.kconfig_string_guest", "=", "\s*=\s*", ".*", "\s*#\s*"),
         classes => default:u_if_repaired("target_kconfig_changed"),
         comment => "set kconfig strings";
 
