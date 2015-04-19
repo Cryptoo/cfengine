@@ -73,7 +73,7 @@ bundle agent make_conf(root, role, multilib)
 
     make_conf_role_template_server::
 
-      "makeopts_host"
+      "makeopts_template"
         expression => "any";
 
       "pkgdir_server_guest"
@@ -84,7 +84,7 @@ bundle agent make_conf(root, role, multilib)
 
     make_conf_role_template_desktop::
 
-      "makeopts_host"
+      "makeopts_template"
         expression => "any";
 
       "pkgdir_desktop_guest"
