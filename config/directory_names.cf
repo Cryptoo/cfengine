@@ -82,6 +82,7 @@ bundle common directory_names
       "fs_standard_base" string => "usr";
       "fs_standard_apps" string => "$(fs_standard_base)/bin";
       "fs_cryptoo" string => "$(fs_standard_base)/cryptoo";
+      "fs_cryptoo_apps" string => "$(fs_cryptoo)/bin";
       "fs_cryptoo_pm" string => "$(fs_cryptoo)/Documentation/$(fs_config_pm)";
       "fs_cryptoo_pm_env" string => "$(fs_cryptoo_pm)/env";
       "fs_cryptoo_pm_environments" string => "$(fs_cryptoo_pm)/package.env";

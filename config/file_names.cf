@@ -186,6 +186,12 @@ bundle common file_names
         string => "$(cryptoo:directory_names.fs_standard_apps)/ssh";
       "systemd_app"
         string => "$(cryptoo:directory_names.fs_standard_apps)/systemctl";
+      "cryptoo_perms_app"
+        string => "$(cryptoo:directory_names.fs_cryptoo_apps)/cryptoo_perms";
+      "distfiles_perms_app"
+        string => "$(cryptoo:directory_names.fs_cryptoo_apps)/distfiles_perms";
+      "pkgdir_perms_app"
+        string => "$(cryptoo:directory_names.fs_cryptoo_apps)/pkgdir_perms";
       "cryptoo_profile"
         string => "$(cryptoo:directory_names.fs_cryptoo_profiles)/repo_name";
       "pm_machine_meta"

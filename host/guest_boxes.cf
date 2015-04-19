@@ -74,6 +74,6 @@ bundle agent guest_boxes
 
     cryptoo:have_cryptoo::
 
-      "/usr/cryptoo/bin/cryptoo_perms";
+      "/$(cryptoo:file_names.cryptoo_perms_app)";
 
 }

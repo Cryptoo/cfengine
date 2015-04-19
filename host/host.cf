@@ -344,4 +344,9 @@ bundle agent host(arch)
 
       "$(distfiles_cleanup_command)";
 
+    (all_mounted|all_ready)&have_cryptoo::
+
+      "/$(cryptoo:file_names.distfiles_perms_app)";
+
+      "/$(cryptoo:file_names.pkgdir_perms_app)";
 }
