@@ -296,6 +296,10 @@ bundle agent host(arch)
         usebundle => cryptoo:kconfig("guest", "$(arch)"),
         classes => default:if_ok("kernel_ok");
 
+      "configure multilib guest kernel"
+        usebundle => cryptoo:kconfig("guest_multilib", "$(arch)"),
+        classes => default:if_ok("kernel_ok");
+
     srv_created::
 
       "mount storage device"

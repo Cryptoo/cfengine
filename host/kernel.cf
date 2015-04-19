@@ -141,6 +141,13 @@ bundle agent kconfig(target, arch)
         classes => default:u_if_repaired("target_kconfig_changed"),
         comment => "set kconfig strings";
 
+  guest_multilib&have_target_kconfig::
+
+      "$(kconfig_file)"
+        edit_line => default:set_line_based("cryptoo:config.kconfig_string_guest_multilib", "=", "\s*=\s*", ".*", "\s*#\s*"),
+        classes => default:u_if_repaired("target_kconfig_changed"),
+        comment => "set kconfig strings";
+
   commands:
 
     need_kernel_src::
