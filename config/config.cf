@@ -68,7 +68,7 @@ bundle common config
 
       "kconfig[64BIT]"
         string => "64BIT",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[KERNEL_XZ]"
         string => "KERNEL_XZ",
@@ -76,7 +76,7 @@ bundle common config
 
       "kconfig[SYSVIPC]"
         string => "SYSVIPC",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[SWAP]"
         string => "SWAP",
@@ -84,47 +84,47 @@ bundle common config
 
       "kconfig[FHANDLE]"
         string => "FHANDLE",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[AUDIT]"
         string => "AUDIT",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[AUDITSYSCALL]"
         string => "AUDITSYSCALL",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[HIGH_RES_TIMERS]"
         string => "HIGH_RES_TIMERS",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NO_HZ_IDLE]"
         string => "NO_HZ_IDLE",
-        meta => { "disabled", "host" };
+        meta => { "disabled", "host", "guest" };
 
       "kconfig[UTS_NS]"
         string => "UTS_NS",
-        meta => { "disabled", "host" };
+        meta => { "disabled", "host", "guest" };
 
       "kconfig[IPC_NS]"
         string => "IPC_NS",
-        meta => { "disabled", "host" };
+        meta => { "disabled", "host", "guest" };
 
       "kconfig[PID_NS]"
         string => "PID_NS",
-        meta => { "disabled", "host" };
+        meta => { "disabled", "host", "guest" };
 
       "kconfig[IKCONFIG]"
         string => "IKCONFIG",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IKCONFIG_PROC]"
         string => "IKCONFIG_PROC",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[SCHED_AUTOGROUP]"
         string => "SCHED_AUTOGROUP",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[BLK_DEV_INITRD]"
         string => "BLK_DEV_INITRD",
@@ -132,47 +132,63 @@ bundle common config
 
       "kconfig[EMBEDDED]"
         string => "EMBEDDED",
-        meta => { "disabled", "host" };
+        meta => { "disabled", "host", "guest" };
 
       "kconfig[EXPERT]"
         string => "EXPERT",
-        meta => { "disabled", "host" };
+        meta => { "disabled", "host", "guest" };
 
       "kconfig[CC_STACKPROTECTOR_REGULAR]"
         string => "CC_STACKPROTECTOR_REGULAR",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[JUMP_LABEL]"
         string => "JUMP_LABEL",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[MODULES]"
         string => "MODULES",
-        meta => { "disabled", "host" };
+        meta => { "disabled", "host", "guest" };
 
       "kconfig[BLK_DEV_BSG]"
         string => "BLK_DEV_BSG",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest"  };
 
       "kconfig[IOSCHED_DEADLINE]"
         string => "IOSCHED_DEADLINE",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest"  };
 
       "kconfig[IOSCHED_CFQ]"
         string => "IOSCHED_CFQ",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest"  };
 
       "kconfig[SMP]"
         string => "SMP",
         meta => { "enabled", "host" };
 
+      "kconfig[HYPERVISOR_GUEST]"
+        string => "HYPERVISOR_GUEST",
+        meta => { "enabled", "guest" };
+
+      "kconfig[PARAVIRT]"
+        string => "PARAVIRT",
+        meta => { "enabled", "guest" };
+
+      "kconfig[KVM_GUEST]"
+        string => "KVM_GUEST",
+        meta => { "enabled", "guest" };
+
+      "kconfig[PARAVIRT_TIME_ACCOUNTING]"
+        string => "PARAVIRT_TIME_ACCOUNTING",
+        meta => { "enabled", "guest" };
+
       "kconfig[GENERIC_CPU]"
         string => "GENERIC_CPU",
-        meta => { "disabled", "host" };
+        meta => { "disabled", "host", "guest"  };
 
       "kconfig[MCORE2]"
         string => "MCORE2",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest"  };
 
       "kconfig[SCHED_SMT]"
         string => "SCHED_SMT",
@@ -184,15 +200,15 @@ bundle common config
 
       "kconfig[X86_MCE]"
         string => "X86_MCE",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[X86_MCE_INTEL]"
         string => "X86_MCE_INTEL",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[X86_MCE_AMD]"
         string => "X86_MCE_AMD",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NUMA]"
         string => "NUMA",
@@ -210,89 +226,97 @@ bundle common config
         string => "MOVABLE_NODE",
         meta => { "disabled", "host" };
 
+      "kconfig[MEMORY_BALLOON=]"
+        string => "MEMORY_BALLOON=",
+        meta => { "enabled", "guest" };
+
       "kconfig[KSM]"
         string => "KSM",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[MEMORY_FAILURE]"
         string => "MEMORY_FAILURE",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host" , "guest"};
 
       "kconfig[TRANSPARENT_HUGEPAGE]"
         string => "TRANSPARENT_HUGEPAGE",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[SECCOMP]"
         string => "SECCOMP",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
+
+      "kconfig[CMDLINE_BOOL]"
+        string => "CMDLINE_BOOL",
+        meta => { "enabled", "guest" };
 
       "kconfig[ACPI]"
         string => "ACPI",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[ACPI_AC]"
         string => "ACPI_AC",
-        meta => { "disabled", "host" };
+        meta => { "disabled", "host", "guest" };
 
       "kconfig[ACPI_BATTERY]"
         string => "ACPI_BATTERY",
-        meta => { "disabled", "host" };
+        meta => { "disabled", "host", "guest" };
 
       "kconfig[CPU_FREQ]"
         string => "CPU_FREQ",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[CPU_FREQ_STAT]"
         string => "CPU_FREQ_STAT",
-        meta => { "disabled", "host" };
+        meta => { "disabled", "host", "guest" };
 
       "kconfig[CPU_FREQ_GOV_ONDEMAND]"
         string => "CPU_FREQ_GOV_ONDEMAND",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[CPU_FREQ_DEFAULT_GOV_PERFORMANCE]"
         string => "CPU_FREQ_DEFAULT_GOV_PERFORMANCE",
-        meta => { "disabled", "host" };
+        meta => { "disabled", "host", "guest" };
 
       "kconfig[CPU_FREQ_DEFAULT_GOV_ONDEMAND]"
         string => "CPU_FREQ_DEFAULT_GOV_ONDEMAND",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[X86_INTEL_PSTATE]"
         string => "X86_INTEL_PSTATE",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[X86_ACPI_CPUFREQ]"
         string => "X86_ACPI_CPUFREQ",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[X86_POWERNOW_K8]"
         string => "X86_POWERNOW_K8",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[INTEL_IDLE]"
         string => "INTEL_IDLE",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[I7300_IDLE]"
         string => "I7300_IDLE",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[PCI]"
         string => "PCI",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[PCIEPORTBUS]"
         string => "PCIEPORTBUS",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[HT_IRQ]"
         string => "HT_IRQ",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[BINFMT_ELF]"
         string => "BINFMT_ELF",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[BINFMT_SCRIPT]"
         string => "BINFMT_SCRIPT",
@@ -300,599 +324,615 @@ bundle common config
 
       "kconfig[NET]"
         string => "NET",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[PACKET]"
         string => "PACKET",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[PACKET_DIAG]"
         string => "PACKET_DIAG",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[UNIX]"
         string => "UNIX",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[UNIX_DIAG]"
         string => "UNIX_DIAG",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[INET]"
         string => "INET",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[INET_DIAG]"
         string => "INET_DIAG",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[INET_UDP_DIAG]"
         string => "INET_UDP_DIAG",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IPV6]"
         string => "IPV6",
-        meta => { "disabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER]"
         string => "NETFILTER",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[BRIDGE_NETFILTER]"
         string => "BRIDGE_NETFILTER",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NF_CONNTRACK_PROCFS]"
         string => "NF_CONNTRACK_PROCFS",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NF_CONNTRACK]"
         string => "NF_CONNTRACK",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NF_CONNTRACK_PROC_COMPAT]"
         string => "NF_CONNTRACK_PROC_COMPAT",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NF_CT_PROTO_UDPLITE]"
         string => "NF_CT_PROTO_UDPLITE",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NF_CONNTRACK_IRC]"
         string => "NF_CONNTRACK_IRC",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NF_CONNTRACK_SIP]"
         string => "NF_CONNTRACK_SIP",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NF_CT_NETLINK]"
         string => "NF_CT_NETLINK",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_NETLINK_QUEUE_CT]"
         string => "NETFILTER_NETLINK_QUEUE_CT",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_SET]"
         string => "NETFILTER_XT_SET",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_TARGET_NETMAP]"
         string => "NETFILTER_XT_TARGET_NETMAP",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_TARGET_AUDIT]"
         string => "NETFILTER_XT_TARGET_AUDIT",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_TARGET_CHECKSUM]"
         string => "NETFILTER_XT_TARGET_CHECKSUM",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_TARGET_CLASSIFY]"
         string => "NETFILTER_XT_TARGET_CLASSIFY",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_TARGET_CONNMARK]"
         string => "NETFILTER_XT_TARGET_CONNMARK",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_TARGET_DSCP]"
         string => "NETFILTER_XT_TARGET_DSCP",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_TARGET_HMARK]"
         string => "NETFILTER_XT_TARGET_HMARK",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_TARGET_IDLETIMER]"
         string => "NETFILTER_XT_TARGET_IDLETIMER",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_TARGET_LOG]"
         string => "NETFILTER_XT_TARGET_LOG",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_TARGET_NFLOG]"
         string => "NETFILTER_XT_TARGET_NFLOG",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_TARGET_NFQUEUE]"
         string => "NETFILTER_XT_TARGET_NFQUEUE",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_TARGET_NOTRACK]"
         string => "NETFILTER_XT_TARGET_NOTRACK",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_TARGET_REDIRECT]"
         string => "NETFILTER_XT_TARGET_REDIRECT",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_TARGET_TEE]"
         string => "NETFILTER_XT_TARGET_TEE",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_TARGET_TPROXY]"
         string => "NETFILTER_XT_TARGET_TPROXY",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_TARGET_TRACE]"
         string => "NETFILTER_XT_TARGET_TRACE",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_TARGET_TCPMSS]"
         string => "NETFILTER_XT_TARGET_TCPMSS",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_TARGET_TCPOPTSTRIP]"
         string => "NETFILTER_XT_TARGET_TCPOPTSTRIP",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_ADDRTYPE]"
         string => "NETFILTER_XT_MATCH_ADDRTYPE",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_BPF]"
         string => "NETFILTER_XT_MATCH_BPF",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_CLUSTER]"
         string => "NETFILTER_XT_MATCH_CLUSTER",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_COMMENT]"
         string => "NETFILTER_XT_MATCH_COMMENT",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_CONNBYTES]"
         string => "NETFILTER_XT_MATCH_CONNBYTES",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_CONNLABEL]"
         string => "NETFILTER_XT_MATCH_CONNLABEL",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_CONNLIMIT]"
         string => "NETFILTER_XT_MATCH_CONNLIMIT",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_CONNMARK]"
         string => "NETFILTER_XT_MATCH_CONNMARK",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_CONNTRACK]"
         string => "NETFILTER_XT_MATCH_CONNTRACK",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_CPU]"
         string => "NETFILTER_XT_MATCH_CPU",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_DCCP]"
         string => "NETFILTER_XT_MATCH_DCCP",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_DEVGROUP]"
         string => "NETFILTER_XT_MATCH_DEVGROUP",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_DSCP]"
         string => "NETFILTER_XT_MATCH_DSCP",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_ECN]"
         string => "NETFILTER_XT_MATCH_ECN",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_ESP]"
         string => "NETFILTER_XT_MATCH_ESP",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_HASHLIMIT]"
         string => "NETFILTER_XT_MATCH_HASHLIMIT",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_HELPER]"
         string => "NETFILTER_XT_MATCH_HELPER",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_HL]"
         string => "NETFILTER_XT_MATCH_HL",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_IPCOMP]"
         string => "NETFILTER_XT_MATCH_IPCOMP",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_IPRANGE]"
         string => "NETFILTER_XT_MATCH_IPRANGE",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_L2TP]"
         string => "NETFILTER_XT_MATCH_L2TP",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_LENGTH]"
         string => "NETFILTER_XT_MATCH_LENGTH",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_LIMIT]"
         string => "NETFILTER_XT_MATCH_LIMIT",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_MAC]"
         string => "NETFILTER_XT_MATCH_MAC",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_MARK]"
         string => "NETFILTER_XT_MATCH_MARK",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_MULTIPORT]"
         string => "NETFILTER_XT_MATCH_MULTIPORT",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_NFACCT]"
         string => "NETFILTER_XT_MATCH_NFACCT",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_OSF]"
         string => "NETFILTER_XT_MATCH_OSF",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_OWNER]"
         string => "NETFILTER_XT_MATCH_OWNER",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_POLICY]"
         string => "NETFILTER_XT_MATCH_POLICY",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_PHYSDEV]"
         string => "NETFILTER_XT_MATCH_PHYSDEV",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_PKTTYPE]"
         string => "NETFILTER_XT_MATCH_PKTTYPE",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_QUOTA]"
         string => "NETFILTER_XT_MATCH_QUOTA",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_RATEEST]"
         string => "NETFILTER_XT_MATCH_RATEEST",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_REALM]"
         string => "NETFILTER_XT_MATCH_REALM",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_RECENT]"
         string => "NETFILTER_XT_MATCH_RECENT",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_SCTP]"
         string => "NETFILTER_XT_MATCH_SCTP",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_SOCKET]"
         string => "NETFILTER_XT_MATCH_SOCKET",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_STATE]"
         string => "NETFILTER_XT_MATCH_STATE",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_STATISTIC]"
         string => "NETFILTER_XT_MATCH_STATISTIC",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_STRING]"
         string => "NETFILTER_XT_MATCH_STRING",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_TCPMSS]"
         string => "NETFILTER_XT_MATCH_TCPMSS",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_TIME]"
         string => "NETFILTER_XT_MATCH_TIME",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETFILTER_XT_MATCH_U32]"
         string => "NETFILTER_XT_MATCH_U32",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_SET]"
         string => "IP_SET",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_SET_BITMAP_IP]"
         string => "IP_SET_BITMAP_IP",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_SET_BITMAP_IPMAC]"
         string => "IP_SET_BITMAP_IPMAC",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_SET_BITMAP_PORT]"
         string => "IP_SET_BITMAP_PORT",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_SET_HASH_IP]"
         string => "IP_SET_HASH_IP",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_SET_HASH_IPMARK]"
         string => "IP_SET_HASH_IPMARK",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_SET_HASH_IPPORT]"
         string => "IP_SET_HASH_IPPORT",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_SET_HASH_IPPORTIP]"
         string => "IP_SET_HASH_IPPORTIP",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_SET_HASH_IPPORTNET]"
         string => "IP_SET_HASH_IPPORTNET",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_SET_HASH_MAC]"
         string => "IP_SET_HASH_MAC",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_SET_HASH_NETPORTNET]"
         string => "IP_SET_HASH_NETPORTNET",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_SET_HASH_NET]"
         string => "IP_SET_HASH_NET",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_SET_HASH_NETNET]"
         string => "IP_SET_HASH_NETNET",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_SET_HASH_NETPORT]"
         string => "IP_SET_HASH_NETPORT",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_SET_HASH_NETIFACE]"
         string => "IP_SET_HASH_NETIFACE",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_SET_LIST_SET]"
         string => "IP_SET_LIST_SET",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host" , "guest"};
 
       "kconfig[NF_CONNTRACK_IPV4]"
         string => "NF_CONNTRACK_IPV4",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NF_LOG_ARP]"
         string => "NF_LOG_ARP",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_NF_IPTABLES]"
         string => "IP_NF_IPTABLES",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_NF_MATCH_AH]"
         string => "IP_NF_MATCH_AH",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_NF_MATCH_ECN]"
         string => "IP_NF_MATCH_ECN",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_NF_MATCH_RPFILTER]"
         string => "IP_NF_MATCH_RPFILTER",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_NF_MATCH_TTL]"
         string => "IP_NF_MATCH_TTL",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_NF_FILTER]"
         string => "IP_NF_FILTER",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_NF_TARGET_REJECT]"
         string => "IP_NF_TARGET_REJECT",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_NF_TARGET_SYNPROXY]"
         string => "IP_NF_TARGET_SYNPROXY",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_NF_NAT]"
         string => "IP_NF_NAT",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_NF_TARGET_MASQUERADE]"
         string => "IP_NF_TARGET_MASQUERADE",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_NF_MANGLE]"
         string => "IP_NF_MANGLE",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_NF_TARGET_CLUSTERIP]"
         string => "IP_NF_TARGET_CLUSTERIP",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_NF_TARGET_ECN]"
         string => "IP_NF_TARGET_ECN",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_NF_TARGET_TTL]"
         string => "IP_NF_TARGET_TTL",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_NF_RAW]"
         string => "IP_NF_RAW",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_NF_ARPTABLES]"
         string => "IP_NF_ARPTABLES",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_NF_ARPFILTER]"
         string => "IP_NF_ARPFILTER",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[IP_NF_ARP_MANGLE]"
         string => "IP_NF_ARP_MANGLE",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[BRIDGE_NF_EBTABLES]"
         string => "BRIDGE_NF_EBTABLES",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[BRIDGE_EBT_BROUTE]"
         string => "BRIDGE_EBT_BROUTE",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[BRIDGE_EBT_T_FILTER]"
         string => "BRIDGE_EBT_T_FILTER",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[BRIDGE_EBT_T_NAT]"
         string => "BRIDGE_EBT_T_NAT",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[BRIDGE_EBT_802_3]"
         string => "BRIDGE_EBT_802_3",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[BRIDGE_EBT_AMONG]"
         string => "BRIDGE_EBT_AMONG",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[BRIDGE_EBT_ARP]"
         string => "BRIDGE_EBT_ARP",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[BRIDGE_EBT_IP]"
         string => "BRIDGE_EBT_IP",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[BRIDGE_EBT_LIMIT]"
         string => "BRIDGE_EBT_LIMIT",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[BRIDGE_EBT_MARK]"
         string => "BRIDGE_EBT_MARK",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[BRIDGE_EBT_PKTTYPE]"
         string => "BRIDGE_EBT_PKTTYPE",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[BRIDGE_EBT_STP]"
         string => "BRIDGE_EBT_STP",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[BRIDGE_EBT_VLAN]"
         string => "BRIDGE_EBT_VLAN",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[BRIDGE_EBT_ARPREPLY]"
         string => "BRIDGE_EBT_ARPREPLY",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[BRIDGE_EBT_DNAT]"
         string => "BRIDGE_EBT_DNAT",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[BRIDGE_EBT_MARK_T]"
         string => "BRIDGE_EBT_MARK_T",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[BRIDGE_EBT_REDIRECT]"
         string => "BRIDGE_EBT_REDIRECT",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[BRIDGE_EBT_SNAT]"
         string => "BRIDGE_EBT_SNAT",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[BRIDGE_EBT_LOG]"
         string => "BRIDGE_EBT_LOG",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[BRIDGE_EBT_NFLOG]"
         string => "BRIDGE_EBT_NFLOG",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[BRIDGE]"
         string => "BRIDGE",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[BRIDGE_IGMP_SNOOPING]"
         string => "BRIDGE_IGMP_SNOOPING",
-        meta => { "disabled", "host" };
+        meta => { "disabled", "host", "guest" };
 
       "kconfig[NET_SCHED]"
         string => "NET_SCHED",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NET_SCH_FQ_CODEL]"
         string => "NET_SCH_FQ_CODEL",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETLINK_MMAP]"
         string => "NETLINK_MMAP",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[NETLINK_DIAG]"
         string => "NETLINK_DIAG",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[WIRELESS]"
         string => "WIRELESS",
-        meta => { "disabled", "host" };
+        meta => { "disabled", "host", "guest" };
+
+      "kconfig[NET_9P]"
+        string => "NET_9P",
+        meta => { "enabled", "guest" };
+
+      "kconfig[NET_9P_VIRTIO]"
+        string => "NET_9P_VIRTIO",
+        meta => { "enabled", "guest" };
 
       "kconfig[UEVENT_HELPER]"
         string => "UEVENT_HELPER",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[DEVTMPFS]"
         string => "DEVTMPFS",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[FW_LOADER_USER_HELPER_FALLBACK]"
         string => "FW_LOADER_USER_HELPER_FALLBACK",
-        meta => { "disabled", "host" };
+        meta => { "disabled", "host", "guest" };
 
       "kconfig[BLK_DEV_LOOP]"
         string => "BLK_DEV_LOOP",
         meta => { "enabled", "host" };
+
+      "kconfig[VIRTIO_BLK]"
+        string => "VIRTIO_BLK",
+        meta => { "enabled", "guest" };
+
+      "kconfig[SCSI]"
+        string => "SCSI",
+        meta => { "disabled", "guest" };
 
       "kconfig[SCSI_MQ_DEFAULT]"
         string => "SCSI_MQ_DEFAULT",
@@ -968,27 +1008,31 @@ bundle common config
 
       "kconfig[NETDEVICES]"
         string => "NETDEVICES",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[MACVLAN]"
         string => "MACVLAN",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[MACVTAP]"
         string => "MACVTAP",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[TUN]"
         string => "TUN",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[VETH]"
         string => "VETH",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
+
+      "kconfig[VIRTIO_NET]"
+        string => "VIRTIO_NET",
+        meta => { "enabled", "guest" };
 
       "kconfig[NLMON]"
         string => "NLMON",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[ETHERNET]"
         string => "ETHERNET",
@@ -996,51 +1040,27 @@ bundle common config
 
       "kconfig[WLAN]"
         string => "WLAN",
-        meta => { "disabled", "host" };
-
-      "kconfig[AGP]"
-        string => "AGP",
-        meta => { "enabled", "host" };
-
-      "kconfig[DRM]"
-        string => "DRM",
-        meta => { "enabled", "host" };
-
-      "kconfig[DRM_I915]"
-        string => "DRM_I915",
-        meta => { "enabled", "host" };
-
-      "kconfig[DRM_I915_KMS]"
-        string => "DRM_I915_KMS",
-        meta => { "enabled", "host" };
-
-      "kconfig[DRM_I915_FBDEV]"
-        string => "DRM_I915_FBDEV",
-        meta => { "enabled", "host" };
-
-      "kconfig[DRM_I915_PRELIMINARY_HW_SUPPORT]"
-        string => "DRM_I915_PRELIMINARY_HW_SUPPORT",
-        meta => { "enabled", "host" };
-
-      "kconfig[FB_VESA]"
-        string => "FB_VESA",
-        meta => { "enabled", "host" };
+        meta => { "disabled", "host", "guest" };
 
       "kconfig[DEVPTS_MULTIPLE_INSTANCES]"
         string => "DEVPTS_MULTIPLE_INSTANCES",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[SERIAL_8250]"
         string => "SERIAL_8250",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[SERIAL_8250_DEPRECATED_OPTIONS]"
         string => "SERIAL_8250_DEPRECATED_OPTIONS",
-        meta => { "disabled", "host" };
+        meta => { "disabled", "host", "guest" };
 
       "kconfig[SERIAL_8250_CONSOLE]"
         string => "SERIAL_8250_CONSOLE",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
+
+      "kconfig[VIRTIO_CONSOLE]"
+        string => "VIRTIO_CONSOLE",
+        meta => { "enabled", "guest" };
 
       "kconfig[HW_RANDOM]"
         string => "HW_RANDOM",
@@ -1062,6 +1082,10 @@ bundle common config
         string => "HW_RANDOM_VIA",
         meta => { "enabled", "host" };
 
+      "kconfig[HW_RANDOM_VIRTIO]"
+        string => "HW_RANDOM_VIRTIO",
+        meta => { "enabled", "guest" };
+
       "kconfig[HPET]"
         string => "HPET",
         meta => { "enabled", "host" };
@@ -1074,33 +1098,85 @@ bundle common config
         string => "HPET_MMAP_DEFAULT",
         meta => { "enabled", "host" };
 
+      "kconfig[AGP]"
+        string => "AGP",
+        meta => { "enabled", "host", "guest" };
+
+      "kconfig[DRM]"
+        string => "DRM",
+        meta => { "enabled", "host", "guest" };
+
+      "kconfig[DRM_I915]"
+        string => "DRM_I915",
+        meta => { "enabled", "host" };
+
+      "kconfig[DRM_I915_KMS]"
+        string => "DRM_I915_KMS",
+        meta => { "enabled", "host" };
+
+      "kconfig[DRM_I915_FBDEV]"
+        string => "DRM_I915_FBDEV",
+        meta => { "enabled", "host" };
+
+      "kconfig[DRM_I915_PRELIMINARY_HW_SUPPORT]"
+        string => "DRM_I915_PRELIMINARY_HW_SUPPORT",
+        meta => { "enabled", "host" };
+
+      "kconfig[DRM_QXL]"
+        string => "DRM_QXL",
+        meta => { "enabled", "guest" };
+
+      "kconfig[DRM_BOCHS]"
+        string => "DRM_BOCHS",
+        meta => { "enabled", "guest" };
+
+      "kconfig[FB_VESA]"
+        string => "FB_VESA",
+        meta => { "enabled", "host", "guest" };
+
       "kconfig[USB_SUPPORT]"
         string => "USB_SUPPORT",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
+
+      "kconfig[SOUND]"
+        string => "SOUND",
+        meta => { "enabled", "guest" };
+
+      "kconfig[SND]"
+        string => "SND",
+        meta => { "enabled", "guest" };
+
+      "kconfig[SND_PCI]"
+        string => "SND_PCI",
+        meta => { "enabled", "guest" };
+
+      "kconfig[SND_INTEL8X0]"
+        string => "SND_INTEL8X0",
+        meta => { "enabled", "guest" };
 
       "kconfig[USB]"
         string => "USB",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[USB_DYNAMIC_MINORS]"
         string => "USB_DYNAMIC_MINORS",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[USB_XHCI_HCD]"
         string => "USB_XHCI_HCD",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[USB_EHCI_HCD]"
         string => "USB_EHCI_HCD",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[USB_EHCI_ROOT_HUB_TT]"
         string => "USB_EHCI_ROOT_HUB_TT",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[USB_EHCI_TT_NEWSCHED]"
         string => "USB_EHCI_TT_NEWSCHED",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[USB_STORAGE]"
         string => "USB_STORAGE",
@@ -1108,43 +1184,59 @@ bundle common config
 
       "kconfig[USBIP_CORE]"
         string => "USBIP_CORE",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[USBIP_VHCI_HCD]"
         string => "USBIP_VHCI_HCD",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[USBIP_HOST]"
         string => "USBIP_HOST",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[RTC_CLASS]"
         string => "RTC_CLASS",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
+
+      "kconfig[VIRTIO_PCI]"
+        string => "VIRTIO_PCI",
+        meta => { "enabled", "guest" };
+
+      "kconfig[VIRTIO_BALLOON]"
+        string => "VIRTIO_BALLOON",
+        meta => { "enabled", "guest" };
+
+      "kconfig[VIRTIO_MMIO]"
+        string => "VIRTIO_MMIO",
+        meta => { "enabled", "guest" };
+
+      "kconfig[VIRTIO_MMIO_CMDLINE_DEVICES]"
+        string => "VIRTIO_MMIO_CMDLINE_DEVICES",
+        meta => { "enabled", "guest" };
 
       "kconfig[EXT4_FS]"
         string => "EXT4_FS",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[EXT4_USE_FOR_EXT23]"
         string => "EXT4_USE_FOR_EXT23",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[DNOTIFY]"
         string => "DNOTIFY",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[INOTIFY_USER]"
         string => "INOTIFY_USER",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[FANOTIFY]"
         string => "FANOTIFY",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[AUTOFS4_FS]"
         string => "AUTOFS4_FS",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[ISO9660_FS]"
         string => "ISO9660_FS",
@@ -1184,27 +1276,35 @@ bundle common config
 
       "kconfig[TMPFS]"
         string => "TMPFS",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[TMPFS_POSIX_ACL]"
         string => "TMPFS_POSIX_ACL",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[TMPFS_XATTR]"
         string => "TMPFS_XATTR",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
+
+      "kconfig[NETWORK_FILESYSTEMS]"
+        string => "NETWORK_FILESYSTEMS",
+        meta => { "enabled", "guest" };
+
+      "kconfig[9P_FS]"
+        string => "9P_FS",
+        meta => { "enabled", "guest" };
 
       "kconfig[MAGIC_SYSRQ]"
         string => "MAGIC_SYSRQ",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[DEBUG_KERNEL]"
         string => "DEBUG_KERNEL",
-        meta => { "disabled", "host" };
+        meta => { "disabled", "host", "guest" };
 
       "kconfig[STRICT_DEVMEM]"
         string => "STRICT_DEVMEM",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[CRYPTO_RMD128]"
         string => "CRYPTO_RMD128",
@@ -1288,6 +1388,9 @@ bundle common config
 
       "kconfig_string_host[CONFIG_INITRAMFS_SOURCE]"
         string => "/boot/dracut.initramfs.cpio";
+
+      "kconfig_string_guest[CONFIG_CMDLINE]"
+        string => "root=/dev/vda net.ifnames=0 init=/usr/lib64/systemd/systemd";
 
       "grub[GRUB_CMDLINE_LINUX]" 
         string => "rd.auto";
