@@ -80,7 +80,7 @@ bundle common config
 
       "kconfig[SWAP]"
         string => "SWAP",
-        meta => { "enabled", "host" };
+        meta => { "disabled", "guest" };
 
       "kconfig[FHANDLE]"
         string => "FHANDLE",
@@ -226,10 +226,6 @@ bundle common config
         string => "MOVABLE_NODE",
         meta => { "disabled", "host" };
 
-      "kconfig[MEMORY_BALLOON=]"
-        string => "MEMORY_BALLOON=",
-        meta => { "enabled", "guest" };
-
       "kconfig[KSM]"
         string => "KSM",
         meta => { "enabled", "host", "guest" };
@@ -249,6 +245,10 @@ bundle common config
       "kconfig[CMDLINE_BOOL]"
         string => "CMDLINE_BOOL",
         meta => { "enabled", "guest" };
+
+      "kconfig[PM]"
+        string => "PM",
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[ACPI]"
         string => "ACPI",
@@ -1036,7 +1036,7 @@ bundle common config
 
       "kconfig[ETHERNET]"
         string => "ETHERNET",
-        meta => { "enabled", "host" };
+        meta => { "disabled", "guest" };
 
       "kconfig[WLAN]"
         string => "WLAN",
@@ -1064,23 +1064,23 @@ bundle common config
 
       "kconfig[HW_RANDOM]"
         string => "HW_RANDOM",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[HW_RANDOM_TIMERIOMEM]"
         string => "HW_RANDOM_TIMERIOMEM",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[HW_RANDOM_INTEL]"
         string => "HW_RANDOM_INTEL",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[HW_RANDOM_AMD]"
         string => "HW_RANDOM_AMD",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[HW_RANDOM_VIA]"
         string => "HW_RANDOM_VIA",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[HW_RANDOM_VIRTIO]"
         string => "HW_RANDOM_VIRTIO",
@@ -1390,7 +1390,10 @@ bundle common config
         string => "/boot/dracut.initramfs.cpio";
 
       "kconfig_string_guest[CONFIG_CMDLINE]"
-        string => "root=/dev/vda net.ifnames=0 init=/usr/lib64/systemd/systemd";
+        string => "root=/dev/vda net.ifnames=0 console=ttyS0,115200n8 init=/usr/lib64/systemd/systemd";
+
+      "kconfig_string_guest[CONFIG_DEFAULT_HOSTNAME]"
+        string => "qemu-guest";
 
       "grub[GRUB_CMDLINE_LINUX]" 
         string => "rd.auto";

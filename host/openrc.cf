@@ -71,7 +71,7 @@ bundle agent openrc(root)
       "$(root)$(cryptoo:file_names.hostname_openrc)"
         perms => cryptoo:system,
         create => "true",
-        edit_line => default:set_quoted_values("hostname");
+        edit_line => default:set_quoted_values("cryptoo:openrc.hostname");
 
   commands:
 
