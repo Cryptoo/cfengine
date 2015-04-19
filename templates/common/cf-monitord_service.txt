@@ -1,0 +1,13 @@
+[Unit]
+Description=CFEngine Status Agent
+After=network.target
+Before=cf-execd.service
+Before=cf-serverd.service
+
+[Service]
+User=root
+Type=simple
+ExecStart=/var/cfengine/bin/cf-monitord --no-fork
+
+[Install]
+WantedBy=multi-user.target

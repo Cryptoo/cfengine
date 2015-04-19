@@ -21,6 +21,9 @@ bundle common templates
 
       "template_list"
         slist => {
+                    "cf_execd",
+                    "cf_monitord",
+                    "cf_serverd",
                     "env_cryptoo",
                     "env_locale",
                     "make_conf",

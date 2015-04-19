@@ -6,6 +6,8 @@ body file control
 
   inputs => {
               "cryptoo/config/directory_groups.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/util/contain.cf",
               "cryptoo/util/perms.cf"
             };
 
@@ -14,6 +16,13 @@ body file control
 bundle agent common_guest(root, role, arch)
 
 {
+
+  classes:
+
+    any::
+
+      "have_systemctl"
+        expression => fileexists("$(root)$(file_names.systemd_app)");
 
   files:
 
@@ -29,4 +38,34 @@ bundle agent common_guest(root, role, arch)
         create => "true",
         handle => "$(root)$(directory_groups.guest_system_private)";
 
-}
+      "$(root)$(file_names.cf_execd_service)"
+        perms => cryptoo:system,
+        create => "true",
+        edit_template => "/$(templates.template[cf_execd])",
+        classes => default:u_if_repaired("daemon_reload");
+
+      "$(root)$(file_names.cf_monitord_service)"
+        perms => cryptoo:system,
+        create => "true",
+        edit_template => "/$(templates.template[cf_monitord])",
+        classes => default:u_if_repaired("daemon_reload");
+
+      "$(root)$(file_names.cf_serverd_service)"
+        perms => cryptoo:system,
+        create => "true",
+        edit_template => "/$(templates.template[cf_serverd])",
+        classes => default:u_if_repaired("daemon_reload");
+
+  services:
+
+    any::
+
+  commands:
+
+    daemon_reload&have_systemctl::
+
+      "/$(file_names.systemd_app)"
+        args => "daemon-reload",
+        contain => basic_chroot($(root));
+
+    }

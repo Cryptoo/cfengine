@@ -1,0 +1,13 @@
+[Unit]
+Description=CFEngine Configuration Agent
+After=network.target
+After=cf-monitord.service
+After=cf-serverd.service
+
+[Service]
+User=root
+Type=simple
+ExecStart=/var/cfengine/bin/cf-execd --no-fork
+
+[Install]
+WantedBy=multi-user.target

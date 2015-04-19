@@ -150,6 +150,12 @@ bundle common file_names
         string => "$(cryptoo:directory_names.fs_config_network)/ispdmz.network";
       "wan_network"
         string => "$(cryptoo:directory_names.fs_config_network)/wan.network";
+      "cf_execd_service"
+        string => "$(cryptoo:directory_names.fs_config_units)/cf-execd.service";
+      "cf_monitord_service"
+        string => "$(cryptoo:directory_names.fs_config_units)/cf-monitord.service";
+      "cf_serverd_service"
+        string => "$(cryptoo:directory_names.fs_config_units)/cf-serverd.service";
       "proc_mounts"
         string => "proc/self/mounts";
       "openrc_softlevel"
@@ -198,6 +204,12 @@ bundle common file_names
         string => "$(cryptoo:directory_names.fs_standard_admin_apps)/locale-gen";
       "sshd_app"
         string => "$(cryptoo:directory_names.fs_standard_admin_apps)/sshd";
+      "template_cf_execd"
+        string => "common/cf-execd_service.txt";
+      "template_cf_monitord"
+        string => "common/cf-monitord_service.txt";
+      "template_cf_serverd"
+        string => "common/cf-serverd_service.txt";
       "template_env_cryptoo"
         string => "common/env_cryptoo.txt";
       "template_env_locale"
