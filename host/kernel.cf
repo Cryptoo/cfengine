@@ -51,13 +51,8 @@ bundle agent kconfig(target, arch)
       "kconfig_file"
         string => "/$(cryptoo:directory_names.fs_volatile_kernel)/$(target)/$(arch)/.config";
 
-#      FIXME: This is the real command. It is tested and works, but it's too slow to use during development
-#      "kernel_clone_command"
-#        string => "/$(cryptoo:file_names.git_app) clone $(cryptoo:cryptoo.kernel_git) /$(cryptoo:directory_names.fs_storage_kernel)";
-
-#      FIXME: Cloning from virtfs is much faster than cloning over the 'net
       "kernel_clone_command"
-        string => "/usr/bin/rsync -a --exclude .git /usr/src/linux-host/ /$(cryptoo:directory_names.fs_storage_kernel)";
+        string => "/$(cryptoo:file_names.git_app) clone $(cryptoo:cryptoo.kernel_git) /$(cryptoo:directory_names.fs_storage_kernel)";
 
   classes:
 
@@ -136,6 +131,13 @@ bundle agent kconfig(target, arch)
 
       "$(kconfig_file)"
         edit_line => default:set_quoted_values("kconfig.kconfig_string_host"),
+        classes => default:u_if_repaired("target_kconfig_changed"),
+        comment => "set kconfig strings";
+
+  guest&have_target_kconfig::
+
+      "$(kconfig_file)"
+        edit_line => default:set_quoted_values("kconfig.kconfig_string_guest"),
         classes => default:u_if_repaired("target_kconfig_changed"),
         comment => "set kconfig strings";
 
