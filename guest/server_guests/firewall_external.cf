@@ -55,9 +55,6 @@ bundle agent firewall_external
       "vpn_primary"
         string => "$(cryptoo:config.machine_number[vpn_primary])";
 
-      "why_doesnt_this_work"
-        string => "$(cryptoo:config.machine_number[firewall_external])";
-
     have_number::
 
       "firewall_external_number"
@@ -160,11 +157,5 @@ bundle agent firewall_external
 
       "configure system as a external firewall"
         usebundle => server_guest("/", "firewall_external", "x86_64");
-
-  reports:
-
-    any::
-
-      "This really should work, it's just like the line above: $(this.why_doesnt_this_work)";
 
 }
