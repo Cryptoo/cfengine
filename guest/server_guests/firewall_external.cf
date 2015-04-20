@@ -25,11 +25,11 @@ bundle agent firewall_external
 
     any::
 
-      "machine_number_vars"
-        slist => variablesmatching(".*machine_number\[firewall_external]");
+      "number_var"
+        slist => variablesmatching(".*cryptoo:config\.machine_number\[firewall_external]");
 
-      "machine_number_var_string"
-        string => nth("machine_number_vars","0");
+      "number_var_string"
+        string => nth("number_var","0");
 
       "ispdmz_subnet"
         string => "$(cryptoo:cryptoo.subnet_config[ispdmz])";
@@ -55,10 +55,13 @@ bundle agent firewall_external
       "vpn_primary"
         string => "$(cryptoo:config.machine_number[vpn_primary])";
 
-    have_machine_number::
+      "why_doesnt_this_work"
+        string => "$(cryptoo:config.machine_number[firewall_external])";
 
-      "machine_number"
-        string => "$($(machine_number_var[1]):$(machine_number_var[2]).$(machine_number_var[3])[$(machine_number_var[4])])";
+    have_number::
+
+      "firewall_external_number"
+        string => "$($(number_var[1]):$(number_var[2]).$(number_var[3])[$(number_var[4])])";
 
       "ispdmz_json"
         string => '
@@ -75,7 +78,7 @@ bundle agent firewall_external
                    "values":
                      [
                        { "LHS": "DHCP", "RHS": "false" },
-                       { "LHS": "Address", "RHS": "192.168.$(this.ispdmz_subnet).$(this.machine_number)/24" },
+                       { "LHS": "Address", "RHS": "192.168.$(this.ispdmz_subnet).$(this.firewall_external_number)/24" },
                        { "LHS": "IPForward", "RHS": "ipv4" }
                      ]
                  },
@@ -132,8 +135,8 @@ bundle agent firewall_external
       "guest_firewall_external"
         expression => "any";
 
-      "have_machine_number"
-        expression => regextract("(.*):(.*)\.(.*)\[(.*)\]", "$(machine_number_var_string)", "machine_number_var");
+      "have_number"
+        expression => regextract("(.*):(.*)\.(.*)\[(.*)\]", "$(number_var_string)", "number_var");
 
   files:
 
@@ -157,5 +160,11 @@ bundle agent firewall_external
 
       "configure system as a external firewall"
         usebundle => server_guest("/", "firewall_external", "x86_64");
+
+  reports:
+
+    any::
+
+      "This really should work, it's just like the line above: $(this.why_doesnt_this_work)";
 
 }
