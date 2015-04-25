@@ -66,6 +66,15 @@ bundle common config
                    "modules",
                  };
 
+      "server_guest_services"
+        slist => {
+                   "acpid.service",
+                   "systemd-networkd.service",
+                   "vixie-cron.service",
+                   "sshd.service",
+                   "gpm.service"
+                 };
+
       "kconfig[64BIT]"
         string => "64BIT",
         meta => { "enabled", "host", "guest", "guest_multilib" };

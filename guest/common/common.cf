@@ -5,6 +5,7 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
+              "cryptoo/config/config.cf",
               "cryptoo/config/directory_groups.cf",
               "cryptoo/config/file_names.cf",
               "cryptoo/util/contain.cf",
@@ -56,11 +57,13 @@ bundle agent common_guest(root, role, arch)
         edit_template => "/$(templates.template[cf_serverd])",
         classes => default:u_if_repaired("daemon_reload");
 
-  services:
-
-    any::
-
   commands:
+
+    have_systemctl::
+
+      "/$(file_names.systemd_app)"
+        args => "enable $(config.server_guest_services)",
+        contain => basic_chroot($(root));
 
     daemon_reload&have_systemctl::
 
