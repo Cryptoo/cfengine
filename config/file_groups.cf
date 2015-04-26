@@ -342,6 +342,7 @@ bundle common file_groups
         slist => {
                     "@(use[desktop_guest])",
                     "browsers",
+                    "irc_client",
                     "mail_client"
                  };
 
@@ -814,65 +815,64 @@ bundle common file_groups
                  };
 
 ################################################################################
-#                                     web
+#                                 irc_client
 ################################################################################
 
-      "make_profile[web]"
+      "make_profile[irc_client]"
         string => "$(make_profile[desktop_guest])";
 
-      "pm_env[web]"
+      "pm_env[irc_client]"
         slist => {
                     "@(pm_env[desktop_guest])"
                  };
 
-      "pm_environment[web]"
+      "pm_environment[irc_client]"
         slist => {
                     "@(pm_environment[desktop_guest])"
                  };
 
-      "keywords[web]"
+      "keywords[irc_client]"
         slist => {
-                    "@(keywords[desktop_guest])",
-                    "browsers"
+                    "@(keywords[desktop_guest])"
                  };
 
-      "mask[web]"
+      "mask[irc_client]"
         slist => {
                     "@(mask[desktop_guest])"
                  };
 
-      "unmask[web]"
+      "unmask[irc_client]"
         slist => {
                     "@(unmask[desktop_guest])"
                  };
 
-      "use[web]"
+      "use[irc_client]"
         slist => {
                     "@(use[desktop_guest])",
-                    "browsers"
+                    "irc_client"
                  };
 
-      "profile[web]"
+      "profile[irc_client]"
         slist => {
                     "@(profile[desktop_guest])"
                  };
 
-      "use_udev[web]"
+      "use_udev[irc_client]"
         slist => {
                     "@(use_udev[desktop_guest])"
                  };
 
-      "use_systemd[web]"
+      "use_systemd[irc_client]"
         slist => {
                     "@(use_systemd[desktop_guest])"
                  };
 
-      "unuse_udev[web]"
+      "unuse_udev[irc_client]"
         slist => {
                     "@(unuse_udev[desktop_guest])"
                  };
 
-      "unuse_systemd[web]"
+      "unuse_systemd[irc_client]"
         slist => {
                     "@(unuse_systemd[desktop_guest])"
                  };
@@ -937,6 +937,70 @@ bundle common file_groups
                  };
 
       "unuse_systemd[mail_client]"
+        slist => {
+                    "@(unuse_systemd[desktop_guest])"
+                 };
+
+################################################################################
+#                                     web
+################################################################################
+
+      "make_profile[web]"
+        string => "$(make_profile[desktop_guest])";
+
+      "pm_env[web]"
+        slist => {
+                    "@(pm_env[desktop_guest])"
+                 };
+
+      "pm_environment[web]"
+        slist => {
+                    "@(pm_environment[desktop_guest])"
+                 };
+
+      "keywords[web]"
+        slist => {
+                    "@(keywords[desktop_guest])",
+                    "browsers"
+                 };
+
+      "mask[web]"
+        slist => {
+                    "@(mask[desktop_guest])"
+                 };
+
+      "unmask[web]"
+        slist => {
+                    "@(unmask[desktop_guest])"
+                 };
+
+      "use[web]"
+        slist => {
+                    "@(use[desktop_guest])",
+                    "browsers"
+                 };
+
+      "profile[web]"
+        slist => {
+                    "@(profile[desktop_guest])"
+                 };
+
+      "use_udev[web]"
+        slist => {
+                    "@(use_udev[desktop_guest])"
+                 };
+
+      "use_systemd[web]"
+        slist => {
+                    "@(use_systemd[desktop_guest])"
+                 };
+
+      "unuse_udev[web]"
+        slist => {
+                    "@(unuse_udev[desktop_guest])"
+                 };
+
+      "unuse_systemd[web]"
         slist => {
                     "@(unuse_systemd[desktop_guest])"
                  };
