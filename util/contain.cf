@@ -21,3 +21,13 @@ body contain working_dir(dir)
   chdir => "$(dir)";
 
 }
+
+body contain silent_chroot(newroot)
+
+{
+
+  chroot => "$(newroot)";
+  no_output => "true";
+
+}
+

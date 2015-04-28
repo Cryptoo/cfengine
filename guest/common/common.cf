@@ -63,7 +63,8 @@ bundle agent common_guest(root, role, arch)
 
       "/$(file_names.systemd_app)"
         args => "enable $(config.server_guest_services)",
-        contain => basic_chroot($(root));
+        contain => silent_chroot($(root)),
+        classes => always_success;
 
     daemon_reload&have_systemctl::
 

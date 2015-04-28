@@ -7,6 +7,7 @@ body file control
 }
 
 body classes srv
+
 {
 
   promise_repaired => { "srv_created", "srv_ok"};
@@ -15,11 +16,20 @@ body classes srv
 }
 
 body classes srv_ready
+
 {
 
   promise_repaired => { "srv_started" };
   promise_kept => { "srv_started" };
   repair_failed => { "srv_failed" };
   cancel_notkept => { "srv_started" };
+
+}
+
+body classes always_success
+
+{
+
+  kept_returncodes => { "0", "1" };
 
 }
