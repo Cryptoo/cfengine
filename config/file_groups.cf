@@ -83,6 +83,18 @@ bundle common file_groups
                     "udev"
                  };
 
+      "systemd_enabled[common]"
+        slist => {
+                    "acpid.service",
+                    "cf-execd.service",
+                    "cf-monitord.service",
+                    "cf-serverd.service",
+                    "gpm.service",
+                    "sshd.service",
+                    "systemd-networkd.service",
+                    "vixie-cron.service"
+                 };
+
 ################################################################################
 #                                 Undefined
 ################################################################################
@@ -143,6 +155,11 @@ bundle common file_groups
       "unuse_systemd[undefined]"
         slist => {
                     "@(unuse_systemd[common])"
+                 };
+
+      "systemd_enabled[undefined]"
+        slist => {
+                    "@(systemd_enabled[common])"
                  };
 
 ################################################################################
@@ -210,6 +227,11 @@ bundle common file_groups
       "unuse_systemd[desktop_guest]"
         slist => {
                     "@(unuse_systemd[common])"
+                 };
+
+      "systemd_enabled[desktop_guest]"
+        slist => {
+                    "@(systemd_enabled[common])"
                  };
 
 ################################################################################
@@ -304,6 +326,11 @@ bundle common file_groups
                     "@(unuse_systemd[common])"
                  };
 
+      "systemd_enabled[template_server]"
+        slist => {
+                    "@(systemd_enabled[common])"
+                 };
+
 ################################################################################
 #                              template_desktop
 ################################################################################
@@ -371,6 +398,11 @@ bundle common file_groups
                     "@(unuse_systemd[desktop_guest])"
                  };
 
+      "systemd_enabled[template_desktop]"
+        slist => {
+                    "@(systemd_enabled[desktop_guest])"
+                 };
+
 ################################################################################
 #                                    host
 ################################################################################
@@ -435,6 +467,11 @@ bundle common file_groups
                     "@(unuse_systemd[common])"
                  };
 
+      "systemd_enabled[host]"
+        slist => {
+                    "@(systemd_enabled[common])"
+                 };
+
 ################################################################################
 #                                desktop_host
 ################################################################################
@@ -495,6 +532,11 @@ bundle common file_groups
       "unuse_systemd[desktop_host]"
         slist => {
                     "@(unuse_systemd[common])"
+                 };
+
+      "systemd_enabled[desktop_host]"
+        slist => {
+                    "@(systemd_enabled[common])"
                  };
 
 ################################################################################
@@ -558,6 +600,11 @@ bundle common file_groups
       "unuse_systemd[master]"
         slist => {
                     "@(unuse_systemd[host])"
+                 };
+
+      "systemd_enabled[master]"
+        slist => {
+                    "@(systemd_enabled[host])"
                  };
 
 ################################################################################
@@ -624,6 +671,11 @@ bundle common file_groups
                     "@(unuse_systemd[common])"
                  };
 
+      "systemd_enabled[firewall_external]"
+        slist => {
+                    "@(systemd_enabled[common])"
+                 };
+
 ################################################################################
 #                             vpn_primary
 ################################################################################
@@ -683,9 +735,14 @@ bundle common file_groups
                     "@(unuse_udev[common])"
                  };
 
-      "unuse_systemd[firewall_external]"
+      "unuse_systemd[vpn_primary]"
         slist => {
                     "@(unuse_systemd[common])"
+                 };
+
+      "systemd_enabled[vpn_primary]"
+        slist => {
+                    "@(systemd_enabled[common])"
                  };
 
 ################################################################################
@@ -748,6 +805,11 @@ bundle common file_groups
       "unuse_systemd[firewall_internal]"
         slist => {
                     "@(unuse_systemd[common])"
+                 };
+
+      "systemd_enabled[firewall_internal]"
+        slist => {
+                    "@(systemd_enabled[common])"
                  };
 
 ################################################################################
@@ -814,6 +876,11 @@ bundle common file_groups
                     "@(unuse_systemd[common])"
                  };
 
+      "systemd_enabled[vpn_server]"
+        slist => {
+                    "@(systemd_enabled[common])"
+                 };
+
 ################################################################################
 #                                 irc_client
 ################################################################################
@@ -875,6 +942,11 @@ bundle common file_groups
       "unuse_systemd[irc_client]"
         slist => {
                     "@(unuse_systemd[desktop_guest])"
+                 };
+
+      "systemd_enabled[irc_client]"
+        slist => {
+                    "@(systemd_enabled[desktop_guest])"
                  };
 
 ################################################################################
@@ -941,6 +1013,11 @@ bundle common file_groups
                     "@(unuse_systemd[desktop_guest])"
                  };
 
+      "systemd_enabled[mail_client]"
+        slist => {
+                    "@(systemd_enabled[desktop_guest])"
+                 };
+
 ################################################################################
 #                                     web
 ################################################################################
@@ -1005,6 +1082,11 @@ bundle common file_groups
                     "@(unuse_systemd[desktop_guest])"
                  };
 
+      "systemd_enabled[web]"
+        slist => {
+                    "@(systemd_enabled[desktop_guest])"
+                 };
+
 ################################################################################
 #                                      im
 ################################################################################
@@ -1067,6 +1149,11 @@ bundle common file_groups
       "unuse_systemd[im]"
         slist => {
                     "@(unuse_systemd[desktop_guest])"
+                 };
+
+      "systemd_enabled[im]"
+        slist => {
+                    "@(systemd_enabled[desktop_guest])"
                  };
 
 }

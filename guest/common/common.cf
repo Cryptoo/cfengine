@@ -63,10 +63,10 @@ bundle agent common_guest(root, role, arch)
     have_systemctl::
 
       "enable systemd services"
-        usebundle => systemd_enable($(root), $(config.server_guest_services));
+        usebundle => systemd_enable($(root), $(file_groups.systemd_enabled[$(this.role)]));
 
       "start systemd services"
-        usebundle => default:standard_services($(cryptoo:config.server_guest_services), "start");
+        usebundle => default:standard_services( $(cryptoo:file_groups.systemd_enabled[$(this.role)]), "start");
 
   commands:
 

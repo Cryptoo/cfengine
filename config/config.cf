@@ -66,18 +66,6 @@ bundle common config
                    "modules",
                  };
 
-      "server_guest_services"
-        slist => {
-                   "acpid.service",
-                   "cf-execd.service",
-                   "cf-monitord.service",
-                   "cf-serverd.service",
-                   "gpm.service",
-                   "sshd.service",
-                   "systemd-networkd.service",
-                   "vixie-cron.service"
-                 };
-
       "kconfig[64BIT]"
         string => "64BIT",
         meta => { "enabled", "host", "guest", "guest_multilib" };
