@@ -33,3 +33,13 @@ body classes always_success
   kept_returncodes => { "0", "1" };
 
 }
+
+body classes systemd_enabled
+
+{
+
+  kept_returncodes => { "0" };
+  repaired_returncodes => { "1" };
+  promise_repaired => { "service_needs_enable" };
+
+}
