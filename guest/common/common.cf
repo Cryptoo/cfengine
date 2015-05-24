@@ -70,6 +70,12 @@ bundle agent common_guest(root, role, arch)
         edit_template => "/$(templates.template[shorewall_service])",
         classes => default:u_if_repaired("daemon_reload");
 
+      "$(root)$(file_names.serial_autologin)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[serial_autologin])",
+        classes => default:u_if_repaired("daemon_reload");
+
   methods:
 
     have_systemctl::

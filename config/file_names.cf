@@ -160,6 +160,8 @@ bundle common file_names
         string => "$(cryptoo:directory_names.fs_config_units)/ipset.service";
       "shorewall_service"
         string => "$(cryptoo:directory_names.fs_config_units)/shorewall.service";
+      "serial_autologin"
+        string => "$(cryptoo:directory_names.fs_config_units)/serial-getty@ttyS0.service.d/autologin.conf";
       "proc_mounts"
         string => "proc/self/mounts";
       "openrc_softlevel"
@@ -240,6 +242,8 @@ bundle common file_names
         string => "common/networks.txt";
       "template_profile_parent"
         string => "common/profile_parent.txt";
+      "template_serial_autologin"
+        string => "common/serial_autologin.txt";
       "template_world_sets"
         string => "common/world_sets.txt";
       "template_wan_network"
