@@ -90,6 +90,8 @@ bundle common file_groups
                     "cf-monitord.service",
                     "cf-serverd.service",
                     "gpm.service",
+                    "ipset.service",
+                    "shorewall.service",
                     "sshd.service",
                     "systemd-networkd.service",
                     "vixie-cron.service"

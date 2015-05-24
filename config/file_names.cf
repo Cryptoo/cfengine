@@ -156,6 +156,10 @@ bundle common file_names
         string => "$(cryptoo:directory_names.fs_config_units)/cf-monitord.service";
       "cf_serverd_service"
         string => "$(cryptoo:directory_names.fs_config_units)/cf-serverd.service";
+      "ipset_service"
+        string => "$(cryptoo:directory_names.fs_config_units)/ipset.service";
+      "shorewall_service"
+        string => "$(cryptoo:directory_names.fs_config_units)/shorewall.service";
       "proc_mounts"
         string => "proc/self/mounts";
       "openrc_softlevel"
@@ -224,6 +228,8 @@ bundle common file_names
         string => "common/fstab.txt";
       "template_ini"
         string => "common/ini_mustache.txt";
+      "template_ipset_service"
+        string => "common/ipset_service.txt";
       "template_local_layout_conf"
         string => "common/local_layout_conf.txt";
       "template_local_repo_name"
@@ -250,6 +256,8 @@ bundle common file_names
         string => "host/guest_role.txt";
       "template_machine_names"
         string => "host/machine_names.txt";
+      "template_shorewall_service"
+        string => "common/shorewall_service.txt";
       "template_site_config"
         string => "host/site_config.txt";
       "template_site_repo_name"

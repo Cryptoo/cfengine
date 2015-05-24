@@ -31,31 +31,43 @@ bundle agent common_guest(root, role, arch)
     any::
 
       "$(root)$(directory_groups.guest_system)/."
-        perms => cryptoo:system,
+        perms => system,
         create => "true",
         handle => "$(root)$(directory_groups.guest_system)";
 
       "$(root)$(directory_groups.guest_system_private)/."
-        perms => cryptoo:root,
+        perms => root,
         create => "true",
         handle => "$(root)$(directory_groups.guest_system_private)";
 
       "$(root)$(file_names.cf_execd_service)"
-        perms => cryptoo:system,
+        perms => system,
         create => "true",
         edit_template => "/$(templates.template[cf_execd])",
         classes => default:u_if_repaired("daemon_reload");
 
       "$(root)$(file_names.cf_monitord_service)"
-        perms => cryptoo:system,
+        perms => system,
         create => "true",
         edit_template => "/$(templates.template[cf_monitord])",
         classes => default:u_if_repaired("daemon_reload");
 
       "$(root)$(file_names.cf_serverd_service)"
-        perms => cryptoo:system,
+        perms => system,
         create => "true",
         edit_template => "/$(templates.template[cf_serverd])",
+        classes => default:u_if_repaired("daemon_reload");
+
+      "$(root)$(file_names.ipset_service)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ipset_service])",
+        classes => default:u_if_repaired("daemon_reload");
+
+      "$(root)$(file_names.shorewall_service)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[shorewall_service])",
         classes => default:u_if_repaired("daemon_reload");
 
   methods:
