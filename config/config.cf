@@ -69,10 +69,13 @@ bundle common config
       "server_guest_services"
         slist => {
                    "acpid.service",
-                   "systemd-networkd.service",
-                   "vixie-cron.service",
+                   "cf-execd.service",
+                   "cf-monitord.service",
+                   "cf-serverd.service",
+                   "gpm.service",
                    "sshd.service",
-                   "gpm.service"
+                   "systemd-networkd.service",
+                   "vixie-cron.service"
                  };
 
       "kconfig[64BIT]"

@@ -72,4 +72,4 @@ bundle agent common_guest(root, role, arch)
         args => "daemon-reload",
         contain => basic_chroot($(root));
 
-    }
+}
