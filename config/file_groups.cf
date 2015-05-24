@@ -742,7 +742,8 @@ bundle common file_groups
 
       "systemd_enabled[firewall_external]"
         slist => {
-                    "@(systemd_enabled[server_guest])"
+                    "@(systemd_enabled[server_guest])",
+                    "noip.service"
                  };
 
 ################################################################################
