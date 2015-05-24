@@ -165,6 +165,73 @@ bundle common file_groups
                  };
 
 ################################################################################
+#                              server_guest
+################################################################################
+
+      "make_profile[server_guest]"
+        string => "$(make_profile[common])";
+
+      "pm_env[server_guest]"
+        slist => {
+                    "@(pm_env[common])"
+                 };
+
+      "pm_environment[server_guest]"
+        slist => {
+                    "@(pm_environment[common])"
+                 };
+
+      "keywords[server_guest]"
+        slist => {
+                    "@(keywords[common])"
+                 };
+
+      "mask[server_guest]"
+        slist => {
+                    "@(mask[common])"
+                 };
+
+      "unmask[server_guest]"
+        slist => {
+                    "@(unmask[common])"
+                 };
+
+      "use[server_guest]"
+        slist => {
+                    "@(use[common])"
+                 };
+
+      "profile[server_guest]"
+        slist => {
+                    "@(profile[common])"
+                 };
+
+      "use_udev[server_guest]"
+        slist => {
+                    "@(use_udev[common])"
+                 };
+
+      "use_systemd[server_guest]"
+        slist => {
+                    "@(use_systemd[common])"
+                 };
+
+      "unuse_udev[server_guest]"
+        slist => {
+                    "@(unuse_udev[common])"
+                 };
+
+      "unuse_systemd[server_guest]"
+        slist => {
+                    "@(unuse_systemd[common])"
+                 };
+
+      "systemd_enabled[server_guest]"
+        slist => {
+                    "@(systemd_enabled[common])"
+                 };
+
+################################################################################
 #                              desktop_guest
 ################################################################################
 
@@ -241,21 +308,21 @@ bundle common file_groups
 ################################################################################
 
       "make_profile[template_server]"
-        string => "$(make_profile[common])";
+        string => "$(make_profile[server_guest])";
 
       "pm_env[template_server]"
         slist => {
-                    "@(pm_env[common])"
+                    "@(pm_env[server_guest])"
                  };
 
       "pm_environment[template_server]"
         slist => {
-                    "@(pm_environment[common])"
+                    "@(pm_environment[server_guest])"
                  };
 
       "keywords[template_server]"
         slist => {
-                    "@(keywords[common])",
+                    "@(keywords[server_guest])",
                     "bitcoin",
                     "bitmessage",
                     "btcd",
@@ -275,18 +342,18 @@ bundle common file_groups
 
       "mask[template_server]"
         slist => {
-                    "@(mask[common])"
+                    "@(mask[server_guest])"
                  };
 
       "unmask[template_server]"
         slist => {
-                    "@(unmask[common])",
+                    "@(unmask[server_guest])",
                     "java"
                  };
 
       "use[template_server]"
         slist => {
-                    "@(use[common])",
+                    "@(use[server_guest])",
                     "bitcoin",
                     "bitcoin_wallet",
                     "deluge",
@@ -305,32 +372,32 @@ bundle common file_groups
 
       "profile[template_server]"
         slist => {
-                    "@(profile[common])"
+                    "@(profile[server_guest])"
                  };
 
       "use_udev[template_server]"
         slist => {
-                    "@(use_udev[common])"
+                    "@(use_udev[server_guest])"
                  };
 
       "use_systemd[template_server]"
         slist => {
-                    "@(use_systemd[common])"
+                    "@(use_systemd[server_guest])"
                  };
 
       "unuse_udev[template_server]"
         slist => {
-                    "@(unuse_udev[common])"
+                    "@(unuse_udev[server_guest])"
                  };
 
       "unuse_systemd[template_server]"
         slist => {
-                    "@(unuse_systemd[common])"
+                    "@(unuse_systemd[server_guest])"
                  };
 
       "systemd_enabled[template_server]"
         slist => {
-                    "@(systemd_enabled[common])"
+                    "@(systemd_enabled[server_guest])"
                  };
 
 ################################################################################
@@ -614,68 +681,68 @@ bundle common file_groups
 ################################################################################
 
       "make_profile[firewall_external]"
-        string => "$(make_profile[common])";
+        string => "$(make_profile[server_guest])";
 
       "pm_env[firewall_external]"
         slist => {
-                    "@(pm_env[common])"
+                    "@(pm_env[server_guest])"
                  };
 
       "pm_environment[firewall_external]"
         slist => {
-                    "@(pm_environment[common])"
+                    "@(pm_environment[server_guest])"
                  };
 
       "keywords[firewall_external]"
         slist => {
-                    "@(keywords[common])",
+                    "@(keywords[server_guest])",
                     "router"
                  };
 
       "mask[firewall_external]"
         slist => {
-                    "@(mask[common])"
+                    "@(mask[server_guest])"
                  };
 
       "unmask[firewall_external]"
         slist => {
-                    "@(unmask[common])"
+                    "@(unmask[server_guest])"
                  };
 
       "use[firewall_external]"
         slist => {
-                    "@(use[common])",
+                    "@(use[server_guest])",
                     "router"
                  };
 
       "profile[firewall_external]"
         slist => {
-                    "@(profile[common])"
+                    "@(profile[server_guest])"
                  };
 
       "use_udev[firewall_external]"
         slist => {
-                    "@(use_udev[common])"
+                    "@(use_udev[server_guest])"
                  };
 
       "use_systemd[firewall_external]"
         slist => {
-                    "@(use_systemd[common])"
+                    "@(use_systemd[server_guest])"
                  };
 
       "unuse_udev[firewall_external]"
         slist => {
-                    "@(unuse_udev[common])"
+                    "@(unuse_udev[server_guest])"
                  };
 
       "unuse_systemd[firewall_external]"
         slist => {
-                    "@(unuse_systemd[common])"
+                    "@(unuse_systemd[server_guest])"
                  };
 
       "systemd_enabled[firewall_external]"
         slist => {
-                    "@(systemd_enabled[common])"
+                    "@(systemd_enabled[server_guest])"
                  };
 
 ################################################################################
@@ -683,68 +750,68 @@ bundle common file_groups
 ################################################################################
 
       "make_profile[vpn_primary]"
-        string => "$(make_profile[common])";
+        string => "$(make_profile[server_guest])";
 
       "pm_env[vpn_primary]"
         slist => {
-                    "@(pm_env[common])"
+                    "@(pm_env[server_guest])"
                  };
 
       "pm_environment[vpn_primary]"
         slist => {
-                    "@(pm_environment[common])"
+                    "@(pm_environment[server_guest])"
                  };
 
       "keywords[vpn_primary]"
         slist => {
-                    "@(keywords[common])",
+                    "@(keywords[server_guest])",
                     "router"
                  };
 
       "mask[vpn_primary]"
         slist => {
-                    "@(mask[common])"
+                    "@(mask[server_guest])"
                  };
 
       "unmask[vpn_primary]"
         slist => {
-                    "@(unmask[common])"
+                    "@(unmask[server_guest])"
                  };
 
       "use[vpn_primary]"
         slist => {
-                    "@(use[common])",
+                    "@(use[server_guest])",
                     "router"
                  };
 
       "profile[vpn_primary]"
         slist => {
-                    "@(profile[common])"
+                    "@(profile[server_guest])"
                  };
 
       "use_udev[vpn_primary]"
         slist => {
-                    "@(use_udev[common])"
+                    "@(use_udev[server_guest])"
                  };
 
       "use_systemd[vpn_primary]"
         slist => {
-                    "@(use_systemd[common])"
+                    "@(use_systemd[server_guest])"
                  };
 
       "unuse_udev[vpn_primary]"
         slist => {
-                    "@(unuse_udev[common])"
+                    "@(unuse_udev[server_guest])"
                  };
 
       "unuse_systemd[vpn_primary]"
         slist => {
-                    "@(unuse_systemd[common])"
+                    "@(unuse_systemd[server_guest])"
                  };
 
       "systemd_enabled[vpn_primary]"
         slist => {
-                    "@(systemd_enabled[common])"
+                    "@(systemd_enabled[server_guest])"
                  };
 
 ################################################################################
@@ -752,66 +819,66 @@ bundle common file_groups
 ################################################################################
 
       "make_profile[firewall_internal]"
-        string => "$(make_profile[common])";
+        string => "$(make_profile[server_guest])";
 
       "pm_env[firewall_internal]"
         slist => {
-                    "@(pm_env[common])"
+                    "@(pm_env[server_guest])"
                  };
 
       "pm_environment[firewall_internal]"
         slist => {
-                    "@(pm_environment[common])"
+                    "@(pm_environment[server_guest])"
                  };
 
       "keywords[firewall_internal]"
         slist => {
-                    "@(keywords[common])"
+                    "@(keywords[server_guest])"
                  };
 
       "mask[firewall_internal]"
         slist => {
-                    "@(mask[common])"
+                    "@(mask[server_guest])"
                  };
 
       "unmask[firewall_internal]"
         slist => {
-                    "@(unmask[common])"
+                    "@(unmask[server_guest])"
                  };
 
       "use[firewall_internal]"
         slist => {
-                    "@(use[common])"
+                    "@(use[server_guest])"
                  };
 
       "profile[firewall_internal]"
         slist => {
-                    "@(profile[common])"
+                    "@(profile[server_guest])"
                  };
 
       "use_udev[firewall_internal]"
         slist => {
-                    "@(use_udev[common])"
+                    "@(use_udev[server_guest])"
                  };
 
       "use_systemd[firewall_internal]"
         slist => {
-                    "@(use_systemd[common])"
+                    "@(use_systemd[server_guest])"
                  };
 
       "unuse_udev[firewall_internal]"
         slist => {
-                    "@(unuse_udev[common])"
+                    "@(unuse_udev[server_guest])"
                  };
 
       "unuse_systemd[firewall_internal]"
         slist => {
-                    "@(unuse_systemd[common])"
+                    "@(unuse_systemd[server_guest])"
                  };
 
       "systemd_enabled[firewall_internal]"
         slist => {
-                    "@(systemd_enabled[common])"
+                    "@(systemd_enabled[server_guest])"
                  };
 
 ################################################################################
@@ -819,68 +886,68 @@ bundle common file_groups
 ################################################################################
 
       "make_profile[vpn_server]"
-        string => "$(make_profile[common])";
+        string => "$(make_profile[server_guest])";
 
       "pm_env[vpn_server]"
         slist => {
-                    "@(pm_env[common])"
+                    "@(pm_env[server_guest])"
                  };
 
       "pm_environment[vpn_server]"
         slist => {
-                    "@(pm_environment[common])"
+                    "@(pm_environment[server_guest])"
                  };
 
       "keywords[vpn_server]"
         slist => {
-                    "@(keywords[common])",
+                    "@(keywords[server_guest])",
                     "vpn"
                  };
 
       "mask[vpn_server]"
         slist => {
-                    "@(mask[common])"
+                    "@(mask[server_guest])"
                  };
 
       "unmask[vpn_server]"
         slist => {
-                    "@(unmask[common])"
+                    "@(unmask[server_guest])"
                  };
 
       "use[vpn_server]"
         slist => {
-                    "@(use[common])",
+                    "@(use[server_guest])",
                     "vpn"
                  };
 
       "profile[vpn_server]"
         slist => {
-                    "@(profile[common])"
+                    "@(profile[server_guest])"
                  };
 
       "use_udev[vpn_server]"
         slist => {
-                    "@(use_udev[common])"
+                    "@(use_udev[server_guest])"
                  };
 
       "use_systemd[vpn_server]"
         slist => {
-                    "@(use_systemd[common])"
+                    "@(use_systemd[server_guest])"
                  };
 
       "unuse_udev[vpn_server]"
         slist => {
-                    "@(unuse_udev[common])"
+                    "@(unuse_udev[server_guest])"
                  };
 
       "unuse_systemd[vpn_server]"
         slist => {
-                    "@(unuse_systemd[common])"
+                    "@(unuse_systemd[server_guest])"
                  };
 
       "systemd_enabled[vpn_server]"
         slist => {
-                    "@(systemd_enabled[common])"
+                    "@(systemd_enabled[server_guest])"
                  };
 
 ################################################################################
