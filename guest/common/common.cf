@@ -65,6 +65,9 @@ bundle agent common_guest(root, role, arch)
       "enable systemd services"
         usebundle => systemd_enable($(root), $(config.server_guest_services));
 
+      "start systemd services"
+        usebundle => default:standard_services($(cryptoo:config.server_guest_services), "start");
+
   commands:
 
     daemon_reload&have_systemctl::
