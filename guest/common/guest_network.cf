@@ -21,11 +21,11 @@ bundle agent guest_network(root, role)
 
     any::
 
-      "number_var"
-        slist => variablesmatching(".*config\.machine_number\[$(this.role)]");
+      "machine_number"
+        data => readjson("$(sys.inputdir)/cryptoo/config/machine_numbers.json", 1M);
 
-      "number_var_string"
-        string => nth("number_var","0");
+      "role_number"
+         string => "$(this.machine_number[$(this.role)])";
 
       "ispdmz_subnet"
         string => "$(cryptoo.subnet_config[ispdmz])";
@@ -47,26 +47,6 @@ bundle agent guest_network(root, role)
 
       "lan_subnet"
         string => "$(cryptoo.subnet_config[lan])";
-
-      "firewall_external"
-        string => "$(config.machine_number[firewall_external])";
-
-      "tor"
-        string => "$(config.machine_number[tor])";
-
-      "i2p"
-        string => "$(config.machine_number[i2p])";
-
-      "vpn_primary"
-        string => "$(config.machine_number[vpn_primary])";
-
-      "firewall_internal"
-        string => "$(config.machine_number[firewall_internal])";
-
-    have_number::
-
-      "role_number"
-        string => "$($(number_var[1]):$(number_var[2]).$(number_var[3])[$(number_var[4])])";
 
       "network_wan_gateway"
         string => '
@@ -112,7 +92,7 @@ bundle agent guest_network(root, role)
                  { "section": "Route",
                    "values":
                      [
-                       { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.vpn_primary)" },
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.machine_number[vpn_primary])" },
                        { "LHS": "Destination", "RHS": "$(this.onion_subnet)" },
                        { "LHS": "Metric", "RHS": "0" }
                      ]
@@ -120,7 +100,7 @@ bundle agent guest_network(root, role)
                  { "section": "Route",
                    "values":
                      [
-                       { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.vpn_primary)" },
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.machine_number[vpn_primary])" },
                        { "LHS": "Destination", "RHS": "$(this.eep_subnet)" },
                        { "LHS": "Metric", "RHS": "0" }
                      ]
@@ -128,7 +108,7 @@ bundle agent guest_network(root, role)
                  { "section": "Route",
                    "values":
                      [
-                       { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.vpn_primary)" },
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.machine_number[vpn_primary])" },
                        { "LHS": "Destination", "RHS": "192.168.$(this.tor_subnet).0/24" },
                        { "LHS": "Metric", "RHS": "0" }
                      ]
@@ -136,7 +116,7 @@ bundle agent guest_network(root, role)
                  { "section": "Route",
                    "values":
                      [
-                       { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.vpn_primary)" },
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.machine_number[vpn_primary])" },
                        { "LHS": "Destination", "RHS": "192.168.$(this.i2p_subnet).0/24" },
                        { "LHS": "Metric", "RHS": "0" }
                      ]
@@ -144,7 +124,7 @@ bundle agent guest_network(root, role)
                  { "section": "Route",
                    "values":
                      [
-                       { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.vpn_primary)" },
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.machine_number[vpn_primary])" },
                        { "LHS": "Destination", "RHS": "192.168.$(this.vpndmz_subnet).0/24" },
                        { "LHS": "Metric", "RHS": "0" }
                      ]
@@ -152,7 +132,7 @@ bundle agent guest_network(root, role)
                  { "section": "Route",
                    "values":
                      [
-                       { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.vpn_primary)" },
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.machine_number[vpn_primary])" },
                        { "LHS": "Destination", "RHS": "192.168.$(this.lan_subnet).0/24" },
                        { "LHS": "Metric", "RHS": "0" }
                      ]
@@ -177,14 +157,14 @@ bundle agent guest_network(root, role)
                      [
                        { "LHS": "DHCP", "RHS": "false" },
                        { "LHS": "Address", "RHS": "192.168.$(this.ispdmz_subnet).$(this.role_number)/24" },
-                       { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.firewall_external)" },
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.machine_number[firewall_external])" },
                        { "LHS": "IPForward", "RHS": "ipv4" }
                      ]
                  },
                  { "section": "Route",
                    "values":
                      [
-                       { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.firewall_external)" },
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.machine_number[firewall_external])" },
                        { "LHS": "Destination", "RHS": "$(config.dns[backup])" },
                        { "LHS": "Metric", "RHS": "0" }
                      ]
@@ -215,7 +195,7 @@ bundle agent guest_network(root, role)
                  { "section": "Route",
                    "values":
                      [
-                       { "LHS": "Gateway", "RHS": "192.168.$(this.vpndmz_subnet).$(this.firewall_internal)" },
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.vpndmz_subnet).$(this.machine_number[firewall_internal])" },
                        { "LHS": "Destination", "RHS": "$(this.onion_subnet)" },
                        { "LHS": "Metric", "RHS": "0" }
                      ]
@@ -223,7 +203,7 @@ bundle agent guest_network(root, role)
                  { "section": "Route",
                    "values":
                      [
-                       { "LHS": "Gateway", "RHS": "192.168.$(this.vpndmz_subnet).$(this.firewall_internal)" },
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.vpndmz_subnet).$(this.machine_number[firewall_internal])" },
                        { "LHS": "Destination", "RHS": "$(this.eep_subnet)" },
                        { "LHS": "Metric", "RHS": "0" }
                      ]
@@ -231,7 +211,7 @@ bundle agent guest_network(root, role)
                  { "section": "Route",
                    "values":
                      [
-                       { "LHS": "Gateway", "RHS": "192.168.$(this.vpndmz_subnet).$(this.firewall_internal)" },
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.vpndmz_subnet).$(this.machine_number[firewall_internal])" },
                        { "LHS": "Destination", "RHS": "192.168.$(this.tor_subnet).0/24" },
                        { "LHS": "Metric", "RHS": "0" }
                      ]
@@ -239,7 +219,7 @@ bundle agent guest_network(root, role)
                  { "section": "Route",
                    "values":
                      [
-                       { "LHS": "Gateway", "RHS": "192.168.$(this.vpndmz_subnet).$(this.firewall_internal)" },
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.vpndmz_subnet).$(this.machine_number[firewall_internal])" },
                        { "LHS": "Destination", "RHS": "192.168.$(this.i2p_subnet).0/24" },
                        { "LHS": "Metric", "RHS": "0" }
                      ]
@@ -247,7 +227,7 @@ bundle agent guest_network(root, role)
                  { "section": "Route",
                    "values":
                      [
-                       { "LHS": "Gateway", "RHS": "192.168.$(this.vpndmz_subnet).$(this.firewall_internal)" },
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.vpndmz_subnet).$(this.machine_number[firewall_internal])" },
                        { "LHS": "Destination", "RHS": "192.168.$(this.lan_subnet).0/24" },
                        { "LHS": "Metric", "RHS": "0" }
                      ]
@@ -272,14 +252,14 @@ bundle agent guest_network(root, role)
                      [
                        { "LHS": "DHCP", "RHS": "false" },
                        { "LHS": "Address", "RHS": "192.168.$(this.vpndmz_subnet).$(this.role_number)/24" },
-                       { "LHS": "Gateway", "RHS": "192.168.$(this.vpndmz_subnet).$(this.vpn_primary)" },
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.vpndmz_subnet).$(this.machine_number[vpn_primary])" },
                        { "LHS": "IPForward", "RHS": "ipv4" }
                      ]
                  },
                  { "section": "Route",
                    "values":
                      [
-                       { "LHS": "Gateway", "RHS": "192.168.$(this.vpndmz_subnet).$(this.vpn_primary)" },
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.vpndmz_subnet).$(this.machine_number[vpn_primary])" },
                        { "LHS": "Destination", "RHS": "192.168.$(this.ispdmz_subnet).0/24" },
                        { "LHS": "Metric", "RHS": "0" }
                      ]
@@ -310,7 +290,7 @@ bundle agent guest_network(root, role)
                  { "section": "Route",
                    "values":
                      [
-                       { "LHS": "Gateway", "RHS": "192.168.$(this.tor_subnet).$(this.tor)" },
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.tor_subnet).$(this.machine_number[tor])" },
                        { "LHS": "Destination", "RHS": "$(this.onion_subnet)" },
                        { "LHS": "Metric", "RHS": "0" }
                      ]
@@ -341,7 +321,7 @@ bundle agent guest_network(root, role)
                  { "section": "Route",
                    "values":
                      [
-                       { "LHS": "Gateway", "RHS": "192.168.$(this.i2p_subnet).$(this.i2p)" },
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.i2p_subnet).$(this.machine_number[i2p])" },
                        { "LHS": "Destination", "RHS": "$(this.eep_subnet)" },
                        { "LHS": "Metric", "RHS": "0" }
                      ]
@@ -379,9 +359,6 @@ bundle agent guest_network(root, role)
 
       "guest_$(this.role)"
         expression => "any";
-
-      "have_number"
-        expression => regextract("(.*):(.*)\.(.*)\[(.*)\]", "$(number_var_string)", "number_var");
 
   files:
 
