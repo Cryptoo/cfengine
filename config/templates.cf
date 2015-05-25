@@ -45,7 +45,6 @@ bundle common templates
                     "site_config",
                     "site_repo_name",
                     "subnets",
-                    "wan_network",
                     "world_sets",
                  };
 

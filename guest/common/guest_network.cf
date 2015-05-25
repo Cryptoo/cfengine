@@ -56,6 +56,28 @@ bundle agent guest_network(root, role)
       "role_number"
         string => "$($(number_var[1]):$(number_var[2]).$(number_var[3])[$(number_var[4])])";
 
+      "network_wan_gateway"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "Match",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "eth0" }
+                     ]
+                 },
+                 { "section": "Network",
+                   "values":
+                     [
+                       { "LHS": "DHCP", "RHS": "true" },
+                       { "LHS": "IPForward", "RHS": "ipv4" }
+                     ]
+                 }
+               ]
+          }
+        ';
+
       "network_ispdmz_gateway"
         string => '
           {
@@ -138,7 +160,9 @@ bundle agent guest_network(root, role)
       "$(this.root)$(file_names.wan_network)"
         perms => cryptoo:system,
         create => "true",
-        edit_template => "/$(templates.template[wan_network])";
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_wan_gateway));
 
       "$(this.root)$(file_names.ispdmz_network)"
         perms => cryptoo:system,

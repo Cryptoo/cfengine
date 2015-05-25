@@ -246,8 +246,6 @@ bundle common file_names
         string => "common/serial_autologin.txt";
       "template_world_sets"
         string => "common/world_sets.txt";
-      "template_wan_network"
-        string => "guest/network/wan_network.txt";
       "template_crypttab"
         string => "host/crypttab.txt";
       "template_dmcrypt"
