@@ -31,9 +31,15 @@ bundle agent cryptoo_system
 
   methods:
 
-    any::
+    !default:cryptoo_bootstrap::
 
       "configure system"
         usebundle => $(role_bundle);
+
+  reports:
+
+    default:cryptoo_bootstrap::
+
+      "bootstrapping not yet implemented";
 
 }
