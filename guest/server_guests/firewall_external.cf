@@ -5,7 +5,6 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
-              "cryptoo/guest/common/guest_network.cf",
               "cryptoo/guest/server_guests/server_guest.cf"
             };
 
@@ -25,8 +24,5 @@ bundle agent firewall_external
 
       "configure system as a external firewall"
         usebundle => server_guest("/", "firewall_external", "x86_64");
-
-      "configure networking"
-        usebundle => guest_network("/", "firewall_external");
 
 }

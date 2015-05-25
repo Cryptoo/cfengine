@@ -25,7 +25,4 @@ bundle agent firewall_internal
       "configure system as an internal firewall"
         usebundle => server_guest("/", "firewall_internal", "x86_64");
 
-      "configure networking"
-        usebundle => guest_network("/", "firewall_internal");
-
 }

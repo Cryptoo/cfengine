@@ -9,6 +9,7 @@ body file control
               "cryptoo/config/config.cf",
               "cryptoo/config/directory_groups.cf",
               "cryptoo/config/file_names.cf",
+              "cryptoo/guest/common/guest_network.cf",
               "cryptoo/util/contain.cf",
               "cryptoo/util/perms.cf"
             };
@@ -77,6 +78,11 @@ bundle agent common_guest(root, role, arch)
         classes => default:u_if_repaired("daemon_reload");
 
   methods:
+
+    any::
+
+      "configure networking"
+        usebundle => guest_network($(this.root), $(this.role));
 
     have_systemctl::
 
