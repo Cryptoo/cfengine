@@ -146,8 +146,14 @@ bundle common file_names
         string => "$(cryptoo:directory_names.fs_config_ssh)/sshd_config";
       "ssh_config"
         string => "$(cryptoo:directory_names.fs_config_ssh)/ssh_config";
+      "i2p_network"
+        string => "$(cryptoo:directory_names.fs_config_network)/i2p.network";
       "ispdmz_network"
         string => "$(cryptoo:directory_names.fs_config_network)/ispdmz.network";
+      "lan_network"
+        string => "$(cryptoo:directory_names.fs_config_network)/lan.network";
+      "tor_network"
+        string => "$(cryptoo:directory_names.fs_config_network)/tor.network";
       "vpndmz_network"
         string => "$(cryptoo:directory_names.fs_config_network)/vpndmz.network";
       "wan_network"

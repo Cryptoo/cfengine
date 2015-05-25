@@ -1554,6 +1554,10 @@ bundle common config
         string => "12";
       "machine_number[vpn_server]"
         string => "13";
+      "machine_number[tor]"
+        string => "14";
+      "machine_number[i2p]"
+        string => "15";
 
       "login_def[SYS_GID_MIN]"
 				int => "100";
