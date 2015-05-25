@@ -22,34 +22,40 @@ bundle agent guest_network(root, role)
     any::
 
       "number_var"
-        slist => variablesmatching(".*cryptoo:config\.machine_number\[$(this.role)]");
+        slist => variablesmatching(".*config\.machine_number\[$(this.role)]");
 
       "number_var_string"
         string => nth("number_var","0");
 
       "ispdmz_subnet"
-        string => "$(cryptoo:cryptoo.subnet_config[ispdmz])";
+        string => "$(cryptoo.subnet_config[ispdmz])";
 
       "onion_subnet"
-        string => "$(cryptoo:config.transparent_proxy_net[tor])";
+        string => "$(config.transparent_proxy_net[tor])";
 
       "eep_subnet"
-        string => "$(cryptoo:config.transparent_proxy_net[i2p])";
+        string => "$(config.transparent_proxy_net[i2p])";
 
       "tor_subnet"
-        string => "$(cryptoo:cryptoo.subnet_config[tor])";
+        string => "$(cryptoo.subnet_config[tor])";
 
       "i2p_subnet"
-        string => "$(cryptoo:cryptoo.subnet_config[i2p])";
+        string => "$(cryptoo.subnet_config[i2p])";
 
       "vpndmz_subnet"
-        string => "$(cryptoo:cryptoo.subnet_config[vpndmz])";
+        string => "$(cryptoo.subnet_config[vpndmz])";
 
       "lan_subnet"
-        string => "$(cryptoo:cryptoo.subnet_config[lan])";
+        string => "$(cryptoo.subnet_config[lan])";
+
+      "firewall_external"
+        string => "$(config.machine_number[firewall_external])";
 
       "vpn_primary"
-        string => "$(cryptoo:config.machine_number[vpn_primary])";
+        string => "$(config.machine_number[vpn_primary])";
+
+      "firewall_internal"
+        string => "$(config.machine_number[firewall_internal])";
 
     have_number::
 
@@ -101,42 +107,143 @@ bundle agent guest_network(root, role)
                    "values":
                      [
                        { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.vpn_primary)" },
-                       { "LHS": "Destination", "RHS": "$(this.onion_subnet)" }
+                       { "LHS": "Destination", "RHS": "$(this.onion_subnet)" },
+                       { "LHS": "Metric", "RHS": "0" }
                      ]
                  },
                  { "section": "Route",
                    "values":
                      [
                        { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.vpn_primary)" },
-                       { "LHS": "Destination", "RHS": "$(this.eep_subnet)" }
+                       { "LHS": "Destination", "RHS": "$(this.eep_subnet)" },
+                       { "LHS": "Metric", "RHS": "0" }
                      ]
                  },
                  { "section": "Route",
                    "values":
                      [
                        { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.vpn_primary)" },
-                       { "LHS": "Destination", "RHS": "192.168.$(this.tor_subnet).0/24" }
+                       { "LHS": "Destination", "RHS": "192.168.$(this.tor_subnet).0/24" },
+                       { "LHS": "Metric", "RHS": "0" }
                      ]
                  },
                  { "section": "Route",
                    "values":
                      [
                        { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.vpn_primary)" },
-                       { "LHS": "Destination", "RHS": "192.168.$(this.i2p_subnet).0/24" }
+                       { "LHS": "Destination", "RHS": "192.168.$(this.i2p_subnet).0/24" },
+                       { "LHS": "Metric", "RHS": "0" }
                      ]
                  },
                  { "section": "Route",
                    "values":
                      [
                        { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.vpn_primary)" },
-                       { "LHS": "Destination", "RHS": "192.168.$(this.vpndmz_subnet).0/24" }
+                       { "LHS": "Destination", "RHS": "192.168.$(this.vpndmz_subnet).0/24" },
+                       { "LHS": "Metric", "RHS": "0" }
                      ]
                  },
                  { "section": "Route",
                    "values":
                      [
                        { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.vpn_primary)" },
-                       { "LHS": "Destination", "RHS": "192.168.$(this.lan_subnet).0/24" }
+                       { "LHS": "Destination", "RHS": "192.168.$(this.lan_subnet).0/24" },
+                       { "LHS": "Metric", "RHS": "0" }
+                     ]
+                 }
+               ]
+          }
+        ';
+
+      "network_ispdmz_gateway_internal"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "Match",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "eth0" }
+                     ]
+                 },
+                 { "section": "Network",
+                   "values":
+                     [
+                       { "LHS": "DHCP", "RHS": "false" },
+                       { "LHS": "Address", "RHS": "192.168.$(this.ispdmz_subnet).$(this.role_number)/24" },
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.firewall_external)" },
+                       { "LHS": "IPForward", "RHS": "ipv4" }
+                     ]
+                 },
+                 { "section": "Route",
+                   "values":
+                     [
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.firewall_external)" },
+                       { "LHS": "Destination", "RHS": "$(config.dns[backup])" },
+                       { "LHS": "Metric", "RHS": "0" }
+                     ]
+                 }
+               ]
+          }
+        ';
+
+      "network_vpndmz_gateway_internal"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "Match",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "eth1" }
+                     ]
+                 },
+                 { "section": "Network",
+                   "values":
+                     [
+                       { "LHS": "DHCP", "RHS": "false" },
+                       { "LHS": "Address", "RHS": "192.168.$(this.vpndmz_subnet).$(this.role_number)/24" },
+                       { "LHS": "IPForward", "RHS": "ipv4" }
+                     ]
+                 },
+                 { "section": "Route",
+                   "values":
+                     [
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.vpndmz_subnet).$(this.firewall_internal)" },
+                       { "LHS": "Destination", "RHS": "$(this.onion_subnet)" },
+                       { "LHS": "Metric", "RHS": "0" }
+                     ]
+                 },
+                 { "section": "Route",
+                   "values":
+                     [
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.vpndmz_subnet).$(this.firewall_internal)" },
+                       { "LHS": "Destination", "RHS": "$(this.eep_subnet)" },
+                       { "LHS": "Metric", "RHS": "0" }
+                     ]
+                 },
+                 { "section": "Route",
+                   "values":
+                     [
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.vpndmz_subnet).$(this.firewall_internal)" },
+                       { "LHS": "Destination", "RHS": "192.168.$(this.tor_subnet).0/24" },
+                       { "LHS": "Metric", "RHS": "0" }
+                     ]
+                 },
+                 { "section": "Route",
+                   "values":
+                     [
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.vpndmz_subnet).$(this.firewall_internal)" },
+                       { "LHS": "Destination", "RHS": "192.168.$(this.i2p_subnet).0/24" },
+                       { "LHS": "Metric", "RHS": "0" }
+                     ]
+                 },
+                 { "section": "Route",
+                   "values":
+                     [
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.vpndmz_subnet).$(this.firewall_internal)" },
+                       { "LHS": "Destination", "RHS": "192.168.$(this.lan_subnet).0/24" },
+                       { "LHS": "Metric", "RHS": "0" }
                      ]
                  }
                ]
@@ -158,17 +265,33 @@ bundle agent guest_network(root, role)
     guest_firewall_external::
 
       "$(this.root)$(file_names.wan_network)"
-        perms => cryptoo:system,
+        perms => system,
         create => "true",
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
         template_data => parsejson($(this.network_wan_gateway));
 
       "$(this.root)$(file_names.ispdmz_network)"
-        perms => cryptoo:system,
+        perms => system,
         create => "true",
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
         template_data => parsejson($(this.network_ispdmz_gateway));
+
+    guest_vpn_primary::
+
+      "$(this.root)$(file_names.ispdmz_network)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_ispdmz_gateway_internal));
+
+      "$(this.root)$(file_names.vpndmz_network)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_vpndmz_gateway_internal));
 
 }

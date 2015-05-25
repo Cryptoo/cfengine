@@ -1628,4 +1628,9 @@ bundle common config
       "transparent_proxy_net[i2p]"
         string => "10.128.0.0/10";
 
+      "dns[primary]"
+        string => "8.8.8.8";
+      "dns[backup]"
+        string => "8.8.4.4";
+
 }

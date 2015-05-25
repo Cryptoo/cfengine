@@ -812,7 +812,8 @@ bundle common file_groups
 
       "systemd_enabled[vpn_primary]"
         slist => {
-                    "@(systemd_enabled[server_guest])"
+                    "@(systemd_enabled[server_guest])",
+                    "openvpn.service"
                  };
 
 ################################################################################

@@ -6,7 +6,7 @@ body file control
 
   inputs => {
               "cryptoo/guest/common/guest_network.cf",
-              "cryptoo/guest/server_guests/server_guest.cf",
+              "cryptoo/guest/server_guests/server_guest.cf"
             };
 
 }
@@ -28,4 +28,5 @@ bundle agent firewall_external
 
       "configure networking"
         usebundle => guest_network("/", "firewall_external");
+
 }

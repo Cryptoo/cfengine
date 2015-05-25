@@ -5,6 +5,7 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
+              "cryptoo/guest/common/guest_network.cf",
               "cryptoo/guest/server_guests/server_guest.cf"
             };
 
@@ -24,5 +25,8 @@ bundle agent vpn_primary
 
       "configure system as the primary VPN client router"
         usebundle => server_guest("/", "vpn_primary", "x86_64");
+
+      "configure networking"
+        usebundle => guest_network("/", "vpn_primary");
 
 }
