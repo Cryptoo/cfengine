@@ -48,6 +48,136 @@ bundle agent guest_network(root, role)
       "lan_subnet"
         string => "$(cryptoo.subnet_config[lan])";
 
+      "netdev_lan"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "NetDev",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "lan" },
+                       { "LHS": "Kind", "RHS": "bridge" }
+                     ]
+                 }
+               ]
+          }
+        ';
+
+      "netdev_lantap"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "NetDev",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "lantap" },
+                       { "LHS": "Kind", "RHS": "veth" }
+                     ]
+                 },
+                 { "section": "Peer",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "lan$(this.role_number)" },
+                     ]
+                 }
+               ]
+          }
+        ';
+
+      "netdev_openvpn1"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "NetDev",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "openvpn1" },
+                       { "LHS": "Kind", "RHS": "tap" }
+                     ]
+                 },
+                 { "section": "Tap",
+                   "values":
+                     [
+                       { "LHS": "User", "RHS": "openvpn" },
+                       { "LHS": "Group", "RHS": "openvpn" },
+                     ]
+                 }
+               ]
+          }
+        ';
+
+      "netdev_openvpn2"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "NetDev",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "openvpn2" },
+                       { "LHS": "Kind", "RHS": "tap" }
+                     ]
+                 },
+                 { "section": "Tap",
+                   "values":
+                     [
+                       { "LHS": "User", "RHS": "openvpn" },
+                       { "LHS": "Group", "RHS": "openvpn" },
+                     ]
+                 }
+               ]
+          }
+        ';
+
+      "netdev_openvpn3"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "NetDev",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "openvpn3" },
+                       { "LHS": "Kind", "RHS": "tap" }
+                     ]
+                 },
+                 { "section": "Tap",
+                   "values":
+                     [
+                       { "LHS": "User", "RHS": "openvpn" },
+                       { "LHS": "Group", "RHS": "openvpn" },
+                     ]
+                 }
+               ]
+          }
+        ';
+
+      "netdev_openvpn4"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "NetDev",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "openvpn4" },
+                       { "LHS": "Kind", "RHS": "tap" }
+                     ]
+                 },
+                 { "section": "Tap",
+                   "values":
+                     [
+                       { "LHS": "User", "RHS": "openvpn" },
+                       { "LHS": "Group", "RHS": "openvpn" },
+                     ]
+                 }
+               ]
+          }
+        ';
+
       "network_wan_gateway"
         string => '
           {
@@ -135,6 +265,30 @@ bundle agent guest_network(root, role)
                        { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.machine_number[vpn_primary])" },
                        { "LHS": "Destination", "RHS": "192.168.$(this.lan_subnet).0/24" },
                        { "LHS": "Metric", "RHS": "0" }
+                     ]
+                 }
+               ]
+          }
+        ';
+
+      "network_ispdmz"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "Match",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "eth0" }
+                     ]
+                 },
+                 { "section": "Network",
+                   "values":
+                     [
+                       { "LHS": "DHCP", "RHS": "false" },
+                       { "LHS": "Address", "RHS": "192.168.$(this.ispdmz_subnet).$(this.role_number)/24" },
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.machine_number[firewall_external])" },
+                       { "LHS": "IPForward", "RHS": "ipv4" }
                      ]
                  }
                ]
@@ -330,6 +484,27 @@ bundle agent guest_network(root, role)
           }
         ';
 
+      "network_lan_bridge"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "Match",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "lan" }
+                     ]
+                 },
+                 { "section": "Network",
+                   "values":
+                     [
+                       { "LHS": "DHCP", "RHS": "false" }
+                     ]
+                 }
+               ]
+          }
+        ';
+
       "network_lan_gateway"
         string => '
           {
@@ -347,6 +522,160 @@ bundle agent guest_network(root, role)
                        { "LHS": "DHCP", "RHS": "false" },
                        { "LHS": "Address", "RHS": "192.168.$(this.lan_subnet).$(this.role_number)/24" },
                        { "LHS": "IPForward", "RHS": "ipv4" }
+                     ]
+                 }
+               ]
+          }
+        ';
+
+      "network_lan_lan0"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "Match",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "eth1" }
+                     ]
+                 },
+                 { "section": "Network",
+                   "values":
+                     [
+                       { "LHS": "DHCP", "RHS": "false" },
+                       { "LHS": "Bridge", "RHS": "lan" }
+                     ]
+                 }
+               ]
+          }
+        ';
+
+      "network_lan_lan13"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "Match",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "lan13" }
+                     ]
+                 },
+                 { "section": "Network",
+                   "values":
+                     [
+                       { "LHS": "DHCP", "RHS": "false" },
+                       { "LHS": "Bridge", "RHS": "lan" }
+                     ]
+                 }
+               ]
+          }
+        ';
+
+      "network_lan_lantap"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "Match",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "lantap" }
+                     ]
+                 },
+                 { "section": "Network",
+                   "values":
+                     [
+                       { "LHS": "DHCP", "RHS": "false" },
+                       { "LHS": "Address", "RHS": "192.168.$(this.lan_subnet).$(this.role_number)/24" }
+                     ]
+                 }
+               ]
+          }
+        ';
+
+      "network_lan_openvpn1"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "Match",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "openvpn1" }
+                     ]
+                 },
+                 { "section": "Network",
+                   "values":
+                     [
+                       { "LHS": "DHCP", "RHS": "false" },
+                       { "LHS": "Bridge", "RHS": "lan" }
+                     ]
+                 }
+               ]
+          }
+        ';
+
+      "network_lan_openvpn2"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "Match",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "openvpn2" }
+                     ]
+                 },
+                 { "section": "Network",
+                   "values":
+                     [
+                       { "LHS": "DHCP", "RHS": "false" },
+                       { "LHS": "Bridge", "RHS": "lan" }
+                     ]
+                 }
+               ]
+          }
+        ';
+
+      "network_lan_openvpn3"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "Match",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "openvpn3" }
+                     ]
+                 },
+                 { "section": "Network",
+                   "values":
+                     [
+                       { "LHS": "DHCP", "RHS": "false" },
+                       { "LHS": "Bridge", "RHS": "lan" }
+                     ]
+                 }
+               ]
+          }
+        ';
+
+      "network_lan_openvpn4"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "Match",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "openvpn4" }
+                     ]
+                 },
+                 { "section": "Network",
+                   "values":
+                     [
+                       { "LHS": "DHCP", "RHS": "false" },
+                       { "LHS": "Bridge", "RHS": "lan" }
                      ]
                  }
                ]
@@ -377,6 +706,113 @@ bundle agent guest_network(root, role)
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
         template_data => parsejson($(this.network_ispdmz_gateway));
+
+    guest_vpn_server::
+
+      "$(this.root)$(file_names.lan_netdev)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.netdev_lan));
+
+      "$(this.root)$(file_names.lantap_netdev)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.netdev_lantap));
+
+      "$(this.root)$(file_names.openvpn1_netdev)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.netdev_openvpn1));
+
+      "$(this.root)$(file_names.openvpn2_netdev)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.netdev_openvpn2));
+
+      "$(this.root)$(file_names.openvpn3_netdev)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.netdev_openvpn3));
+
+      "$(this.root)$(file_names.openvpn4_netdev)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.netdev_openvpn4));
+
+      "$(this.root)$(file_names.ispdmz_network)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_ispdmz_gateway_internal));
+
+      "$(this.root)$(file_names.lan_bridge_network)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_lan_bridge));
+
+      "$(this.root)$(file_names.lan_network)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_lan_lantap));
+
+      "$(this.root)$(file_names.lan0_network)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_lan_lan0));
+
+      "$(this.root)$(file_names.lan13_network)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_lan_lan13));
+
+      "$(this.root)$(file_names.openvpn1_network)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_lan_openvpn1));
+
+      "$(this.root)$(file_names.openvpn2_network)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_lan_openvpn2));
+
+      "$(this.root)$(file_names.openvpn3_network)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_lan_openvpn3));
+
+      "$(this.root)$(file_names.openvpn4_network)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_lan_openvpn4));
 
     guest_vpn_primary::
 

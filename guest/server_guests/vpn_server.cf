@@ -25,4 +25,7 @@ bundle agent vpn_server
       "configure system as a VPN server"
         usebundle => server_guest("/", "vpn_server", "x86_64");
 
+      "configure networking"
+        usebundle => guest_network("/", "vpn_server");
+
 }
