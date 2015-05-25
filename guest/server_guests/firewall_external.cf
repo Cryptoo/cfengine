@@ -5,10 +5,8 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
-              "cryptoo/config/config.cf",
-              "cryptoo/config/file_names.cf",
+              "cryptoo/guest/common/guest_network.cf",
               "cryptoo/guest/server_guests/server_guest.cf",
-              "cryptoo/util/perms.cf"
             };
 
 }
@@ -21,136 +19,6 @@ bundle agent firewall_external
 
     "tags" slist => { "cryptoo_role" };
 
-  vars:
-
-    any::
-
-      "number_var"
-        slist => variablesmatching(".*cryptoo:config\.machine_number\[firewall_external]");
-
-      "number_var_string"
-        string => nth("number_var","0");
-
-      "ispdmz_subnet"
-        string => "$(cryptoo:cryptoo.subnet_config[ispdmz])";
-
-      "onion_subnet"
-        string => "$(cryptoo:config.transparent_proxy_net[tor])";
-
-      "eep_subnet"
-        string => "$(cryptoo:config.transparent_proxy_net[i2p])";
-
-      "tor_subnet"
-        string => "$(cryptoo:cryptoo.subnet_config[tor])";
-
-      "i2p_subnet"
-        string => "$(cryptoo:cryptoo.subnet_config[i2p])";
-
-      "vpndmz_subnet"
-        string => "$(cryptoo:cryptoo.subnet_config[vpndmz])";
-
-      "lan_subnet"
-        string => "$(cryptoo:cryptoo.subnet_config[lan])";
-
-      "vpn_primary"
-        string => "$(cryptoo:config.machine_number[vpn_primary])";
-
-    have_number::
-
-      "firewall_external_number"
-        string => "$($(number_var[1]):$(number_var[2]).$(number_var[3])[$(number_var[4])])";
-
-      "ispdmz_json"
-        string => '
-          {
-            "sections":
-               [
-                 { "section": "Match",
-                   "values":
-                     [
-                       { "LHS": "Name", "RHS": "eth1" }
-                     ]
-                 },
-                 { "section": "Network",
-                   "values":
-                     [
-                       { "LHS": "DHCP", "RHS": "false" },
-                       { "LHS": "Address", "RHS": "192.168.$(this.ispdmz_subnet).$(this.firewall_external_number)/24" },
-                       { "LHS": "IPForward", "RHS": "ipv4" }
-                     ]
-                 },
-                 { "section": "Route",
-                   "values":
-                     [
-                       { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.vpn_primary)" },
-                       { "LHS": "Destination", "RHS": "$(this.onion_subnet)" }
-                     ]
-                 },
-                 { "section": "Route",
-                   "values":
-                     [
-                       { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.vpn_primary)" },
-                       { "LHS": "Destination", "RHS": "$(this.eep_subnet)" }
-                     ]
-                 },
-                 { "section": "Route",
-                   "values":
-                     [
-                       { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.vpn_primary)" },
-                       { "LHS": "Destination", "RHS": "192.168.$(this.tor_subnet).0/24" }
-                     ]
-                 },
-                 { "section": "Route",
-                   "values":
-                     [
-                       { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.vpn_primary)" },
-                       { "LHS": "Destination", "RHS": "192.168.$(this.i2p_subnet).0/24" }
-                     ]
-                 },
-                 { "section": "Route",
-                   "values":
-                     [
-                       { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.vpn_primary)" },
-                       { "LHS": "Destination", "RHS": "192.168.$(this.vpndmz_subnet).0/24" }
-                     ]
-                 },
-                 { "section": "Route",
-                   "values":
-                     [
-                       { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(this.vpn_primary)" },
-                       { "LHS": "Destination", "RHS": "192.168.$(this.lan_subnet).0/24" }
-                     ]
-                 }
-               ]
-          }
-        ';
-
-  classes:
-
-    any::
-
-      "guest_firewall_external"
-        expression => "any";
-
-      "have_number"
-        expression => regextract("(.*):(.*)\.(.*)\[(.*)\]", "$(number_var_string)", "number_var");
-
-  files:
-
-    any::
-
-      "/$(file_names.wan_network)"
-        perms => cryptoo:system,
-        create => "true",
-        edit_template => "/$(templates.template[wan_network])";
-
-      "/$(file_names.ispdmz_network)"
-        perms => cryptoo:system,
-        create => "true",
-        edit_template => "/$(templates.template[ini])",
-        template_method => "mustache",
-        template_data => parsejson($(this.ispdmz_json));
-
   methods:
 
     any::
@@ -158,4 +26,6 @@ bundle agent firewall_external
       "configure system as a external firewall"
         usebundle => server_guest("/", "firewall_external", "x86_64");
 
+      "configure networking"
+        usebundle => guest_network("/", "firewall_external");
 }
