@@ -1,0 +1,11 @@
+{
+    "undefined": "-1",
+    "master": "1",
+    "firewall_external": "10",
+    "vpn_primary": "11",
+    "firewall_internal": "12",
+    "vpn_server": "13",
+    "tor": "14",
+    "i2p": "15"
+
+}

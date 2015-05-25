@@ -20,6 +20,9 @@ bundle common config
     "users"
       data => readjson("$(sys.inputdir)/cryptoo/config/users.json", 1M);
 
+    "machine_number"
+      data => readjson("$(sys.inputdir)/cryptoo/config/machine_numbers.json", 1M);
+
     "server_guests"
        slist => {
                    "firewall_external",
@@ -1541,23 +1544,6 @@ bundle common config
         string => "0xfd810000";
       "virtfs[mode][file][0775]"
         string => "0xfd410000";
-
-      "machine_number[undefined]"
-        string => "-1";
-      "machine_number[master]"
-        string => "1";
-      "machine_number[firewall_external]"
-        string => "10";
-      "machine_number[vpn_primary]"
-        string => "11";
-      "machine_number[firewall_internal]"
-        string => "12";
-      "machine_number[vpn_server]"
-        string => "13";
-      "machine_number[tor]"
-        string => "14";
-      "machine_number[i2p]"
-        string => "15";
 
       "login_def[SYS_GID_MIN]"
 				int => "100";
