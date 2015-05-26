@@ -1109,9 +1109,21 @@ bundle common config
         string => "WLAN",
         meta => { "disabled", "host", "guest", "guest_multilib" };
 
+      "kconfig[INPUT_MOUSEDEV]"
+        string => "INPUT_MOUSEDEV",
+        meta => { "disabled", "guest", "guest_multilib" };
+
       "kconfig[INPUT_EVDEV]"
         string => "INPUT_EVDEV",
         meta => { "enabled", "host" };
+
+      "kconfig[INPUT_KEYBOARD]"
+        string => "INPUT_KEYBOARD",
+        meta => { "disabled", "guest", "guest_multilib" };
+
+      "kconfig[INPUT_MOUSE]"
+        string => "INPUT_MOUSE",
+        meta => { "disabled", "guest", "guest_multilib" };
 
       "kconfig[DEVPTS_MULTIPLE_INSTANCES]"
         string => "DEVPTS_MULTIPLE_INSTANCES",
@@ -1171,11 +1183,11 @@ bundle common config
 
       "kconfig[AGP]"
         string => "AGP",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host" };
 
       "kconfig[DRM]"
         string => "DRM",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host" };
 
       "kconfig[DRM_I915]"
         string => "DRM_I915",
@@ -1193,17 +1205,9 @@ bundle common config
         string => "DRM_I915_PRELIMINARY_HW_SUPPORT",
         meta => { "enabled", "host" };
 
-      "kconfig[DRM_QXL]"
-        string => "DRM_QXL",
-        meta => { "enabled", "guest", "guest_multilib" };
-
-      "kconfig[DRM_BOCHS]"
-        string => "DRM_BOCHS",
-        meta => { "enabled", "guest", "guest_multilib" };
-
       "kconfig[FB_VESA]"
         string => "FB_VESA",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host" };
 
       "kconfig[HWMON]"
         string => "HWMON",
