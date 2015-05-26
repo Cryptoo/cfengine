@@ -18,7 +18,7 @@ MAKEOPTS="-j8 -l8"
 [%CFEngine makeopts_host:: %]
 EMERGE_DEFAULT_OPTS="--ask --jobs --load-average 8.0 --keep-going --usepkg --buildpkg --binpkg-respect-use"
 [%CFEngine makeopts_template:: %]
-EMERGE_DEFAULT_OPTS="--jobs --load-average 8.0 --keep-going --usepkg --buildpkg --binpkg-respect-use"
+EMERGE_DEFAULT_OPTS="--jobs --load-average 8.0 --keep-going --usepkg --buildpkg --binpkg-respect-use --with-bdeps=y --binpkg-changed-deps=n"
 [%CFEngine makeopts_guest:: %]
 MAKEOPTS="-j2 -l1.4"
 
@@ -32,12 +32,12 @@ USE="${CPU_FLAGS_X86}"
 #Local options
 USE="${USE} $(cryptoo:cryptoo.site_config[make.conf][USE])"
 
-[%CFEngine make_conf_graphical:: %]
+[%CFEngine runtime_host:: %]
 INPUT_DEVICES="evdev"
-[%CFEngine make_conf_graphical&runtime_host:: %]
 VIDEO_CARDS="$(cryptoo:cryptoo.site_config[make.conf][VIDEO_CARDS])"
-[%CFEngine make_conf_graphical&runtime_guest:: %]
-VIDEO_CARDS="modesetting"
+[%CFEngine make_conf_graphical&(!runtime_host):: %]
+INPUT_DEVICES="void"
+VIDEO_CARDS="dummy"
 [%CFEngine make_conf_graphical&runtime_host:: %]
 ALSA_CARDS="$(cryptoo:cryptoo.site_config[make.conf][ALSA_CARDS])"
 [%CFEngine make_conf_graphical&runtime_guest:: %]

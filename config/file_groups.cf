@@ -270,6 +270,7 @@ bundle common file_groups
         slist => {
                     "@(use[common])",
                     "desktop",
+                    "desktop_guest",
                     "X"
                  };
 
@@ -575,7 +576,8 @@ bundle common file_groups
 
       "use[desktop_host]"
         slist => {
-                    "@(use[common])"
+                    "@(use[common])",
+                    "desktop_host"
                  };
 
       "profile[desktop_host]"
