@@ -107,6 +107,7 @@ bundle common directory_groups
       "host_system"
         slist => {
                     $(cryptoo:directory_names.fs_config_dracut),
+                    $(cryptoo:directory_names.fs_mount_cryptoo),
                     $(cryptoo:directory_names.fs_volatile_kernel),
                     $(cryptoo:directory_names.fs_volatile_libvirt)
                  };

@@ -5,6 +5,7 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
+              "cryptoo/bootstrap.cf",
               "cryptoo/cryptoo.cf",
               "cryptoo/common/undefined.cf",
               "cryptoo/guest/server_guests/firewall_external.cf",
@@ -36,10 +37,9 @@ bundle agent cryptoo_system
       "configure system"
         usebundle => $(role_bundle);
 
-  reports:
-
     default:cryptoo_bootstrap::
 
-      "bootstrapping not yet implemented";
+      "bootstrap a guest image"
+        usebundle => cryptoo_bootstrap;
 
 }

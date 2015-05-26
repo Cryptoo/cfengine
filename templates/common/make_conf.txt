@@ -15,7 +15,10 @@ CHOST="x86_64-pc-linux-gnu"
 [%CFEngine makeopts_host|makeopts_template:: %]
 MAKEOPTS="-j8 -l8"
 
+[%CFEngine makeopts_host:: %]
 EMERGE_DEFAULT_OPTS="--ask --jobs --load-average 8.0 --keep-going --usepkg --buildpkg --binpkg-respect-use"
+[%CFEngine makeopts_template:: %]
+EMERGE_DEFAULT_OPTS="--jobs --load-average 8.0 --keep-going --usepkg --buildpkg --binpkg-respect-use"
 [%CFEngine makeopts_guest:: %]
 MAKEOPTS="-j2 -l1.4"
 

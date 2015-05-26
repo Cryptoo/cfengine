@@ -22,6 +22,8 @@ bundle common file_names
         string => "$(cryptoo:directory_names.fs_apps_base)/chmod";
       "chown_app"
         string => "$(cryptoo:directory_names.fs_apps_base)/chown";
+      "dd_app"
+        string => "$(cryptoo:directory_names.fs_apps_base)/dd";
       "lsblk_app"
         string => "$(cryptoo:directory_names.fs_apps_base)/lsblk";
       "mount_app"
@@ -202,6 +204,10 @@ bundle common file_names
         string => "$(cryptoo:directory_names.fs_runtime_base)/openrc/softlevel";
       "blkid_app"
         string => "$(cryptoo:directory_names.fs_admin_apps)/blkid";
+      "losetup_app"
+        string => "$(cryptoo:directory_names.fs_admin_apps)/losetup";
+      "mkfs_app"
+        string => "$(cryptoo:directory_names.fs_admin_apps)/mkfs";
       "rc_app"
         string => "$(cryptoo:directory_names.fs_admin_apps)/rc";
       "storage_pm_site_meta"
@@ -214,6 +220,8 @@ bundle common file_names
         string => "$(cryptoo:directory_names.fs_standard_apps)/cpuinfo2cpuflags-x86";
       "dracut_app"
         string => "$(cryptoo:directory_names.fs_standard_apps)/dracut";
+      "emerge_app"
+        string => "$(cryptoo:directory_names.fs_standard_apps)/emerge";
       "find_app"
         string => "$(cryptoo:directory_names.fs_standard_apps)/find";
       "gcc_config_app"

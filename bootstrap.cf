@@ -1,0 +1,160 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/cryptoo.cf",
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/guest/server_guests/firewall_external.cf",
+              "cryptoo/guest/server_guests/firewall_internal.cf",
+              "cryptoo/guest/server_guests/vpn_primary.cf",
+              "cryptoo/guest/server_guests/vpn_server.cf",
+              "cryptoo/guest/desktop_guests/mail_client.cf",
+              "cryptoo/guest/desktop_guests/web.cf"
+            };
+
+}
+
+bundle agent cryptoo_bootstrap
+
+{
+
+  vars:
+
+    default:bootstrap_firewall_external::
+
+      "role"
+        string => "firewall_external";
+
+    default:bootstrap_firewall_internal::
+
+      "role"
+        string => "firewall_internal";
+
+    default:bootstrap_vpn_primary::
+
+      "role"
+        string => "vpn_primary";
+
+    default:bootstrap_vpn_server::
+
+      "role"
+        string => "vpn_server";
+
+    default:bootstrap_mail_client::
+
+      "role"
+        string => "mail_client";
+
+    default:bootstrap_web::
+
+      "role"
+        string => "web";
+
+    role_defined::
+
+      "image_file"
+        string => "/$(directory_names.fs_libvirt_images)/$(this.role).img";
+
+    bootstrap_server_guest::
+
+      "image_size_mb"
+        string => "4096";
+
+    bootstrap_desktop_guest::
+
+      "image_size_mb"
+        string => "2048";
+
+  classes:
+
+    default:bootstrap_firewall_external::
+
+      "role_defined"
+        expression => "any";
+
+      "bootstrap_server_guest"
+        expression => "any";
+
+    default:bootstrap_firewall_internal::
+
+      "role_defined"
+        expression => "any";
+
+      "bootstrap_server_guest"
+        expression => "any";
+
+    default:bootstrap_vpn_primary::
+
+      "role_defined"
+        expression => "any";
+
+      "bootstrap_server_guest"
+        expression => "any";
+
+    default:bootstrap_vpn_server::
+
+      "role_defined"
+        expression => "any";
+
+      "bootstrap_server_guest"
+        expression => "any";
+
+    default:bootstrap_mail_client::
+
+      "role_defined"
+        expression => "any";
+
+      "bootstrap_desktop_guest"
+        expression => "any";
+
+    default:bootstrap_web::
+
+      "role_defined"
+        expression => "any";
+
+      "bootstrap_desktop_guest"
+        expression => "any";
+
+    role_defined::
+
+      "bootstrap_ready"
+        not => fileexists($(this.image_file));
+
+  commands:
+
+    bootstrap_ready::
+
+      "/$(file_names.dd_app)"
+        args => "if=/dev/zero of=$(this.image_file) bs=1M count=$(this.image_size_mb)",
+        handle => "image_created";
+
+      "/$(file_names.losetup_app)"
+        args => "-D",
+        depends_on => { "image_created" },
+        handle => "loop_free";
+
+      "/$(file_names.losetup_app)"
+        args => "-v /dev/loop0 $(this.image_file)",
+        depends_on => { "loop_free" },
+        handle => "loop_attached";
+
+      "/$(file_names.mkfs_app)"
+        args => "-v -t $(cryptoo.site_config[guest_fs][filesystem]) /dev/loop0",
+        depends_on => { "loop_free" },
+        handle => "image_fs_created";
+
+      "/$(file_names.mount_app)"
+        args => "-o $(cryptoo.site_config[guest_fs][options]) /dev/loop0 $(directory_names.fs_mount_cryptoo)",
+        depends_on => { "image_fs_created" },
+        handle => "image_fs_mounted";
+
+      "/$(file_names.emerge_app)"
+        args => "--config-root=/$(directory_names.fs_volatile_images)/server/x86_64/no-multilib/ --root=$(directory_names.fs_mount_cryptoo) --root-deps --emptytree @system @$(this.role)",
+        depends_on => { "image_fs_mounted" },
+        handle => "system_emerged";
+
+}
