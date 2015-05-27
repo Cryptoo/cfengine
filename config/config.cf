@@ -20,6 +20,9 @@ bundle common config
     "users"
       data => readjson("$(sys.inputdir)/cryptoo/config/users.json", 1M);
 
+    "extra_groups"
+      data => readjson("$(sys.inputdir)/cryptoo/config/groups.json", 1M);
+
     "machine_number"
       data => readjson("$(sys.inputdir)/cryptoo/config/machine_numbers.json", 1M);
 

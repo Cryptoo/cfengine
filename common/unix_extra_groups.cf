@@ -1,0 +1,41 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/config.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/util/contain.cf"
+            };
+
+}
+
+bundle agent unix_extra_groups(root, group)
+
+{
+
+  vars:
+
+    any::
+
+      "user_list"
+        slist => getindices("config.extra_groups[$(this.group)]");
+
+
+  classes:
+
+    any::
+
+      "have_groupmems"
+        expression => fileexists("$(root)$(cryptoo:file_names.groupmems_app)");
+
+  commands:
+
+    have_groupmems::
+
+      "/$(file_names.groupmems_app) --group $(this.group) --add $(config.extra_groups[$(this.group)][$(user_list)])"
+        contain => basic_chroot($(this.root));
+
+}

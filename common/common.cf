@@ -8,6 +8,7 @@ body file control
               "cryptoo/common/gcc.cf",
               "cryptoo/common/portage.cf",
               "cryptoo/common/ssh.cf",
+              "cryptoo/common/unix_extra_groups.cf",
               "cryptoo/common/unix_group.cf",
               "cryptoo/common/unix_user.cf",
               "cryptoo/guest/template/files.cf",
@@ -32,6 +33,9 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
 
       "users"
         slist => getindices("cryptoo:config.users");
+
+      "extra_groups"
+        slist => getindices("cryptoo:config.extra_groups");
 
   classes:
 
@@ -157,6 +161,9 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
       "set up users"
         usebundle => cryptoo:unix_user("$(root)", "$(users)"),
         classes => default:if_ok("users_ok");
+
+      "set up additional group memberships"
+        usebundle => cryptoo:unix_extra_groups("$(root)", "$(extra_groups)");
 
       "set up ssh"
         usebundle => cryptoo:ssh("$(root)");

@@ -250,6 +250,8 @@ bundle common file_names
         string => "$(cryptoo:directory_names.fs_standard_admin_apps)/env-update";
       "groupadd_app"
         string => "$(cryptoo:directory_names.fs_standard_admin_apps)/groupadd";
+      "groupmems_app"
+        string => "$(cryptoo:directory_names.fs_standard_admin_apps)/groupmems";
       "useradd_app"
         string => "$(cryptoo:directory_names.fs_standard_admin_apps)/useradd";
       "libvirtd_app"
