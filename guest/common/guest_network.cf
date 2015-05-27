@@ -422,6 +422,61 @@ bundle agent guest_network(root, role)
           }
         ';
 
+      "network_tor_gateway"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "Match",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "eth1" }
+                     ]
+                 },
+                 { "section": "Network",
+                   "values":
+                     [
+                       { "LHS": "DHCP", "RHS": "false" },
+                       { "LHS": "Address", "RHS": "192.168.$(this.tor_subnet).$(this.role_number)/24" },
+                       { "LHS": "IPForward", "RHS": "ipv4" }
+                     ]
+                 },
+                 { "section": "Route",
+                   "values":
+                     [
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.tor_subnet).$(this.machine_number[firewall_internal])" },
+                       { "LHS": "Destination", "RHS": "$(this.eep_subnet)" },
+                       { "LHS": "Metric", "RHS": "0" }
+                     ]
+                 },
+                 { "section": "Route",
+                   "values":
+                     [
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.tor_subnet).$(this.machine_number[firewall_internal])" },
+                       { "LHS": "Destination", "RHS": "192.168.$(this.i2p_subnet).0/24" },
+                       { "LHS": "Metric", "RHS": "0" }
+                     ]
+                 },
+                 { "section": "Route",
+                   "values":
+                     [
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.tor_subnet).$(this.machine_number[firewall_internal])" },
+                       { "LHS": "Destination", "RHS": "192.168.$(this.vpndmz_subnet).0/24" },
+                       { "LHS": "Metric", "RHS": "0" }
+                     ]
+                 },
+                 { "section": "Route",
+                   "values":
+                     [
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.tor_subnet).$(this.machine_number[firewall_internal])" },
+                       { "LHS": "Destination", "RHS": "192.168.$(this.lan_subnet).0/24" },
+                       { "LHS": "Metric", "RHS": "0" }
+                     ]
+                 }
+               ]
+          }
+        ';
+
       "network_tor_gateway_lan"
         string => '
           {
@@ -756,7 +811,7 @@ bundle agent guest_network(root, role)
         create => "true",
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
-        template_data => parsejson($(this.network_ispdmz_gateway_internal));
+        template_data => parsejson($(this.network_ispdmz));
 
       "$(this.root)$(file_names.lan_bridge_network)"
         perms => system,
@@ -859,5 +914,21 @@ bundle agent guest_network(root, role)
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
         template_data => parsejson($(this.network_lan_gateway));
+
+    guest_tor::
+
+      "$(this.root)$(file_names.ispdmz_network)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_ispdmz));
+
+      "$(this.root)$(file_names.tor_network)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_tor_gateway));
 
 }
