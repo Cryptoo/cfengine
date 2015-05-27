@@ -8,12 +8,8 @@ body file control
               "cryptoo/cryptoo.cf",
               "cryptoo/config/directory_names.cf",
               "cryptoo/config/file_names.cf",
-              "cryptoo/guest/server_guests/firewall_external.cf",
-              "cryptoo/guest/server_guests/firewall_internal.cf",
-              "cryptoo/guest/server_guests/vpn_primary.cf",
-              "cryptoo/guest/server_guests/vpn_server.cf",
-              "cryptoo/guest/desktop_guests/mail_client.cf",
-              "cryptoo/guest/desktop_guests/web.cf"
+              "cryptoo/guest/server_guests/server_guest.cf",
+              "cryptoo/guest/desktop_guests/desktop_guest.cf"
             };
 
 }
@@ -24,6 +20,32 @@ bundle agent cryptoo_bootstrap
 
   vars:
 
+    any::
+
+      "stage3_amd64_multilib"
+        slist => findfiles("/$(directory_names.fs_storage_pm_install)/stage3-amd64-2*.tar.bz2");
+
+      "stage3_amd64_multilib_sorted"
+        slist => sort("stage3_amd64_multilib", "lex");
+
+      "stage3_amd64_multilib_sorted_reverse"
+        slist => reverse("stage3_amd64_multilib_sorted");
+
+      "stage3_amd64_multilib_best"
+        string => nth("stage3_amd64_multilib_sorted_reverse", 0);
+
+      "stage3_amd64_nomultilib"
+        slist => findfiles("/$(directory_names.fs_storage_pm_install)/stage3-amd64-nomultilib-2*.tar.bz2");
+
+      "stage3_amd64_nomultilib_sorted"
+        slist => sort("stage3_amd64_nomultilib", "lex");
+
+      "stage3_amd64_nomultilib_sorted_reverse"
+        slist => reverse("stage3_amd64_nomultilib_sorted");
+
+      "stage3_amd64_nomultilib_best"
+        string => nth("stage3_amd64_nomultilib_sorted_reverse", 0);
+
     default:bootstrap_firewall_external::
 
       "role"
@@ -33,6 +55,11 @@ bundle agent cryptoo_bootstrap
 
       "role"
         string => "firewall_internal";
+
+    default:bootstrap_tor::
+
+      "role"
+        string => "tor";
 
     default:bootstrap_vpn_primary::
 
@@ -79,12 +106,29 @@ bundle agent cryptoo_bootstrap
       "bootstrap_server_guest"
         expression => "any";
 
+      "bootstrap_nomultilib"
+        expression => "any";
+
     default:bootstrap_firewall_internal::
 
       "role_defined"
         expression => "any";
 
       "bootstrap_server_guest"
+        expression => "any";
+
+      "bootstrap_nomultilib"
+        expression => "any";
+
+    default:bootstrap_tor::
+
+      "role_defined"
+        expression => "any";
+
+      "bootstrap_server_guest"
+        expression => "any";
+
+      "bootstrap_nomultilib"
         expression => "any";
 
     default:bootstrap_vpn_primary::
@@ -95,12 +139,18 @@ bundle agent cryptoo_bootstrap
       "bootstrap_server_guest"
         expression => "any";
 
+      "bootstrap_nomultilib"
+        expression => "any";
+
     default:bootstrap_vpn_server::
 
       "role_defined"
         expression => "any";
 
       "bootstrap_server_guest"
+        expression => "any";
+
+      "bootstrap_nomultilib"
         expression => "any";
 
     default:bootstrap_mail_client::
@@ -111,6 +161,9 @@ bundle agent cryptoo_bootstrap
       "bootstrap_desktop_guest"
         expression => "any";
 
+      "bootstrap_nomultilib"
+        expression => "any";
+
     default:bootstrap_web::
 
       "role_defined"
@@ -119,10 +172,29 @@ bundle agent cryptoo_bootstrap
       "bootstrap_desktop_guest"
         expression => "any";
 
+      "bootstrap_nomultilib"
+        expression => "any";
+
     role_defined::
 
       "bootstrap_ready"
         not => fileexists($(this.image_file));
+
+  methods:
+
+    bootstrap_ready::
+
+      "set users and groups"
+        usebundle => cryptoo_filesystem("/$(directory_names.fs_mount_cryptoo)","undefined","x86_64","nomultilib"),
+        depends_on => { "skeleton_extracted" },
+        handle => "users_created";
+
+    bootstrap_server_guest::
+
+      "configure system"
+        usebundle => server_guest("/", "$(this.role)", "x86_64"),
+        depends_on => { "system_emerged" },
+        handle => "filesystem_ready";
 
   commands:
 
@@ -135,26 +207,53 @@ bundle agent cryptoo_bootstrap
       "/$(file_names.losetup_app)"
         args => "-D",
         depends_on => { "image_created" },
-        handle => "loop_free";
+        handle => "loop_ready";
 
       "/$(file_names.losetup_app)"
-        args => "-v /dev/loop0 $(this.image_file)",
-        depends_on => { "loop_free" },
+        args => "/dev/loop0 $(this.image_file)",
+        depends_on => { "loop_ready" },
         handle => "loop_attached";
 
       "/$(file_names.mkfs_app)"
-        args => "-v -t $(cryptoo.site_config[guest_fs][filesystem]) /dev/loop0",
-        depends_on => { "loop_free" },
+        args => "-t $(cryptoo.site_config[guest_fs][filesystem]) -E nodiscard /dev/loop0",
+        depends_on => { "loop_attached" },
         handle => "image_fs_created";
 
       "/$(file_names.mount_app)"
-        args => "-o $(cryptoo.site_config[guest_fs][options]) /dev/loop0 $(directory_names.fs_mount_cryptoo)",
+        args => "-o $(cryptoo.site_config[guest_fs][options]) /dev/loop0 /$(directory_names.fs_mount_cryptoo)",
         depends_on => { "image_fs_created" },
         handle => "image_fs_mounted";
 
       "/$(file_names.emerge_app)"
-        args => "--config-root=/$(directory_names.fs_volatile_images)/server/x86_64/no-multilib/ --root=$(directory_names.fs_mount_cryptoo) --root-deps --emptytree @system @$(this.role)",
-        depends_on => { "image_fs_mounted" },
+        args => "--config-root=/$(directory_names.fs_volatile_images)/server/x86_64/no-multilib/ --root=/$(directory_names.fs_mount_cryptoo) --root-deps --emptytree --quiet @system @$(this.role)",
+        depends_on => { "users_created" },
         handle => "system_emerged";
+
+      "/$(file_names.umount_app)"
+        args => "/$(directory_names.fs_mount_cryptoo)",
+        depends_on => { "filesystem_ready" },
+        handle => "image_fs_unmounted";
+
+      "/$(file_names.losetup_app)"
+        args => "-D",
+        depends_on => { "image_fs_unmounted" },
+        handle => "loop_finished";
+
+    bootstrap_nomultilib::
+
+      "/$(file_names.tar_app)"
+        args => "-xjpf $(this.stage3_amd64_nomultilib_best) -C /$(directory_names.fs_mount_cryptoo)",
+        depends_on => { "image_fs_mounted" },
+        handle => "skeleton_extracted";
+
+  reports:
+
+    any::
+
+      "Bootstrapping";
+
+    role_defined::
+
+      "Creating a $(this.role) guest";
 
 }

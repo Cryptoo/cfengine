@@ -134,6 +134,7 @@ bundle common directory_groups
                     $(cryptoo:directory_names.fs_storage_overlay),
                     $(cryptoo:directory_names.fs_storage_pm),
                     $(cryptoo:directory_names.fs_storage_pm_site),
+                    $(cryptoo:directory_names.fs_storage_pm_install),
                     $(cryptoo:directory_names.fs_storage_pm_site_meta),
                     $(cryptoo:directory_names.fs_storage_pm_site_profile),
                     $(cryptoo:directory_names.fs_bitcoin_overlay),

@@ -32,6 +32,10 @@ bundle common file_names
         string => "$(cryptoo:directory_names.fs_apps_base)/mv";
       "setfattr_app"
         string => "$(cryptoo:directory_names.fs_apps_base)/setfattr";
+      "tar_app"
+        string => "$(cryptoo:directory_names.fs_apps_base)/tar";
+      "umount_app"
+        string => "$(cryptoo:directory_names.fs_apps_base)/umount";
       "dracut_image"
         string => "$(cryptoo:directory_names.fs_boot_base)/dracut.initramfs.cpio";
       "dmcrypt_key"

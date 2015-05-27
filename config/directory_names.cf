@@ -70,8 +70,9 @@ bundle common directory_names
       "fs_storage_home" string => "$(fs_storage_site)/$(fs_home)";
       "fs_storage_overlay" string => "$(fs_storage_site)/layman";
       "fs_storage_binpkg" string => "$(fs_storage_site)/packages";
-      "fs_storage_pm" string => "$(fs_storage_site)/portage";
-      "fs_storage_pm_site" string => "$(fs_storage_site)/portage-local";
+      "fs_storage_pm" string => "$(fs_storage_site)/$(pm)";
+      "fs_storage_pm_site" string => "$(fs_storage_site)/$(pm)-local";
+      "fs_storage_pm_install" string => "$(fs_storage_pm_site)/install";
       "fs_storage_pm_site_meta" string => "$(fs_storage_pm_site)/metadata";
       "fs_storage_pm_site_profile" string => "$(fs_storage_pm_site)/profiles";
       "fs_storage_shared" string => "$(fs_storage_site)/storage";
