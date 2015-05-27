@@ -7,7 +7,7 @@ PORTDIR_OVERLAY="/usr/local/portage ${PORTDIR_OVERLAY}"
 [%CFEngine makeopts_host:: %]
 CFLAGS="-O2 -pipe -march=native"
 [%CFEngine makeopts_guest|makeopts_template:: %]
-CFLAGS="-O2 -pipe -march=$(cryptoo:cryptoo.site_config[make.conf][guest_march]) -mtune=native"
+CFLAGS="-O2 -pipe -mtune=$(cryptoo:cryptoo.site_config[make.conf][guest_mtune])"
 [%CFEngine any:: %]
 CXXFLAGS="${CFLAGS}"
 CHOST="x86_64-pc-linux-gnu"

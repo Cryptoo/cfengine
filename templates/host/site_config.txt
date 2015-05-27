@@ -3,7 +3,7 @@
                    "USE": "",
                    "VIDEO_CARDS": "",
                    "ALSA_CARDS": "",
-                   "guest_march": "native"
+                   "guest_mtune": "generic"
                  },
     "locale": "en_US",
     "timezone": "UTC",
