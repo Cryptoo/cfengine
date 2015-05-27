@@ -89,8 +89,9 @@ bundle agent common_guest(root, role, arch)
       "enable systemd services"
         usebundle => systemd_enable($(root), $(file_groups.systemd_enabled[$(this.role)]));
 
-      "start systemd services"
-        usebundle => default:standard_services( $(cryptoo:file_groups.systemd_enabled[$(this.role)]), "start");
+# This bundle always attempts to start systemd-networkd even though it's already running.
+#      "start systemd services"
+#        usebundle => default:standard_services( $(cryptoo:file_groups.systemd_enabled[$(this.role)]), "start");
 
   commands:
 
