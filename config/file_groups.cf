@@ -89,7 +89,6 @@ bundle common file_groups
                     "cf-execd.service",
                     "cf-monitord.service",
                     "cf-serverd.service",
-                    "gpm.service",
                     "ipset.service",
                     "shorewall.service",
                     "sshd.service",
@@ -534,7 +533,8 @@ bundle common file_groups
 
       "unuse_systemd[host]"
         slist => {
-                    "@(unuse_systemd[common])"
+                    "@(unuse_systemd[common])",
+                    "gpm.service"
                  };
 
       "systemd_enabled[host]"
@@ -607,7 +607,8 @@ bundle common file_groups
 
       "systemd_enabled[desktop_host]"
         slist => {
-                    "@(systemd_enabled[common])"
+                    "@(systemd_enabled[common])",
+                    "gpm.service"
                  };
 
 ################################################################################
