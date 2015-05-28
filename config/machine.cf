@@ -21,7 +21,7 @@ bundle common machine
     defined_number::
 
       "machine_number"
-        string => "$(config.machine_numbers[$(cryptoo.configured_role)])";
+        string => "$(config.defined_numbers[$(cryptoo.configured_role)])";
 
       "hostname"
         string => "$(network.machine_names[$(this.machine_number)][name])";
@@ -52,7 +52,7 @@ bundle common machine
     any::
 
       "defined_number"
-        not => strcmp("$(config.machine_numbers[$(cryptoo.configured_role)])","");
+        not => strcmp("$(config.defined_numbers[$(cryptoo.configured_role)])","");
 
   reports:
 
