@@ -18,26 +18,18 @@ bundle common machines
 
   vars:
 
-    any::
-
-      "machine_number_vars"
-        slist => variablesmatching(".*machine_numbers");
-
-      "machine_number_var_string"
-        string => nth("machine_number_vars","0");
-
-    have_machine_number::
+    defined_number::
 
       "machine_number"
-        string => "$($(machine_number_var[1]):$(machine_number_var[2]).$(machine_number_var[3])[$(cryptoo.configured_role)])";
+        string => "$(config.machine_numbers[$(cryptoo.configured_role)])";
 
       "hostname"
-        string => "$(network.machine_names[$(this.machine_number)])";
+        string => "$(network.machine_names[$(this.machine_number)][name])";
 
-    have_hostname&(!have_machine_number)::
+    have_hostname&(!defined_number)::
 
       "hostname"
-        string => "$(cryptoo:cryptoo.configured_hostname)";
+        string => "$(cryptoo.configured_hostname)";
 
       "machine_number"
         string => "$(network.machine_names_inverse[$(this.hostname)])";
@@ -48,26 +40,26 @@ bundle common machines
         string => "/dev/mapper/$(hostname)-root";
 
       "root_uuid"
-        string => execresult("/$(cryptoo:file_names.blkid_app) -s UUID -o value $(root_dev)","noshell");
+        string => execresult("/$(file_names.blkid_app) -s UUID -o value $(root_dev)","noshell");
 
     !cryptoo_host::
 
       "root_uuid"
-        string => execresult("/$(cryptoo:file_names.blkid_app) -s UUID -o value /dev/vda","noshell");
+        string => execresult("/$(file_names.blkid_app) -s UUID -o value /dev/vda","noshell");
 
   classes:
 
     any::
 
-      "have_machine_number"
-        expression => regextract("(.*):(.*)\.(.*)", "$(machine_number_var_string)", "machine_number_var");
+      "defined_number"
+        not => strcmp("$(config.machine_numbers[$(cryptoo.configured_role)])","");
 
   reports:
 
-    verbose_mode&(have_machine_number|(have_hostname&(!have_machine_number)))::
+    verbose_mode&(defined_number|(have_hostname&(!defined_number)))::
 
-      "My role is: $(cryptoo:cryptoo.configured_role)";
-      "My number is: $(machine_number)";
-      "My hostname is: $(hostname)";
+      "My role is: $(cryptoo.configured_role)";
+      "My number is: $(this.machine_number)";
+      "My hostname is: $(this.hostname)";
 
 }
