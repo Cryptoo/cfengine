@@ -20,7 +20,7 @@ bundle common machines
     any::
 
       "machine_number_vars"
-        slist => variablesmatching(".*machine_number\[$(cryptoo:cryptoo.configured_role)]");
+        slist => variablesmatching(".*machine_numbers");
 
       "machine_number_var_string"
         string => nth("machine_number_vars","0");
@@ -28,7 +28,7 @@ bundle common machines
     have_machine_number::
 
       "machine_number"
-        string => "$($(machine_number_var[1]):$(machine_number_var[2]).$(machine_number_var[3])[$(machine_number_var[4])])";
+        string => "$($(machine_number_var[1]):$(machine_number_var[2]).$(machine_number_var[3])[$(cryptoo.configured_role)])";
 
       "hostname"
         string => "$(cryptoo:cryptoo.machine_names[$(machine_number)])";
@@ -59,7 +59,7 @@ bundle common machines
     any::
 
       "have_machine_number"
-        expression => regextract("(.*):(.*)\.(.*)\[(.*)\]", "$(machine_number_var_string)", "machine_number_var");
+        expression => regextract("(.*):(.*)\.(.*)", "$(machine_number_var_string)", "machine_number_var");
 
   reports:
 

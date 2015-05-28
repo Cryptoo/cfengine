@@ -23,7 +23,7 @@ bundle common config
     "extra_groups"
       data => readjson("$(sys.inputdir)/cryptoo/config/groups.json", 1M);
 
-    "machine_number"
+    "machine_numbers"
       data => readjson("$(sys.inputdir)/cryptoo/config/machine_numbers.json", 1M);
 
     "server_guests"
