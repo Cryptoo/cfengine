@@ -7,6 +7,7 @@ body file control
   inputs => {
               "cryptoo/cryptoo.cf",
               "cryptoo/config/config.cf",
+              "cryptoo/config/file_names.cf",
               "cryptoo/config/network.cf",
               "cryptoo/config/templates.cf",
               "cryptoo/util/perms.cf"
