@@ -19,6 +19,11 @@ bundle common machine
 
   vars:
 
+    have_hostname::
+
+      "configured_hostname"
+        string => readfile("/$(file_names.cryptoo_hostname)","128");
+
     defined_number::
 
       "machine_number"
@@ -54,6 +59,9 @@ bundle common machine
 
       "defined_number"
         not => strcmp("$(config.defined_numbers[$(cryptoo.configured_role)])","");
+
+      "have_hostname"
+        expression => fileexists("/$(file_names.cryptoo_hostname)");
 
   reports:
 
