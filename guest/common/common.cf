@@ -6,7 +6,6 @@ body file control
 
   inputs => {
               "cryptoo/common/systemd.cf",
-              "cryptoo/config/config.cf",
               "cryptoo/config/directory_groups.cf",
               "cryptoo/config/file_names.cf",
               "cryptoo/guest/common/guest_network.cf",
