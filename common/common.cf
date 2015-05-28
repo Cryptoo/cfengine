@@ -12,6 +12,7 @@ body file control
               "cryptoo/common/unix_group.cf",
               "cryptoo/common/unix_user.cf",
               "cryptoo/config/config.cf",
+              "cryptoo/config/directory_groups.cf",
               "cryptoo/config/directory_names.cf",
               "cryptoo/guest/template/files.cf",
               "cryptoo/util/contain.cf",
