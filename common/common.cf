@@ -14,6 +14,7 @@ body file control
               "cryptoo/config/config.cf",
               "cryptoo/config/directory_groups.cf",
               "cryptoo/config/directory_names.cf",
+              "cryptoo/config/templates.cf",
               "cryptoo/guest/template/files.cf",
               "cryptoo/util/contain.cf",
               "cryptoo/util/edit_line.cf",
