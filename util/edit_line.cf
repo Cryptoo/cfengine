@@ -52,7 +52,7 @@ bundle edit_line enable_kconfig(symbol, file)
 
      reports:
 
-       "enabled CONFIG_$(symbol)";
+       "($(this.file)) enabled CONFIG_$(symbol)";
 
 }
 
@@ -89,6 +89,6 @@ bundle edit_line disable_kconfig(symbol,file)
 
       missing_from_file::
 
-        "added CONFIG_$(symbol)";
+        "($(this.file)) added CONFIG_$(symbol)";
 
 }
