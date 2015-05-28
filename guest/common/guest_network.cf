@@ -7,6 +7,7 @@ body file control
   inputs => {
               "cryptoo/cryptoo.cf",
               "cryptoo/config/config.cf",
+              "cryptoo/config/network.cf",
               "cryptoo/config/templates.cf",
               "cryptoo/util/perms.cf"
             };
@@ -25,7 +26,7 @@ bundle agent guest_network(root, role)
          string => "$(config.machine_numbers[$(this.role)])";
 
       "ispdmz_subnet"
-        string => "$(cryptoo.subnet_config[ispdmz])";
+        string => "$(network.subnet_config[ispdmz])";
 
       "onion_subnet"
         string => "$(config.transparent_proxy_net[tor])";
@@ -34,16 +35,16 @@ bundle agent guest_network(root, role)
         string => "$(config.transparent_proxy_net[i2p])";
 
       "tor_subnet"
-        string => "$(cryptoo.subnet_config[tor])";
+        string => "$(network.subnet_config[tor])";
 
       "i2p_subnet"
-        string => "$(cryptoo.subnet_config[i2p])";
+        string => "$(network.subnet_config[i2p])";
 
       "vpndmz_subnet"
-        string => "$(cryptoo.subnet_config[vpndmz])";
+        string => "$(network.subnet_config[vpndmz])";
 
       "lan_subnet"
-        string => "$(cryptoo.subnet_config[lan])";
+        string => "$(network.subnet_config[lan])";
 
       "netdev_lan"
         string => '

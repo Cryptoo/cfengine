@@ -12,6 +12,7 @@ body file control
               "cryptoo/config/directory_groups.cf",
               "cryptoo/config/file_names.cf",
               "cryptoo/config/machines.cf",
+              "cryptoo/config/network.cf",
               "cryptoo/config/templates.cf"
             };
 
@@ -34,6 +35,7 @@ bundle common cryptoo
                    "cryptoo:file_names",
                    "cryptoo:templates",
                    "cryptoo:local",
+                   "cryptoo:network",
                    "cryptoo:machines",
                    "cryptoo:cryptoo_system"
                  };
@@ -56,22 +58,6 @@ bundle common cryptoo
       "configured_role"
         string => "undefined";
 
-    have_machine_names::
-
-      "machine_names"
-        data => readjson("/$(cryptoo:file_names.machine_names)", 1M);
-
-      "machine_names_idx"
-        slist => getindices("machine_names");
-
-      "machine_names_inverse[$(machine_names[$(machine_names_idx)])]"
-        string => "$(machine_names_idx)";
-
-    need_machine_names::
-
-      "machine_names"
-        data => readjson("/$(cryptoo:templates.template[machine_names])", 1M);
-
     have_site_config::
 
       "site_config"
@@ -83,21 +69,6 @@ bundle common cryptoo
       "site_config"
         data => readjson("/$(cryptoo:templates.template[site_config])", 1M),
         classes => default:if_ok("site_config_available");
-
-    have_subnet_config::
-
-      "subnet_config"
-        data => readjson("/$(cryptoo:file_names.subnet_config)", 1M),
-        classes => default:if_ok("subnet_config_available");
-
-      "local_subnets"
-        slist => {
-                   "192.168.$(subnet_config[ispdmz]).0/24",
-                   "192.168.$(subnet_config[tor]).0/24",
-                   "192.168.$(subnet_config[i2p]).0/24",
-                   "192.168.$(subnet_config[vpndmz]).0/24",
-                   "192.168.$(subnet_config[lan]).0/24",
-                 };
 
   classes:
 
@@ -112,23 +83,11 @@ bundle common cryptoo
       "have_hostname"
         expression => fileexists("/$(cryptoo:file_names.cryptoo_hostname)");
 
-      "have_machine_names"
-        expression => fileexists("/$(cryptoo:file_names.machine_names)");
-
-      "need_machine_names"
-        not => fileexists("/$(cryptoo:file_names.machine_names)");
-
       "have_site_config"
         expression => fileexists("/$(cryptoo:file_names.site_config)");
 
       "need_site_config"
         not => fileexists("/$(cryptoo:file_names.site_config)");
-
-      "have_subnet_config"
-        expression => fileexists("/$(cryptoo:file_names.subnet_config)");
-
-      "need_subnet_config"
-        not => fileexists("/$(cryptoo:file_names.subnet_config)");
 
     have_role::
 

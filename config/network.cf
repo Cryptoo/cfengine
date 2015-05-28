@@ -1,0 +1,69 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/templates.cf",
+            };
+
+}
+
+bundle common network
+
+{
+
+  vars:
+
+    any::
+
+    have_machine_names::
+
+      "machine_names"
+        data => readjson("/$(file_names.machine_names)", 1M);
+
+      "machine_names_idx"
+        slist => getindices("machine_names");
+
+      "machine_names_inverse[$(machine_names[$(machine_names_idx)])]"
+        string => "$(machine_names_idx)";
+
+    need_machine_names::
+
+      "machine_names"
+        data => readjson("/$(templates.template[machine_names])", 1M);
+
+    have_subnet_config::
+
+      "subnet_config"
+        data => readjson("/$(file_names.subnet_config)", 1M),
+        classes => default:if_ok("subnet_config_available");
+
+      "local_subnets"
+        slist => {
+                   "192.168.$(this.subnet_config[ispdmz]).0/24",
+                   "192.168.$(this.subnet_config[tor]).0/24",
+                   "192.168.$(this.subnet_config[i2p]).0/24",
+                   "192.168.$(this.subnet_config[vpndmz]).0/24",
+                   "192.168.$(this.subnet_config[lan]).0/24",
+                 };
+
+  classes:
+
+    any::
+
+      "have_machine_names"
+        expression => fileexists("/$(file_names.machine_names)");
+
+      "need_machine_names"
+        not => fileexists("/$(file_names.machine_names)");
+
+      "have_subnet_config"
+        expression => fileexists("/$(file_names.subnet_config)");
+
+      "need_subnet_config"
+        not => fileexists("/$(file_names.subnet_config)");
+
+}

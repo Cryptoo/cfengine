@@ -6,7 +6,8 @@ body file control
 
   inputs => {
               "cryptoo/cryptoo.cf",
-              "cryptoo/config/file_names.cf"
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/network.cf"
             };
 
 }
@@ -31,7 +32,7 @@ bundle common machines
         string => "$($(machine_number_var[1]):$(machine_number_var[2]).$(machine_number_var[3])[$(cryptoo.configured_role)])";
 
       "hostname"
-        string => "$(cryptoo:cryptoo.machine_names[$(machine_number)])";
+        string => "$(network.machine_names[$(this.machine_number)])";
 
     have_hostname&(!have_machine_number)::
 
@@ -39,7 +40,7 @@ bundle common machines
         string => "$(cryptoo:cryptoo.configured_hostname)";
 
       "machine_number"
-        string => "$(cryptoo:cryptoo.machine_names_inverse[$(hostname)])";
+        string => "$(network.machine_names_inverse[$(this.hostname)])";
 
     cryptoo_host::
 
