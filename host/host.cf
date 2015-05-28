@@ -9,7 +9,7 @@ body file control
               "cryptoo/config/directory_names.cf",
               "cryptoo/config/directory_groups.cf",
               "cryptoo/config/file_names.cf",
-              "cryptoo/config/machines.cf",
+              "cryptoo/config/machine.cf",
               "cryptoo/config/templates.cf",
               "cryptoo/common/common.cf",
               "cryptoo/host/crypttab.cf",
@@ -60,11 +60,11 @@ bundle agent host(arch)
         expression => "any";
 
       "root_bind_mount"
-        expression => regline("device /dev/mapper/$(cryptoo:machines.hostname)-root mounted on /$(cryptoo:directory_names.fs_mount_root).*", "$(cryptoo:file_names.mount_info)"),
+        expression => regline("device /dev/mapper/$(cryptoo:machine.hostname)-root mounted on /$(cryptoo:directory_names.fs_mount_root).*", "$(cryptoo:file_names.mount_info)"),
         comment => "/ is mounted as a bind mount on /mnt/root. Gives access to underlying rootfs";
 
       "srv_mounted"
-        expression => regline("device /dev/mapper/$(cryptoo:machines.hostname)-storage mounted on /$(cryptoo:directory_names.fs_storage_base).*", "$(cryptoo:file_names.mount_info)"),
+        expression => regline("device /dev/mapper/$(cryptoo:machine.hostname)-storage mounted on /$(cryptoo:directory_names.fs_storage_base).*", "$(cryptoo:file_names.mount_info)"),
         comment => "backing LV is mounted for /srv";
 
       "have_grub"

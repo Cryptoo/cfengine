@@ -1,8 +1,8 @@
 [%CFEngine host|desktop_host:: %]
-LABEL=$(cryptoo:machines.hostname)-boot   /$(cryptoo:directory_names.fs_boot_base)                           $(cryptoo:cryptoo.site_config[boot_fs][filesystem])        $(cryptoo:cryptoo.site_config[boot_fs][options])       1 2
-UUID=$(cryptoo:machines.root_uuid)                         /                               $(cryptoo:cryptoo.site_config[host_fs][filesystem])        $(cryptoo:cryptoo.site_config[host_fs][options])       0 1
-/dev/mapper/$(cryptoo:machines.hostname)-swap                              none                            swap        sw            0 0
-/dev/mapper/$(cryptoo:machines.hostname)-storage                           /$(cryptoo:directory_names.fs_storage_base)          $(cryptoo:cryptoo.site_config[host_fs][filesystem])        $(cryptoo:cryptoo.site_config[host_fs][options])       0 0
+LABEL=$(cryptoo:machine.hostname)-boot   /$(cryptoo:directory_names.fs_boot_base)                           $(cryptoo:cryptoo.site_config[boot_fs][filesystem])        $(cryptoo:cryptoo.site_config[boot_fs][options])       1 2
+UUID=$(cryptoo:machine.root_uuid)                         /                               $(cryptoo:cryptoo.site_config[host_fs][filesystem])        $(cryptoo:cryptoo.site_config[host_fs][options])       0 1
+/dev/mapper/$(cryptoo:machine.hostname)-swap                              none                            swap        sw            0 0
+/dev/mapper/$(cryptoo:machine.hostname)-storage                           /$(cryptoo:directory_names.fs_storage_base)          $(cryptoo:cryptoo.site_config[host_fs][filesystem])        $(cryptoo:cryptoo.site_config[host_fs][options])       0 0
 
 /$(cryptoo:directory_names.fs_storage_apps)             /usr/site-local/bin             none        bind          0 0
 /$(cryptoo:directory_names.fs_storage_cryptoo)          /$(cryptoo:directory_names.fs_cryptoo)               none        bind          0 0

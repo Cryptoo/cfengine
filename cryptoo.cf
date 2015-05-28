@@ -11,7 +11,7 @@ body file control
               "cryptoo/config/directory_names.cf",
               "cryptoo/config/directory_groups.cf",
               "cryptoo/config/file_names.cf",
-              "cryptoo/config/machines.cf",
+              "cryptoo/config/machine.cf",
               "cryptoo/config/network.cf",
               "cryptoo/config/templates.cf"
             };
@@ -36,7 +36,7 @@ bundle common cryptoo
                    "cryptoo:templates",
                    "cryptoo:local",
                    "cryptoo:network",
-                   "cryptoo:machines",
+                   "cryptoo:machine",
                    "cryptoo:cryptoo_system"
                  };
 

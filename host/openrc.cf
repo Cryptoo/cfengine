@@ -21,7 +21,7 @@ bundle agent openrc(root)
     any::
 
       "hostname[hostname]"
-        string => "$(cryptoo:machines.hostname)";
+        string => "$(cryptoo:machine.hostname)";
 
   classes:
 

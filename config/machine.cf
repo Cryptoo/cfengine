@@ -12,7 +12,7 @@ body file control
 
 }
 
-bundle common machines
+bundle common machine
 
 {
 
@@ -37,7 +37,7 @@ bundle common machines
     cryptoo_host::
 
       "root_dev"
-        string => "/dev/mapper/$(hostname)-root";
+        string => "/dev/mapper/$(this.hostname)-root";
 
       "root_uuid"
         string => execresult("/$(file_names.blkid_app) -s UUID -o value $(root_dev)","noshell");
