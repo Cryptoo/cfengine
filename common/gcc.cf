@@ -4,6 +4,10 @@ body file control
 
   namespace => "cryptoo";
 
+  inputs => {
+              "cryptoo/config/directory_names.cf"
+            };
+
 }
 
 bundle agent gcc(root, arch)
