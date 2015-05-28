@@ -1,6 +1,7 @@
 {
     "undefined": "-1",
     "master": "1",
+    "desktop_host": "2",
     "firewall_external": "10",
     "vpn_primary": "11",
     "firewall_internal": "12",
