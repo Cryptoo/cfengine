@@ -27,7 +27,7 @@ bundle common network
       "machine_names_idx"
         slist => getindices("machine_names");
 
-      "machine_names_inverse[$(machine_names[$(machine_names_idx)])]"
+      "machine_numbers[$(machine_names[$(machine_names_idx)][name])]"
         string => "$(machine_names_idx)";
 
     need_machine_names::

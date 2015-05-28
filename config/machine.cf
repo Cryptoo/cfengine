@@ -32,7 +32,7 @@ bundle common machine
         string => "$(cryptoo.configured_hostname)";
 
       "machine_number"
-        string => "$(network.machine_names_inverse[$(this.hostname)])";
+        string => "$(network.machine_numbers[$(this.hostname)])";
 
     cryptoo_host::
 
