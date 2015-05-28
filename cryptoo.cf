@@ -7,7 +7,6 @@ body file control
   inputs => {
               "cryptoo/local.cf",
               "cryptoo/system.cf",
-              "cryptoo/config/machine.cf",
               "cryptoo/config/templates.cf"
             };
 
@@ -25,7 +24,6 @@ bundle common cryptoo
         slist => {
                    "cryptoo:cryptoo",
                    "cryptoo:local",
-                   "cryptoo:machine",
                    "cryptoo:cryptoo_system"
                  };
 
