@@ -22,7 +22,7 @@ bundle agent kconfig(target, arch)
     any::
 
       "kconfig_target"
-        slist => variablesmatching(".*config\.kconfig\[.*]", "$(target)");
+        slist => variablesmatching(".*config\.kconfig\[.*]", "$(this.target)");
 
       "kconfig_enabled"
         slist => variablesmatching(".*config\.kconfig\[.*]", "enabled");
@@ -49,7 +49,7 @@ bundle agent kconfig(target, arch)
         slist => getindices(kconfig_target_disabled_array);
 
       "kconfig_file"
-        string => "/$(cryptoo:directory_names.fs_volatile_kernel)/$(target)/$(arch)/.config";
+        string => "/$(cryptoo:directory_names.fs_volatile_kernel)/$(this.target)/$(arch)/.config";
 
       "kernel_clone_command"
         string => "/$(cryptoo:file_names.git_app) clone $(cryptoo:cryptoo.kernel_git) /$(cryptoo:directory_names.fs_storage_kernel)";
@@ -58,7 +58,7 @@ bundle agent kconfig(target, arch)
 
     any::
 
-      "$(target)"
+      "$(this.target)"
         expression => "any";
 
       "have_cryptoo"
@@ -100,7 +100,7 @@ bundle agent kconfig(target, arch)
         perms => cryptoo:system,
         create => "false",
         edit_line => enable_kconfig("$(kconfig_target_enabled_symbols)","$(kconfig_file)"),
-        classes => default:u_if_repaired("target_kconfig_changed"),
+        classes => default:u_if_repaired("$(this.target)_kconfig_changed"),
         comment => "repair symbols that should be enabled, but are in the disabled state";
 
       "$(kconfig_file)"
@@ -108,7 +108,7 @@ bundle agent kconfig(target, arch)
         perms => cryptoo:system,
         create => "false",
         edit_line => enable_kconfig("$(kconfig_target_enabled_symbols)","$(kconfig_file)"),
-        classes => default:u_if_repaired("target_kconfig_changed"),
+        classes => default:u_if_repaired("$(this.target)_kconfig_changed"),
         comment => "repair symbols that should be enabled, but are missing";
 
       "$(kconfig_file)"
@@ -116,7 +116,7 @@ bundle agent kconfig(target, arch)
         perms => cryptoo:system,
         create => "false",
         edit_line => disable_kconfig("$(kconfig_target_disabled_symbols)","$(kconfig_file)"),
-        classes => default:u_if_repaired("target_kconfig_changed"),
+        classes => default:u_if_repaired("$(this.target)_kconfig_changed"),
         comment => "repair symbols that should be disabled, but are in the enabled state";
 
       "$(kconfig_file)"
@@ -124,39 +124,42 @@ bundle agent kconfig(target, arch)
         perms => cryptoo:system,
         create => "false",
         edit_line => disable_kconfig("$(kconfig_target_disabled_symbols)","$(kconfig_file)"),
-        classes => default:u_if_repaired("target_kconfig_changed"),
+        classes => default:u_if_repaired("$(this.target)_kconfig_changed"),
         comment => "repair symbols that should be disabled, but are missing";
 
   host&have_target_kconfig::
 
       "$(kconfig_file)"
         edit_line => default:set_line_based("cryptoo:config.kconfig_string_host", "=", "\s*=\s*", ".*", "\s*#\s*"),
-        classes => default:u_if_repaired("target_kconfig_changed"),
+        classes => default:u_if_repaired("$(this.target)_kconfig_changed"),
         comment => "set kconfig strings";
 
   guest&have_target_kconfig::
 
       "$(kconfig_file)"
         edit_line => default:set_line_based("cryptoo:config.kconfig_string_guest", "=", "\s*=\s*", ".*", "\s*#\s*"),
-        classes => default:u_if_repaired("target_kconfig_changed"),
+        classes => default:u_if_repaired("$(this.target)_kconfig_changed"),
         comment => "set kconfig strings";
 
   guest_multilib&have_target_kconfig::
 
       "$(kconfig_file)"
         edit_line => default:set_line_based("cryptoo:config.kconfig_string_guest_multilib", "=", "\s*=\s*", ".*", "\s*#\s*"),
-        classes => default:u_if_repaired("target_kconfig_changed"),
+        classes => default:u_if_repaired("$(this.target)_kconfig_changed"),
         comment => "set kconfig strings";
 
   commands:
+
+    any::
+
+      "/usr/cryptoo/bin/kmake_$(this.target)"
+      args => "olddefconfig",
+      ifvarclass => "$(this.target)_kconfig_changed";
 
     need_kernel_src::
       "$(kernel_clone_command)";
 
     need_target_kconfig_bootstrap::
-      "/usr/cryptoo/bin/kmake_$(target) allnoconfig";
-
-    target_kconfig_changed::
-      "/usr/cryptoo/bin/kmake_$(target) olddefconfig";
+      "/usr/cryptoo/bin/kmake_$(this.target) allnoconfig";
 
 }
