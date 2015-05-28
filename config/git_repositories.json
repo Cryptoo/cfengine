@@ -1,0 +1,4 @@
+{
+    "kernel": "git://github.com/cryptoo/kernel",
+    "overlay": "git://github.com/cryptoo/overlay"
+}

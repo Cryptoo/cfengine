@@ -332,7 +332,7 @@ bundle agent host(arch)
 
     need_cryptoo&(all_mounted|all_ready)::
 
-      "/$(cryptoo:file_names.git_app) clone -b dev $(cryptoo:cryptoo.overlay_git) /$(cryptoo:directory_names.fs_storage_cryptoo)";
+      "/$(file_names.git_app) clone -b dev $(config.git_repositories[overlay]) /$(directory_names.fs_storage_cryptoo)";
 
     (need_dracut_image|update_dracut)&(have_dracut_app&have_crypttab)::
 

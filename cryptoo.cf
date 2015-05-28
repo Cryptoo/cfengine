@@ -38,12 +38,6 @@ bundle common cryptoo
                    "cryptoo:cryptoo_system"
                  };
 
-      "kernel_git"
-        string => "git://github.com/cryptoo/kernel";
-
-      "overlay_git"
-        string => "git://github.com/cryptoo/overlay";
-
       "local_inputs"
         slist => lsdir("$(this.promise_dirname)/local/promises", ".*\.cf", "true");
 

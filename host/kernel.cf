@@ -52,7 +52,7 @@ bundle agent kconfig(target, arch)
         string => "/$(cryptoo:directory_names.fs_volatile_kernel)/$(this.target)/$(arch)/.config";
 
       "kernel_clone_command"
-        string => "/$(cryptoo:file_names.git_app) clone $(cryptoo:cryptoo.kernel_git) /$(cryptoo:directory_names.fs_storage_kernel)";
+        string => "/$(file_names.git_app) clone $(config.git_repositories[kernel]) /$(directory_names.fs_storage_kernel)";
 
   classes:
 
