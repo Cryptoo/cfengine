@@ -24,6 +24,7 @@ bundle common cryptoo
         slist => {
                    "cryptoo:cryptoo",
                    "cryptoo:local",
+                   "cryptoo:machine",
                    "cryptoo:cryptoo_system"
                  };
 
