@@ -8,9 +8,9 @@ body file control
               "cryptoo/common/common.cf",
               "cryptoo/config/file_names.cf",
               "cryptoo/config/templates.cf",
-              "cryptoo/guest/common/common.cf",
               "cryptoo/roles/host/common/mounts.cf",
-              "cryptoo/util/perms.cf"
+              "cryptoo/util/perms.cf",
+              "@(cryptoo:cryptoo.desktop_guest_inputs)"
             };
 
 }

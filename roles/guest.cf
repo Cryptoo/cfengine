@@ -9,9 +9,10 @@ body file control
               "cryptoo/config/directory_groups.cf",
               "cryptoo/config/file_names.cf",
               "cryptoo/config/templates.cf",
-              "cryptoo/guest/common/guest_network.cf",
               "cryptoo/util/contain.cf",
-              "cryptoo/util/perms.cf"
+              "cryptoo/util/perms.cf",
+              "@(cryptoo:cryptoo.guest_common_inputs)",
+              "@(cryptoo:cryptoo.guest_inputs)"
             };
 
 }

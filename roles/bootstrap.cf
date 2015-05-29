@@ -8,8 +8,7 @@ body file control
               "cryptoo/config/directory_names.cf",
               "cryptoo/config/file_names.cf",
               "cryptoo/config/site.cf",
-              "cryptoo/guest/server_guests/server_guest.cf",
-              "cryptoo/guest/desktop_guests/desktop_guest.cf"
+              "@(cryptoo:cryptoo.guest_inputs)"
             };
 
 }

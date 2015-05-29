@@ -6,13 +6,6 @@ body file control
 
   inputs => {
               "cryptoo/cryptoo.cf",
-              "cryptoo/guest/server_guests/firewall_external.cf",
-              "cryptoo/guest/server_guests/firewall_internal.cf",
-              "cryptoo/guest/server_guests/tor.cf",
-              "cryptoo/guest/server_guests/vpn_primary.cf",
-              "cryptoo/guest/server_guests/vpn_server.cf",
-              "cryptoo/guest/desktop_guests/mail_client.cf",
-              "cryptoo/guest/desktop_guests/web.cf",
               "@(cryptoo:cryptoo.role_inputs)"
             };
 

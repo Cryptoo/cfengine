@@ -4,10 +4,6 @@ body file control
 
   namespace => "cryptoo";
 
-  inputs => {
-              "cryptoo/guest/server_guests/server_guest.cf"
-            };
-
 }
 
 bundle agent firewall_internal
