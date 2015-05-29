@@ -1,8 +1,8 @@
 [%CFEngine host|desktop_host:: %]
-LABEL=$(cryptoo:machine.hostname)-boot   /$(cryptoo:directory_names.fs_boot_base)                           $(cryptoo:cryptoo.site_config[boot_fs][filesystem])        $(cryptoo:cryptoo.site_config[boot_fs][options])       1 2
-UUID=$(cryptoo:machine.root_uuid)                         /                               $(cryptoo:cryptoo.site_config[host_fs][filesystem])        $(cryptoo:cryptoo.site_config[host_fs][options])       0 1
+LABEL=$(cryptoo:machine.hostname)-boot   /$(cryptoo:directory_names.fs_boot_base)                           $(cryptoo:site.config[boot_fs][filesystem])        $(cryptoo:site.config[boot_fs][options])       1 2
+UUID=$(cryptoo:machine.root_uuid)                         /                               $(cryptoo:site.config[host_fs][filesystem])        $(cryptoo:site.config[host_fs][options])       0 1
 /dev/mapper/$(cryptoo:machine.hostname)-swap                              none                            swap        sw            0 0
-/dev/mapper/$(cryptoo:machine.hostname)-storage                           /$(cryptoo:directory_names.fs_storage_base)          $(cryptoo:cryptoo.site_config[host_fs][filesystem])        $(cryptoo:cryptoo.site_config[host_fs][options])       0 0
+/dev/mapper/$(cryptoo:machine.hostname)-storage                           /$(cryptoo:directory_names.fs_storage_base)          $(cryptoo:site.config[host_fs][filesystem])        $(cryptoo:site.config[host_fs][options])       0 0
 
 /$(cryptoo:directory_names.fs_storage_apps)             /usr/site-local/bin             none        bind          0 0
 /$(cryptoo:directory_names.fs_storage_cryptoo)          /$(cryptoo:directory_names.fs_cryptoo)               none        bind          0 0
@@ -58,7 +58,7 @@ desktop-system-tmp                                      /$(cryptoo:directory_nam
 /$(cryptoo:directory_names.fs_site_binpkg)              /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/multilib/$(cryptoo:directory_names.fs_site_binpkg)             none        rbind
 multilib-system-tmp                                     /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/multilib/$(cryptoo:directory_names.fs_temp_base)               tmpfs       size=1G,nosuid,nodev
 [%CFEngine server_guest|desktop_guest:: %]
-/dev/vda        /                               $(cryptoo:cryptoo.site_config[guest_fs][filesystem])    $(cryptoo:cryptoo.site_config[guest_fs][options])                                                0 1
+/dev/vda        /                               $(cryptoo:site.config[guest_fs][filesystem])    $(cryptoo:site.config[guest_fs][options])                                                0 1
 
 /bin            /$(cryptoo:directory_names.fs_site_apps)                     9p      trans=virtio,version=9p2000.L,ro,nodev,nosuid,noatime           0 0
 /cryptoo        /$(cryptoo:directory_names.fs_cryptoo)                       9p      trans=virtio,version=9p2000.L,ro,nodev,nosuid,noatime           0 0

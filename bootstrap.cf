@@ -8,6 +8,7 @@ body file control
               "cryptoo/cryptoo.cf",
               "cryptoo/config/directory_names.cf",
               "cryptoo/config/file_names.cf",
+              "cryptoo/config/site.cf",
               "cryptoo/guest/server_guests/server_guest.cf",
               "cryptoo/guest/desktop_guests/desktop_guest.cf"
             };
@@ -215,12 +216,12 @@ bundle agent cryptoo_bootstrap
         handle => "loop_attached";
 
       "/$(file_names.mkfs_app)"
-        args => "-t $(cryptoo.site_config[guest_fs][filesystem]) -E nodiscard /dev/loop0",
+        args => "-t $(site.config[guest_fs][filesystem]) -E nodiscard /dev/loop0",
         depends_on => { "loop_attached" },
         handle => "image_fs_created";
 
       "/$(file_names.mount_app)"
-        args => "-o $(cryptoo.site_config[guest_fs][options]) /dev/loop0 /$(directory_names.fs_mount_cryptoo)",
+        args => "-o $(site.config[guest_fs][options]) /dev/loop0 /$(directory_names.fs_mount_cryptoo)",
         depends_on => { "image_fs_created" },
         handle => "image_fs_mounted";
 

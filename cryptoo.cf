@@ -40,18 +40,6 @@ bundle common cryptoo
       "configured_role"
         string => "undefined";
 
-    have_site_config::
-
-      "site_config"
-        data => readjson("/$(cryptoo:file_names.site_config)", 1M),
-        classes => default:if_ok("site_config_available");
-
-    need_site_config::
-
-      "site_config"
-        data => readjson("/$(cryptoo:templates.template[site_config])", 1M),
-        classes => default:if_ok("site_config_available");
-
   classes:
 
     any::
@@ -61,12 +49,6 @@ bundle common cryptoo
 
       "need_role"
         not => fileexists("/$(cryptoo:file_names.cryptoo_role)");
-
-      "have_site_config"
-        expression => fileexists("/$(cryptoo:file_names.site_config)");
-
-      "need_site_config"
-        not => fileexists("/$(cryptoo:file_names.site_config)");
 
     have_role::
 

@@ -14,6 +14,7 @@ body file control
               "cryptoo/config/config.cf",
               "cryptoo/config/directory_groups.cf",
               "cryptoo/config/directory_names.cf",
+              "cryptoo/config/site.cf",
               "cryptoo/config/templates.cf",
               "cryptoo/guest/template/files.cf",
               "cryptoo/util/contain.cf",
@@ -115,7 +116,7 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
 
       "$(root)$(file_names.localtime)"
         move_obstructions => "true",
-        link_from => timezone("$(cryptoo:cryptoo.site_config[timezone])");
+        link_from => timezone("$(cryptoo:site.config[timezone])");
 
       "$(root)$(file_names.system_bashrc)"
         perms => system,
@@ -146,7 +147,7 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
       "$(root)$(file_names.locale)"
         perms => system,
         create => "false",
-        edit_line => default:uncomment_lines_containing("$(cryptoo:cryptoo.site_config[locale])","#"),
+        edit_line => default:uncomment_lines_containing("$(cryptoo:site.config[locale])","#"),
         classes => default:u_if_repaired("update_locale");
 
   methods:

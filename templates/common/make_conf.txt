@@ -7,7 +7,7 @@ PORTDIR_OVERLAY="/usr/local/portage ${PORTDIR_OVERLAY}"
 [%CFEngine makeopts_host:: %]
 CFLAGS="-O2 -pipe -march=native"
 [%CFEngine makeopts_guest|makeopts_template:: %]
-CFLAGS="-O2 -pipe -mtune=$(cryptoo:cryptoo.site_config[make.conf][guest_mtune])"
+CFLAGS="-O2 -pipe -mtune=$(cryptoo:site.config[make.conf][guest_mtune])"
 [%CFEngine any:: %]
 CXXFLAGS="${CFLAGS}"
 CHOST="x86_64-pc-linux-gnu"
@@ -30,16 +30,16 @@ $(cryptoo:make_conf.cpu_flags)
 USE="${CPU_FLAGS_X86}"
 
 #Local options
-USE="${USE} $(cryptoo:cryptoo.site_config[make.conf][USE])"
+USE="${USE} $(cryptoo:site.config[make.conf][USE])"
 
 [%CFEngine runtime_host:: %]
 INPUT_DEVICES="evdev"
-VIDEO_CARDS="$(cryptoo:cryptoo.site_config[make.conf][VIDEO_CARDS])"
+VIDEO_CARDS="$(cryptoo:site.config[make.conf][VIDEO_CARDS])"
 [%CFEngine make_conf_graphical&(!runtime_host):: %]
 INPUT_DEVICES="void"
 VIDEO_CARDS="dummy"
 [%CFEngine make_conf_graphical&runtime_host:: %]
-ALSA_CARDS="$(cryptoo:cryptoo.site_config[make.conf][ALSA_CARDS])"
+ALSA_CARDS="$(cryptoo:site.config[make.conf][ALSA_CARDS])"
 [%CFEngine make_conf_graphical&runtime_guest:: %]
 ALSA_CARDS="ac97"
 
