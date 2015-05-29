@@ -9,7 +9,7 @@ body file control
               "cryptoo/config/file_names.cf",
               "cryptoo/config/templates.cf",
               "cryptoo/guest/common/common.cf",
-              "cryptoo/host/mounts.cf",
+              "cryptoo/roles/host/mounts.cf",
               "cryptoo/util/perms.cf"
             };
 

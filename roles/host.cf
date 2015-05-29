@@ -5,24 +5,18 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
+              "cryptoo/common/common.cf",
               "cryptoo/config/config.cf",
               "cryptoo/config/directory_names.cf",
               "cryptoo/config/directory_groups.cf",
               "cryptoo/config/file_names.cf",
               "cryptoo/config/machine.cf",
               "cryptoo/config/templates.cf",
-              "cryptoo/common/common.cf",
-              "cryptoo/host/crypttab.cf",
-              "cryptoo/host/guest_boxes.cf",
-              "cryptoo/host/kernel.cf",
-              "cryptoo/host/mounts.cf",
-              "cryptoo/host/openrc.cf",
-              "cryptoo/util/perms.cf",
-              "cryptoo/host/subnet.cf",
               "cryptoo/util/classes.cf",
               "cryptoo/util/link_from.cf",
+              "cryptoo/util/perms.cf",
               "cryptoo/util/setfattr.cf",
-              "cryptoo/host/guest_role.cf",
+              "@(cryptoo:cryptoo.host_inputs)"
             };
 
 }

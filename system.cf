@@ -13,7 +13,6 @@ body file control
               "cryptoo/guest/server_guests/vpn_server.cf",
               "cryptoo/guest/desktop_guests/mail_client.cf",
               "cryptoo/guest/desktop_guests/web.cf",
-              "cryptoo/host/master.cf",
               "@(cryptoo:cryptoo.role_inputs)"
             };
 

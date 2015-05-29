@@ -8,7 +8,7 @@ body file control
               "cryptoo/config/config.cf",
               "cryptoo/config/directory_names.cf",
               "cryptoo/config/file_names.cf",
-              "cryptoo/host/guest_role.cf",
+              "cryptoo/roles/host/guest_role.cf",
               "cryptoo/util/perms.cf",
               "cryptoo/util/setfattr.cf"
             };
