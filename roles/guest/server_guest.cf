@@ -34,7 +34,7 @@ bundle agent server_guest(root, role, arch)
         perms => cryptoo:system,
         create => "true",
         edit_template => "/$(cryptoo:templates.template[fstab])",
-        classes => default:u_if_repaired("fstab_repaired"),
+        classes => default:if_repaired("fstab_repaired"),
         comment => "configure /etc/fstab";
 
   methods:

@@ -101,7 +101,7 @@ bundle agent kconfig(target, arch)
         perms => cryptoo:system,
         create => "false",
         edit_line => enable_kconfig("$(kconfig_target_enabled_symbols)","$(kconfig_file)"),
-        classes => default:u_if_repaired("$(this.target)_kconfig_changed"),
+        classes => default:if_repaired("$(this.target)_kconfig_changed"),
         comment => "repair symbols that should be enabled, but are in the disabled state";
 
       "$(kconfig_file)"
@@ -109,7 +109,7 @@ bundle agent kconfig(target, arch)
         perms => cryptoo:system,
         create => "false",
         edit_line => enable_kconfig("$(kconfig_target_enabled_symbols)","$(kconfig_file)"),
-        classes => default:u_if_repaired("$(this.target)_kconfig_changed"),
+        classes => default:if_repaired("$(this.target)_kconfig_changed"),
         comment => "repair symbols that should be enabled, but are missing";
 
       "$(kconfig_file)"
@@ -117,7 +117,7 @@ bundle agent kconfig(target, arch)
         perms => cryptoo:system,
         create => "false",
         edit_line => disable_kconfig("$(kconfig_target_disabled_symbols)","$(kconfig_file)"),
-        classes => default:u_if_repaired("$(this.target)_kconfig_changed"),
+        classes => default:if_repaired("$(this.target)_kconfig_changed"),
         comment => "repair symbols that should be disabled, but are in the enabled state";
 
       "$(kconfig_file)"
@@ -125,28 +125,28 @@ bundle agent kconfig(target, arch)
         perms => cryptoo:system,
         create => "false",
         edit_line => disable_kconfig("$(kconfig_target_disabled_symbols)","$(kconfig_file)"),
-        classes => default:u_if_repaired("$(this.target)_kconfig_changed"),
+        classes => default:if_repaired("$(this.target)_kconfig_changed"),
         comment => "repair symbols that should be disabled, but are missing";
 
   host&have_target_kconfig::
 
       "$(kconfig_file)"
         edit_line => default:set_line_based("cryptoo:config.kconfig_string_host", "=", "\s*=\s*", ".*", "\s*#\s*"),
-        classes => default:u_if_repaired("$(this.target)_kconfig_changed"),
+        classes => default:if_repaired("$(this.target)_kconfig_changed"),
         comment => "set kconfig strings";
 
   guest&have_target_kconfig::
 
       "$(kconfig_file)"
         edit_line => default:set_line_based("cryptoo:config.kconfig_string_guest", "=", "\s*=\s*", ".*", "\s*#\s*"),
-        classes => default:u_if_repaired("$(this.target)_kconfig_changed"),
+        classes => default:if_repaired("$(this.target)_kconfig_changed"),
         comment => "set kconfig strings";
 
   guest_multilib&have_target_kconfig::
 
       "$(kconfig_file)"
         edit_line => default:set_line_based("cryptoo:config.kconfig_string_guest_multilib", "=", "\s*=\s*", ".*", "\s*#\s*"),
-        classes => default:u_if_repaired("$(this.target)_kconfig_changed"),
+        classes => default:if_repaired("$(this.target)_kconfig_changed"),
         comment => "set kconfig strings";
 
   commands:

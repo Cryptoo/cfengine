@@ -49,6 +49,6 @@ bundle agent subnet
         perms => cryptoo:system,
         create => "true",
         edit_template => "/$(cryptoo:templates.template[subnets])",
-        classes => default:u_if_repaired("done");
+        classes => default:if_repaired("done");
 
 }

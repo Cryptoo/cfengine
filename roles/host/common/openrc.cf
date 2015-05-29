@@ -39,36 +39,36 @@ bundle agent openrc(root)
       "$(root)$(cryptoo:file_names.openrc_$(config.enabled_services))"
         move_obstructions => "true",
         link_from => cryptoo:openrc($(config.enabled_services)),
-        classes => default:u_if_repaired("update_openrc");
+        classes => default:if_repaired("update_openrc");
 
       "$(root)$(cryptoo:file_names.openrc_devicemapper)"
         move_obstructions => "true",
         link_from => cryptoo:openrc("device-mapper"),
-        classes => default:u_if_repaired("update_openrc");
+        classes => default:if_repaired("update_openrc");
 
       "$(root)$(cryptoo:file_names.openrc_cf_execd)"
         move_obstructions => "true",
         link_from => cryptoo:openrc("cf-execd"),
-        classes => default:u_if_repaired("update_openrc");
+        classes => default:if_repaired("update_openrc");
 
       "$(root)$(cryptoo:file_names.openrc_cf_monitord)"
         move_obstructions => "true",
         link_from => cryptoo:openrc("cf-monitord"),
-        classes => default:u_if_repaired("update_openrc");
+        classes => default:if_repaired("update_openrc");
 
       "$(root)$(cryptoo:file_names.openrc_cf_serverd)"
         move_obstructions => "true",
         link_from => cryptoo:openrc("cf-serverd"),
-        classes => default:u_if_repaired("update_openrc");
+        classes => default:if_repaired("update_openrc");
 
       "$(root)$(cryptoo:file_names.openrc_vixiecron)"
         move_obstructions => "true",
         link_from => cryptoo:openrc("vixie-cron"),
-        classes => default:u_if_repaired("update_openrc");
+        classes => default:if_repaired("update_openrc");
 
       "$(root)$(cryptoo:file_names.openrc_$(config.disabled_services))"
         delete => default:tidy,
-        classes => default:u_if_repaired("update_openrc");
+        classes => default:if_repaired("update_openrc");
 
       "$(root)$(cryptoo:file_names.hostname_openrc)"
         perms => cryptoo:system,

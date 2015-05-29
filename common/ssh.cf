@@ -33,11 +33,11 @@ bundle agent ssh(root)
       "$(root)$(cryptoo:file_names.sshd_config)"
         create => "false",
         edit_line => default:set_line_based("cryptoo:config.ssh[sshd]", " ", "\s+", ".*", "\s*#\s*"),
-        classes => default:u_if_repaired("update_sshd");
+        classes => default:if_repaired("update_sshd");
 
       "$(root)$(cryptoo:directory_names.fs_config_ssh)/$(cryptoo:config.ssh[banned_keys])"
         move_obstructions => "true",
         link_from => cryptoo:null,
-        classes => default:u_if_repaired("update_sshd");
+        classes => default:if_repaired("update_sshd");
 
 }
