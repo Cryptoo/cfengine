@@ -1,0 +1,42 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/templates.cf"
+            };
+
+}
+
+bundle common site
+
+{
+
+  vars:
+
+    have_site_config::
+
+      "config"
+        data => readjson("/$(file_names.site_config)", 1M),
+        classes => default:if_ok("site_config_available");
+
+    need_site_config::
+
+      "config"
+        data => readjson("/$(templates.template[site_config])", 1M),
+        classes => default:if_ok("site_config_available");
+
+  classes:
+
+    any::
+
+      "have_site_config"
+        expression => fileexists("/$(file_names.site_config)");
+
+      "need_site_config"
+        not => fileexists("/$(file_names.site_config)");
+
+}

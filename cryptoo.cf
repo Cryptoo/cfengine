@@ -30,6 +30,9 @@ bundle common cryptoo
       "local_inputs"
         slist => lsdir("$(this.promise_dirname)/local/promises", ".*\.cf", "true");
 
+      "role_inputs"
+        slist => lsdir("$(this.promise_dirname)/roles", ".*\.cf", "true");
+
     have_role::
 
       "configured_role"
