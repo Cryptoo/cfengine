@@ -16,8 +16,8 @@ body file control
               "cryptoo/util/link_from.cf",
               "cryptoo/util/perms.cf",
               "cryptoo/util/setfattr.cf",
-              "@(cryptoo:cryptoo.host_common_inputs)",
-              "@(cryptoo:cryptoo.host_inputs)"
+              "@(cryptoo:control.host_common_inputs)",
+              "@(cryptoo:control.host_inputs)"
             };
 
 }

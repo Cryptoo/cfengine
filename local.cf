@@ -5,8 +5,8 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
-              "cryptoo/cryptoo.cf",
-              "@(cryptoo:cryptoo.local_inputs)"
+              "cryptoo/control.cf",
+              "@(cryptoo:control.local_inputs)"
             };
 
 }

@@ -11,8 +11,8 @@ body file control
               "cryptoo/config/templates.cf",
               "cryptoo/util/contain.cf",
               "cryptoo/util/perms.cf",
-              "@(cryptoo:cryptoo.guest_common_inputs)",
-              "@(cryptoo:cryptoo.guest_inputs)"
+              "@(cryptoo:control.guest_common_inputs)",
+              "@(cryptoo:control.guest_inputs)"
             };
 
 }

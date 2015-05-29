@@ -10,7 +10,7 @@ body file control
               "cryptoo/config/templates.cf",
               "cryptoo/roles/host/common/mounts.cf",
               "cryptoo/util/perms.cf",
-              "@(cryptoo:cryptoo.server_guest_inputs)"
+              "@(cryptoo:control.server_guest_inputs)"
             };
 
 }

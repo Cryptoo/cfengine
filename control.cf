@@ -1,0 +1,90 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/local.cf",
+              "cryptoo/cryptoo.cf",
+              "cryptoo/config/file_names.cf"
+            };
+
+}
+
+bundle common control
+
+{
+
+  vars:
+
+    any::
+
+      "bundles"
+        slist => {
+                   "cryptoo:control",
+                   "cryptoo:local",
+                   "cryptoo:machine",
+                   "cryptoo:cryptoo"
+                 };
+
+      "local_inputs"
+        slist => lsdir("$(this.promise_dirname)/local/promises", ".*\.cf", "true");
+
+      "role_inputs"
+        slist => lsdir("$(this.promise_dirname)/roles", ".*\.cf", "true");
+
+      "host_common_inputs"
+        slist => lsdir("$(this.promise_dirname)/roles/host/common", ".*\.cf", "true");
+
+      "host_inputs"
+        slist => lsdir("$(this.promise_dirname)/roles/host", ".*\.cf", "true");
+
+      "guest_common_inputs"
+        slist => lsdir("$(this.promise_dirname)/roles/guest/common", ".*\.cf", "true");
+
+      "guest_inputs"
+        slist => lsdir("$(this.promise_dirname)/roles/guest", ".*\.cf", "true");
+
+      "desktop_guest_inputs"
+        slist => lsdir("$(this.promise_dirname)/roles/guest/desktop_guests", ".*\.cf", "true");
+
+      "server_guest_inputs"
+        slist => lsdir("$(this.promise_dirname)/roles/guest/server_guests", ".*\.cf", "true");
+
+    have_role::
+
+      "configured_role"
+        string => readfile("/$(file_names.cryptoo_role)","128");
+
+    need_role::
+
+      "configured_role"
+        string => "undefined";
+
+  classes:
+
+    any::
+
+      "have_role"
+        expression => fileexists("/$(file_names.cryptoo_role)");
+
+      "need_role"
+        not => fileexists("/$(file_names.cryptoo_role)");
+
+    have_role::
+
+      "role_$(configured_role)"
+        expression => "any";
+
+    need_role::
+
+      "role_undefined"
+        expression => "any";
+
+    role_master|role_desktop_host::
+
+      "cryptoo_host"
+        expression => "any";
+
+}

@@ -5,14 +5,13 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
-              "cryptoo/local.cf",
-              "cryptoo/system.cf",
-              "cryptoo/config/file_names.cf"
+              "cryptoo/control.cf",
+              "@(cryptoo:control.role_inputs)"
             };
 
 }
 
-bundle common cryptoo
+bundle agent cryptoo
 
 {
 
@@ -20,71 +19,19 @@ bundle common cryptoo
 
     any::
 
-      "bundles"
-        slist => {
-                   "cryptoo:cryptoo",
-                   "cryptoo:local",
-                   "cryptoo:machine",
-                   "cryptoo:cryptoo_system"
-                 };
+      "role_bundle"
+        slist => bundlesmatching(".*:$(control.configured_role)", "cryptoo_role");
 
-      "local_inputs"
-        slist => lsdir("$(this.promise_dirname)/local/promises", ".*\.cf", "true");
+  methods:
 
-      "role_inputs"
-        slist => lsdir("$(this.promise_dirname)/roles", ".*\.cf", "true");
+    !default:cryptoo_bootstrap::
 
-      "host_common_inputs"
-        slist => lsdir("$(this.promise_dirname)/roles/host/common", ".*\.cf", "true");
+      "configure system"
+        usebundle => $(role_bundle);
 
-      "host_inputs"
-        slist => lsdir("$(this.promise_dirname)/roles/host", ".*\.cf", "true");
+    default:cryptoo_bootstrap::
 
-      "guest_common_inputs"
-        slist => lsdir("$(this.promise_dirname)/roles/guest/common", ".*\.cf", "true");
-
-      "guest_inputs"
-        slist => lsdir("$(this.promise_dirname)/roles/guest", ".*\.cf", "true");
-
-      "desktop_guest_inputs"
-        slist => lsdir("$(this.promise_dirname)/roles/guest/desktop_guests", ".*\.cf", "true");
-
-      "server_guest_inputs"
-        slist => lsdir("$(this.promise_dirname)/roles/guest/server_guests", ".*\.cf", "true");
-
-    have_role::
-
-      "configured_role"
-        string => readfile("/$(file_names.cryptoo_role)","128");
-
-    need_role::
-
-      "configured_role"
-        string => "undefined";
-
-  classes:
-
-    any::
-
-      "have_role"
-        expression => fileexists("/$(file_names.cryptoo_role)");
-
-      "need_role"
-        not => fileexists("/$(file_names.cryptoo_role)");
-
-    have_role::
-
-      "role_$(configured_role)"
-        expression => "any";
-
-    need_role::
-
-      "role_undefined"
-        expression => "any";
-
-    role_master|role_desktop_host::
-
-      "cryptoo_host"
-        expression => "any";
+      "bootstrap a guest image"
+        usebundle => cryptoo_bootstrap;
 
 }

@@ -5,7 +5,7 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
-              "cryptoo/cryptoo.cf",
+              "cryptoo/control.cf",
               "cryptoo/config/config.cf",
               "cryptoo/config/file_names.cf",
               "cryptoo/config/network.cf"
@@ -27,7 +27,7 @@ bundle common machine
     defined_number::
 
       "machine_number"
-        string => "$(config.defined_numbers[$(cryptoo.configured_role)])";
+        string => "$(config.defined_numbers[$(control.configured_role)])";
 
       "hostname"
         string => "$(network.machine_names[$(this.machine_number)][name])";
@@ -35,7 +35,7 @@ bundle common machine
     have_hostname&(!defined_number)::
 
       "hostname"
-        string => "$(cryptoo.configured_hostname)";
+        string => "$(control.configured_hostname)";
 
       "machine_number"
         string => "$(network.machine_numbers[$(this.hostname)])";
@@ -58,7 +58,7 @@ bundle common machine
     any::
 
       "defined_number"
-        not => strcmp("$(config.defined_numbers[$(cryptoo.configured_role)])","");
+        not => strcmp("$(config.defined_numbers[$(control.configured_role)])","");
 
       "have_hostname"
         expression => fileexists("/$(file_names.cryptoo_hostname)");
@@ -67,7 +67,7 @@ bundle common machine
 
     verbose_mode&(defined_number|(have_hostname&(!defined_number)))::
 
-      "My role is: $(cryptoo.configured_role)";
+      "My role is: $(control.configured_role)";
       "My number is: $(this.machine_number)";
       "My hostname is: $(this.hostname)";
 
