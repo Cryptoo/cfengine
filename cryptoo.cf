@@ -7,7 +7,7 @@ body file control
   inputs => {
               "cryptoo/local.cf",
               "cryptoo/system.cf",
-              "cryptoo/config/templates.cf"
+              "cryptoo/config/file_names.cf"
             };
 
 }
@@ -33,7 +33,7 @@ bundle common cryptoo
     have_role::
 
       "configured_role"
-        string => readfile("/$(cryptoo:file_names.cryptoo_role)","128");
+        string => readfile("/$(file_names.cryptoo_role)","128");
 
     need_role::
 
@@ -45,10 +45,10 @@ bundle common cryptoo
     any::
 
       "have_role"
-        expression => fileexists("/$(cryptoo:file_names.cryptoo_role)");
+        expression => fileexists("/$(file_names.cryptoo_role)");
 
       "need_role"
-        not => fileexists("/$(cryptoo:file_names.cryptoo_role)");
+        not => fileexists("/$(file_names.cryptoo_role)");
 
     have_role::
 
