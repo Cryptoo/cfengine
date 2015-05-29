@@ -6,6 +6,7 @@ body file control
 
   inputs => {
               "cryptoo/common/common.cf",
+              "cryptoo/common/mounts.cf",
               "cryptoo/config/config.cf",
               "cryptoo/config/directory_names.cf",
               "cryptoo/config/directory_groups.cf",

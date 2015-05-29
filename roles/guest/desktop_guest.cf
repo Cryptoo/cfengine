@@ -6,9 +6,9 @@ body file control
 
   inputs => {
               "cryptoo/common/common.cf",
+              "cryptoo/common/mounts.cf",
               "cryptoo/config/file_names.cf",
               "cryptoo/config/templates.cf",
-              "cryptoo/roles/host/common/mounts.cf",
               "cryptoo/util/perms.cf",
               "@(cryptoo:control.desktop_guest_inputs)"
             };
