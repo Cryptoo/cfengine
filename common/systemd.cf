@@ -20,6 +20,13 @@ bundle agent systemd(root, role)
 
 {
 
+  vars:
+
+    any::
+
+      "hostname"
+        string => '{ "value": "$(machine.hostname)" }';
+
   classes:
 
     any::
@@ -30,6 +37,13 @@ bundle agent systemd(root, role)
   files:
 
     any::
+
+      "$(root)$(file_names.hostname_systemd)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[value])",
+        template_method => "mustache",
+        template_data => parsejson($(this.hostname));
 
       "$(root)$(file_names.cf_execd_service)"
         perms => system,

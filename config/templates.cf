@@ -47,6 +47,7 @@ bundle common templates
                     "site_repo_name",
                     "subnets",
                     "world_sets",
+                    "value"
                  };
 
       "template[$(template_list)]"

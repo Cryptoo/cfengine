@@ -320,6 +320,8 @@ bundle common file_names
         string => "common/profile_parent.txt";
       "template_serial_autologin"
         string => "common/serial_autologin.txt";
+      "template_value"
+        string => "common/value_mustache.txt";
       "template_world_sets"
         string => "common/world_sets.txt";
       "template_crypttab"
