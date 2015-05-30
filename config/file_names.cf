@@ -291,59 +291,86 @@ bundle common file_names
       "sshd_app"
         string => "$(cryptoo:directory_names.fs_standard_admin_apps)/sshd";
       "template_cf_execd"
-        string => "common/cf-execd_service.txt";
+        string => "common/cf-execd_service.txt",
+        meta => { "template" };
       "template_cf_monitord"
-        string => "common/cf-monitord_service.txt";
+        string => "common/cf-monitord_service.txt",
+        meta => { "template" };
       "template_cf_serverd"
-        string => "common/cf-serverd_service.txt";
+        string => "common/cf-serverd_service.txt",
+        meta => { "template" };
       "template_env_cryptoo"
-        string => "common/env_cryptoo.txt";
+        string => "common/env_cryptoo.txt",
+        meta => { "template" };
       "template_env_locale"
-        string => "common/env_locale.txt";
+        string => "common/env_locale.txt",
+        meta => { "template" };
       "template_fstab"
-        string => "common/fstab.txt";
+        string => "common/fstab.txt",
+        meta => { "template" };
       "template_fstab_mustache"
-        string => "common/fstab_mustache.txt";
+        string => "common/fstab_mustache.txt",
+        meta => { "template" };
       "template_ini"
-        string => "common/ini_mustache.txt";
+        string => "common/ini_mustache.txt",
+        meta => { "template" };
       "template_ipset_service"
-        string => "common/ipset_service.txt";
+        string => "common/ipset_service.txt",
+        meta => { "template" };
       "template_local_layout_conf"
-        string => "common/local_layout_conf.txt";
+        string => "common/local_layout_conf.txt",
+        meta => { "template" };
       "template_local_repo_name"
-        string => "common/local_repo_name.txt";
+        string => "common/local_repo_name.txt",
+        meta => { "template" };
       "template_make_conf"
-        string => "common/make_conf.txt";
+        string => "common/make_conf.txt",
+        meta => { "template" };
       "template_networks"
-        string => "common/networks.txt";
+        string => "common/networks.txt",
+        meta => { "template" };
       "template_profile_parent"
-        string => "common/profile_parent.txt";
+        string => "common/profile_parent.txt",
+        meta => { "template" };
       "template_serial_autologin"
-        string => "common/serial_autologin.txt";
+        string => "common/serial_autologin.txt",
+        meta => { "template" };
       "template_value"
-        string => "common/value_mustache.txt";
+        string => "common/value_mustache.txt",
+        meta => { "template" };
       "template_world_sets"
-        string => "common/world_sets.txt";
+        string => "common/world_sets.txt",
+        meta => { "template" };
       "template_crypttab"
-        string => "host/crypttab.txt";
+        string => "host/crypttab.txt",
+        meta => { "template" };
       "template_dmcrypt"
-        string => "host/dmcrypt.txt";
+        string => "host/dmcrypt.txt",
+        meta => { "template" };
       "template_dracut_conf"
-        string => "host/dracut_conf.txt";
+        string => "host/dracut_conf.txt",
+        meta => { "template" };
       "template_env_kernel"
-        string => "host/env_kernel.txt";
+        string => "host/env_kernel.txt",
+        meta => { "template" };
       "template_guest_role"
-        string => "host/guest_role.txt";
+        string => "host/guest_role.txt",
+        meta => { "template" };
       "template_machine_names"
-        string => "host/machine_names.txt";
+        string => "host/machine_names.txt",
+        meta => { "template" };
       "template_shorewall_service"
-        string => "common/shorewall_service.txt";
+        string => "common/shorewall_service.txt",
+        meta => { "template" };
       "template_site_config"
-        string => "host/site_config.txt";
+        string => "host/site_config.txt",
+        meta => { "template" };
       "template_site_repo_name"
-        string => "host/site_repo_name.txt";
+        string => "host/site_repo_name.txt",
+        meta => { "template" };
       "template_subnets"
-        string => "host/subnets.txt";
+        string => "host/subnets.txt",
+        meta => { "template" };
       "overlay_conf"
         string => "$(cryptoo:directory_names.fs_volatile_overlay)/make.conf";
       "bitcoin_overlay"

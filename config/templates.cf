@@ -19,47 +19,30 @@ bundle common templates
 
     any::
 
-      "template_list"
-        slist => {
-                    "cf_execd",
-                    "cf_monitord",
-                    "cf_serverd",
-                    "crypttab",
-                    "dmcrypt",
-                    "dracut_conf",
-                    "env_cryptoo",
-                    "env_kernel",
-                    "env_locale",
-                    "fstab",
-                    "fstab_mustache",
-                    "guest_role",
-                    "ini",
-                    "ipset_service",
-                    "local_layout_conf",
-                    "local_repo_name",
-                    "machine_names",
-                    "make_conf",
-                    "networks",
-                    "profile_parent",
-                    "serial_autologin",
-                    "shorewall_service",
-                    "site_config",
-                    "site_repo_name",
-                    "subnets",
-                    "world_sets",
-                    "value"
-                 };
+      "template_vars"
+        slist => variablesmatching("cryptoo:.*", "template");
 
-      "template[$(template_list)]"
-        string => ifelse("local_template_$(template_list)", "$(cryptoo:directory_names.fs_volatile_local_templates)/$(cryptoo:file_names.template_$(template_list))",
-                         "!local_template_$(template_list)", "$(cryptoo:directory_names.fs_volatile_cf_templates)/$(cryptoo:file_names.template_$(template_list))",
+    template_list::
+
+      "template_name[$(template_vars)]"
+        string => "$(template_var[$(template_vars)][1])";
+
+      "template_names"
+        slist => getvalues("template_name");
+
+      "template[$(template_names)]"
+        string => ifelse("local_template_$(template_names)", "$(cryptoo:directory_names.fs_volatile_local_templates)/$(cryptoo:file_names.template_$(template_names))",
+                         "!local_template_$(template_names)", "$(cryptoo:directory_names.fs_volatile_cf_templates)/$(cryptoo:file_names.template_$(template_names))",
                          "missing");
 
   classes:
 
     any::
 
-      "local_template_$(template_list)"
-        expression => fileexists("/$(cryptoo:directory_names.fs_volatile_local_templates)/$(cryptoo:file_names.template_$(template_list))");
+      "local_template_$(template_names)"
+        expression => fileexists("/$(cryptoo:directory_names.fs_volatile_local_templates)/$(cryptoo:file_names.template_$(template_names))");
+
+      "template_list"
+        expression => regextract("cryptoo:file_names\.template_(.*)", "$(template_vars)", "template_var[$(template_vars)]");
 
 }
