@@ -19,31 +19,31 @@ system-tmp                                              /$(cryptoo:directory_nam
 
 /                                                       /$(cryptoo:directory_names.fs_mount_root)            none        bind          0 0
 
-/$(cryptoo:directory_names.fs_volatile_overlay)         /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no-multilib/$(cryptoo:directory_names.fs_volatile_overlay)      none        rbind
-/$(cryptoo:directory_names.fs_cryptoo)                  /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no-multilib/$(cryptoo:directory_names.fs_cryptoo)               none        rbind
-/$(cryptoo:directory_names.fs_pm)                       /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no-multilib/$(cryptoo:directory_names.fs_pm)                    none        rbind
-/$(cryptoo:directory_names.fs_site_pm)                  /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no-multilib/$(cryptoo:directory_names.fs_site_pm)               none        rbind
-/$(cryptoo:directory_names.fs_site_sources)             /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no-multilib/$(cryptoo:directory_names.fs_site_sources)          none        rbind
-/$(cryptoo:directory_names.fs_dev_base)                 /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no-multilib/$(cryptoo:directory_names.fs_dev_base)              none        rbind
-/$(cryptoo:directory_names.fs_proc_base)                /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no-multilib/$(cryptoo:directory_names.fs_proc_base)             none        rbind
-/$(cryptoo:directory_names.fs_sys_base)                 /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no-multilib/$(cryptoo:directory_names.fs_sys_base)              none        rbind
-/$(cryptoo:directory_names.fs_site_apps)                /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no-multilib/$(cryptoo:directory_names.fs_site_apps)             none        rbind
-/$(cryptoo:directory_names.fs_site_srcpkg)              /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no-multilib/$(cryptoo:directory_names.fs_site_srcpkg)           none        rbind
-/$(cryptoo:directory_names.fs_site_binpkg)              /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no-multilib/$(cryptoo:directory_names.fs_site_binpkg)           none        rbind
-server-system-tmp                                       /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no-multilib/$(cryptoo:directory_names.fs_temp_base)             tmpfs       size=1G,nosuid,nodev
+/$(cryptoo:directory_names.fs_volatile_overlay)         /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no_multilib/$(cryptoo:directory_names.fs_volatile_overlay)      none        rbind
+/$(cryptoo:directory_names.fs_cryptoo)                  /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no_multilib/$(cryptoo:directory_names.fs_cryptoo)               none        rbind
+/$(cryptoo:directory_names.fs_pm)                       /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no_multilib/$(cryptoo:directory_names.fs_pm)                    none        rbind
+/$(cryptoo:directory_names.fs_site_pm)                  /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no_multilib/$(cryptoo:directory_names.fs_site_pm)               none        rbind
+/$(cryptoo:directory_names.fs_site_sources)             /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no_multilib/$(cryptoo:directory_names.fs_site_sources)          none        rbind
+/$(cryptoo:directory_names.fs_dev_base)                 /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no_multilib/$(cryptoo:directory_names.fs_dev_base)              none        rbind
+/$(cryptoo:directory_names.fs_proc_base)                /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no_multilib/$(cryptoo:directory_names.fs_proc_base)             none        rbind
+/$(cryptoo:directory_names.fs_sys_base)                 /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no_multilib/$(cryptoo:directory_names.fs_sys_base)              none        rbind
+/$(cryptoo:directory_names.fs_site_apps)                /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no_multilib/$(cryptoo:directory_names.fs_site_apps)             none        rbind
+/$(cryptoo:directory_names.fs_site_srcpkg)              /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no_multilib/$(cryptoo:directory_names.fs_site_srcpkg)           none        rbind
+/$(cryptoo:directory_names.fs_site_binpkg)              /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no_multilib/$(cryptoo:directory_names.fs_site_binpkg)           none        rbind
+server-system-tmp                                       /$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no_multilib/$(cryptoo:directory_names.fs_temp_base)             tmpfs       size=1G,nosuid,nodev
 
-/$(cryptoo:directory_names.fs_volatile_overlay)         /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/$(cryptoo:directory_names.fs_volatile_overlay)     none        rbind
-/$(cryptoo:directory_names.fs_cryptoo)                  /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/$(cryptoo:directory_names.fs_cryptoo)              none        rbind
-/$(cryptoo:directory_names.fs_pm)                       /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/$(cryptoo:directory_names.fs_pm)                   none        rbind
-/$(cryptoo:directory_names.fs_site_pm)                  /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/$(cryptoo:directory_names.fs_site_pm)              none        rbind
-/$(cryptoo:directory_names.fs_site_sources)             /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/$(cryptoo:directory_names.fs_site_sources)         none        rbind
-/$(cryptoo:directory_names.fs_dev_base)                 /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/$(cryptoo:directory_names.fs_dev_base)             none        rbind
-/$(cryptoo:directory_names.fs_proc_base)                /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/$(cryptoo:directory_names.fs_proc_base)            none        rbind
-/$(cryptoo:directory_names.fs_sys_base)                 /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/$(cryptoo:directory_names.fs_sys_base)             none        rbind
-/$(cryptoo:directory_names.fs_site_apps)                /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/$(cryptoo:directory_names.fs_site_apps)            none        rbind
-/$(cryptoo:directory_names.fs_site_srcpkg)              /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/$(cryptoo:directory_names.fs_site_srcpkg)          none        rbind
-/$(cryptoo:directory_names.fs_site_binpkg)              /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/$(cryptoo:directory_names.fs_site_binpkg)          none        rbind
-desktop-system-tmp                                      /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/$(cryptoo:directory_names.fs_temp_base)            tmpfs       size=1G,nosuid,nodev
+/$(cryptoo:directory_names.fs_volatile_overlay)         /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no_multilib/$(cryptoo:directory_names.fs_volatile_overlay)     none        rbind
+/$(cryptoo:directory_names.fs_cryptoo)                  /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no_multilib/$(cryptoo:directory_names.fs_cryptoo)              none        rbind
+/$(cryptoo:directory_names.fs_pm)                       /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no_multilib/$(cryptoo:directory_names.fs_pm)                   none        rbind
+/$(cryptoo:directory_names.fs_site_pm)                  /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no_multilib/$(cryptoo:directory_names.fs_site_pm)              none        rbind
+/$(cryptoo:directory_names.fs_site_sources)             /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no_multilib/$(cryptoo:directory_names.fs_site_sources)         none        rbind
+/$(cryptoo:directory_names.fs_dev_base)                 /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no_multilib/$(cryptoo:directory_names.fs_dev_base)             none        rbind
+/$(cryptoo:directory_names.fs_proc_base)                /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no_multilib/$(cryptoo:directory_names.fs_proc_base)            none        rbind
+/$(cryptoo:directory_names.fs_sys_base)                 /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no_multilib/$(cryptoo:directory_names.fs_sys_base)             none        rbind
+/$(cryptoo:directory_names.fs_site_apps)                /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no_multilib/$(cryptoo:directory_names.fs_site_apps)            none        rbind
+/$(cryptoo:directory_names.fs_site_srcpkg)              /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no_multilib/$(cryptoo:directory_names.fs_site_srcpkg)          none        rbind
+/$(cryptoo:directory_names.fs_site_binpkg)              /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no_multilib/$(cryptoo:directory_names.fs_site_binpkg)          none        rbind
+desktop-system-tmp                                      /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no_multilib/$(cryptoo:directory_names.fs_temp_base)            tmpfs       size=1G,nosuid,nodev
 
 /$(cryptoo:directory_names.fs_volatile_overlay)         /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/multilib/$(cryptoo:directory_names.fs_volatile_overlay)        none        rbind
 /$(cryptoo:directory_names.fs_cryptoo)                  /$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/multilib/$(cryptoo:directory_names.fs_cryptoo)                 none        rbind

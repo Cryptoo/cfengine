@@ -45,6 +45,191 @@ bundle agent host(arch)
         string => "/$(cryptoo:file_names.find_app) /$(cryptoo:directory_names.fs_storage_pm)/distfiles -mindepth 1 -maxdepth 1 -name * -exec /$(cryptoo:file_names.move_app) {} /$(cryptoo:directory_names.fs_storage_srcpkg) ;",
         comment => "this command moves the contents of /usr/portage/distfiles to /usr/site-local/distfiles. Also needed for bootstrapping";
 
+      "chroot"
+        data => mergedata("cryptoo:site.config[chroot_guest]");
+
+      "chroot_list"
+        slist => getindices("chroot");
+
+      "chroot_mounts[$(chroot_list)][1]"
+        string => '{ "source": "/$(directory_names.fs_volatile_overlay)", "target": "/$(directory_names.fs_volatile_images)/$(chroot[$(chroot_list)][class])/$(chroot[$(chroot_list)][arch])/$(chroot[$(chroot_list)][multilib])/$(directory_names.fs_volatile_overlay)", "type": "none", "options": "bind", "dump": "0", "pass": "0", }';
+
+      "chroot_mounts[$(chroot_list)][2]"
+        string => '{ "source": "/$(directory_names.fs_cryptoo)", "target": "/$(directory_names.fs_volatile_images)/$(chroot[$(chroot_list)][class])/$(chroot[$(chroot_list)][arch])/$(chroot[$(chroot_list)][multilib])/$(directory_names.fs_cryptoo)", "type": "none", "options": "bind", "dump": "0", "pass": "0", }';
+
+      "chroot_mounts[$(chroot_list)][3]"
+        string => '{ "source": "/$(directory_names.fs_pm)", "target": "/$(directory_names.fs_volatile_images)/$(chroot[$(chroot_list)][class])/$(chroot[$(chroot_list)][arch])/$(chroot[$(chroot_list)][multilib])/$(directory_names.fs_pm)", "type": "none", "options": "bind", "dump": "0", "pass": "0", }';
+
+      "chroot_mounts[$(chroot_list)][4]"
+        string => '{ "source": "/$(directory_names.fs_site_pm)", "target": "/$(directory_names.fs_volatile_images)/$(chroot[$(chroot_list)][class])/$(chroot[$(chroot_list)][arch])/$(chroot[$(chroot_list)][multilib])/$(directory_names.fs_site_pm)", "type": "none", "options": "bind", "dump": "0", "pass": "0", }';
+
+      "chroot_mounts[$(chroot_list)][5]"
+        string => '{ "source": "/$(directory_names.fs_site_sources)", "target": "/$(directory_names.fs_volatile_images)/$(chroot[$(chroot_list)][class])/$(chroot[$(chroot_list)][arch])/$(chroot[$(chroot_list)][multilib])/$(directory_names.fs_site_sources)", "type": "none", "options": "bind", "dump": "0", "pass": "0", }';
+
+      "chroot_mounts[$(chroot_list)][6]"
+        string => '{ "source": "/$(directory_names.fs_dev_base)", "target": "/$(directory_names.fs_volatile_images)/$(chroot[$(chroot_list)][class])/$(chroot[$(chroot_list)][arch])/$(chroot[$(chroot_list)][multilib])/$(directory_names.fs_dev_base)", "type": "none", "options": "bind", "dump": "0", "pass": "0", }';
+
+      "chroot_mounts[$(chroot_list)][7]"
+        string => '{ "source": "/$(directory_names.fs_proc_base)", "target": "/$(directory_names.fs_volatile_images)/$(chroot[$(chroot_list)][class])/$(chroot[$(chroot_list)][arch])/$(chroot[$(chroot_list)][multilib])/$(directory_names.fs_proc_base)", "type": "none", "options": "bind", "dump": "0", "pass": "0", }';
+
+      "chroot_mounts[$(chroot_list)][8]"
+        string => '{ "source": "/$(directory_names.fs_sys_base)", "target": "/$(directory_names.fs_volatile_images)/$(chroot[$(chroot_list)][class])/$(chroot[$(chroot_list)][arch])/$(chroot[$(chroot_list)][multilib])/$(directory_names.fs_sys_base)", "type": "none", "options": "bind", "dump": "0", "pass": "0", }';
+
+      "chroot_mounts[$(chroot_list)][9]"
+        string => '{ "source": "/$(directory_names.fs_site_apps)", "target": "/$(directory_names.fs_volatile_images)/$(chroot[$(chroot_list)][class])/$(chroot[$(chroot_list)][arch])/$(chroot[$(chroot_list)][multilib])/$(directory_names.fs_site_apps)", "type": "none", "options": "bind", "dump": "0", "pass": "0", }';
+
+      "chroot_mounts[$(chroot_list)][10]"
+        string => '{ "source": "/$(directory_names.fs_site_srcpkg) ", "target": "/$(directory_names.fs_volatile_images)/$(chroot[$(chroot_list)][class])/$(chroot[$(chroot_list)][arch])/$(chroot[$(chroot_list)][multilib])/$(directory_names.fs_site_srcpkg) ", "type": "none", "options": "bind", "dump": "0", "pass": "0", }';
+
+      "chroot_mounts[$(chroot_list)][11]"
+        string => '{ "source": "/$(directory_names.fs_site_binpkg)", "target": "/$(directory_names.fs_volatile_images)/$(chroot[$(chroot_list)][class])/$(chroot[$(chroot_list)][arch])/$(chroot[$(chroot_list)][multilib])/$(directory_names.fs_site_binpkg)", "type": "none", "options": "bind", "dump": "0", "pass": "0", }';
+
+      "chroot_mounts[$(chroot_list)][12]"
+        string => '{ "source": "$(chroot[$(chroot_list)][class])_$(chroot[$(chroot_list)][arch])_$(chroot[$(chroot_list)][multilib])_tmp", "target": "/$(directory_names.fs_volatile_images)/$(chroot[$(chroot_list)][class])/$(chroot[$(chroot_list)][arch])/$(chroot[$(chroot_list)][multilib])/$(cryptoo:directory_names.fs_temp_base)", "type": "tmpfs", "options": "size=1G,nosuid,nodev", "dump": "0", "pass": "0", }';
+
+      "chroot_mount_$(chroot_list)_index"
+        slist => getindices("chroot_mounts[$(chroot_list)]");
+
+      "chroot_data_$(chroot_list)_$(chroot_mount_$(chroot_list)_index)"
+        data => parsejson("$(chroot_mounts[$(chroot_list)][$(chroot_mount_$(chroot_list)_index)])");
+
+      "fstab_json"
+        string => '
+          {
+            "mounts":
+               [
+                 { 
+                   "source": "LABEL=$(machine.hostname)-boot",
+                   "target": "/$(directory_names.fs_boot_base)",
+                   "type": "$(site.config[boot_fs][filesystem])",
+                   "options": "$(site.config[boot_fs][options])",
+                   "dump": "0",
+                   "pass": "2"
+                 },
+                 { 
+                   "source": "UUID=$(machine.root_uuid)",
+                   "target": "/",
+                   "type": "$(site.config[host_fs][filesystem])",
+                   "options": "$(site.config[host_fs][options])",
+                   "dump": "0",
+                   "pass": "1"
+                 },
+                 { 
+                   "source": "/dev/mapper/$(machine.hostname)-swap",
+                   "target": "none",
+                   "type": "swap",
+                   "options": "sw",
+                   "dump": "0",
+                   "pass": "0"
+                 },
+                 { 
+                   "source": "/dev/mapper/$(machine.hostname)-storage",
+                   "target": "/$(directory_names.fs_storage_base)",
+                   "type": "$(site.config[host_fs][filesystem])",
+                   "options": "$(site.config[host_fs][options])",
+                   "dump": "0",
+                   "pass": "2"
+                 },
+                 { 
+                   "source": "/$(cryptoo:directory_names.fs_storage_apps)",
+                   "target": "/usr/site-local/bin",
+                   "type": "none",
+                   "options": "bind",
+                   "dump": "0",
+                   "pass": "0"
+                 },
+                 { 
+                   "source": "/$(cryptoo:directory_names.fs_storage_cryptoo)",
+                   "target": "/$(cryptoo:directory_names.fs_cryptoo)",
+                   "type": "none",
+                   "options": "bind",
+                   "dump": "0",
+                   "pass": "0"
+                 },
+                 { 
+                   "source": "/$(cryptoo:directory_names.fs_storage_home)",
+                   "target": "/$(cryptoo:directory_names.fs_home)",
+                   "type": "none",
+                   "options": "bind",
+                   "dump": "0",
+                   "pass": "0"
+                 },
+                 { 
+                   "source": "/$(cryptoo:directory_names.fs_storage_srcpkg)",
+                   "target": "/$(cryptoo:directory_names.fs_site_srcpkg)",
+                   "type": "none",
+                   "options": "bind",
+                   "dump": "0",
+                   "pass": "0"
+                 },
+                 { 
+                   "source": "/$(cryptoo:directory_names.fs_storage_overlay)",
+                   "target": "/$(cryptoo:directory_names.fs_volatile_overlay)",
+                   "type": "none",
+                   "options": "bind",
+                   "dump": "0",
+                   "pass": "0"
+                 },
+                 { 
+                   "source": "/$(cryptoo:directory_names.fs_storage_binpkg)",
+                   "target": "/$(cryptoo:directory_names.fs_site_binpkg)",
+                   "type": "none",
+                   "options": "bind",
+                   "dump": "0",
+                   "pass": "0"
+                 },
+                 { 
+                   "source": "/$(cryptoo:directory_names.fs_storage_pm)",
+                   "target": "/$(cryptoo:directory_names.fs_pm)",
+                   "type": "none",
+                   "options": "bind",
+                   "dump": "0",
+                   "pass": "0"
+                 },
+                 { 
+                   "source": "/$(cryptoo:directory_names.fs_storage_pm_site)",
+                   "target": "/$(cryptoo:directory_names.fs_site_pm)",
+                   "type": "none",
+                   "options": "bind",
+                   "dump": "0",
+                   "pass": "0"
+                 },
+                 { 
+                   "source": "/$(cryptoo:directory_names.fs_storage_shared) ",
+                   "target": "/$(cryptoo:directory_names.fs_mount_shared)",
+                   "type": "none",
+                   "options": "bind",
+                   "dump": "0",
+                   "pass": "0"
+                 },
+                 { 
+                   "source": "/$(cryptoo:directory_names.fs_storage_sources)",
+                   "target": "/$(cryptoo:directory_names.fs_site_sources)",
+                   "type": "none",
+                   "options": "bind",
+                   "dump": "0",
+                   "pass": "0"
+                 },
+                 { 
+                   "source": "/",
+                   "target": "/$(cryptoo:directory_names.fs_mount_root)",
+                   "type": "none",
+                   "options": "bind",
+                   "dump": "0",
+                   "pass": "0"
+                 },
+                 { 
+                   "source": "system-tmp",
+                   "target": "/$(cryptoo:directory_names.fs_temp_base)",
+                   "type": "tmpfs",
+                   "options": "size=1G",
+                   "dump": "0",
+                   "pass": "0"
+                 }
+               ]
+          }
+        ';
+
   classes:
 
     any::
@@ -161,6 +346,14 @@ bundle agent host(arch)
         classes => default:if_repaired("fstab_repaired"),
         comment => "configure /etc/fstab";
 
+      "/$(cryptoo:file_names.fstab).mustache"
+        perms => cryptoo:system,
+        create => "true",
+        edit_template => "/$(cryptoo:templates.template[fstab_mustache])",
+        template_method => "mustache",
+        template_data => parsejson($(this.fstab_json)),
+        comment => "configure /etc/fstab";
+
       "/$(cryptoo:directory_names.fs_storage_base)/."
         perms => cryptoo:system,
         create => "true",
@@ -264,14 +457,8 @@ bundle agent host(arch)
       "configure OpenRC"
         usebundle => cryptoo:openrc("/");
 
-      "manage files for the server skeleton"
-        usebundle => cryptoo:cryptoo_filesystem("/$(cryptoo:directory_names.fs_volatile_images)/server/x86_64/no-multilib/","template_server","x86_64","nomultilib");
-
-      "manage files for the desktop skeleton"
-        usebundle => cryptoo:cryptoo_filesystem("/$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/no-multilib/","template_desktop","x86_64","nomultilib");
-
-      "manage files for the desktop-multilib skeleton"
-        usebundle => cryptoo:cryptoo_filesystem("/$(cryptoo:directory_names.fs_volatile_images)/desktop/x86_64/multilib/","template_desktop","x86_64","multilib");
+      "manage chroot guests"
+        usebundle => cryptoo:cryptoo_filesystem("/$(cryptoo:directory_names.fs_volatile_images)/$(chroot[$(chroot_list)][class])/$(chroot[$(chroot_list)][arch])/$(chroot[$(chroot_list)][multilib])/","template_$(chroot[$(chroot_list)][class])","$(chroot[$(chroot_list)][arch])","$(chroot[$(chroot_list)][multilib])");
 
       "manage crypttab"
         usebundle => cryptoo:crypttab;
@@ -282,7 +469,7 @@ bundle agent host(arch)
     (all_mounted)|(all_ready)::
 
       "manage common files"
-        usebundle => cryptoo:cryptoo_filesystem("/","master","$(arch)","nomultilib");
+        usebundle => cryptoo:cryptoo_filesystem("/","master","$(arch)","no_multilib");
 
       "configure host kernel"
         usebundle => cryptoo:kconfig("host", "$(arch)"),
@@ -353,4 +540,11 @@ bundle agent host(arch)
       "/$(cryptoo:file_names.distfiles_perms_app)";
 
       "/$(cryptoo:file_names.pkgdir_perms_app)";
+
+  reports:
+
+    any::
+
+#      "$(chroot_mounts[$(chroot_list)][$(chroot_mount_$(chroot_list)_index)])";
+
 }

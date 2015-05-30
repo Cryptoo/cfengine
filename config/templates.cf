@@ -31,6 +31,7 @@ bundle common templates
                     "env_kernel",
                     "env_locale",
                     "fstab",
+                    "fstab_mustache",
                     "guest_role",
                     "ini",
                     "ipset_service",

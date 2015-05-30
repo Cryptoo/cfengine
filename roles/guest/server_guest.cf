@@ -42,7 +42,7 @@ bundle agent server_guest(root, role, arch)
     any::
 
       "manage common files"
-        usebundle => cryptoo:cryptoo_filesystem("$(root)","$(role)","$(arch)","nomultilib");
+        usebundle => cryptoo:cryptoo_filesystem("$(root)","$(role)","$(arch)","no_multilib");
 
       "manage guest files"
         usebundle => cryptoo:common_guest("$(root)","$(role)","$(arch)");

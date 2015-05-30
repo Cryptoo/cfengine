@@ -19,24 +19,21 @@
                 "filesystem": "ext4",
                 "options": "defaults,noatime"
               }
-    "guest_templates": {
-                   "server": {
+    "chroot_guest": {
+                   "1": {
+                              "class": "server",
                               "arch": "x86_64",
-                              "portage_arch": "amd64",
-                              "multilib": false,
-                              "graphical": false
+                              "multilib": "no_multilib"
                             },
-                   "desktop": {
+                   "2": {
+                              "class": "desktop",
                               "arch": "x86_64",
-                              "portage_arch": "amd64",
-                              "multilib": false
-                              "graphical": true
+                              "multilib": "no_multilib"
                             },
-                   "desktop-multilib": {
+                   "3": {
+                              "class": "desktop",
                               "arch": "x86_64",
-                              "portage_arch": "amd64",
-                              "multilib": true,
-                              "graphical": true
+                              "multilib": "multilib"
                             }
                  }
 

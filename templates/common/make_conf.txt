@@ -43,19 +43,19 @@ ALSA_CARDS="$(cryptoo:site.config[make.conf][ALSA_CARDS])"
 [%CFEngine make_conf_graphical&runtime_guest:: %]
 ALSA_CARDS="ac97"
 
-[%CFEngine pkgdir_master&make_conf_nomultilib:: %]
-PKGDIR="/usr/site-local/packages/host/no-multilib/${ARCH}"
+[%CFEngine pkgdir_master&make_conf_no_multilib:: %]
+PKGDIR="/usr/site-local/packages/host/no_multilib/${ARCH}"
 [%CFEngine pkgdir_master&make_conf_multilib:: %]
 PKGDIR="/usr/site-local/packages/host/multilib/${ARCH}"
-[%CFEngine pkgdir_desktop_host&make_conf_nomultilib:: %]
-PKGDIR="/usr/site-local/packages/desktop-host/no-multilib/${ARCH}"
+[%CFEngine pkgdir_desktop_host&make_conf_no_multilib:: %]
+PKGDIR="/usr/site-local/packages/desktop-host/no_multilib/${ARCH}"
 [%CFEngine pkgdir_desktop_host&make_conf_multilib:: %]
 PKGDIR="/usr/site-local/packages/desktop-host/multilib/${ARCH}"
-[%CFEngine pkgdir_server_guest&make_conf_nomultilib:: %]
-PKGDIR="/usr/site-local/packages/server/no-multilib/${ARCH}"
+[%CFEngine pkgdir_server_guest&make_conf_no_multilib:: %]
+PKGDIR="/usr/site-local/packages/server/no_multilib/${ARCH}"
 [%CFEngine pkgdir_server_guest&make_conf_multilib:: %]
 PKGDIR="/usr/site-local/packages/server/multilib/${ARCH}"
-[%CFEngine pkgdir_desktop_guest&make_conf_nomultilib:: %]
-PKGDIR="/usr/site-local/packages/desktop/no-multilib/${ARCH}"
+[%CFEngine pkgdir_desktop_guest&make_conf_no_multilib:: %]
+PKGDIR="/usr/site-local/packages/desktop/no_multilib/${ARCH}"
 [%CFEngine pkgdir_desktop_guest&make_conf_multilib:: %]
 PKGDIR="/usr/site-local/packages/desktop/multilib/${ARCH}"

@@ -1,4 +1,4 @@
-[%CFEngine portage_nomultilib:: %]
+[%CFEngine portage_no_multilib:: %]
 ../../../../usr/portage/profiles/default/linux/amd64/13.0/no-multilib
 [%CFEngine portage_multilib:: %]
 ../../../../usr/portage/profiles/default/linux/amd64/13.0/

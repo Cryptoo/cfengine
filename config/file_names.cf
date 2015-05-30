@@ -276,6 +276,8 @@ bundle common file_names
         string => "common/env_locale.txt";
       "template_fstab"
         string => "common/fstab.txt";
+      "template_fstab_mustache"
+        string => "common/fstab_mustache.txt";
       "template_ini"
         string => "common/ini_mustache.txt";
       "template_ipset_service"

@@ -105,7 +105,7 @@ bundle agent cryptoo_bootstrap
       "bootstrap_server_guest"
         expression => "any";
 
-      "bootstrap_nomultilib"
+      "bootstrap_no_multilib"
         expression => "any";
 
     default:bootstrap_firewall_internal::
@@ -116,7 +116,7 @@ bundle agent cryptoo_bootstrap
       "bootstrap_server_guest"
         expression => "any";
 
-      "bootstrap_nomultilib"
+      "bootstrap_no_multilib"
         expression => "any";
 
     default:bootstrap_tor::
@@ -127,7 +127,7 @@ bundle agent cryptoo_bootstrap
       "bootstrap_server_guest"
         expression => "any";
 
-      "bootstrap_nomultilib"
+      "bootstrap_no_multilib"
         expression => "any";
 
     default:bootstrap_vpn_primary::
@@ -138,7 +138,7 @@ bundle agent cryptoo_bootstrap
       "bootstrap_server_guest"
         expression => "any";
 
-      "bootstrap_nomultilib"
+      "bootstrap_no_multilib"
         expression => "any";
 
     default:bootstrap_vpn_server::
@@ -149,7 +149,7 @@ bundle agent cryptoo_bootstrap
       "bootstrap_server_guest"
         expression => "any";
 
-      "bootstrap_nomultilib"
+      "bootstrap_no_multilib"
         expression => "any";
 
     default:bootstrap_mail_client::
@@ -160,7 +160,7 @@ bundle agent cryptoo_bootstrap
       "bootstrap_desktop_guest"
         expression => "any";
 
-      "bootstrap_nomultilib"
+      "bootstrap_no_multilib"
         expression => "any";
 
     default:bootstrap_web::
@@ -171,7 +171,7 @@ bundle agent cryptoo_bootstrap
       "bootstrap_desktop_guest"
         expression => "any";
 
-      "bootstrap_nomultilib"
+      "bootstrap_no_multilib"
         expression => "any";
 
     role_defined::
@@ -184,7 +184,7 @@ bundle agent cryptoo_bootstrap
     bootstrap_ready::
 
       "set users and groups"
-        usebundle => cryptoo_filesystem("/$(directory_names.fs_mount_cryptoo)","undefined","x86_64","nomultilib"),
+        usebundle => cryptoo_filesystem("/$(directory_names.fs_mount_cryptoo)","undefined","x86_64","no_multilib"),
         depends_on => { "skeleton_extracted" },
         handle => "users_created";
 
@@ -224,7 +224,7 @@ bundle agent cryptoo_bootstrap
         handle => "image_fs_mounted";
 
       "/$(file_names.emerge_app)"
-        args => "--config-root=/$(directory_names.fs_volatile_images)/server/x86_64/no-multilib/ --root=/$(directory_names.fs_mount_cryptoo) --root-deps --emptytree --quiet @system @$(this.role)",
+        args => "--config-root=/$(directory_names.fs_volatile_images)/server/x86_64/no_multilib/ --root=/$(directory_names.fs_mount_cryptoo) --root-deps --emptytree --quiet @system @$(this.role)",
         depends_on => { "users_created" },
         handle => "system_emerged";
 
@@ -238,7 +238,7 @@ bundle agent cryptoo_bootstrap
         depends_on => { "image_fs_unmounted" },
         handle => "loop_finished";
 
-    bootstrap_nomultilib::
+    bootstrap_no_multilib::
 
       "/$(file_names.tar_app)"
         args => "-xjpf $(this.stage3_amd64_nomultilib_best) -C /$(directory_names.fs_mount_cryptoo)",

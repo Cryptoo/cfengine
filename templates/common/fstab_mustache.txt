@@ -1,0 +1,3 @@
+{{#mounts}}
+{{source}}       {{target}}       {{type}}        {{options}}       {{dump}} {{pass}}
+{{/mounts}}

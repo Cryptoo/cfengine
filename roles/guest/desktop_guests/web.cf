@@ -19,6 +19,6 @@ bundle agent web
     any::
 
       "configure system as a web browser guest"
-        usebundle => cryptoo:desktop_guest("/", "web", "x86_64", "nomultilib");
+        usebundle => cryptoo:desktop_guest("/", "web", "x86_64", "no_multilib");
 
 }

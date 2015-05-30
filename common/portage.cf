@@ -23,7 +23,7 @@ bundle agent portage(root, role, arch, multilib)
 
   vars:
 
-    portage_nomultilib::
+    portage_no_multilib::
 
       "configured_role"
         string => concat("@", "$(role)");
