@@ -507,7 +507,6 @@ bundle common file_groups
       "use[host]"
         slist => {
                     "@(use[common])",
-                    "udev",
                     "host"
                  };
 
@@ -577,6 +576,7 @@ bundle common file_groups
       "use[desktop_host]"
         slist => {
                     "@(use[common])",
+                    "udev",
                     "desktop_host"
                  };
 
@@ -646,6 +646,7 @@ bundle common file_groups
       "use[master]"
         slist => {
                     "@(use[host])",
+                    "systemd",
                     "master"
                  };
 
