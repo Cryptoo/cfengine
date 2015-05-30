@@ -5,30 +5,84 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
+              "cryptoo/common/systemd/networkd.cf",
+              "cryptoo/common/systemd/service.cf",
+              "cryptoo/config/file_groups.cf",
               "cryptoo/config/file_names.cf",
+              "cryptoo/config/templates.cf",
               "cryptoo/util/contain.cf",
-              "cryptoo/util/classes.cf"
+              "cryptoo/util/perms.cf"
             };
 
 }
 
-bundle agent systemd_enable(root, service)
+bundle agent systemd(root, role)
 
 {
 
-  commands:
+  classes:
 
     any::
 
-      "/$(file_names.systemd_app)"
-        args => "is-enabled $(this.service)",
-        contain => silent_chroot($(this.root)),
-        classes => systemd_enabled;
+      "have_systemctl"
+        expression => fileexists("$(root)$(file_names.systemd_app)");
 
-    service_needs_enable::
+  files:
+
+    any::
+
+      "$(root)$(file_names.cf_execd_service)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[cf_execd])",
+        classes => default:if_repaired("daemon_reload");
+
+      "$(root)$(file_names.cf_monitord_service)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[cf_monitord])",
+        classes => default:if_repaired("daemon_reload");
+
+      "$(root)$(file_names.cf_serverd_service)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[cf_serverd])",
+        classes => default:if_repaired("daemon_reload");
+
+      "$(root)$(file_names.ipset_service)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ipset_service])",
+        classes => default:if_repaired("daemon_reload");
+
+      "$(root)$(file_names.shorewall_service)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[shorewall_service])",
+        classes => default:if_repaired("daemon_reload");
+
+  methods:
+
+    any::
+
+      "configure systemd-networkd"
+        usebundle => networkd($(this.root), $(this.role));
+
+    have_systemctl::
+
+      "enable systemd services"
+        usebundle => systemd_enable($(root), $(file_groups.systemd_enabled[$(this.role)]));
+
+# This bundle always attempts to start systemd-networkd even though it's already running.
+#      "start systemd services"
+#        usebundle => default:standard_services( $(file_groups.systemd_enabled[$(this.role)]), "start");
+
+  commands:
+
+    daemon_reload&have_systemctl::
 
       "/$(file_names.systemd_app)"
-        args => "enable $(this.service)",
-        contain => silent_chroot($(this.root));
+        args => "daemon-reload",
+        contain => basic_chroot($(root));
 
 }

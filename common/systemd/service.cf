@@ -1,0 +1,34 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/file_names.cf",
+              "cryptoo/util/contain.cf",
+              "cryptoo/util/classes.cf"
+            };
+
+}
+
+bundle agent systemd_enable(root, service)
+
+{
+
+  commands:
+
+    any::
+
+      "/$(file_names.systemd_app)"
+        args => "is-enabled $(this.service)",
+        contain => silent_chroot($(this.root)),
+        classes => systemd_enabled;
+
+    service_needs_enable::
+
+      "/$(file_names.systemd_app)"
+        args => "enable $(this.service)",
+        contain => silent_chroot($(this.root));
+
+}

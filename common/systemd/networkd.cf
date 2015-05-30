@@ -14,7 +14,7 @@ body file control
 
 }
 
-bundle agent guest_network(root, role)
+bundle agent networkd(root, role)
 
 {
 
@@ -45,6 +45,38 @@ bundle agent guest_network(root, role)
 
       "lan_subnet"
         string => "$(network.subnet_config[lan])";
+
+      "netdev_i2p"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "NetDev",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "i2p" },
+                       { "LHS": "Kind", "RHS": "bridge" }
+                     ]
+                 }
+               ]
+          }
+        ';
+
+      "netdev_ispdmz"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "NetDev",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "ispdmz" },
+                       { "LHS": "Kind", "RHS": "bridge" }
+                     ]
+                 }
+               ]
+          }
+        ';
 
       "netdev_lan"
         string => '
@@ -176,6 +208,99 @@ bundle agent guest_network(root, role)
           }
         ';
 
+      "netdev_tor"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "NetDev",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "tor" },
+                       { "LHS": "Kind", "RHS": "bridge" }
+                     ]
+                 }
+               ]
+          }
+        ';
+
+      "netdev_vpndmz"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "NetDev",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "vpndmz" },
+                       { "LHS": "Kind", "RHS": "bridge" }
+                     ]
+                 }
+               ]
+          }
+        ';
+
+      "netdev_wan"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "NetDev",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "wan" },
+                       { "LHS": "Kind", "RHS": "bridge" }
+                     ]
+                 }
+               ]
+          }
+        ';
+
+      "network_wan_bridge"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "Match",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "wan" }
+                     ]
+                 },
+                 { "section": "Network",
+                   "values":
+                     [
+                       { "LHS": "DHCP", "RHS": "false" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
+                     ]
+                 }
+               ]
+          }
+        ';
+
+      "network_wan_physical"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "Match",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "$(site.config[host_network][wan_physical])" }
+                     ]
+                 },
+                 { "section": "Network",
+                   "values":
+                     [
+                       { "LHS": "DHCP", "RHS": "false" },
+                       { "LHS": "Bridge", "RHS": "wan" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
+                     ]
+                 }
+               ]
+          }
+        ';
+
       "network_wan_gateway"
         string => '
           {
@@ -191,7 +316,8 @@ bundle agent guest_network(root, role)
                    "values":
                      [
                        { "LHS": "DHCP", "RHS": "true" },
-                       { "LHS": "IPForward", "RHS": "ipv4" }
+                       { "LHS": "IPForward", "RHS": "ipv4" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
                      ]
                  }
                ]
@@ -214,7 +340,8 @@ bundle agent guest_network(root, role)
                      [
                        { "LHS": "DHCP", "RHS": "false" },
                        { "LHS": "Address", "RHS": "192.168.$(this.ispdmz_subnet).$(this.role_number)/24" },
-                       { "LHS": "IPForward", "RHS": "ipv4" }
+                       { "LHS": "IPForward", "RHS": "ipv4" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
                      ]
                  },
                  { "section": "Route",
@@ -286,7 +413,30 @@ bundle agent guest_network(root, role)
                        { "LHS": "DHCP", "RHS": "false" },
                        { "LHS": "Address", "RHS": "192.168.$(this.ispdmz_subnet).$(this.role_number)/24" },
                        { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(config.defined_numbers[firewall_external])" },
-                       { "LHS": "IPForward", "RHS": "ipv4" }
+                       { "LHS": "IPForward", "RHS": "ipv4" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
+                     ]
+                 }
+               ]
+          }
+        ';
+
+      "network_ispdmz_bridge"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "Match",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "ispdmz" }
+                     ]
+                 },
+                 { "section": "Network",
+                   "values":
+                     [
+                       { "LHS": "DHCP", "RHS": "false" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
                      ]
                  }
                ]
@@ -310,7 +460,8 @@ bundle agent guest_network(root, role)
                        { "LHS": "DHCP", "RHS": "false" },
                        { "LHS": "Address", "RHS": "192.168.$(this.ispdmz_subnet).$(this.role_number)/24" },
                        { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(config.defined_numbers[firewall_external])" },
-                       { "LHS": "IPForward", "RHS": "ipv4" }
+                       { "LHS": "IPForward", "RHS": "ipv4" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
                      ]
                  },
                  { "section": "Route",
@@ -319,6 +470,28 @@ bundle agent guest_network(root, role)
                        { "LHS": "Gateway", "RHS": "192.168.$(this.ispdmz_subnet).$(config.defined_numbers[firewall_external])" },
                        { "LHS": "Destination", "RHS": "$(config.dns[backup])" },
                        { "LHS": "Metric", "RHS": "0" }
+                     ]
+                 }
+               ]
+          }
+        ';
+
+      "network_vpndmz_bridge"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "Match",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "vpndmz" }
+                     ]
+                 },
+                 { "section": "Network",
+                   "values":
+                     [
+                       { "LHS": "DHCP", "RHS": "false" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
                      ]
                  }
                ]
@@ -341,7 +514,8 @@ bundle agent guest_network(root, role)
                      [
                        { "LHS": "DHCP", "RHS": "false" },
                        { "LHS": "Address", "RHS": "192.168.$(this.vpndmz_subnet).$(this.role_number)/24" },
-                       { "LHS": "IPForward", "RHS": "ipv4" }
+                       { "LHS": "IPForward", "RHS": "ipv4" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
                      ]
                  },
                  { "section": "Route",
@@ -405,7 +579,8 @@ bundle agent guest_network(root, role)
                        { "LHS": "DHCP", "RHS": "false" },
                        { "LHS": "Address", "RHS": "192.168.$(this.vpndmz_subnet).$(this.role_number)/24" },
                        { "LHS": "Gateway", "RHS": "192.168.$(this.vpndmz_subnet).$(config.defined_numbers[vpn_primary])" },
-                       { "LHS": "IPForward", "RHS": "ipv4" }
+                       { "LHS": "IPForward", "RHS": "ipv4" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
                      ]
                  },
                  { "section": "Route",
@@ -414,6 +589,28 @@ bundle agent guest_network(root, role)
                        { "LHS": "Gateway", "RHS": "192.168.$(this.vpndmz_subnet).$(config.defined_numbers[vpn_primary])" },
                        { "LHS": "Destination", "RHS": "192.168.$(this.ispdmz_subnet).0/24" },
                        { "LHS": "Metric", "RHS": "0" }
+                     ]
+                 }
+               ]
+          }
+        ';
+
+      "network_tor_bridge"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "Match",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "tor" }
+                     ]
+                 },
+                 { "section": "Network",
+                   "values":
+                     [
+                       { "LHS": "DHCP", "RHS": "false" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
                      ]
                  }
                ]
@@ -436,7 +633,8 @@ bundle agent guest_network(root, role)
                      [
                        { "LHS": "DHCP", "RHS": "false" },
                        { "LHS": "Address", "RHS": "192.168.$(this.tor_subnet).$(this.role_number)/24" },
-                       { "LHS": "IPForward", "RHS": "ipv4" }
+                       { "LHS": "IPForward", "RHS": "ipv4" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
                      ]
                  },
                  { "section": "Route",
@@ -491,7 +689,8 @@ bundle agent guest_network(root, role)
                      [
                        { "LHS": "DHCP", "RHS": "false" },
                        { "LHS": "Address", "RHS": "192.168.$(this.tor_subnet).$(this.role_number)/24" },
-                       { "LHS": "IPForward", "RHS": "ipv4" }
+                       { "LHS": "IPForward", "RHS": "ipv4" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
                      ]
                  },
                  { "section": "Route",
@@ -500,6 +699,28 @@ bundle agent guest_network(root, role)
                        { "LHS": "Gateway", "RHS": "192.168.$(this.tor_subnet).$(config.defined_numbers[tor])" },
                        { "LHS": "Destination", "RHS": "$(this.onion_subnet)" },
                        { "LHS": "Metric", "RHS": "0" }
+                     ]
+                 }
+               ]
+          }
+        ';
+
+      "network_i2p_bridge"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "Match",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "i2p" }
+                     ]
+                 },
+                 { "section": "Network",
+                   "values":
+                     [
+                       { "LHS": "DHCP", "RHS": "false" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
                      ]
                  }
                ]
@@ -522,7 +743,8 @@ bundle agent guest_network(root, role)
                      [
                        { "LHS": "DHCP", "RHS": "false" },
                        { "LHS": "Address", "RHS": "192.168.$(this.i2p_subnet).$(this.role_number)/24" },
-                       { "LHS": "IPForward", "RHS": "ipv4" }
+                       { "LHS": "IPForward", "RHS": "ipv4" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
                      ]
                  },
                  { "section": "Route",
@@ -551,7 +773,31 @@ bundle agent guest_network(root, role)
                  { "section": "Network",
                    "values":
                      [
-                       { "LHS": "DHCP", "RHS": "false" }
+                       { "LHS": "DHCP", "RHS": "false" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
+                     ]
+                 }
+               ]
+          }
+        ';
+
+      "network_lan_physical"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "Match",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "$(site.config[host_network][lan_physical])" }
+                     ]
+                 },
+                 { "section": "Network",
+                   "values":
+                     [
+                       { "LHS": "DHCP", "RHS": "false" },
+                       { "LHS": "Bridge", "RHS": "lan" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
                      ]
                  }
                ]
@@ -574,7 +820,8 @@ bundle agent guest_network(root, role)
                      [
                        { "LHS": "DHCP", "RHS": "false" },
                        { "LHS": "Address", "RHS": "192.168.$(this.lan_subnet).$(this.role_number)/24" },
-                       { "LHS": "IPForward", "RHS": "ipv4" }
+                       { "LHS": "IPForward", "RHS": "ipv4" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
                      ]
                  }
                ]
@@ -596,7 +843,31 @@ bundle agent guest_network(root, role)
                    "values":
                      [
                        { "LHS": "DHCP", "RHS": "false" },
-                       { "LHS": "Bridge", "RHS": "lan" }
+                       { "LHS": "Bridge", "RHS": "lan" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
+                     ]
+                 }
+               ]
+          }
+        ';
+
+      "network_lan_lan1"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "Match",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "lan1" }
+                     ]
+                 },
+                 { "section": "Network",
+                   "values":
+                     [
+                       { "LHS": "DHCP", "RHS": "false" },
+                       { "LHS": "Bridge", "RHS": "lan" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
                      ]
                  }
                ]
@@ -618,7 +889,8 @@ bundle agent guest_network(root, role)
                    "values":
                      [
                        { "LHS": "DHCP", "RHS": "false" },
-                       { "LHS": "Bridge", "RHS": "lan" }
+                       { "LHS": "Bridge", "RHS": "lan" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
                      ]
                  }
                ]
@@ -640,7 +912,8 @@ bundle agent guest_network(root, role)
                    "values":
                      [
                        { "LHS": "DHCP", "RHS": "false" },
-                       { "LHS": "Address", "RHS": "192.168.$(this.lan_subnet).$(this.role_number)/24" }
+                       { "LHS": "Address", "RHS": "192.168.$(this.lan_subnet).$(this.role_number)/24" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
                      ]
                  }
                ]
@@ -662,7 +935,8 @@ bundle agent guest_network(root, role)
                    "values":
                      [
                        { "LHS": "DHCP", "RHS": "false" },
-                       { "LHS": "Bridge", "RHS": "lan" }
+                       { "LHS": "Bridge", "RHS": "lan" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
                      ]
                  }
                ]
@@ -684,7 +958,8 @@ bundle agent guest_network(root, role)
                    "values":
                      [
                        { "LHS": "DHCP", "RHS": "false" },
-                       { "LHS": "Bridge", "RHS": "lan" }
+                       { "LHS": "Bridge", "RHS": "lan" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
                      ]
                  }
                ]
@@ -706,7 +981,8 @@ bundle agent guest_network(root, role)
                    "values":
                      [
                        { "LHS": "DHCP", "RHS": "false" },
-                       { "LHS": "Bridge", "RHS": "lan" }
+                       { "LHS": "Bridge", "RHS": "lan" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
                      ]
                  }
                ]
@@ -728,7 +1004,8 @@ bundle agent guest_network(root, role)
                    "values":
                      [
                        { "LHS": "DHCP", "RHS": "false" },
-                       { "LHS": "Bridge", "RHS": "lan" }
+                       { "LHS": "Bridge", "RHS": "lan" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
                      ]
                  }
                ]
@@ -739,12 +1016,133 @@ bundle agent guest_network(root, role)
 
     any::
 
-      "guest_$(this.role)"
+      "networkd_$(this.role)"
         expression => "any";
 
   files:
 
-    guest_firewall_external::
+    networkd_master::
+
+      "$(this.root)$(file_names.i2p_netdev)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.netdev_i2p));
+
+      "$(this.root)$(file_names.ispdmz_netdev)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.netdev_ispdmz));
+
+      "$(this.root)$(file_names.lan_netdev)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.netdev_lan));
+
+      "$(this.root)$(file_names.lantap_netdev)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.netdev_lantap));
+
+      "$(this.root)$(file_names.tor_netdev)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.netdev_tor));
+
+      "$(this.root)$(file_names.vpndmz_netdev)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.netdev_vpndmz));
+
+      "$(this.root)$(file_names.wan_netdev)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.netdev_wan));
+
+      "$(this.root)$(file_names.wan_bridge_network)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_wan_bridge));
+
+      "$(this.root)$(file_names.wan_physical_network)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_wan_physical));
+
+      "$(this.root)$(file_names.ispdmz_bridge_network)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_ispdmz_bridge));
+
+      "$(this.root)$(file_names.vpndmz_bridge_network)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_vpndmz_bridge));
+
+      "$(this.root)$(file_names.tor_bridge_network)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_tor_bridge));
+
+      "$(this.root)$(file_names.i2p_bridge_network)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_i2p_bridge));
+
+      "$(this.root)$(file_names.lan_network)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_lan_lantap));
+
+      "$(this.root)$(file_names.lan1_network)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_lan_lan1));
+
+      "$(this.root)$(file_names.lan_bridge_network)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_lan_bridge));
+
+      "$(this.root)$(file_names.lan_physical_network)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_lan_physical));
+
+    networkd_firewall_external::
 
       "$(this.root)$(file_names.wan_network)"
         perms => system,
@@ -760,7 +1158,7 @@ bundle agent guest_network(root, role)
         template_method => "mustache",
         template_data => parsejson($(this.network_ispdmz_gateway));
 
-    guest_vpn_server::
+    networkd_vpn_server::
 
       "$(this.root)$(file_names.lan_netdev)"
         perms => system,
@@ -867,7 +1265,7 @@ bundle agent guest_network(root, role)
         template_method => "mustache",
         template_data => parsejson($(this.network_lan_openvpn4));
 
-    guest_vpn_primary::
+    networkd_vpn_primary::
 
       "$(this.root)$(file_names.ispdmz_network)"
         perms => system,
@@ -883,7 +1281,7 @@ bundle agent guest_network(root, role)
         template_method => "mustache",
         template_data => parsejson($(this.network_vpndmz_gateway_internal));
 
-    guest_firewall_internal::
+    networkd_firewall_internal::
 
       "$(this.root)$(file_names.vpndmz_network)"
         perms => system,
@@ -913,7 +1311,7 @@ bundle agent guest_network(root, role)
         template_method => "mustache",
         template_data => parsejson($(this.network_lan_gateway));
 
-    guest_tor::
+    networkd_tor::
 
       "$(this.root)$(file_names.ispdmz_network)"
         perms => system,

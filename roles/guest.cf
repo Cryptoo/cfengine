@@ -11,7 +11,6 @@ body file control
               "cryptoo/config/templates.cf",
               "cryptoo/util/contain.cf",
               "cryptoo/util/perms.cf",
-              "@(cryptoo:control.guest_common_inputs)",
               "@(cryptoo:control.guest_inputs)"
             };
 
@@ -42,36 +41,6 @@ bundle agent common_guest(root, role, arch)
         create => "true",
         handle => "$(root)$(directory_groups.guest_system_private)";
 
-      "$(root)$(file_names.cf_execd_service)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[cf_execd])",
-        classes => default:if_repaired("daemon_reload");
-
-      "$(root)$(file_names.cf_monitord_service)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[cf_monitord])",
-        classes => default:if_repaired("daemon_reload");
-
-      "$(root)$(file_names.cf_serverd_service)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[cf_serverd])",
-        classes => default:if_repaired("daemon_reload");
-
-      "$(root)$(file_names.ipset_service)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[ipset_service])",
-        classes => default:if_repaired("daemon_reload");
-
-      "$(root)$(file_names.shorewall_service)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[shorewall_service])",
-        classes => default:if_repaired("daemon_reload");
-
       "$(root)$(file_names.serial_autologin)"
         perms => system,
         create => "true",
@@ -82,17 +51,8 @@ bundle agent common_guest(root, role, arch)
 
     any::
 
-      "configure networking"
-        usebundle => guest_network($(this.root), $(this.role));
-
-    have_systemctl::
-
-      "enable systemd services"
-        usebundle => systemd_enable($(root), $(file_groups.systemd_enabled[$(this.role)]));
-
-# This bundle always attempts to start systemd-networkd even though it's already running.
-#      "start systemd services"
-#        usebundle => default:standard_services( $(cryptoo:file_groups.systemd_enabled[$(this.role)]), "start");
+      "configure systemd"
+        usebundle => systemd($(this.root), $(this.role));
 
   commands:
 

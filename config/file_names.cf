@@ -152,6 +152,10 @@ bundle common file_names
         string => "$(cryptoo:directory_names.fs_config_ssh)/sshd_config";
       "ssh_config"
         string => "$(cryptoo:directory_names.fs_config_ssh)/ssh_config";
+      "i2p_netdev"
+        string => "$(cryptoo:directory_names.fs_config_network)/i2p.netdev";
+      "ispdmz_netdev"
+        string => "$(cryptoo:directory_names.fs_config_network)/ispdmz.netdev";
       "lan_netdev"
         string => "$(cryptoo:directory_names.fs_config_network)/lan.netdev";
       "lantap_netdev"
@@ -164,18 +168,32 @@ bundle common file_names
         string => "$(cryptoo:directory_names.fs_config_network)/openvpn3.netdev";
       "openvpn4_netdev"
         string => "$(cryptoo:directory_names.fs_config_network)/openvpn4.netdev";
+      "tor_netdev"
+        string => "$(cryptoo:directory_names.fs_config_network)/tor.netdev";
+      "vpndmz_netdev"
+        string => "$(cryptoo:directory_names.fs_config_network)/vpndmz.netdev";
+      "wan_netdev"
+        string => "$(cryptoo:directory_names.fs_config_network)/wan.netdev";
       "i2p_network"
         string => "$(cryptoo:directory_names.fs_config_network)/i2p.network";
+      "i2p_bridge_network"
+        string => "$(cryptoo:directory_names.fs_config_network)/i2p_bridge.network";
       "ispdmz_network"
         string => "$(cryptoo:directory_names.fs_config_network)/ispdmz.network";
+      "ispdmz_bridge_network"
+        string => "$(cryptoo:directory_names.fs_config_network)/ispdmz_bridge.network";
       "lan_network"
         string => "$(cryptoo:directory_names.fs_config_network)/lan.network";
       "lan0_network"
         string => "$(cryptoo:directory_names.fs_config_network)/lan0.network";
+      "lan1_network"
+        string => "$(cryptoo:directory_names.fs_config_network)/lan1.network";
       "lan13_network"
         string => "$(cryptoo:directory_names.fs_config_network)/lan13.network";
       "lan_bridge_network"
         string => "$(cryptoo:directory_names.fs_config_network)/lan_bridge.network";
+      "lan_physical_network"
+        string => "$(cryptoo:directory_names.fs_config_network)/lan_physical.network";
       "openvpn1_network"
         string => "$(cryptoo:directory_names.fs_config_network)/openvpn1.network";
       "openvpn2_network"
@@ -186,10 +204,18 @@ bundle common file_names
         string => "$(cryptoo:directory_names.fs_config_network)/openvpn4.network";
       "tor_network"
         string => "$(cryptoo:directory_names.fs_config_network)/tor.network";
+      "tor_bridge_network"
+        string => "$(cryptoo:directory_names.fs_config_network)/tor_bridge.network";
       "vpndmz_network"
         string => "$(cryptoo:directory_names.fs_config_network)/vpndmz.network";
+      "vpndmz_bridge_network"
+        string => "$(cryptoo:directory_names.fs_config_network)/vpndmz_bridge.network";
       "wan_network"
         string => "$(cryptoo:directory_names.fs_config_network)/wan.network";
+      "wan_bridge_network"
+        string => "$(cryptoo:directory_names.fs_config_network)/wan_bridge.network";
+      "wan_physical_network"
+        string => "$(cryptoo:directory_names.fs_config_network)/wan_physical.network";
       "cf_execd_service"
         string => "$(cryptoo:directory_names.fs_config_units)/cf-execd.service";
       "cf_monitord_service"

@@ -36,5 +36,9 @@
                               "multilib": "multilib"
                             }
                  }
+    "host_network": {
+                "wan_physical": "eth0",
+                "lan_physical": "eth1"
+              }
 
 }
