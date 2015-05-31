@@ -238,7 +238,7 @@ bundle agent cryptoo_bootstrap
         handle => "image_fs_mounted";
 
       "/$(file_names.emerge_app)"
-        args => "--config-root=/$(directory_names.fs_volatile_images)/server/x86_64/no_multilib/ --root=/$(directory_names.fs_mount_cryptoo) --root-deps --emptytree --quiet @system @$(this.role)",
+        args => "--config-root=/$(directory_names.fs_volatile_images)/server/x86_64/no_multilib/ --root=/$(directory_names.fs_mount_cryptoo) --root-deps --emptytree --quiet y @system @guest",
         depends_on => { "users_created" },
         handle => "system_emerged";
 
