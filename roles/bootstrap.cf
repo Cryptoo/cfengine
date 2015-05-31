@@ -5,6 +5,7 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
+              "cryptoo/config/best.cf",
               "cryptoo/config/directory_names.cf",
               "cryptoo/config/file_names.cf",
               "cryptoo/config/site.cf",
@@ -18,32 +19,6 @@ bundle agent cryptoo_bootstrap
 {
 
   vars:
-
-    any::
-
-      "stage3_amd64_multilib"
-        slist => findfiles("/$(directory_names.fs_storage_pm_install)/stage3-amd64-2*.tar.bz2");
-
-      "stage3_amd64_multilib_sorted"
-        slist => sort("stage3_amd64_multilib", "lex");
-
-      "stage3_amd64_multilib_sorted_reverse"
-        slist => reverse("stage3_amd64_multilib_sorted");
-
-      "stage3_amd64_multilib_best"
-        string => nth("stage3_amd64_multilib_sorted_reverse", 0);
-
-      "stage3_amd64_nomultilib"
-        slist => findfiles("/$(directory_names.fs_storage_pm_install)/stage3-amd64-nomultilib-2*.tar.bz2");
-
-      "stage3_amd64_nomultilib_sorted"
-        slist => sort("stage3_amd64_nomultilib", "lex");
-
-      "stage3_amd64_nomultilib_sorted_reverse"
-        slist => reverse("stage3_amd64_nomultilib_sorted");
-
-      "stage3_amd64_nomultilib_best"
-        string => nth("stage3_amd64_nomultilib_sorted_reverse", 0);
 
     default:bootstrap_firewall_external::
 
@@ -241,7 +216,7 @@ bundle agent cryptoo_bootstrap
     bootstrap_no_multilib::
 
       "/$(file_names.tar_app)"
-        args => "-xjpf $(this.stage3_amd64_nomultilib_best) -C /$(directory_names.fs_mount_cryptoo)",
+        args => "-xjpf $(best.stage3_amd64_nomultilib) -C /$(directory_names.fs_mount_cryptoo)",
         depends_on => { "image_fs_mounted" },
         handle => "skeleton_extracted";
 

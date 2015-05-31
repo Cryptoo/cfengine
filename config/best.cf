@@ -1,0 +1,57 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/directory_names.cf"
+            };
+
+}
+
+bundle common best
+
+{
+
+  vars:
+
+    any::
+
+      "native_gcc_profiles"
+        slist => findfiles("/$(directory_names.fs_config_gcc_environment)/$(arch)-pc-linux-gnu-*");
+
+      "native_gcc_profiles_sorted"
+        slist => sort("native_gcc_profiles", "lex");
+
+      "native_gcc_profiles_sorted_reverse"
+        slist => reverse("native_gcc_profiles_sorted");
+
+      "native_gcc_profile"
+        string => nth("native_gcc_profiles_sorted_reverse", 0);
+
+      "stage3_amd64_multilib_candidates"
+        slist => findfiles("/$(directory_names.fs_storage_pm_install)/stage3-amd64-2*.tar.bz2");
+
+      "stage3_amd64_multilib_sorted"
+        slist => sort("stage3_amd64_multilib_candidates", "lex");
+
+      "stage3_amd64_multilib_sorted_reverse"
+        slist => reverse("stage3_amd64_multilib_sorted");
+
+      "stage3_amd64_multilib"
+        string => nth("stage3_amd64_multilib_sorted_reverse", 0);
+
+      "stage3_amd64_nomultilib_candidates"
+        slist => findfiles("/$(directory_names.fs_storage_pm_install)/stage3-amd64-nomultilib-2*.tar.bz2");
+
+      "stage3_amd64_nomultilib_sorted"
+        slist => sort("stage3_amd64_nomultilib_candidates", "lex");
+
+      "stage3_amd64_nomultilib_sorted_reverse"
+        slist => reverse("stage3_amd64_nomultilib_sorted");
+
+      "stage3_amd64_nomultilib"
+        string => nth("stage3_amd64_nomultilib_sorted_reverse", 0);
+
+}

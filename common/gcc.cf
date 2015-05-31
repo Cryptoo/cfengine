@@ -5,6 +5,7 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
+              "cryptoo/config/best.cf",
               "cryptoo/config/directory_names.cf"
             };
 
@@ -14,20 +15,6 @@ bundle agent gcc(root, arch)
 
 {
   vars:
-
-    any::
-
-      "native_gcc_profiles"
-        slist => findfiles("/$(directory_names.fs_config_gcc_environment)/$(arch)-pc-linux-gnu-*");
-
-      "native_gcc_profiles_sorted"
-        slist => sort("native_gcc_profiles", "lex");
-
-      "native_gcc_profiles_sorted_reverse"
-        slist => reverse("native_gcc_profiles_sorted");
-
-      "native_gcc_profile_best_path"
-        string => nth("native_gcc_profiles_sorted_reverse", 0);
 
     native_gcc_profile_best::
 
@@ -42,7 +29,7 @@ bundle agent gcc(root, arch)
         expression => fileexists("$(root)$(file_names.env_gcc_$(arch))");
 
       "native_gcc_profile_best"
-        expression => regextract("(/$(directory_names.fs_config_gcc_environment)/)(.*)", "$(native_gcc_profile_best_path)", "native_gcc_profile_best");
+        expression => regextract("(/$(directory_names.fs_config_gcc_environment)/)(.*)", "$(best.native_gcc_profile)", "native_gcc_profile_best");
 
   files:
 
@@ -50,7 +37,7 @@ bundle agent gcc(root, arch)
 
       "$(root)$(file_names.env_gcc_native)"
         move_obstructions => "true",
-        link_from => gcc_profile("$(native_gcc_profile_best_path)"),
+        link_from => gcc_profile("$(best.native_gcc_profile)"),
         classes => default:if_repaired("update_env");
 
       "$(root)$(file_names.env_gcc_$(arch))"
