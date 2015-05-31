@@ -5,7 +5,10 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
-              "cryptoo/common/systemd.cf"
+              "cryptoo/common/systemd.cf",
+              "cryptoo/config/config.cf",
+              "cryptoo/config/templates.cf",
+              "cryptoo/util/contain.cf"
             };
 
 }
@@ -18,6 +21,49 @@ bundle agent master
 
     "tags" slist => { "cryptoo_role" };
 
+  vars:
+
+    any::
+
+      "console_autologin"
+# This doesn't work for some reason. Maybe Mustache understands json constructs that storejson/parsejson doesn't?
+#        string => storejson("config.systemd[console_autologin]");
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "Service",
+                   "values":
+                     [
+                       { "LHS": "Type", "RHS": "simple" },
+                       { "LHS": "ExecStart", "RHS": "" },
+                       { "LHS": "ExecStart", "RHS": "-/sbin/agetty --autologin root --noclear %I 38400 linux" }
+                     ]
+                 }
+               ]
+          }
+        ';
+
+
+  classes:
+
+    any::
+
+      "have_systemctl"
+        expression => fileexists("$(root)$(file_names.systemd_app)");
+
+  files:
+
+    any::
+
+      "/$(file_names.console_autologin)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.console_autologin)),
+        classes => default:if_repaired("daemon_reload");
+
   methods:
 
     any::
@@ -27,5 +73,13 @@ bundle agent master
 
       "configure systemd"
         usebundle => systemd("/", "master");
+
+  commands:
+
+    daemon_reload&have_systemctl::
+
+      "/$(file_names.systemd_app)"
+        args => "daemon-reload",
+        contain => basic_chroot($(root));
 
 }

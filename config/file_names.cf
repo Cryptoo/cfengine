@@ -226,6 +226,8 @@ bundle common file_names
         string => "$(cryptoo:directory_names.fs_config_units)/ipset.service";
       "shorewall_service"
         string => "$(cryptoo:directory_names.fs_config_units)/shorewall.service";
+      "console_autologin"
+        string => "$(cryptoo:directory_names.fs_config_units)/getty@tty1.service.d/autologin.conf";
       "serial_autologin"
         string => "$(cryptoo:directory_names.fs_config_units)/serial-getty@ttyS0.service.d/autologin.conf";
       "proc_mounts"

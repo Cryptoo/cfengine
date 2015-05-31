@@ -1,0 +1,17 @@
+{
+    "console_autologin": 
+      {
+        "sections":
+           [
+             {
+               "section": "Service",
+               "values":
+                 [
+                   { "LHS": "Type", "RHS": "simple" },
+                   { "LHS": "ExecStart", "RHS": "" },
+                   { "LHS": "ExecStart", "RHS": "-/sbin/agetty --autologin root --noclear %I 38400 linux" }
+                 ]
+             }
+           ]
+      }
+}

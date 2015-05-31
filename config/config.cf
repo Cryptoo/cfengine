@@ -29,6 +29,9 @@ bundle common config
     "git_repositories"
       data => readjson("$(sys.inputdir)/cryptoo/config/git_repositories.json", 1M);
 
+    "systemd"
+      data => readjson("$(sys.inputdir)/cryptoo/config/systemd.json", 1M);
+
     "server_guests"
        slist => {
                    "firewall_external",
