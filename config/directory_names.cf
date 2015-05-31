@@ -32,6 +32,8 @@ bundle common directory_names
       "fs_config_environment" string => "$(fs_config_base)/env.d";
       "fs_config_gcc_environment" string => "$(fs_config_environment)/gcc";
       "fs_config_openrc" string => "$(fs_config_base)/init.d";
+      "fs_config_libvirt" string => "$(fs_config_base)/libvirt";
+      "fs_config_qemu" string => "$(fs_config_libvirt)/qemu";
       "fs_config_pm" string => "$(fs_config_base)/$(pm)";
       "fs_config_pm_env" string => "$(fs_config_pm)/env";
       "fs_config_pm_environments" string => "$(fs_config_pm)/package.env";

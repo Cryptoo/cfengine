@@ -1,0 +1,121 @@
+<domain type='kvm'>
+  <name>{{name}}</name>
+  <memory unit='KiB'>{{ram}}</memory>
+  <currentMemory unit='KiB'>{{ram}}</currentMemory>
+  <vcpu placement='static'>{{cpu}}</vcpu>
+  <resource>
+    <partition>/machine</partition>
+  </resource>
+  <os>
+    <type arch='x86_64' machine='pc-1.2'>hvm</type>
+    <kernel>{{kernel}}</kernel>
+    <boot dev='hd'/>
+  </os>
+  <features>
+    <acpi/>
+    <apic/>
+    <pae/>
+  </features>
+  <clock offset='utc'/>
+  <on_poweroff>destroy</on_poweroff>
+  <on_reboot>restart</on_reboot>
+  <on_crash>restart</on_crash>
+  <devices>
+    <emulator>/usr/bin/qemu-system-x86_64</emulator>
+    <disk type='file' device='disk'>
+      <driver name='qemu' type='raw' cache='writeback' io='threads'/>
+      <source file='/var/lib/libvirt/images/{{name}}.img'/>
+      <backingStore/>
+      <target dev='vda' bus='virtio'/>
+    </disk>
+    <controller type='pci' index='0' model='pci-root'>
+    </controller>
+    <controller type='virtio-serial' index='0'>
+    </controller>
+    <filesystem type='mount' accessmode='passthrough'>
+      <source dir='/etc/cryptoo/guest/inbox/{{name}}'/>
+      <target dir='/inbox'/>
+      <readonly/>
+      <alias name='fs0'/>
+    </filesystem>
+    <filesystem type='mount' accessmode='passthrough'>
+      <source dir='/etc/cryptoo/guest/outbox/{{name}}'/>
+      <target dir='/outbox'/>
+      <alias name='fs1'/>
+    </filesystem>
+    <filesystem type='mount' accessmode='passthrough'>
+      <source dir='/srv/nfs/site-local/bin'/>
+      <target dir='/bin'/>
+      <readonly/>
+      <alias name='fs2'/>
+    </filesystem>
+    <filesystem type='mount' accessmode='passthrough'>
+      <source dir='/srv/nfs/backup/{{name}}'/>
+      <target dir='/backup'/>
+      <alias name='fs3'/>
+    </filesystem>
+    <filesystem type='mount' accessmode='passthrough'>
+      <source dir='/srv/nfs/site-local/cryptoo'/>
+      <target dir='/cryptoo'/>
+      <readonly/>
+      <alias name='fs4'/>
+    </filesystem>
+    <filesystem type='mount' accessmode='mapped'>
+      <source dir='/srv/nfs/site-local/distfiles'/>
+      <target dir='/distfiles'/>
+      <alias name='fs5'/>
+    </filesystem>
+    <filesystem type='mount' accessmode='passthrough'>
+      <source dir='/srv/nfs/site-local/layman'/>
+      <target dir='/layman'/>
+      <readonly/>
+      <alias name='fs6'/>
+    </filesystem>
+    <filesystem type='mount' accessmode='mapped'>
+      <source dir='/srv/nfs/site-local/packages'/>
+      <target dir='/packages'/>
+      <alias name='fs7'/>
+    </filesystem>
+    <filesystem type='mount' accessmode='passthrough'>
+      <source dir='/srv/nfs/site-local/portage'/>
+      <target dir='/portage'/>
+      <readonly/>
+      <alias name='fs8'/>
+    </filesystem>
+    <filesystem type='mount' accessmode='mapped'>
+      <source dir='/srv/nfs/site-local/portage-local'/>
+      <target dir='/portage-local'/>
+      <readonly/>
+      <alias name='fs9'/>
+    </filesystem>
+    <filesystem type='mount' accessmode='passthrough'>
+      <source dir='/srv/nfs/site-local/src'/>
+      <target dir='/src'/>
+      <readonly/>
+      <alias name='fs10'/>
+    </filesystem>
+    <filesystem type='mount' accessmode='passthrough'>
+      <source dir='/srv/nfs/site-local/storage'/>
+      <target dir='/storage'/>
+      <alias name='fs11'/>
+    </filesystem>
+{{#interfaces}}
+    <interface type='bridge'>
+      <source bridge='{{bridge}}'/>
+      <target dev='{{device}}'/>
+      <model type='virtio'/>
+    </interface>
+{{/interfaces}}
+    <serial type='pty'>
+      <target port='0'/>
+    </serial>
+    <console type='pty'>
+      <target type='serial' port='0'/>
+    </console>
+    <memballoon model='virtio'>
+    </memballoon>
+    <rng model='virtio'>
+      <backend model='random'>/dev/random</backend>
+    </rng>
+  </devices>
+</domain>

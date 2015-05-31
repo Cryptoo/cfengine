@@ -319,6 +319,9 @@ bundle common file_names
       "template_ipset_service"
         string => "common/ipset_service.txt",
         meta => { "template" };
+      "template_libvirt"
+        string => "common/libvirt_mustache.txt",
+        meta => { "template" };
       "template_local_layout_conf"
         string => "common/local_layout_conf.txt",
         meta => { "template" };

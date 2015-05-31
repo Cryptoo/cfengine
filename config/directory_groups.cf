@@ -148,6 +148,8 @@ bundle common directory_groups
 
       "host_qemu"
         slist => {
+                    $(cryptoo:directory_names.fs_config_libvirt),
+                    $(cryptoo:directory_names.fs_config_qemu),
                     $(cryptoo:directory_names.fs_libvirt_images),
                     $(cryptoo:directory_names.fs_storage_backup)
                  };

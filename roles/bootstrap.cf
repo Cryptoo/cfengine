@@ -60,6 +60,9 @@ bundle agent cryptoo_bootstrap
       "image_file"
         string => "/$(directory_names.fs_libvirt_images)/$(this.role).img";
 
+      "definition"
+        string => "/$(directory_names.fs_config_qemu)/$(this.role).xml";
+
     bootstrap_server_guest::
 
       "image_size_mb"
@@ -69,6 +72,29 @@ bundle agent cryptoo_bootstrap
 
       "image_size_mb"
         string => "2048";
+
+    bootstrap_ready::
+
+      "definition_json"
+        string => '
+          {
+            "name": "$(this.role)",
+            "ram": "16776192",
+            "cpu": "1",
+            "kernel": "/$(directory_names.fs_libvirt_images)/guest-kernel-x86_64",
+            "interfaces":
+               [
+                 {
+                   "bridge": "ispdmz",
+                   "device": "ispdmz14"
+                 },
+                 {
+                   "bridge": "tor",
+                   "device": "tor14"
+                 }
+               ]
+          }
+        ';
 
   classes:
 
@@ -153,6 +179,19 @@ bundle agent cryptoo_bootstrap
 
       "bootstrap_ready"
         not => fileexists($(this.image_file));
+
+  files:
+
+    bootstrap_ready::
+
+      "$(this.definition)"
+        perms => qemu,
+        create => "true",
+        edit_template => "/$(templates.template[libvirt])",
+        template_method => "mustache",
+        template_data => parsejson($(this.definition_json)),
+        depends_on => { "loop_finished" },
+        handle => "definition_created";
 
   methods:
 
