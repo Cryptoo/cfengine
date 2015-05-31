@@ -61,9 +61,9 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
       "have_localegen_app"
         expression => fileexists("$(root)$(file_names.localegen_app)");
 
-    local_role_template_desktop|local_role_template_server::
+    local_role_chroot_desktop|local_role_chroot_server::
 
-      "template"
+      "chroot"
         expression => "any";
 
   files:
@@ -173,10 +173,10 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
       "set up ssh"
         usebundle => cryptoo:ssh("$(root)");
 
-    template::
+    chroot::
 
-      "manage template files"
-        usebundle => template_files("$(root)", "$(role)");
+      "manage chroot files"
+        usebundle => chroot_files("$(root)", "$(role)");
 
   commands:
 

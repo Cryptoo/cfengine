@@ -71,9 +71,9 @@ bundle agent make_conf(root, role, multilib)
       "runtime_host"
         expression => "any";
 
-    make_conf_role_template_server::
+    make_conf_role_chroot_server::
 
-      "makeopts_template"
+      "makeopts_chroot"
         expression => "any";
 
       "pkgdir_server_guest"
@@ -82,9 +82,9 @@ bundle agent make_conf(root, role, multilib)
       "runtime_guest"
         expression => "any";
 
-    make_conf_role_template_desktop::
+    make_conf_role_chroot_desktop::
 
-      "makeopts_template"
+      "makeopts_chroot"
         expression => "any";
 
       "pkgdir_desktop_guest"

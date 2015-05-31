@@ -272,7 +272,7 @@ bundle agent host(arch)
         usebundle => cryptoo:openrc("/");
 
       "manage chroot guests"
-        usebundle => cryptoo:cryptoo_filesystem("/$(cryptoo:directory_names.fs_volatile_images)/$(chroot[$(chroot_list)][class])/$(chroot[$(chroot_list)][arch])/$(chroot[$(chroot_list)][multilib])/","template_$(chroot[$(chroot_list)][class])","$(chroot[$(chroot_list)][arch])","$(chroot[$(chroot_list)][multilib])");
+        usebundle => cryptoo:cryptoo_filesystem("/$(cryptoo:directory_names.fs_volatile_images)/$(chroot[$(chroot_list)][class])/$(chroot[$(chroot_list)][arch])/$(chroot[$(chroot_list)][multilib])/","chroot_$(chroot[$(chroot_list)][class])","$(chroot[$(chroot_list)][arch])","$(chroot[$(chroot_list)][multilib])");
 
       "manage crypttab"
         usebundle => cryptoo:crypttab;

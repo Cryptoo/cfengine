@@ -10,7 +10,7 @@ body file control
 
 }
 
-bundle agent template_files(root, role)
+bundle agent chroot_files(root, role)
 
 {
 
@@ -22,38 +22,38 @@ bundle agent template_files(root, role)
         expression => "any";
 
       "need_resolv_conf"
-        not => fileexists("$(root)$(cryptoo:file_names.dns_config)");
+        not => fileexists("$(root)$(file_names.dns_config)");
 
       "need_group"
-        not => fileexists("$(root)$(cryptoo:file_names.group)");
+        not => fileexists("$(root)$(file_names.group)");
 
       "need_passwd"
-        not => fileexists("$(root)$(cryptoo:file_names.passwd)");
+        not => fileexists("$(root)$(file_names.passwd)");
 
       "need_shadow"
-        not => fileexists("$(root)$(cryptoo:file_names.shadow)");
+        not => fileexists("$(root)$(file_names.shadow)");
 
   files:
 
     need_group::
 
-      "$(root)$(cryptoo:file_names.group)"
-        copy_from => default:local_cp("/$(cryptoo:file_names.group)");
+      "$(root)$(file_names.group)"
+        copy_from => default:local_cp("/$(file_names.group)");
 
     need_passwd::
 
-      "$(root)$(cryptoo:file_names.passwd)"
-        copy_from => default:local_cp("/$(cryptoo:file_names.passwd)");
+      "$(root)$(file_names.passwd)"
+        copy_from => default:local_cp("/$(file_names.passwd)");
 
     need_shadow::
 
-      "$(root)$(cryptoo:file_names.shadow)"
-        copy_from => default:local_cp("/$(cryptoo:file_names.shadow)");
+      "$(root)$(file_names.shadow)"
+        copy_from => default:local_cp("/$(file_names.shadow)");
 
     need_resolv_conf::
 
-      "$(root)$(cryptoo:file_names.dns_config)"
-          copy_from => default:local_cp("/$(cryptoo:file_names.dns_config)");
+      "$(root)$(file_names.dns_config)"
+          copy_from => default:local_cp("/$(file_names.dns_config)");
 
 }
 

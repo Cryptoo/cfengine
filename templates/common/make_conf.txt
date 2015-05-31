@@ -6,18 +6,18 @@ PORTDIR_OVERLAY="/usr/local/portage ${PORTDIR_OVERLAY}"
 
 [%CFEngine makeopts_host:: %]
 CFLAGS="-O2 -pipe -march=native"
-[%CFEngine makeopts_guest|makeopts_template:: %]
+[%CFEngine makeopts_guest|makeopts_chroot:: %]
 CFLAGS="-O2 -pipe -mtune=$(cryptoo:site.config[make.conf][guest_mtune])"
 [%CFEngine any:: %]
 CXXFLAGS="${CFLAGS}"
 CHOST="x86_64-pc-linux-gnu"
 
-[%CFEngine makeopts_host|makeopts_template:: %]
+[%CFEngine makeopts_host|makeopts_chroot:: %]
 MAKEOPTS="-j8 -l8"
 
 [%CFEngine makeopts_host:: %]
 EMERGE_DEFAULT_OPTS="--ask --jobs --load-average 8.0 --keep-going --usepkg --buildpkg --binpkg-respect-use"
-[%CFEngine makeopts_template:: %]
+[%CFEngine makeopts_chroot:: %]
 EMERGE_DEFAULT_OPTS="--jobs --load-average 8.0 --keep-going --usepkg --buildpkg --binpkg-respect-use --with-bdeps=y --binpkg-changed-deps=n"
 [%CFEngine makeopts_guest:: %]
 MAKEOPTS="-j2 -l1.4"

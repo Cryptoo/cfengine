@@ -1,1 +1,1 @@
-$(cryptoo:portage.configured_role)
+$(cryptoo:portage.portage_role)

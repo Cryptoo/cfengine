@@ -25,12 +25,12 @@ bundle agent portage(root, role, arch, multilib)
 
     portage_no_multilib::
 
-      "configured_role"
+      "portage_role"
         string => concat("@", "$(role)");
 
     portage_multilib::
 
-      "configured_role"
+      "portage_role"
         string => concat("@", "$(role)", "_multilib");
 
   classes:
@@ -41,107 +41,104 @@ bundle agent portage(root, role, arch, multilib)
         expression => "any";
 
       "bootstrap_systemd"
-        not => fileexists("$(root)$(cryptoo:file_names.systemd_app)");
+        not => fileexists("$(root)$(file_names.systemd_app)");
 
       "have_systemd"
-        expression => fileexists("$(root)$(cryptoo:file_names.systemd_app)");
-
-      "portage_role_$(role)"
-        expression => "any";
+        expression => fileexists("$(root)$(file_names.systemd_app)");
 
   files:
 
     any::
 
-      "$(root)$(cryptoo:directory_groups.common_pm)/."
-        perms => cryptoo:portage,
+      "$(root)$(directory_groups.common_pm)/."
+        perms => portage,
         create => "true",
         comment => "Manage Portage-related system directories";
 
-      "$(root)$(cryptoo:directory_groups.common_pm_open)/."
-        perms => cryptoo:portage_open,
+      "$(root)$(directory_groups.common_pm_open)/."
+        perms => portage_open,
         create => "true",
         comment => "Manage Portage-related open directories";
 
-      "$(root)$(cryptoo:directory_names.fs_config_pm_env)/$(cryptoo:file_groups.pm_env[$(role)]).conf"
+      "$(root)$(directory_names.fs_config_pm_env)/$(file_groups.pm_env[$(role)]).conf"
         move_obstructions => "true",
-        link_from => cryptoo:cryptoo_portage_env("$(cryptoo:file_groups.pm_env[$(role)]).conf"),
+        link_from => cryptoo_portage_env("$(file_groups.pm_env[$(role)]).conf"),
         comment => "Link all files in /etc/portage/env";
 
-      "$(root)$(cryptoo:directory_names.fs_config_pm_environments)/$(cryptoo:file_groups.pm_environment[$(role)])"
+      "$(root)$(directory_names.fs_config_pm_environments)/$(file_groups.pm_environment[$(role)])"
         move_obstructions => "true",
-        link_from => cryptoo:cryptoo_package_env("$(cryptoo:file_groups.pm_environment[$(role)])"),
+        link_from => cryptoo_package_env("$(file_groups.pm_environment[$(role)])"),
         comment => "Link all files in /etc/portage/package.env";
 
-      "$(root)$(cryptoo:directory_names.fs_config_pm_keywords)/$(cryptoo:file_groups.keywords[$(role)])"
+      "$(root)$(directory_names.fs_config_pm_keywords)/$(file_groups.keywords[$(role)])"
         move_obstructions => "true",
-        link_from => cryptoo:cryptoo_package_keyword("$(cryptoo:file_groups.keywords[$(role)])"),
+        link_from => cryptoo_package_keyword("$(file_groups.keywords[$(role)])"),
         comment => "Link all files in /etc/portage/package.keywords";
 
-      "$(root)$(cryptoo:directory_names.fs_config_pm_mask)/$(cryptoo:file_groups.mask[$(role)])"
+      "$(root)$(directory_names.fs_config_pm_mask)/$(file_groups.mask[$(role)])"
         move_obstructions => "true",
-        link_from => cryptoo:cryptoo_package_mask("$(cryptoo:file_groups.mask[$(role)])"),
+        link_from => cryptoo_package_mask("$(file_groups.mask[$(role)])"),
         comment => "Link all files in /etc/portage/package.mask";
 
-      "$(root)$(cryptoo:directory_names.fs_config_pm_unmask)/$(cryptoo:file_groups.unmask[$(role)])"
+      "$(root)$(directory_names.fs_config_pm_unmask)/$(file_groups.unmask[$(role)])"
         move_obstructions => "true",
-        link_from => cryptoo:cryptoo_package_unmask("$(cryptoo:file_groups.unmask[$(role)])"),
+        link_from => cryptoo_package_unmask("$(file_groups.unmask[$(role)])"),
         comment => "Link all files in /etc/portage/package.unmask";
 
-      "$(root)$(cryptoo:directory_names.fs_config_pm_use)/$(cryptoo:file_groups.use[$(role)])"
+      "$(root)$(directory_names.fs_config_pm_use)/$(file_groups.use[$(role)])"
         move_obstructions => "true",
-        link_from => cryptoo:cryptoo_package_use("$(cryptoo:file_groups.use[$(role)])"),
+        link_from => cryptoo_package_use("$(file_groups.use[$(role)])"),
         comment => "Link all files in /etc/portage/package.use";
 
-      "$(root)$(cryptoo:directory_names.fs_config_pm_profile)/$(cryptoo:file_groups.profile[$(role)])"
+      "$(root)$(directory_names.fs_config_pm_profile)/$(file_groups.profile[$(role)])"
         move_obstructions => "true",
-        link_from => cryptoo:cryptoo_portage_profile("$(cryptoo:file_groups.profile[$(role)])"),
+        link_from => cryptoo_portage_profile("$(file_groups.profile[$(role)])"),
         comment => "Link all files in /etc/portage/profile";
 
       "$(root)$(file_names.pm_profile)"
         move_obstructions => "true",
-        link_from => cryptoo:cryptoo_profile("$(cryptoo:file_groups.make_profile[$(role)])");
+        link_from => cryptoo_profile("$(file_groups.make_profile[$(role)])");
 
-      "$(root)$(cryptoo:file_names.pm_profile_upstream)"
-        perms => cryptoo:system,
+      "$(root)$(file_names.pm_profile_upstream)"
+        perms => system,
         create => "true",
-        edit_template => "/$(cryptoo:templates.template[profile_parent])";
+        edit_template => "/$(templates.template[profile_parent])";
 
-      "$(root)$(cryptoo:file_names.pm_machine_meta)"
-        perms => cryptoo:system,
+      "$(root)$(file_names.pm_machine_meta)"
+        perms => system,
         create => "true",
-        edit_template => "/$(cryptoo:templates.template[local_layout_conf])";
+        edit_template => "/$(templates.template[local_layout_conf])";
 
-      "$(root)$(cryptoo:file_names.pm_machine_repo)"
-        perms => cryptoo:system,
+      "$(root)$(file_names.pm_machine_repo)"
+        perms => system,
         create => "true",
-        edit_template => "/$(cryptoo:templates.template[local_repo_name])";
+        edit_template => "/$(templates.template[local_repo_name])";
 
-      "$(root)$(cryptoo:file_names.pm_installed_sets)"
-        perms => cryptoo:system,
+      "$(root)$(file_names.pm_installed_sets)"
+        perms => system,
         create => "true",
-        edit_template => "/$(cryptoo:templates.template[world_sets])";
+        edit_template => "/$(templates.template[world_sets])";
 
     bootstrap_systemd::
 
-      "$(root)$(cryptoo:directory_names.fs_config_pm_use)/$(cryptoo:file_groups.unuse_udev[$(role)])"
+      "$(root)$(directory_names.fs_config_pm_use)/$(file_groups.unuse_udev[$(role)])"
         delete => default:tidy,
         comment => "Unlink systemd-related files in /etc/portage/package.use";
 
-      "$(root)$(cryptoo:directory_names.fs_config_pm_use)/$(cryptoo:file_groups.use_udev[$(role)])"
+      "$(root)$(directory_names.fs_config_pm_use)/$(file_groups.use_udev[$(role)])"
         move_obstructions => "true",
-        link_from => cryptoo:cryptoo_package_use("$(cryptoo:file_groups.use_udev[$(role)])"),
+        link_from => cryptoo_package_use("$(file_groups.use_udev[$(role)])"),
         comment => "Link udev-related files in /etc/portage/package.use";
 
     have_systemd::
 
-      "$(root)$(cryptoo:directory_names.fs_config_pm_use)/$(cryptoo:file_groups.unuse_systemd[$(role)])"
+      "$(root)$(directory_names.fs_config_pm_use)/$(file_groups.unuse_systemd[$(role)])"
         delete => default:tidy,
         comment => "Unlink udev-related files in /etc/portage/package.use";
 
-      "$(root)$(cryptoo:directory_names.fs_config_pm_use)/$(cryptoo:file_groups.use_systemd[$(role)])"
+      "$(root)$(directory_names.fs_config_pm_use)/$(file_groups.use_systemd[$(role)])"
         move_obstructions => "true",
-        link_from => cryptoo:cryptoo_package_use("$(cryptoo:file_groups.use_systemd[$(role)])"),
+        link_from => cryptoo_package_use("$(file_groups.use_systemd[$(role)])"),
         comment => "Link systemd-related files in /etc/portage/package.use";
 
   methods:
@@ -149,6 +146,6 @@ bundle agent portage(root, role, arch, multilib)
     any::
 
       "configure make.conf"
-        usebundle => cryptoo:make_conf("$(root)", "$(role)", "$(multilib)");
+        usebundle => make_conf("$(root)", "$(role)", "$(multilib)");
 
 }
