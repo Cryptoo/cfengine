@@ -304,23 +304,23 @@ bundle common file_groups
                  };
 
 ################################################################################
-#                              template_server
+#                              chroot_server
 ################################################################################
 
-      "make_profile[template_server]"
+      "make_profile[chroot_server]"
         string => "$(make_profile[server_guest])";
 
-      "pm_env[template_server]"
+      "pm_env[chroot_server]"
         slist => {
                     "@(pm_env[server_guest])"
                  };
 
-      "pm_environment[template_server]"
+      "pm_environment[chroot_server]"
         slist => {
                     "@(pm_environment[server_guest])"
                  };
 
-      "keywords[template_server]"
+      "keywords[chroot_server]"
         slist => {
                     "@(keywords[server_guest])",
                     "bitcoin",
@@ -340,18 +340,18 @@ bundle common file_groups
                     "znc"
                  };
 
-      "mask[template_server]"
+      "mask[chroot_server]"
         slist => {
                     "@(mask[server_guest])"
                  };
 
-      "unmask[template_server]"
+      "unmask[chroot_server]"
         slist => {
                     "@(unmask[server_guest])",
                     "java"
                  };
 
-      "use[template_server]"
+      "use[chroot_server]"
         slist => {
                     "@(use[server_guest])",
                     "bitcoin",
@@ -370,71 +370,71 @@ bundle common file_groups
                     "znc"
                  };
 
-      "profile[template_server]"
+      "profile[chroot_server]"
         slist => {
                     "@(profile[server_guest])"
                  };
 
-      "use_udev[template_server]"
+      "use_udev[chroot_server]"
         slist => {
                     "@(use_udev[server_guest])"
                  };
 
-      "use_systemd[template_server]"
+      "use_systemd[chroot_server]"
         slist => {
                     "@(use_systemd[server_guest])"
                  };
 
-      "unuse_udev[template_server]"
+      "unuse_udev[chroot_server]"
         slist => {
                     "@(unuse_udev[server_guest])"
                  };
 
-      "unuse_systemd[template_server]"
+      "unuse_systemd[chroot_server]"
         slist => {
                     "@(unuse_systemd[server_guest])"
                  };
 
-      "systemd_enabled[template_server]"
+      "systemd_enabled[chroot_server]"
         slist => {
                     "@(systemd_enabled[server_guest])"
                  };
 
 ################################################################################
-#                              template_desktop
+#                              chroot_desktop
 ################################################################################
 
-      "make_profile[template_desktop]"
+      "make_profile[chroot_desktop]"
         string => "$(make_profile[desktop_guest])";
 
-      "pm_env[template_desktop]"
+      "pm_env[chroot_desktop]"
         slist => {
                     "@(pm_env[desktop_guest])"
                  };
 
-      "pm_environment[template_desktop]"
+      "pm_environment[chroot_desktop]"
         slist => {
                     "@(pm_environment[desktop_guest])"
                  };
 
-      "keywords[template_desktop]"
+      "keywords[chroot_desktop]"
         slist => {
                     "@(keywords[desktop_guest])",
                     "browsers",
                     "mail_client"
                  };
 
-      "mask[template_desktop]"
+      "mask[chroot_desktop]"
         slist => {
                     "@(mask[desktop_guest])"
                  };
 
-      "unmask[template_desktop]"
+      "unmask[chroot_desktop]"
         slist => {
                     "@(unmask[desktop_guest])"
                  };
 
-      "use[template_desktop]"
+      "use[chroot_desktop]"
         slist => {
                     "@(use[desktop_guest])",
                     "browsers",
@@ -442,32 +442,32 @@ bundle common file_groups
                     "mail_client"
                  };
 
-      "profile[template_desktop]"
+      "profile[chroot_desktop]"
         slist => {
                     "@(profile[desktop_guest])"
                  };
 
-      "use_udev[template_desktop]"
+      "use_udev[chroot_desktop]"
         slist => {
                     "@(use_udev[desktop_guest])"
                  };
 
-      "use_systemd[template_desktop]"
+      "use_systemd[chroot_desktop]"
         slist => {
                     "@(use_systemd[desktop_guest])"
                  };
 
-      "unuse_udev[template_desktop]"
+      "unuse_udev[chroot_desktop]"
         slist => {
                     "@(unuse_udev[desktop_guest])"
                  };
 
-      "unuse_systemd[template_desktop]"
+      "unuse_systemd[chroot_desktop]"
         slist => {
                     "@(unuse_systemd[desktop_guest])"
                  };
 
-      "systemd_enabled[template_desktop]"
+      "systemd_enabled[chroot_desktop]"
         slist => {
                     "@(systemd_enabled[desktop_guest])"
                  };
