@@ -7,8 +7,10 @@ body file control
   inputs => {
               "cryptoo/common/systemd.cf",
               "cryptoo/config/config.cf",
+              "cryptoo/config/directory_names.cf",
               "cryptoo/config/templates.cf",
-              "cryptoo/util/contain.cf"
+              "cryptoo/util/contain.cf",
+              "cryptoo/util/perms.cf"
             };
 
 }
@@ -55,6 +57,10 @@ bundle agent master
   files:
 
     any::
+
+      "/$(directory_names.fs_storage_backup)/$(config.server_guests)/."
+        perms => qemu,
+        create => "true";
 
       "/$(file_names.console_autologin)"
         perms => system,
