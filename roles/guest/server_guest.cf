@@ -26,6 +26,9 @@ bundle agent server_guest(root, role, arch)
       "server_guest"
         expression => "any";
 
+      "bootstrap"
+        not => strcmp("$(this.root)", "/");
+
   files:
 
     any::
@@ -47,7 +50,7 @@ bundle agent server_guest(root, role, arch)
       "manage guest files"
         usebundle => cryptoo:common_guest("$(root)","$(role)","$(arch)");
 
-    fstab_repaired::
+    fstab_repaired&(!bootstrap)::
 
       "activate all mountpoints"
         usebundle => cryptoo:mount_all;

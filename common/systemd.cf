@@ -34,6 +34,9 @@ bundle agent systemd(root, role)
       "have_systemctl"
         expression => fileexists("$(root)$(file_names.systemd_app)");
 
+      "bootstrap"
+        not => strcmp("$(this.root)", "/");
+
   files:
 
     any::
@@ -93,7 +96,7 @@ bundle agent systemd(root, role)
 
   commands:
 
-    daemon_reload&have_systemctl::
+    daemon_reload&have_systemctl&(!bootstrap)::
 
       "/$(file_names.systemd_app)"
         args => "daemon-reload",
