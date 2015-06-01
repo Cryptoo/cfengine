@@ -132,9 +132,14 @@ bundle agent image_file(role, type, multilib)
         depends_on => { "basic_system_emerged" },
         handle => "apps_installed";
 
+      "/$(file_names.dd_app)"
+        args => "if=/dev/urandom of=/$(directory_names.fs_mount_cryptoo)/$(file_names.random_seed) bs=512 count=1",
+        depends_on => { "filesystem_ready" },
+        handle => "random_seed_created";
+
       "/$(file_names.umount_app)"
         args => "-l /$(directory_names.fs_mount_cryptoo)",
-        depends_on => { "filesystem_ready" },
+        depends_on => { "random_seed_created" },
         handle => "image_fs_unmounted";
 
       "/$(file_names.losetup_app)"

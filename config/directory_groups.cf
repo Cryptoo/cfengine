@@ -67,7 +67,8 @@ bundle common directory_groups
                     $(cryptoo:directory_names.fs_site_sources),
                     $(cryptoo:directory_names.fs_standard_sources),
                     $(cryptoo:directory_names.fs_volatile_base),
-                    $(cryptoo:directory_names.fs_volatile_library)
+                    $(cryptoo:directory_names.fs_volatile_library),
+                    $(cryptoo:directory_names.fs_volatile_systemd)
                  };
 
       "common_system_restricted"

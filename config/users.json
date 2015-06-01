@@ -17,6 +17,12 @@
                    "group": "dovecot",
                    "shell": "/sbin/nologin"
                  },
+    "messagebus": {
+                   "home": "/dev/null",
+                   "uid": "101",
+                   "group": "messagebus",
+                   "shell": "/sbin/nologin"
+                 },
     "portage": {
                    "home": "/var/tmp/portage",
                    "uid": "250",

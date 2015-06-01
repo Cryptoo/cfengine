@@ -19,279 +19,279 @@ bundle common file_names
     any::
 
       "chmod_app"
-        string => "$(cryptoo:directory_names.fs_apps_base)/chmod";
+        string => "$(directory_names.fs_apps_base)/chmod";
       "chown_app"
-        string => "$(cryptoo:directory_names.fs_apps_base)/chown";
+        string => "$(directory_names.fs_apps_base)/chown";
       "dd_app"
-        string => "$(cryptoo:directory_names.fs_apps_base)/dd";
+        string => "$(directory_names.fs_apps_base)/dd";
       "lsblk_app"
-        string => "$(cryptoo:directory_names.fs_apps_base)/lsblk";
+        string => "$(directory_names.fs_apps_base)/lsblk";
       "mount_app"
-        string => "$(cryptoo:directory_names.fs_apps_base)/mount";
+        string => "$(directory_names.fs_apps_base)/mount";
       "move_app"
-        string => "$(cryptoo:directory_names.fs_apps_base)/mv";
+        string => "$(directory_names.fs_apps_base)/mv";
       "setfattr_app"
-        string => "$(cryptoo:directory_names.fs_apps_base)/setfattr";
+        string => "$(directory_names.fs_apps_base)/setfattr";
       "tar_app"
-        string => "$(cryptoo:directory_names.fs_apps_base)/tar";
+        string => "$(directory_names.fs_apps_base)/tar";
       "umount_app"
-        string => "$(cryptoo:directory_names.fs_apps_base)/umount";
+        string => "$(directory_names.fs_apps_base)/umount";
       "dracut_image"
-        string => "$(cryptoo:directory_names.fs_boot_base)/dracut.initramfs.cpio";
+        string => "$(directory_names.fs_boot_base)/dracut.initramfs.cpio";
       "dmcrypt_key"
-        string => "$(cryptoo:directory_names.fs_boot_base)/master.key";
+        string => "$(directory_names.fs_boot_base)/master.key";
       "null"
-        string => "$(cryptoo:directory_names.fs_dev_base)/null";
+        string => "$(directory_names.fs_dev_base)/null";
       "crypttab"
-        string => "$(cryptoo:directory_names.fs_config_base)/crypttab";
+        string => "$(directory_names.fs_config_base)/crypttab";
       "fstab"
-        string => "$(cryptoo:directory_names.fs_config_base)/fstab";
+        string => "$(directory_names.fs_config_base)/fstab";
       "group"
-        string => "$(cryptoo:directory_names.fs_config_base)/group";
+        string => "$(directory_names.fs_config_base)/group";
       "hostname_systemd"
-        string => "$(cryptoo:directory_names.fs_config_base)/hostname";
+        string => "$(directory_names.fs_config_base)/hostname";
       "locale"
-        string => "$(cryptoo:directory_names.fs_config_base)/locale.gen";
+        string => "$(directory_names.fs_config_base)/locale.gen";
       "localtime"
-        string => "$(cryptoo:directory_names.fs_config_base)/localtime";
+        string => "$(directory_names.fs_config_base)/localtime";
       "mtab"
-        string => "$(cryptoo:directory_names.fs_config_base)/mtab";
+        string => "$(directory_names.fs_config_base)/mtab";
       "networks"
-        string => "$(cryptoo:directory_names.fs_config_base)/networks";
+        string => "$(directory_names.fs_config_base)/networks";
       "passwd"
-        string => "$(cryptoo:directory_names.fs_config_base)/passwd";
+        string => "$(directory_names.fs_config_base)/passwd";
       "dns_config"
-        string => "$(cryptoo:directory_names.fs_config_base)/resolv.conf";
+        string => "$(directory_names.fs_config_base)/resolv.conf";
       "shadow"
-        string => "$(cryptoo:directory_names.fs_config_base)/shadow";
+        string => "$(directory_names.fs_config_base)/shadow";
       "system_bashrc"
-        string => "$(cryptoo:directory_names.fs_config_bash)/bashrc";
+        string => "$(directory_names.fs_config_bash)/bashrc";
       "system_bash_logout"
-        string => "$(cryptoo:directory_names.fs_config_bash)/bash_logout";
+        string => "$(directory_names.fs_config_bash)/bash_logout";
       "dmcrypt_conf"
-        string => "$(cryptoo:directory_names.fs_config_openrc_env)/dmcrypt";
+        string => "$(directory_names.fs_config_openrc_env)/dmcrypt";
       "hostname_openrc"
-        string => "$(cryptoo:directory_names.fs_config_openrc_env)/hostname";
+        string => "$(directory_names.fs_config_openrc_env)/hostname";
       "cryptoo_hostname"
-        string => "$(cryptoo:directory_names.fs_config_cryptoo_incoming)/hostname";
+        string => "$(directory_names.fs_config_cryptoo_incoming)/hostname";
       "machine_names"
-        string => "$(cryptoo:directory_names.fs_config_cryptoo_incoming)/machine_names.json";
+        string => "$(directory_names.fs_config_cryptoo_incoming)/machine_names.json";
       "cryptoo_role"
-        string => "$(cryptoo:directory_names.fs_config_cryptoo_incoming)/role";
+        string => "$(directory_names.fs_config_cryptoo_incoming)/role";
       "site_config"
-        string => "$(cryptoo:directory_names.fs_config_cryptoo_incoming)/site_config.json";
+        string => "$(directory_names.fs_config_cryptoo_incoming)/site_config.json";
       "subnet_config"
-        string => "$(cryptoo:directory_names.fs_config_cryptoo_incoming)/subnet_config.json";
+        string => "$(directory_names.fs_config_cryptoo_incoming)/subnet_config.json";
       "grub_defaults"
-        string => "$(cryptoo:directory_names.fs_config_default)/grub";
+        string => "$(directory_names.fs_config_default)/grub";
       "dracut_conf"
-        string => "$(cryptoo:directory_names.fs_config_dracut)/cryptoo.conf";
+        string => "$(directory_names.fs_config_dracut)/cryptoo.conf";
       "env_cryptoo"
-        string => "$(cryptoo:directory_names.fs_config_environment)/00cryptoo";
+        string => "$(directory_names.fs_config_environment)/00cryptoo";
       "env_locale"
-        string => "$(cryptoo:directory_names.fs_config_environment)/02locale";
+        string => "$(directory_names.fs_config_environment)/02locale";
       "env_kernel"
-        string => "$(cryptoo:directory_names.fs_config_environment)/99kernel";
+        string => "$(directory_names.fs_config_environment)/99kernel";
       "env_gcc_native"
-        string => "$(cryptoo:directory_names.fs_config_gcc_environment)/.NATIVE";
+        string => "$(directory_names.fs_config_gcc_environment)/.NATIVE";
       "env_gcc_x86_64"
-        string => "$(cryptoo:directory_names.fs_config_gcc_environment)/config-x86_64-pc-linux-gnu";
+        string => "$(directory_names.fs_config_gcc_environment)/config-x86_64-pc-linux-gnu";
       "pm_config"
-        string => "$(cryptoo:directory_names.fs_config_pm)/make.conf";
+        string => "$(directory_names.fs_config_pm)/make.conf";
       "pm_profile"
-        string => "$(cryptoo:directory_names.fs_config_pm)/make.profile";
+        string => "$(directory_names.fs_config_pm)/make.profile";
       "pm_profile_upstream"
-        string => "$(cryptoo:directory_names.fs_config_pm_upstream)/parent";
+        string => "$(directory_names.fs_config_pm_upstream)/parent";
       "openrc_acpid"
-        string => "$(cryptoo:directory_names.fs_config_run_boot)/acpid";
+        string => "$(directory_names.fs_config_run_boot)/acpid";
       "openrc_devicemapper"
-        string => "$(cryptoo:directory_names.fs_config_run_boot)/device-mapper";
+        string => "$(directory_names.fs_config_run_boot)/device-mapper";
       "openrc_dmcrypt"
-        string => "$(cryptoo:directory_names.fs_config_run_boot)/dmcrypt";
+        string => "$(directory_names.fs_config_run_boot)/dmcrypt";
       "openrc_lvm"
-        string => "$(cryptoo:directory_names.fs_config_run_boot)/lvm";
+        string => "$(directory_names.fs_config_run_boot)/lvm";
       "openrc_lvmetad"
-        string => "$(cryptoo:directory_names.fs_config_run_boot)/lvmetad";
+        string => "$(directory_names.fs_config_run_boot)/lvmetad";
       "openrc_mdraid"
-        string => "$(cryptoo:directory_names.fs_config_run_boot)/mdraid";
+        string => "$(directory_names.fs_config_run_boot)/mdraid";
       "openrc_modules"
-        string => "$(cryptoo:directory_names.fs_config_run_boot)/modules";
+        string => "$(directory_names.fs_config_run_boot)/modules";
       "openrc_cf_execd"
-        string => "$(cryptoo:directory_names.fs_config_run_default)/cf-execd";
+        string => "$(directory_names.fs_config_run_default)/cf-execd";
       "openrc_cf_monitord"
-        string => "$(cryptoo:directory_names.fs_config_run_default)/cf-monitord";
+        string => "$(directory_names.fs_config_run_default)/cf-monitord";
       "openrc_cf_serverd"
-        string => "$(cryptoo:directory_names.fs_config_run_default)/cf-serverd";
+        string => "$(directory_names.fs_config_run_default)/cf-serverd";
       "openrc_consolefont"
-        string => "$(cryptoo:directory_names.fs_config_run_default)/consolefont";
+        string => "$(directory_names.fs_config_run_default)/consolefont";
       "openrc_dbus"
-        string => "$(cryptoo:directory_names.fs_config_run_default)/dbus";
+        string => "$(directory_names.fs_config_run_default)/dbus";
       "openrc_gpm"
-        string => "$(cryptoo:directory_names.fs_config_run_default)/gpm";
+        string => "$(directory_names.fs_config_run_default)/gpm";
       "openrc_libvirtd"
-        string => "$(cryptoo:directory_names.fs_config_run_default)/libvirtd";
+        string => "$(directory_names.fs_config_run_default)/libvirtd";
       "openrc_metalog"
-        string => "$(cryptoo:directory_names.fs_config_run_default)/metalog";
+        string => "$(directory_names.fs_config_run_default)/metalog";
       "openrc_ntpd"
-        string => "$(cryptoo:directory_names.fs_config_run_default)/ntpd";
+        string => "$(directory_names.fs_config_run_default)/ntpd";
       "openrc_numlock"
-        string => "$(cryptoo:directory_names.fs_config_run_default)/numlock";
+        string => "$(directory_names.fs_config_run_default)/numlock";
       "openrc_rngd"
-        string => "$(cryptoo:directory_names.fs_config_run_default)/rngd";
+        string => "$(directory_names.fs_config_run_default)/rngd";
       "openrc_sshd"
-        string => "$(cryptoo:directory_names.fs_config_run_default)/sshd";
+        string => "$(directory_names.fs_config_run_default)/sshd";
       "openrc_virtlockd"
-        string => "$(cryptoo:directory_names.fs_config_run_default)/virtlockd";
+        string => "$(directory_names.fs_config_run_default)/virtlockd";
       "openrc_vixiecron"
-        string => "$(cryptoo:directory_names.fs_config_run_default)/vixie-cron";
+        string => "$(directory_names.fs_config_run_default)/vixie-cron";
       "openrc_kmod"
-        string => "$(cryptoo:directory_names.fs_config_run_sysinit)/kmod-static-nodes";
+        string => "$(directory_names.fs_config_run_sysinit)/kmod-static-nodes";
       "mount_info"
         string => "/proc/self/mountstats";
       "sshd_config"
-        string => "$(cryptoo:directory_names.fs_config_ssh)/sshd_config";
+        string => "$(directory_names.fs_config_ssh)/sshd_config";
       "ssh_config"
-        string => "$(cryptoo:directory_names.fs_config_ssh)/ssh_config";
+        string => "$(directory_names.fs_config_ssh)/ssh_config";
       "i2p_netdev"
-        string => "$(cryptoo:directory_names.fs_config_network)/i2p.netdev";
+        string => "$(directory_names.fs_config_network)/i2p.netdev";
       "ispdmz_netdev"
-        string => "$(cryptoo:directory_names.fs_config_network)/ispdmz.netdev";
+        string => "$(directory_names.fs_config_network)/ispdmz.netdev";
       "lan_netdev"
-        string => "$(cryptoo:directory_names.fs_config_network)/lan.netdev";
+        string => "$(directory_names.fs_config_network)/lan.netdev";
       "lantap_netdev"
-        string => "$(cryptoo:directory_names.fs_config_network)/lantap.netdev";
+        string => "$(directory_names.fs_config_network)/lantap.netdev";
       "openvpn1_netdev"
-        string => "$(cryptoo:directory_names.fs_config_network)/openvpn1.netdev";
+        string => "$(directory_names.fs_config_network)/openvpn1.netdev";
       "openvpn2_netdev"
-        string => "$(cryptoo:directory_names.fs_config_network)/openvpn2.netdev";
+        string => "$(directory_names.fs_config_network)/openvpn2.netdev";
       "openvpn3_netdev"
-        string => "$(cryptoo:directory_names.fs_config_network)/openvpn3.netdev";
+        string => "$(directory_names.fs_config_network)/openvpn3.netdev";
       "openvpn4_netdev"
-        string => "$(cryptoo:directory_names.fs_config_network)/openvpn4.netdev";
+        string => "$(directory_names.fs_config_network)/openvpn4.netdev";
       "tor_netdev"
-        string => "$(cryptoo:directory_names.fs_config_network)/tor.netdev";
+        string => "$(directory_names.fs_config_network)/tor.netdev";
       "vpndmz_netdev"
-        string => "$(cryptoo:directory_names.fs_config_network)/vpndmz.netdev";
+        string => "$(directory_names.fs_config_network)/vpndmz.netdev";
       "wan_netdev"
-        string => "$(cryptoo:directory_names.fs_config_network)/wan.netdev";
+        string => "$(directory_names.fs_config_network)/wan.netdev";
       "i2p_network"
-        string => "$(cryptoo:directory_names.fs_config_network)/i2p.network";
+        string => "$(directory_names.fs_config_network)/i2p.network";
       "i2p_bridge_network"
-        string => "$(cryptoo:directory_names.fs_config_network)/i2p_bridge.network";
+        string => "$(directory_names.fs_config_network)/i2p_bridge.network";
       "ispdmz_network"
-        string => "$(cryptoo:directory_names.fs_config_network)/ispdmz.network";
+        string => "$(directory_names.fs_config_network)/ispdmz.network";
       "ispdmz_bridge_network"
-        string => "$(cryptoo:directory_names.fs_config_network)/ispdmz_bridge.network";
+        string => "$(directory_names.fs_config_network)/ispdmz_bridge.network";
       "lan_network"
-        string => "$(cryptoo:directory_names.fs_config_network)/lan.network";
+        string => "$(directory_names.fs_config_network)/lan.network";
       "lan0_network"
-        string => "$(cryptoo:directory_names.fs_config_network)/lan0.network";
+        string => "$(directory_names.fs_config_network)/lan0.network";
       "lan1_network"
-        string => "$(cryptoo:directory_names.fs_config_network)/lan1.network";
+        string => "$(directory_names.fs_config_network)/lan1.network";
       "lan13_network"
-        string => "$(cryptoo:directory_names.fs_config_network)/lan13.network";
+        string => "$(directory_names.fs_config_network)/lan13.network";
       "lan_bridge_network"
-        string => "$(cryptoo:directory_names.fs_config_network)/lan_bridge.network";
+        string => "$(directory_names.fs_config_network)/lan_bridge.network";
       "lan_physical_network"
-        string => "$(cryptoo:directory_names.fs_config_network)/lan_physical.network";
+        string => "$(directory_names.fs_config_network)/lan_physical.network";
       "openvpn1_network"
-        string => "$(cryptoo:directory_names.fs_config_network)/openvpn1.network";
+        string => "$(directory_names.fs_config_network)/openvpn1.network";
       "openvpn2_network"
-        string => "$(cryptoo:directory_names.fs_config_network)/openvpn2.network";
+        string => "$(directory_names.fs_config_network)/openvpn2.network";
       "openvpn3_network"
-        string => "$(cryptoo:directory_names.fs_config_network)/openvpn3.network";
+        string => "$(directory_names.fs_config_network)/openvpn3.network";
       "openvpn4_network"
-        string => "$(cryptoo:directory_names.fs_config_network)/openvpn4.network";
+        string => "$(directory_names.fs_config_network)/openvpn4.network";
       "tor_network"
-        string => "$(cryptoo:directory_names.fs_config_network)/tor.network";
+        string => "$(directory_names.fs_config_network)/tor.network";
       "tor_bridge_network"
-        string => "$(cryptoo:directory_names.fs_config_network)/tor_bridge.network";
+        string => "$(directory_names.fs_config_network)/tor_bridge.network";
       "vpndmz_network"
-        string => "$(cryptoo:directory_names.fs_config_network)/vpndmz.network";
+        string => "$(directory_names.fs_config_network)/vpndmz.network";
       "vpndmz_bridge_network"
-        string => "$(cryptoo:directory_names.fs_config_network)/vpndmz_bridge.network";
+        string => "$(directory_names.fs_config_network)/vpndmz_bridge.network";
       "wan_network"
-        string => "$(cryptoo:directory_names.fs_config_network)/wan.network";
+        string => "$(directory_names.fs_config_network)/wan.network";
       "wan_bridge_network"
-        string => "$(cryptoo:directory_names.fs_config_network)/wan_bridge.network";
+        string => "$(directory_names.fs_config_network)/wan_bridge.network";
       "wan_physical_network"
-        string => "$(cryptoo:directory_names.fs_config_network)/wan_physical.network";
+        string => "$(directory_names.fs_config_network)/wan_physical.network";
       "cf_execd_service"
-        string => "$(cryptoo:directory_names.fs_config_units)/cf-execd.service";
+        string => "$(directory_names.fs_config_units)/cf-execd.service";
       "cf_monitord_service"
-        string => "$(cryptoo:directory_names.fs_config_units)/cf-monitord.service";
+        string => "$(directory_names.fs_config_units)/cf-monitord.service";
       "cf_serverd_service"
-        string => "$(cryptoo:directory_names.fs_config_units)/cf-serverd.service";
+        string => "$(directory_names.fs_config_units)/cf-serverd.service";
       "ipset_service"
-        string => "$(cryptoo:directory_names.fs_config_units)/ipset.service";
+        string => "$(directory_names.fs_config_units)/ipset.service";
       "shorewall_service"
-        string => "$(cryptoo:directory_names.fs_config_units)/shorewall.service";
+        string => "$(directory_names.fs_config_units)/shorewall.service";
       "console_autologin"
-        string => "$(cryptoo:directory_names.fs_config_units)/getty@tty1.service.d/autologin.conf";
+        string => "$(directory_names.fs_config_units)/getty@tty1.service.d/autologin.conf";
       "serial_autologin"
-        string => "$(cryptoo:directory_names.fs_config_units)/serial-getty@ttyS0.service.d/autologin.conf";
+        string => "$(directory_names.fs_config_units)/serial-getty@ttyS0.service.d/autologin.conf";
       "proc_mounts"
         string => "proc/self/mounts";
       "openrc_softlevel"
-        string => "$(cryptoo:directory_names.fs_runtime_base)/openrc/softlevel";
+        string => "$(directory_names.fs_runtime_base)/openrc/softlevel";
       "blkid_app"
-        string => "$(cryptoo:directory_names.fs_admin_apps)/blkid";
+        string => "$(directory_names.fs_admin_apps)/blkid";
       "losetup_app"
-        string => "$(cryptoo:directory_names.fs_admin_apps)/losetup";
+        string => "$(directory_names.fs_admin_apps)/losetup";
       "mkfs_app"
-        string => "$(cryptoo:directory_names.fs_admin_apps)/mkfs";
+        string => "$(directory_names.fs_admin_apps)/mkfs";
       "rc_app"
-        string => "$(cryptoo:directory_names.fs_admin_apps)/rc";
+        string => "$(directory_names.fs_admin_apps)/rc";
       "storage_pm_site_meta"
-        string => "$(cryptoo:directory_names.fs_storage_pm_site_meta)/layout.conf";
+        string => "$(directory_names.fs_storage_pm_site_meta)/layout.conf";
       "storage_pm_site_repo"
-        string => "$(cryptoo:directory_names.fs_storage_pm_site_profile)/repo_name";
+        string => "$(directory_names.fs_storage_pm_site_profile)/repo_name";
       "kernel_makefile"
-        string => "$(cryptoo:directory_names.fs_storage_kernel)/Makefile";
+        string => "$(directory_names.fs_storage_kernel)/Makefile";
       "cpu2use_app"
-        string => "$(cryptoo:directory_names.fs_standard_apps)/cpuinfo2cpuflags-x86";
+        string => "$(directory_names.fs_standard_apps)/cpuinfo2cpuflags-x86";
       "dracut_app"
-        string => "$(cryptoo:directory_names.fs_standard_apps)/dracut";
+        string => "$(directory_names.fs_standard_apps)/dracut";
       "emerge_app"
-        string => "$(cryptoo:directory_names.fs_standard_apps)/emerge";
+        string => "$(directory_names.fs_standard_apps)/emerge";
       "find_app"
-        string => "$(cryptoo:directory_names.fs_standard_apps)/find";
+        string => "$(directory_names.fs_standard_apps)/find";
       "gcc_config_app"
-        string => "$(cryptoo:directory_names.fs_standard_apps)/gcc-config";
+        string => "$(directory_names.fs_standard_apps)/gcc-config";
       "git_app"
-        string => "$(cryptoo:directory_names.fs_standard_apps)/git";
+        string => "$(directory_names.fs_standard_apps)/git";
       "layman_app"
-        string => "$(cryptoo:directory_names.fs_standard_apps)/layman";
+        string => "$(directory_names.fs_standard_apps)/layman";
       "ssh_app"
-        string => "$(cryptoo:directory_names.fs_standard_apps)/ssh";
+        string => "$(directory_names.fs_standard_apps)/ssh";
       "systemd_app"
-        string => "$(cryptoo:directory_names.fs_standard_apps)/systemctl";
+        string => "$(directory_names.fs_standard_apps)/systemctl";
       "cryptoo_perms_app"
-        string => "$(cryptoo:directory_names.fs_cryptoo_apps)/cryptoo_perms";
+        string => "$(directory_names.fs_cryptoo_apps)/cryptoo_perms";
       "distfiles_perms_app"
-        string => "$(cryptoo:directory_names.fs_cryptoo_apps)/distfiles_perms";
+        string => "$(directory_names.fs_cryptoo_apps)/distfiles_perms";
       "pkgdir_perms_app"
-        string => "$(cryptoo:directory_names.fs_cryptoo_apps)/pkgdir_perms";
+        string => "$(directory_names.fs_cryptoo_apps)/pkgdir_perms";
       "cryptoo_profile"
-        string => "$(cryptoo:directory_names.fs_cryptoo_profiles)/repo_name";
+        string => "$(directory_names.fs_cryptoo_profiles)/repo_name";
       "pm_machine_meta"
-        string => "$(cryptoo:directory_names.fs_machine_pm_meta)/layout.conf";
+        string => "$(directory_names.fs_machine_pm_meta)/layout.conf";
       "pm_machine_repo"
-        string => "$(cryptoo:directory_names.fs_machine_pm_profile)/repo_name";
+        string => "$(directory_names.fs_machine_pm_profile)/repo_name";
       "envupdate_app"
-        string => "$(cryptoo:directory_names.fs_standard_admin_apps)/env-update";
+        string => "$(directory_names.fs_standard_admin_apps)/env-update";
       "groupadd_app"
-        string => "$(cryptoo:directory_names.fs_standard_admin_apps)/groupadd";
+        string => "$(directory_names.fs_standard_admin_apps)/groupadd";
       "groupmems_app"
-        string => "$(cryptoo:directory_names.fs_standard_admin_apps)/groupmems";
+        string => "$(directory_names.fs_standard_admin_apps)/groupmems";
       "useradd_app"
-        string => "$(cryptoo:directory_names.fs_standard_admin_apps)/useradd";
+        string => "$(directory_names.fs_standard_admin_apps)/useradd";
       "libvirtd_app"
-        string => "$(cryptoo:directory_names.fs_standard_admin_apps)/libvirtd";
+        string => "$(directory_names.fs_standard_admin_apps)/libvirtd";
       "localegen_app"
-        string => "$(cryptoo:directory_names.fs_standard_admin_apps)/locale-gen";
+        string => "$(directory_names.fs_standard_admin_apps)/locale-gen";
       "sshd_app"
-        string => "$(cryptoo:directory_names.fs_standard_admin_apps)/sshd";
+        string => "$(directory_names.fs_standard_admin_apps)/sshd";
       "template_cf_execd"
         string => "common/cf-execd_service.txt",
         meta => { "template" };
@@ -377,10 +377,12 @@ bundle common file_names
         string => "host/subnets.txt",
         meta => { "template" };
       "overlay_conf"
-        string => "$(cryptoo:directory_names.fs_volatile_overlay)/make.conf";
+        string => "$(directory_names.fs_volatile_overlay)/make.conf";
       "bitcoin_overlay"
-        string => "$(cryptoo:directory_names.fs_bitcoin_overlay)/profiles/repo_name";
+        string => "$(directory_names.fs_bitcoin_overlay)/profiles/repo_name";
+      "random_seed"
+        string => "$(directory_names.fs_volatile_systemd)/random-seed";
       "pm_installed_sets"
-        string => "$(cryptoo:directory_names.fs_volatile_pm)/world_sets";
+        string => "$(directory_names.fs_volatile_pm)/world_sets";
 
 }

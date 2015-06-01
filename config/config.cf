@@ -1587,10 +1587,12 @@ bundle common config
         int => "12";
       "gid[dovecot]"
         int => "97";
-			"gid[users]"
-				int => "100";
-			"gid[portage]"
-				int => "250";
+      "gid[users]"
+        int => "100";
+      "gid[messagebus]"
+        int => "101";
+      "gid[portage]"
+        int => "250";
       "gid[systemd-resolve]"
         int => "297";
       "gid[systemd-network]"
