@@ -19,6 +19,6 @@ bundle agent firewall_external
     any::
 
       "configure system as a external firewall"
-        usebundle => server_guest("/", "firewall_external", "x86_64");
+        usebundle => server_guest("/", "firewall_external", "x86_64", "no_multilib");
 
 }

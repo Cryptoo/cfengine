@@ -11,7 +11,7 @@ body file control
 
 }
 
-bundle agent server_guest(root, role, arch)
+bundle agent server_guest(root, role, arch, multilib)
 
 {
 
@@ -20,9 +20,9 @@ bundle agent server_guest(root, role, arch)
     any::
 
       "manage common files"
-        usebundle => cryptoo_filesystem("$(root)","$(role)","$(arch)","no_multilib");
+        usebundle => cryptoo_filesystem("$(root)", "$(role)", "$(arch)", "$(multilib)");
 
       "manage guest files"
-        usebundle => common_guest("$(root)","$(role)","$(arch)");
+        usebundle => common_guest("$(root)", "server", "$(role)", "$(arch)");
 
 }

@@ -19,6 +19,6 @@ bundle agent tor
     any::
 
       "configure system as a Tor node"
-        usebundle => server_guest("/", "tor", "x86_64");
+        usebundle => server_guest("/", "tor", "x86_64", "no_multilib");
 
 }

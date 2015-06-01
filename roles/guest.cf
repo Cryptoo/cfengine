@@ -17,7 +17,7 @@ body file control
 
 }
 
-bundle agent common_guest(root, role, arch)
+bundle agent common_guest(root, type, role, arch)
 
 {
 
@@ -30,6 +30,9 @@ bundle agent common_guest(root, role, arch)
 
       "bootstrap"
         not => strcmp("$(this.root)", "/");
+
+      "$(this.type)_guest"
+        expression => "any";
 
   files:
 

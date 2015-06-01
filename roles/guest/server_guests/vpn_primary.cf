@@ -19,6 +19,6 @@ bundle agent vpn_primary
     any::
 
       "configure system as the primary VPN client router"
-        usebundle => server_guest("/", "vpn_primary", "x86_64");
+        usebundle => server_guest("/", "vpn_primary", "x86_64", "no_multilib");
 
 }

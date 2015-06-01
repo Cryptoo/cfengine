@@ -87,7 +87,7 @@ bundle agent image_file(role, type, multilib)
     bootstrap_server::
 
       "configure system"
-        usebundle => server_guest("/$(directory_names.fs_mount_cryptoo)/", "$(this.role)", "x86_64"),
+        usebundle => server_guest("/$(directory_names.fs_mount_cryptoo)/", "$(this.role)", "x86_64", "$(this.multilib)"),
         depends_on => { "apps_installed" },
         handle => "filesystem_ready";
 

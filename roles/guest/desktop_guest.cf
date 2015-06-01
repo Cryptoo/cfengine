@@ -20,9 +20,9 @@ bundle agent desktop_guest(root, role, arch, multilib)
     any::
 
       "manage common files"
-        usebundle => cryptoo:cryptoo_filesystem("$(root)","$(role)","$(arch)","$(multilib)");
+        usebundle => cryptoo_filesystem("$(root)", "$(role)", "$(arch)", "$(multilib)");
 
       "manage guest files"
-        usebundle => cryptoo:common_guest("$(root)","$(role)","$(arch)");
+        usebundle => common_guest("$(root)", "desktop", "$(role)", "$(arch)");
 
 }
