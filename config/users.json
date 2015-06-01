@@ -23,6 +23,18 @@
                    "group": "portage",
                    "shell": "/sbin/nologin"
                  },
+    "systemd-resolve": {
+                   "home": "/dev/null",
+                   "uid": "297",
+                   "group": "systemd-resolve",
+                   "shell": "/sbin/nologin"
+                 },
+    "systemd-network": {
+                   "home": "/dev/null",
+                   "uid": "298",
+                   "group": "systemd-network",
+                   "shell": "/sbin/nologin"
+                 },
     "qemu": {
                    "home": "/dev/null",
                    "uid": "300",

@@ -1591,6 +1591,12 @@ bundle common config
 				int => "100";
 			"gid[portage]"
 				int => "250";
+      "gid[systemd-resolve]"
+        int => "297";
+      "gid[systemd-network]"
+        int => "298";
+      "gid[systemd-journal]"
+        int => "299";
 			"gid[qemu]"
 				int => "300";
 			"gid[dhcp]"
