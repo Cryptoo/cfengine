@@ -179,7 +179,7 @@ bundle agent host(arch)
       "/$(cryptoo:file_names.grub_defaults)"
         perms => cryptoo:system,
         create => "false",
-        edit_line => default:delete_lines_matching("# GRUB_CMDLINE_LINUX=.*"),
+        edit_line => default:delete_lines_matching("#.*GRUB_CMDLINE_LINUX=.*"),
         comment => "remove some example comments that interfere with the next promise";
 
       "/$(cryptoo:file_names.grub_defaults)"
