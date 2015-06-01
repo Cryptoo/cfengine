@@ -103,7 +103,7 @@ bundle agent bootstrap_guest(role, type, multilib)
     bootstrap_server::
 
       "configure system"
-        usebundle => server_guest("/", "$(this.role)", "x86_64"),
+        usebundle => server_guest("/$(directory_names.fs_mount_cryptoo)", "$(this.role)", "x86_64"),
         depends_on => { "apps_installed" },
         handle => "filesystem_ready";
 
@@ -170,5 +170,7 @@ bundle agent bootstrap_guest(role, type, multilib)
     any::
 
       "Creating a $(this.role) guest";
+      "$(this.definition)";
+      "$(this.definition_json)";
 
 }
