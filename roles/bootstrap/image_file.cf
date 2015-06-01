@@ -80,14 +80,14 @@ bundle agent image_file(role, type, multilib)
     bootstrap_ready::
 
       "set users and groups"
-        usebundle => cryptoo_filesystem("/$(directory_names.fs_mount_cryptoo)","undefined","x86_64","$(this.multilib)"),
+        usebundle => cryptoo_filesystem("/$(directory_names.fs_mount_cryptoo)/","undefined","x86_64","$(this.multilib)"),
         depends_on => { "skeleton_extracted" },
         handle => "users_created";
 
     bootstrap_server::
 
       "configure system"
-        usebundle => server_guest("/$(directory_names.fs_mount_cryptoo)", "$(this.role)", "x86_64"),
+        usebundle => server_guest("/$(directory_names.fs_mount_cryptoo)/", "$(this.role)", "x86_64"),
         depends_on => { "apps_installed" },
         handle => "filesystem_ready";
 
