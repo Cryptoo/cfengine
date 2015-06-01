@@ -6,10 +6,6 @@ body file control
 
   inputs => {
               "cryptoo/common/common.cf",
-              "cryptoo/common/mounts.cf",
-              "cryptoo/config/file_names.cf",
-              "cryptoo/config/templates.cf",
-              "cryptoo/util/perms.cf",
               "@(cryptoo:control.desktop_guest_inputs)"
             };
 
@@ -18,27 +14,6 @@ body file control
 bundle agent desktop_guest(root, role, arch, multilib)
 
 {
-
-  classes:
-
-    any::
-
-      "desktop_guest"
-        expression => "any";
-
-      "bootstrap"
-        not => strcmp("$(this.root)", "/");
-
-  files:
-
-    any::
-
-      "/$(cryptoo:file_names.fstab)"
-        perms => cryptoo:system,
-        create => "true",
-        edit_template => "/$(cryptoo:templates.template[fstab])",
-        classes => default:if_repaired("fstab_repaired"),
-        comment => "configure /etc/fstab";
 
   methods:
 
@@ -49,10 +24,5 @@ bundle agent desktop_guest(root, role, arch, multilib)
 
       "manage guest files"
         usebundle => cryptoo:common_guest("$(root)","$(role)","$(arch)");
-
-    fstab_repaired&(!bootstrap)::
-
-      "activate all mountpoints"
-        usebundle => cryptoo:mount_all;
 
 }

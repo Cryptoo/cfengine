@@ -5,6 +5,7 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
+              "cryptoo/common/mounts.cf",
               "cryptoo/common/systemd.cf",
               "cryptoo/config/directory_groups.cf",
               "cryptoo/config/file_names.cf",
@@ -50,12 +51,24 @@ bundle agent common_guest(root, role, arch)
         edit_template => "/$(templates.template[serial_autologin])",
         classes => default:if_repaired("daemon_reload");
 
+      "$(root)$(file_names.fstab)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(cryptoo:templates.template[fstab])",
+        classes => default:if_repaired("fstab_repaired"),
+        comment => "configure /etc/fstab";
+
   methods:
 
     any::
 
       "configure systemd"
         usebundle => systemd($(this.root), $(this.role));
+
+    fstab_repaired&(!bootstrap)::
+
+      "activate all mountpoints"
+        usebundle => mount_all;
 
   commands:
 
