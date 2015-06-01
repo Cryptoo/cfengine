@@ -28,10 +28,16 @@ bundle agent portage(root, role, arch, multilib)
       "portage_role"
         string => concat("@", "$(role)");
 
+      "role_json"
+        string => '{ "value": "$(this.portage_role)" }';
+
     portage_multilib::
 
       "portage_role"
         string => concat("@", "$(role)", "_multilib");
+
+      "role_json"
+        string => '{ "value": "$(this.portage_role)" }';
 
   classes:
 
@@ -117,7 +123,9 @@ bundle agent portage(root, role, arch, multilib)
       "$(root)$(file_names.pm_installed_sets)"
         perms => system,
         create => "true",
-        edit_template => "/$(templates.template[world_sets])";
+        edit_template => "/$(templates.template[value])",
+        template_method => "mustache",
+        template_data => parsejson($(this.role_json));
 
     bootstrap_systemd::
 

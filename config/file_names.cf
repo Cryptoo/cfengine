@@ -343,9 +343,6 @@ bundle common file_names
       "template_value"
         string => "common/value_mustache.txt",
         meta => { "template" };
-      "template_world_sets"
-        string => "common/world_sets.txt",
-        meta => { "template" };
       "template_crypttab"
         string => "host/crypttab.txt",
         meta => { "template" };
