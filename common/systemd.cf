@@ -85,7 +85,7 @@ bundle agent systemd(root, role)
       "configure systemd-networkd"
         usebundle => networkd($(this.root), $(this.role));
 
-    have_systemctl::
+    have_systemctl&(!bootstrap)::
 
       "enable systemd services"
         usebundle => systemd_enable($(root), $(file_groups.systemd_enabled[$(this.role)]));
