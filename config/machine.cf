@@ -35,7 +35,7 @@ bundle common machine
     have_hostname&(!defined_number)::
 
       "hostname"
-        string => "$(control.configured_hostname)";
+        string => "$(this.configured_hostname)";
 
       "machine_number"
         string => "$(network.machine_numbers[$(this.hostname)])";
