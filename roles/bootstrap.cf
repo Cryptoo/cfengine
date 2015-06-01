@@ -9,6 +9,8 @@ body file control
               "cryptoo/config/directory_names.cf",
               "cryptoo/config/file_names.cf",
               "cryptoo/config/site.cf",
+              "cryptoo/util/classes.cf",
+              "cryptoo/util/contain.cf",
               "@(cryptoo:control.guest_inputs)"
             };
 
@@ -206,7 +208,7 @@ bundle agent cryptoo_bootstrap
 
       "configure system"
         usebundle => server_guest("/", "$(this.role)", "x86_64"),
-        depends_on => { "system_emerged" },
+        depends_on => { "apps_installed" },
         handle => "filesystem_ready";
 
   commands:
@@ -238,9 +240,17 @@ bundle agent cryptoo_bootstrap
         handle => "image_fs_mounted";
 
       "/$(file_names.emerge_app)"
-        args => "--config-root=/$(directory_names.fs_volatile_images)/server/x86_64/no_multilib/ --root=/$(directory_names.fs_mount_cryptoo) --root-deps --emptytree --quiet y @system @guest",
+        args => "--config-root=/$(directory_names.fs_volatile_images)/server/x86_64/no_multilib/ --root=/$(directory_names.fs_mount_cryptoo) --root-deps --emptytree @system",
+        contain => silent,
         depends_on => { "users_created" },
-        handle => "system_emerged";
+        handle => "basic_system_emerged";
+
+      "/$(file_names.emerge_app)"
+        args => "--config-root=/$(directory_names.fs_volatile_images)/server/x86_64/no_multilib/ --root=/$(directory_names.fs_mount_cryptoo) --root-deps @(this.role)",
+        contain => silent,
+        classes => always_success,
+        depends_on => { "basic_system_emerged" },
+        handle => "apps_installed";
 
       "/$(file_names.umount_app)"
         args => "/$(directory_names.fs_mount_cryptoo)",

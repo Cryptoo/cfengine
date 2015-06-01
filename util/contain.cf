@@ -22,6 +22,14 @@ body contain working_dir(dir)
 
 }
 
+body contain silent
+
+{
+
+  no_output => "true";
+
+}
+
 body contain silent_chroot(newroot)
 
 {
@@ -30,4 +38,3 @@ body contain silent_chroot(newroot)
   no_output => "true";
 
 }
-
