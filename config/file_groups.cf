@@ -751,6 +751,75 @@ bundle common file_groups
                  };
 
 ################################################################################
+#                             tor
+################################################################################
+
+      "make_profile[tor]"
+        string => "$(make_profile[server_guest])";
+
+      "pm_env[tor]"
+        slist => {
+                    "@(pm_env[server_guest])"
+                 };
+
+      "pm_environment[tor]"
+        slist => {
+                    "@(pm_environment[server_guest])"
+                 };
+
+      "keywords[tor]"
+        slist => {
+                    "@(keywords[server_guest])",
+                    "tor"
+                 };
+
+      "mask[tor]"
+        slist => {
+                    "@(mask[server_guest])"
+                 };
+
+      "unmask[tor]"
+        slist => {
+                    "@(unmask[server_guest])"
+                 };
+
+      "use[tor]"
+        slist => {
+                    "@(use[server_guest])",
+                    "tor"
+                 };
+
+      "profile[tor]"
+        slist => {
+                    "@(profile[server_guest])"
+                 };
+
+      "use_udev[tor]"
+        slist => {
+                    "@(use_udev[server_guest])"
+                 };
+
+      "use_systemd[tor]"
+        slist => {
+                    "@(use_systemd[server_guest])"
+                 };
+
+      "unuse_udev[tor]"
+        slist => {
+                    "@(unuse_udev[server_guest])"
+                 };
+
+      "unuse_systemd[tor]"
+        slist => {
+                    "@(unuse_systemd[server_guest])"
+                 };
+
+      "systemd_enabled[tor]"
+        slist => {
+                    "@(systemd_enabled[server_guest])"
+                 };
+
+################################################################################
 #                             vpn_primary
 ################################################################################
 
