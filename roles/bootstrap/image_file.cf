@@ -133,7 +133,7 @@ bundle agent image_file(role, type, multilib)
         handle => "apps_installed";
 
       "/$(file_names.umount_app)"
-        args => "/$(directory_names.fs_mount_cryptoo)",
+        args => "-l /$(directory_names.fs_mount_cryptoo)",
         depends_on => { "filesystem_ready" },
         handle => "image_fs_unmounted";
 
