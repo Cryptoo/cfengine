@@ -140,9 +140,14 @@ bundle agent image_file(role, type, multilib)
         depends_on => { "filesystem_ready" },
         handle => "random_seed_created";
 
+      "/$(file_names.rsync_app)"
+        args => "-aX $(sys.inputdir)/ /$(directory_names.fs_mount_cryptoo)$(sys.inputdir)",
+        depends_on => { "random_seed_created" },
+        handle => "cfengine_installed";
+
       "/$(file_names.umount_app)"
         args => "-l /$(directory_names.fs_mount_cryptoo)",
-        depends_on => { "random_seed_created" },
+        depends_on => { "cfengine_installed" },
         handle => "image_fs_unmounted";
 
       "/$(file_names.losetup_app)"

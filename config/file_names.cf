@@ -262,6 +262,8 @@ bundle common file_names
         string => "$(directory_names.fs_standard_apps)/git";
       "layman_app"
         string => "$(directory_names.fs_standard_apps)/layman";
+      "rsync_app"
+        string => "$(directory_names.fs_standard_apps)/rsync";
       "ssh_app"
         string => "$(directory_names.fs_standard_apps)/ssh";
       "systemd_app"
