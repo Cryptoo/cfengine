@@ -72,6 +72,14 @@ bundle common config
                    "kmod",
                  };
 
+      "core_systemd"
+        slist => {
+                   "acpid.service",
+                   "sshd.service",
+                   "systemd-networkd.service",
+                   "vixie-cron.service",
+                 };
+
       "disabled_services"
         slist => {
                    "kmod",

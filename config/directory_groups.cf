@@ -46,6 +46,10 @@ bundle common directory_groups
                     $(cryptoo:directory_names.fs_config_run_default),
                     $(cryptoo:directory_names.fs_config_run_sysinit),
                     $(cryptoo:directory_names.fs_config_ssh),
+                    $(cryptoo:directory_names.fs_config_systemd),
+                    $(cryptoo:directory_names.fs_config_network),
+                    $(cryptoo:directory_names.fs_config_units),
+                    $(cryptoo:directory_names.fs_config_units_multi_user),
                     $(cryptoo:directory_names.fs_home),
                     $(cryptoo:directory_names.fs_mount_base),
                     $(cryptoo:directory_names.fs_mount_root),
@@ -163,9 +167,6 @@ bundle common directory_groups
 
       "guest_system"
         slist => {
-                    $(cryptoo:directory_names.fs_config_systemd),
-                    $(cryptoo:directory_names.fs_config_network),
-                    $(cryptoo:directory_names.fs_config_units)
                  };
 
       "guest_system_private"

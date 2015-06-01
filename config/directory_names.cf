@@ -52,6 +52,7 @@ bundle common directory_names
       "fs_config_systemd" string => "$(fs_config_base)/systemd";
       "fs_config_network" string => "$(fs_config_systemd)/network";
       "fs_config_units" string => "$(fs_config_systemd)/system";
+      "fs_config_units_multi_user" string => "$(fs_config_units)/multi-user.target.wants";
       "fs_home" string => "home";
       "fs_mount_base" string => "mnt";
       "fs_mount_cryptoo" string => "$(fs_mount_base)/cryptoo";
@@ -97,6 +98,7 @@ bundle common directory_names
       "fs_cryptoo_pm_patches" string => "$(fs_cryptoo_pm)/patches";
       "fs_cryptoo_pm_profile" string => "$(fs_cryptoo_pm)/profile";
       "fs_cryptoo_profiles" string => "$(fs_cryptoo)/profiles";
+      "fs_standard_units" string => "$(fs_standard_base)/lib64/systemd/system";
       "fs_machine_base" string => "$(fs_standard_base)/local"; 
       "fs_machine_pm" string => "$(fs_machine_base)/$(pm)"; 
       "fs_machine_pm_meta" string => "$(fs_machine_pm)/metadata"; 
