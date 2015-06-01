@@ -27,6 +27,9 @@ bundle agent image_file(role, type, multilib)
       "image_file"
         string => "/$(directory_names.fs_libvirt_images)/$(this.role).img";
 
+      "role_set"
+        string => concat("@", "$(this.role)");
+
     bootstrap_server::
 
       "image_size_mb"
@@ -126,7 +129,7 @@ bundle agent image_file(role, type, multilib)
         handle => "basic_system_emerged";
 
       "/$(file_names.emerge_app)"
-        args => "--config-root=/$(directory_names.fs_volatile_images)/server/x86_64/no_multilib/ --root=/$(directory_names.fs_mount_cryptoo) --root-deps @(this.role)",
+        args => "--config-root=/$(directory_names.fs_volatile_images)/server/x86_64/no_multilib/ --root=/$(directory_names.fs_mount_cryptoo) --root-deps $(this.role_set)",
         contain => silent,
         classes => always_success,
         depends_on => { "basic_system_emerged" },

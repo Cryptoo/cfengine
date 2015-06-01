@@ -52,6 +52,9 @@ bundle agent portage(root, role, arch, multilib)
       "have_systemd"
         expression => fileexists("$(root)$(file_names.systemd_app)");
 
+      "defined_role"
+        not => strcmp("$(this.role)", "undefined");
+
   files:
 
     any::
@@ -119,6 +122,8 @@ bundle agent portage(root, role, arch, multilib)
         perms => system,
         create => "true",
         edit_template => "/$(templates.template[local_repo_name])";
+
+    defined_role::
 
       "$(root)$(file_names.pm_installed_sets)"
         perms => system,
