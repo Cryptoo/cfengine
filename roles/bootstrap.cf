@@ -5,13 +5,7 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
-              "cryptoo/config/best.cf",
-              "cryptoo/config/directory_names.cf",
-              "cryptoo/config/file_names.cf",
-              "cryptoo/config/site.cf",
-              "cryptoo/util/classes.cf",
-              "cryptoo/util/contain.cf",
-              "@(cryptoo:control.guest_inputs)"
+              "@(cryptoo:control.bootstrap_inputs)"
             };
 
 }
@@ -27,256 +21,126 @@ bundle agent cryptoo_bootstrap
       "role"
         string => "firewall_external";
 
+      "type"
+        string => "server";
+
+      "multilib"
+        string => "no_multilib";
+
     default:bootstrap_firewall_internal::
 
       "role"
         string => "firewall_internal";
+
+      "type"
+        string => "server";
+
+      "multilib"
+        string => "no_multilib";
 
     default:bootstrap_tor::
 
       "role"
         string => "tor";
 
+      "type"
+        string => "server";
+
+      "multilib"
+        string => "no_multilib";
+
     default:bootstrap_vpn_primary::
 
       "role"
         string => "vpn_primary";
+
+      "type"
+        string => "server";
+
+      "multilib"
+        string => "no_multilib";
 
     default:bootstrap_vpn_server::
 
       "role"
         string => "vpn_server";
 
+      "type"
+        string => "server";
+
+      "multilib"
+        string => "no_multilib";
+
     default:bootstrap_mail_client::
 
       "role"
         string => "mail_client";
+
+      "type"
+        string => "desktop";
+
+      "multilib"
+        string => "no_multilib";
 
     default:bootstrap_web::
 
       "role"
         string => "web";
 
-    role_defined::
+      "type"
+        string => "desktop";
 
-      "image_file"
-        string => "/$(directory_names.fs_libvirt_images)/$(this.role).img";
-
-      "definition"
-        string => "/$(directory_names.fs_config_qemu)/$(this.role).xml";
-
-    bootstrap_server_guest::
-
-      "image_size_mb"
-        string => "4096";
-
-    bootstrap_desktop_guest::
-
-      "image_size_mb"
-        string => "2048";
-
-    bootstrap_ready::
-
-      "definition_json"
-        string => '
-          {
-            "name": "$(this.role)",
-            "ram": "16776192",
-            "cpu": "1",
-            "kernel": "/$(directory_names.fs_libvirt_images)/guest-kernel-x86_64",
-            "interfaces":
-               [
-                 {
-                   "bridge": "ispdmz",
-                   "device": "ispdmz14"
-                 },
-                 {
-                   "bridge": "tor",
-                   "device": "tor14"
-                 }
-               ]
-          }
-        ';
+      "multilib"
+        string => "no_multilib";
 
   classes:
 
     default:bootstrap_firewall_external::
 
-      "role_defined"
-        expression => "any";
-
-      "bootstrap_server_guest"
-        expression => "any";
-
-      "bootstrap_no_multilib"
+      "bootstrap_guest"
         expression => "any";
 
     default:bootstrap_firewall_internal::
 
-      "role_defined"
-        expression => "any";
-
-      "bootstrap_server_guest"
-        expression => "any";
-
-      "bootstrap_no_multilib"
+      "bootstrap_guest"
         expression => "any";
 
     default:bootstrap_tor::
 
-      "role_defined"
-        expression => "any";
-
-      "bootstrap_server_guest"
-        expression => "any";
-
-      "bootstrap_no_multilib"
+      "bootstrap_guest"
         expression => "any";
 
     default:bootstrap_vpn_primary::
 
-      "role_defined"
-        expression => "any";
-
-      "bootstrap_server_guest"
-        expression => "any";
-
-      "bootstrap_no_multilib"
+      "bootstrap_guest"
         expression => "any";
 
     default:bootstrap_vpn_server::
 
-      "role_defined"
-        expression => "any";
-
-      "bootstrap_server_guest"
-        expression => "any";
-
-      "bootstrap_no_multilib"
+      "bootstrap_guest"
         expression => "any";
 
     default:bootstrap_mail_client::
 
-      "role_defined"
-        expression => "any";
-
-      "bootstrap_desktop_guest"
-        expression => "any";
-
-      "bootstrap_no_multilib"
+      "bootstrap_guest"
         expression => "any";
 
     default:bootstrap_web::
 
-      "role_defined"
+      "bootstrap_guest"
         expression => "any";
-
-      "bootstrap_desktop_guest"
-        expression => "any";
-
-      "bootstrap_no_multilib"
-        expression => "any";
-
-    role_defined::
-
-      "bootstrap_ready"
-        not => fileexists($(this.image_file));
-
-  files:
-
-    bootstrap_ready::
-
-      "$(this.definition)"
-        perms => qemu,
-        create => "true",
-        edit_template => "/$(templates.template[libvirt])",
-        template_method => "mustache",
-        template_data => parsejson($(this.definition_json)),
-        depends_on => { "loop_finished" },
-        handle => "definition_created";
 
   methods:
 
-    bootstrap_ready::
+    bootstrap_guest::
 
-      "set users and groups"
-        usebundle => cryptoo_filesystem("/$(directory_names.fs_mount_cryptoo)","undefined","x86_64","no_multilib"),
-        depends_on => { "skeleton_extracted" },
-        handle => "users_created";
-
-    bootstrap_server_guest::
-
-      "configure system"
-        usebundle => server_guest("/", "$(this.role)", "x86_64"),
-        depends_on => { "apps_installed" },
-        handle => "filesystem_ready";
-
-  commands:
-
-    bootstrap_ready::
-
-      "/$(file_names.dd_app)"
-        args => "if=/dev/zero of=$(this.image_file) bs=1M count=$(this.image_size_mb)",
-        handle => "image_created";
-
-      "/$(file_names.losetup_app)"
-        args => "-D",
-        depends_on => { "image_created" },
-        handle => "loop_ready";
-
-      "/$(file_names.losetup_app)"
-        args => "/dev/loop0 $(this.image_file)",
-        depends_on => { "loop_ready" },
-        handle => "loop_attached";
-
-      "/$(file_names.mkfs_app)"
-        args => "-t $(site.config[guest_fs][filesystem]) -E nodiscard /dev/loop0",
-        depends_on => { "loop_attached" },
-        handle => "image_fs_created";
-
-      "/$(file_names.mount_app)"
-        args => "-o $(site.config[guest_fs][options]) /dev/loop0 /$(directory_names.fs_mount_cryptoo)",
-        depends_on => { "image_fs_created" },
-        handle => "image_fs_mounted";
-
-      "/$(file_names.emerge_app)"
-        args => "--config-root=/$(directory_names.fs_volatile_images)/server/x86_64/no_multilib/ --root=/$(directory_names.fs_mount_cryptoo) --root-deps --emptytree @system",
-        contain => silent,
-        depends_on => { "users_created" },
-        handle => "basic_system_emerged";
-
-      "/$(file_names.emerge_app)"
-        args => "--config-root=/$(directory_names.fs_volatile_images)/server/x86_64/no_multilib/ --root=/$(directory_names.fs_mount_cryptoo) --root-deps @(this.role)",
-        contain => silent,
-        classes => always_success,
-        depends_on => { "basic_system_emerged" },
-        handle => "apps_installed";
-
-      "/$(file_names.umount_app)"
-        args => "/$(directory_names.fs_mount_cryptoo)",
-        depends_on => { "filesystem_ready" },
-        handle => "image_fs_unmounted";
-
-      "/$(file_names.losetup_app)"
-        args => "-D",
-        depends_on => { "image_fs_unmounted" },
-        handle => "loop_finished";
-
-    bootstrap_no_multilib::
-
-      "/$(file_names.tar_app)"
-        args => "-xjpf $(best.stage3_amd64_nomultilib) -C /$(directory_names.fs_mount_cryptoo)",
-        depends_on => { "image_fs_mounted" },
-        handle => "skeleton_extracted";
+      "bootstrap a new guest"
+        usebundle => bootstrap_guest($(this.role), $(this.type), $(this.multilib));
 
   reports:
 
     any::
 
       "Bootstrapping";
-
-    role_defined::
-
-      "Creating a $(this.role) guest";
 
 }

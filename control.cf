@@ -49,6 +49,9 @@ bundle common control
       "server_guest_inputs"
         slist => lsdir("$(this.promise_dirname)/roles/guest/server_guests", ".*\.cf", "true");
 
+      "bootstrap_inputs"
+        slist => lsdir("$(this.promise_dirname)/roles/bootstrap", ".*\.cf", "true");
+
     have_role::
 
       "configured_role"
