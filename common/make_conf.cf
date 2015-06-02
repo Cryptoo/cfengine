@@ -107,6 +107,17 @@ bundle agent make_conf(root, role, multilib)
       "runtime_guest"
         expression => "any";
 
+    make_conf_role_tor::
+
+      "makeopts_guest"
+        expression => "any";
+
+      "pkgdir_server_guest"
+        expression => "any";
+
+      "runtime_guest"
+        expression => "any";
+
     make_conf_role_vpn_primary::
 
       "makeopts_guest"
