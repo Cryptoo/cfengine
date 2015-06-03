@@ -28,7 +28,7 @@ bundle common role
             "make_conf":
               {
                 "makeopts": "host",
-                "pkdir": "master",
+                "pkgdir": "master",
                 "runtime": "host",
                 "graphical": "headless"
               }
@@ -42,7 +42,7 @@ bundle common role
             "make_conf":
               {
                 "makeopts": "host",
-                "pkdir": "desktop_host",
+                "pkgdir": "desktop_host",
                 "runtime": "host",
                 "graphical": "graphical"
               }
@@ -55,7 +55,7 @@ bundle common role
             "make_conf":
               {
                 "makeopts": "chroot",
-                "pkdir": "server_guest",
+                "pkgdir": "server_guest",
                 "runtime": "guest",
                 "graphical": "headless"
               }
@@ -68,7 +68,7 @@ bundle common role
             "make_conf":
               {
                 "makeopts": "chroot",
-                "pkdir": "server_guest",
+                "pkgdir": "desktop_guest",
                 "runtime": "guest",
                 "graphical": "headless"
               }
@@ -82,7 +82,7 @@ bundle common role
             "make_conf":
               {
                 "makeopts": "guest",
-                "pkdir": "server_guest",
+                "pkgdir": "server_guest",
                 "runtime": "guest",
                 "graphical": "headless"
               },
@@ -114,7 +114,7 @@ bundle common role
             "make_conf":
               {
                 "makeopts": "guest",
-                "pkdir": "server_guest",
+                "pkgdir": "server_guest",
                 "runtime": "guest",
                 "graphical": "headless"
               },
@@ -146,7 +146,7 @@ bundle common role
             "make_conf":
               {
                 "makeopts": "guest",
-                "pkdir": "server_guest",
+                "pkgdir": "server_guest",
                 "runtime": "guest",
                 "graphical": "headless"
               },
@@ -178,7 +178,7 @@ bundle common role
             "make_conf":
               {
                 "makeopts": "guest",
-                "pkdir": "server_guest",
+                "pkgdir": "server_guest",
                 "runtime": "guest",
                 "graphical": "headless"
               },
@@ -218,7 +218,7 @@ bundle common role
             "make_conf":
               {
                 "makeopts": "guest",
-                "pkdir": "server_guest",
+                "pkgdir": "server_guest",
                 "runtime": "guest",
                 "graphical": "headless"
               },
@@ -249,7 +249,7 @@ bundle common role
             "make_conf":
               {
                 "makeopts": "guest",
-                "pkdir": "desktop_guest",
+                "pkgdir": "desktop_guest",
                 "runtime": "guest",
                 "graphical": "headless"
               }
@@ -262,7 +262,7 @@ bundle common role
             "make_conf":
               {
                 "makeopts": "guest",
-                "pkdir": "desktop_guest",
+                "pkgdir": "desktop_guest",
                 "runtime": "guest",
                 "graphical": "headless"
               }

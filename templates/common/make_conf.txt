@@ -32,7 +32,7 @@ USE="${CPU_FLAGS_X86}"
 #Local options
 USE="${USE} $(cryptoo:site.config[make.conf][USE])"
 
-[%CFEngine runtime_host:: %]
+[%CFEngine make_conf_graphical&runtime_host:: %]
 INPUT_DEVICES="evdev"
 VIDEO_CARDS="$(cryptoo:site.config[make.conf][VIDEO_CARDS])"
 [%CFEngine make_conf_graphical&(!runtime_host):: %]
