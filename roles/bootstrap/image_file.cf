@@ -40,29 +40,6 @@ bundle agent image_file(role, type, multilib)
       "image_size_mb"
         string => "2048";
 
-    bootstrap_ready::
-
-      "definition_json"
-        string => '
-          {
-            "name": "$(this.role)",
-            "ram": "16776192",
-            "cpu": "1",
-            "kernel": "/$(directory_names.fs_libvirt_images)/guest-kernel-x86_64",
-            "interfaces":
-               [
-                 {
-                   "bridge": "ispdmz",
-                   "device": "ispdmz14"
-                 },
-                 {
-                   "bridge": "tor",
-                   "device": "tor14"
-                 }
-               ]
-          }
-        ';
-
   classes:
 
     any::

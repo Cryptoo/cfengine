@@ -1,0 +1,49 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/directory_names.cf"
+            };
+
+}
+
+bundle common role
+
+{
+
+  vars:
+
+    any::
+
+      "defined_numbers"
+        data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
+
+      "params[tor]"
+        string => '
+          {
+            "number": "$(this.defined_numbers[tor])",
+            "libvirt":
+              {
+                "name": "tor",
+                "ram": "16776192",
+                "cpu": "1",
+                "kernel": "/$(directory_names.fs_libvirt_images)/guest-kernel-x86_64",
+                "interfaces":
+                   [
+                     {
+                       "bridge": "ispdmz",
+                       "device": "ispdmz$(this.defined_numbers[tor])"
+                     },
+                     {
+                       "bridge": "tor",
+                       "device": "tor$(this.defined_numbers[tor])"
+                     }
+                   ]
+              }
+          }
+        ';
+
+}

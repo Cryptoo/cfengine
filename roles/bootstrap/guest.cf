@@ -6,6 +6,7 @@ body file control
 
   inputs => {
               "cryptoo/config/directory_names.cf",
+              "cryptoo/config/role.cf",
               "cryptoo/config/templates.cf",
               "cryptoo/util/perms.cf",
               "@(cryptoo:control.guest_inputs)"
@@ -21,29 +22,14 @@ bundle agent bootstrap_guest(role, type, multilib)
 
     any::
 
+      "params"
+        string => "$(role.params[$(this.role)])";
+
+      "params_data"
+        data => parsejson("$(this.params)");
+
       "definition"
         string => "/$(directory_names.fs_config_qemu)/$(this.role).xml";
-
-      "definition_json"
-        string => '
-          {
-            "name": "$(this.role)",
-            "ram": "16776192",
-            "cpu": "1",
-            "kernel": "/$(directory_names.fs_libvirt_images)/guest-kernel-x86_64",
-            "interfaces":
-               [
-                 {
-                   "bridge": "ispdmz",
-                   "device": "ispdmz14"
-                 },
-                 {
-                   "bridge": "tor",
-                   "device": "tor14"
-                 }
-               ]
-          }
-        ';
 
   files:
 
@@ -54,7 +40,7 @@ bundle agent bootstrap_guest(role, type, multilib)
         create => "true",
         edit_template => "/$(templates.template[libvirt])",
         template_method => "mustache",
-        template_data => parsejson($(this.definition_json));
+        template_data => parsejson(storejson("params_data[libvirt]"));
 
   methods:
 
