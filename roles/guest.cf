@@ -34,6 +34,9 @@ bundle agent common_guest(root, type, role, arch)
       "$(this.type)_guest"
         expression => "any";
 
+      "have_master_ssh_key"
+        expression => fileexists("/$(file_names.master_ssh_key)");
+
   files:
 
     any::
@@ -60,6 +63,13 @@ bundle agent common_guest(root, type, role, arch)
         edit_template => "/$(cryptoo:templates.template[fstab])",
         classes => default:if_repaired("fstab_repaired"),
         comment => "configure /etc/fstab";
+
+    have_master_ssh_key::
+
+      "$(root)$(file_names.authorized_keys)"
+        perms => root,
+        move_obstructions => "true",
+        copy_from => default:local_cp("/$(cryptoo:file_names.master_ssh_key)");
 
   methods:
 

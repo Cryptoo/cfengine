@@ -20,17 +20,11 @@ bundle agent ssh(root, role)
 
     any::
 
-      "ssh_role_$(this.role)"
-        expression => "any";
-
       "have_ssh"
         expression => fileexists("$(root)$(cryptoo:file_names.ssh_app)");
 
       "have_sshd"
         expression => fileexists("$(root)$(cryptoo:file_names.sshd_app)");
-
-      "have_master_ssh_key"
-        expression => fileexists("/$(file_names.master_ssh_key)");
 
   files:
 
@@ -45,12 +39,5 @@ bundle agent ssh(root, role)
         move_obstructions => "true",
         link_from => cryptoo:null,
         classes => default:if_repaired("update_sshd");
-
-    have_master_ssh_key&(!ssh_role_master)&(!ssh_role_desktop_host)::
-
-      "/$(file_names.authorized_keys)"
-        perms => root,
-        move_obstructions => "true",
-        copy_from => default:local_cp("/$(cryptoo:file_names.master_ssh_key)");
 
 }
