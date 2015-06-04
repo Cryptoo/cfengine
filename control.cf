@@ -24,6 +24,7 @@ bundle common control
         slist => {
                    "cryptoo:control",
                    "cryptoo:local",
+                   "cryptoo:site",
                    "cryptoo:machine",
                    "cryptoo:cryptoo"
                  };
