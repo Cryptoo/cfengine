@@ -171,7 +171,7 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
         usebundle => cryptoo:unix_extra_groups("$(root)", "$(extra_groups)");
 
       "set up ssh"
-        usebundle => cryptoo:ssh("$(root)");
+        usebundle => cryptoo:ssh($(root), $(role));
 
     chroot::
 

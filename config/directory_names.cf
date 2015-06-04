@@ -61,6 +61,7 @@ bundle common directory_names
       "fs_mount_temp" string => "$(fs_mount_base)/tmp";
       "fs_proc_base" string => "proc";
       "fs_admin_base" string => "root";
+      "fs_admin_ssh" string => "$(fs_admin_base)/.ssh";
       "fs_runtime_base" string => "run";
       "fs_admin_apps" string => "sbin";
       "fs_storage_base" string => "srv";

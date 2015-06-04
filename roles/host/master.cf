@@ -52,7 +52,19 @@ bundle agent master
     any::
 
       "have_systemctl"
-        expression => fileexists("$(root)$(file_names.systemd_app)");
+        expression => fileexists("/$(file_names.systemd_app)");
+
+      "need_master_ssh_key"
+        not => fileexists("/$(file_names.master_ssh_key)");
+
+      "have_master_ssh_key"
+        expression => fileexists("/$(file_names.master_ssh_key)");
+
+      "need_default_key"
+        not => fileexists("/$(file_names.default_key_public)");
+
+      "have_default_key"
+        expression => fileexists("/$(file_names.default_key_public)");
 
   files:
 
@@ -70,9 +82,16 @@ bundle agent master
         template_data => parsejson($(this.console_autologin)),
         classes => default:if_repaired("daemon_reload");
 
+    need_master_ssh_key&have_default_key::
+
+      "/$(file_names.master_ssh_key)"
+        perms => system,
+        copy_from => default:local_cp("/$(cryptoo:file_names.default_key_public)");
+
+
   methods:
 
-    any::
+    have_master_ssh_key::
 
       "configure system as a host"
         usebundle => cryptoo:host("x86_64");
@@ -85,7 +104,12 @@ bundle agent master
     daemon_reload&have_systemctl::
 
       "/$(file_names.systemd_app)"
-        args => "daemon-reload",
-        contain => basic_chroot($(root));
+        args => "daemon-reload";
+
+    need_default_key::
+
+      "/$(file_names.ssh_keygen_app)"
+      args => "-t ed25519 -P \"\" -f /$(file_names.default_key)",
+      comment => "Change the passphrase with ssh-keygen -p";
 
 }

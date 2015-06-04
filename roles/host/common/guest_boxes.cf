@@ -53,6 +53,12 @@ bundle agent guest_boxes
         copy_from => default:local_cp("/$(cryptoo:file_names.subnet_config)"),
         comment => "guest subnet config";
 
+      "/$(directory_names.fs_config_guest_inboxes)/$(config.server_guests)/master_ssh_key"
+        perms => root_qemu,
+        move_obstructions => "true",
+        copy_from => default:local_cp("/$(cryptoo:file_names.default_key_public)"),
+        comment => "master ssh key to allow host to log in to guests";
+
       "/$(directory_names.fs_config_guest_outboxes)/$(config.server_guests)/."
         perms => root_qemu,
         create => "true",

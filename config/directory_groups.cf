@@ -80,6 +80,7 @@ bundle common directory_groups
       "common_system_private"
         slist => {
                     $(cryptoo:directory_names.fs_admin_base),
+                    $(cryptoo:directory_names.fs_admin_ssh),
                     $(cryptoo:directory_names.fs_volatile_cfengine),
                     $(cryptoo:directory_names.fs_volatile_cf_inputs),
                     $(cryptoo:directory_names.fs_volatile_cf_templates)
