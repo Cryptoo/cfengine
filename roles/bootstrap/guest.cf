@@ -40,13 +40,33 @@ bundle agent bootstrap_guest(role, type, multilib)
         create => "true",
         edit_template => "/$(templates.template[libvirt])",
         template_method => "mustache",
-        template_data => parsejson(storejson("params_data[libvirt]"));
+        template_data => parsejson(storejson("params_data[libvirt]")),
+        classes => default:if_ok("xml_created");
 
   methods:
+
+    any::
 
       "create image file"
         usebundle => image_file($(this.role), $(this.type), $(this.multilib)),
         classes => default:if_ok("image_created");
+
+  commands:
+
+    xml_created::
+
+      "/$(file_names.virsh_app)"
+        args => "define /$(directory_names.fs_libvirt_images)/$(this.role).img",
+        handle => "guest_defined";
+
+      "/$(file_names.virsh_app)"
+        args => "autostart $(this.role).img",
+        depends_on => { "guest_defined" },
+        handle => "guest_enabled";
+
+      "/$(file_names.virsh_app)"
+        args => "start $(this.role).img",
+        depends_on => { "guest_enabled" };
 
   reports:
 
