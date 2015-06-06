@@ -369,9 +369,6 @@ bundle common file_names
       "template_env_kernel"
         string => "host/env_kernel.txt",
         meta => { "template" };
-      "template_guest_role"
-        string => "host/guest_role.txt",
-        meta => { "template" };
       "template_machine_names"
         string => "host/machine_names.txt",
         meta => { "template" };

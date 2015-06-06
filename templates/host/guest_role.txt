@@ -1,1 +1,0 @@
-$(cryptoo:guest_role.specified_role)

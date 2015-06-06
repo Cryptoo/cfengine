@@ -17,17 +17,19 @@ bundle agent guest_role(dir, role)
 
     any::
 
-      "specified_role"
-        string => $(role);
+      "role_json"
+        string => '{ "value": "$(this.role)" }';
 
   files:
 
     any::
 
-      "$(dir)/role"
-        perms => cryptoo:root_qemu,
+      "$(this.dir)/role"
+        perms => root_qemu,
         create => "true",
-        edit_template => "/$(cryptoo:templates.template[guest_role])",
+        edit_template => "/$(templates.template[value])",
+        template_method => "mustache",
+        template_data => parsejson($(this.role_json)),
         comment => "set the role which the guest VM will see at /etc/cryptoo/input/role";
 
 }
