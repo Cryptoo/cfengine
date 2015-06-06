@@ -55,8 +55,11 @@ bundle common control
 
     have_role::
 
+      "role_string"
+        slist => readstringlist("/$(file_names.cryptoo_role)","#.*","[\n]",1,128);
+
       "configured_role"
-        string => readfile("/$(file_names.cryptoo_role)","128");
+        string => nth("role_string","0");
 
     need_role::
 
