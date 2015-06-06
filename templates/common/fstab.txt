@@ -4,7 +4,7 @@ UUID=$(cryptoo:machine.root_uuid)                         /                     
 /dev/mapper/$(cryptoo:machine.hostname)-swap                              none                            swap        sw            0 0
 /dev/mapper/$(cryptoo:machine.hostname)-storage                           /$(cryptoo:directory_names.fs_storage_base)          $(cryptoo:site.config[host_fs][filesystem])        $(cryptoo:site.config[host_fs][options])       0 0
 
-/$(cryptoo:directory_names.fs_storage_apps)             /usr/site-local/bin             none        bind          0 0
+/$(cryptoo:directory_names.fs_storage_apps)             /$(cryptoo:directory_names.fs_site_apps)             none        bind          0 0
 /$(cryptoo:directory_names.fs_storage_cryptoo)          /$(cryptoo:directory_names.fs_cryptoo)               none        bind          0 0
 /$(cryptoo:directory_names.fs_storage_home)             /$(cryptoo:directory_names.fs_home)                  none        bind          0 0
 /$(cryptoo:directory_names.fs_storage_srcpkg)           /$(cryptoo:directory_names.fs_site_srcpkg)           none        bind          0 0
