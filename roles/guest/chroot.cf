@@ -56,4 +56,3 @@ bundle agent chroot_files(root, role)
           copy_from => default:local_cp("/$(file_names.dns_config)");
 
 }
-

@@ -46,11 +46,6 @@ bundle agent common_guest(root, type, role, arch)
         create => "true",
         handle => "$(root)$(directory_groups.guest_system)";
 
-      "$(root)$(directory_groups.guest_system_private)/."
-        perms => root,
-        create => "true",
-        handle => "$(root)$(directory_groups.guest_system_private)";
-
       "$(root)$(file_names.serial_autologin)"
         perms => system,
         create => "true",
@@ -70,6 +65,18 @@ bundle agent common_guest(root, type, role, arch)
         perms => root,
         move_obstructions => "true",
         copy_from => default:local_cp("/$(cryptoo:file_names.master_ssh_key)");
+
+    !bootstrap::
+      "$(root)$(directory_groups.guest_system_private)/."
+        perms => root,
+        create => "true",
+        handle => "$(root)$(directory_groups.guest_system_private)";
+
+    bootstrap::
+      "$(root)$(directory_groups.common_cryptoo_private)/."
+        perms => root,
+        create => "true",
+        handle => "$(root)$(directory_groups.guest_system_private)";
 
   methods:
 
