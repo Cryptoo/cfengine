@@ -15,7 +15,7 @@ body file control
 
 }
 
-bundle agent fstab
+bundle agent fstab(root)
 
 {
 
@@ -212,7 +212,7 @@ bundle agent fstab
 
     any::
 
-      "/$(file_names.fstab).mustache"
+      "$(root)$(file_names.fstab)"
         perms => system,
         create => "true",
         edit_template => "/$(templates.template[fstab_mustache])",

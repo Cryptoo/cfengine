@@ -95,6 +95,11 @@ bundle agent cryptoo_bootstrap
 
   classes:
 
+    default:bootstrap_master::
+
+      "bootstrap_master"
+        expression => "any";
+
     default:bootstrap_firewall_external::
 
       "bootstrap_guest"
@@ -131,6 +136,11 @@ bundle agent cryptoo_bootstrap
         expression => "any";
 
   methods:
+
+    bootstrap_master::
+
+      "bootstrap a host"
+        usebundle => bootstrap_master;
 
     bootstrap_guest::
 

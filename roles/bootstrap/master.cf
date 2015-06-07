@@ -1,0 +1,147 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/common/fstab.cf",
+              "cryptoo/common/mounts.cf",
+              "cryptoo/config/directory_groups.cf",
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/machine.cf",
+              "cryptoo/config/site.cf",
+              "cryptoo/config/templates.cf",
+              "cryptoo/util/classes.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
+bundle agent bootstrap_master
+
+{
+
+  vars:
+
+    any::
+
+      "role_json"
+        string => '{ "value": "master" }';
+
+      "portage_cleanup_command"
+        string => "/$(file_names.find_app) /$(directory_names.fs_mount_root)/$(directory_names.fs_pm) -mindepth 1 -maxdepth 1 -name * -exec /$(file_names.move_app) {} /$(directory_names.fs_storage_pm) ;",
+        comment => "this command moves /mnt/root/usr/portage/* /usr/portage/. It's needed because /usr/portage is populated before it's mounted in the proper location";
+
+      "distfiles_cleanup_command"
+        string => "/$(file_names.find_app) /$(directory_names.fs_storage_pm)/distfiles -mindepth 1 -maxdepth 1 -name * -exec /$(file_names.move_app) {} /$(directory_names.fs_storage_srcpkg) ;",
+        comment => "this command moves the contents of /usr/portage/distfiles to /usr/site-local/distfiles.";
+
+  classes:
+
+    any::
+
+      "srv_mounted"
+        expression => regline("device /dev/mapper/$(machine.hostname)-storage mounted on /$(directory_names.fs_storage_base).*", "$(file_names.mount_info)"),
+        comment => "backing LV is mounted for /srv";
+
+    srv_started&(!srv_failed)::
+
+      "srv_ready"
+        expression => "any",
+        comment => "every directory under /srv was created, and none failed";
+
+  files:
+
+    any::
+
+      "/$(directory_groups.common_system)/."
+        perms => system,
+        create => "true";
+
+      "/$(directory_groups.common_pm)/."
+        perms => portage,
+        create => "true";
+
+      "/$(directory_groups.common_pm_open)/."
+        perms => portage_open,
+        create => "true";
+
+      "$(root)$(directory_groups.common_cryptoo_private)/."
+        perms => root,
+        create => "true";
+
+      "/$(directory_names.fs_mount_shared)/."
+        perms => system,
+        create => "true";
+
+      "/$(directory_names.fs_storage_base)/."
+        perms => system,
+        create => "true",
+        classes => srv,
+        comment => "create /srv mountpoint";
+
+      "/$(file_names.cryptoo_role)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[value])",
+        template_method => "mustache",
+        template_data => parsejson($(this.role_json));
+
+    srv_mounted::
+
+      "/$(directory_groups.host_system_storage)/."
+        perms => system,
+        create => "true",
+        classes => srv_ready,
+        comment => "create system directories under /srv";
+
+      "/$(directory_groups.host_pm)/."
+        perms => portage,
+        create => "true",
+        classes => srv_ready,
+        comment => "create Portage-owned directories under /srv";
+
+      "/$(directory_groups.host_pm_open)/."
+        perms => portage_open,
+        create => "true",
+        classes => srv_ready,
+        comment => "create Portage-owned writables directories under /srv";
+
+      "/$(directory_names.fs_storage_shared)/."
+        depends_on => { "users_ok" },
+        perms => system,
+        create => "true",
+        classes => srv_ready,
+        comment => "create master common storage directory";
+
+  commands:
+
+    all_mounted::
+
+      "$(portage_cleanup_command)";
+
+      "$(distfiles_cleanup_command)";
+
+  methods:
+
+  any::
+
+    "create_fstab"
+      usebundle => fstab("/"),
+        classes => default:if_ok("have_fstab");
+
+    have_fstab&srv_created::
+
+      "mount storage device"
+        usebundle => mount_types("$(site.config[host_fs][filesystem])"),
+        classes => default:if_ok("srv_mounted");
+
+    srv_ready&srv_created::
+
+      "ensure all mounts are active"
+        usebundle => mount_all,
+        classes => default:if_ok("all_mounted");
+
+}
