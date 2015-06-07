@@ -60,12 +60,12 @@ bundle agent bootstrap_guest(role, type, multilib)
         handle => "guest_defined";
 
       "/$(file_names.virsh_app)"
-        args => "autostart $(this.role).img",
+        args => "autostart $(this.definition)",
         depends_on => { "guest_defined" },
         handle => "guest_enabled";
 
       "/$(file_names.virsh_app)"
-        args => "start $(this.role).img",
+        args => "start $(this.definition)",
         depends_on => { "guest_enabled" };
 
   reports:
