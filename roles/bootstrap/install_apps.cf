@@ -33,7 +33,7 @@ bundle agent install_apps(role)
     apps_installed::
 
       "configure system"
-        usebundle => $(role_bundle)("/"),
+        usebundle => $(role_bundle)("/$(directory_names.fs_mount_cryptoo)"),
         classes => default:if_ok("image_configured");
 
   commands:
