@@ -42,16 +42,16 @@ bundle common best
       "stage3_amd64_multilib"
         string => nth("stage3_amd64_multilib_sorted_reverse", 0);
 
-      "stage3_amd64_nomultilib_candidates"
+      "stage3_amd64_no_multilib_candidates"
         slist => findfiles("/$(directory_names.fs_storage_pm_install)/stage3-amd64-nomultilib-2*.tar.bz2");
 
-      "stage3_amd64_nomultilib_sorted"
-        slist => sort("stage3_amd64_nomultilib_candidates", "lex");
+      "stage3_amd64_no_multilib_sorted"
+        slist => sort("stage3_amd64_no_multilib_candidates", "lex");
 
-      "stage3_amd64_nomultilib_sorted_reverse"
-        slist => reverse("stage3_amd64_nomultilib_sorted");
+      "stage3_amd64_no_multilib_sorted_reverse"
+        slist => reverse("stage3_amd64_no_multilib_sorted");
 
-      "stage3_amd64_nomultilib"
-        string => nth("stage3_amd64_nomultilib_sorted_reverse", 0);
+      "stage3_amd64_no_multilib"
+        string => nth("stage3_amd64_no_multilib_sorted_reverse", 0);
 
 }

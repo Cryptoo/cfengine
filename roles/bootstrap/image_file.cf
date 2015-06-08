@@ -5,11 +5,8 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
-              "cryptoo/config/best.cf",
               "cryptoo/config/directory_names.cf",
               "cryptoo/config/file_names.cf",
-              "cryptoo/config/site.cf",
-              "cryptoo/util/classes.cf",
               "cryptoo/util/contain.cf",
               "@(cryptoo:control.guest_inputs)"
             };
@@ -24,21 +21,8 @@ bundle agent image_file(role, type, multilib)
 
     any::
 
-      "image_file"
-        string => "/$(directory_names.fs_libvirt_images)/$(this.role).img";
-
       "role_set"
         string => concat("@", "$(this.role)");
-
-    bootstrap_server::
-
-      "image_size_mb"
-        string => "4096";
-
-    bootstrap_desktop::
-
-      "image_size_mb"
-        string => "2048";
 
   classes:
 
@@ -47,79 +31,30 @@ bundle agent image_file(role, type, multilib)
       "bootstrap_$(this.type)"
         expression => "any";
 
-      "bootstrap_$(this.multilib)"
-        expression => "any";
-
-    bootstrap_desktop|bootstrap_server::
-
-      "bootstrap_ready"
-        not => fileexists($(this.image_file));
-
   methods:
 
-    bootstrap_ready::
+    any::
+
+      "create and mount image file"
+        usebundle => prepare_image("$(this.role)", "$(this.multilib)"),
+        handle => "image_created";
 
       "set users and groups"
         usebundle => cryptoo_filesystem("/$(directory_names.fs_mount_cryptoo)/","undefined","x86_64","$(this.multilib)"),
-        depends_on => { "portage_cleaned" },
-        handle => "users_created";
+        depends_on => { "image_created" },
+        handle => "image_ready";
 
-    bootstrap_server::
-
-      "configure system"
-        usebundle => server_guest("/$(directory_names.fs_mount_cryptoo)/", "$(this.role)", "x86_64", "$(this.multilib)"),
-        depends_on => { "apps_installed" },
-        handle => "filesystem_ready";
+      "install and configure apps"
+        usebundle => install_apps("$(this.role)", "$(this.multilib)"),
+        depends_on => { "image_ready" },
+        classes => default:if_ok("filesystem_ready");
 
   commands:
 
-    bootstrap_ready::
-
-      "/$(file_names.dd_app)"
-        args => "if=/dev/zero of=$(this.image_file) bs=1M count=$(this.image_size_mb)",
-        handle => "image_created";
-
-      "/$(file_names.losetup_app)"
-        args => "-D",
-        depends_on => { "image_created" },
-        handle => "loop_ready";
-
-      "/$(file_names.losetup_app)"
-        args => "/dev/loop0 $(this.image_file)",
-        depends_on => { "loop_ready" },
-        handle => "loop_attached";
-
-      "/$(file_names.mkfs_app)"
-        args => "-t $(site.config[guest_fs][filesystem]) -E nodiscard /dev/loop0",
-        depends_on => { "loop_attached" },
-        handle => "image_fs_created";
-
-      "/$(file_names.mount_app)"
-        args => "-o $(site.config[guest_fs][options]) /dev/loop0 /$(directory_names.fs_mount_cryptoo)",
-        depends_on => { "image_fs_created" },
-        handle => "image_fs_mounted";
-
-      "/$(file_names.rm_app)"
-        args => "-r /$(directory_names.fs_mount_cryptoo)/$(directory_names.fs_config_pm)",
-        depends_on => { "skeleton_extracted" },
-        handle => "portage_cleaned";
-
-      "/$(file_names.emerge_app)"
-        args => "--config-root=/$(directory_names.fs_volatile_images)/server/x86_64/no_multilib/ --root=/$(directory_names.fs_mount_cryptoo) --root-deps --emptytree @system",
-        contain => silent,
-        depends_on => { "users_created" },
-        handle => "basic_system_emerged";
-
-      "/$(file_names.emerge_app)"
-        args => "--config-root=/$(directory_names.fs_volatile_images)/server/x86_64/no_multilib/ --root=/$(directory_names.fs_mount_cryptoo) --root-deps $(this.role_set)",
-        contain => silent,
-        classes => always_success,
-        depends_on => { "basic_system_emerged" },
-        handle => "apps_installed";
+    filesystem_ready::
 
       "/$(file_names.dd_app)"
         args => "if=/dev/urandom of=/$(directory_names.fs_mount_cryptoo)/$(file_names.random_seed) bs=512 count=1",
-        depends_on => { "filesystem_ready" },
         handle => "random_seed_created";
 
       "/$(file_names.rsync_app)"
@@ -134,21 +69,6 @@ bundle agent image_file(role, type, multilib)
 
       "/$(file_names.losetup_app)"
         args => "-D",
-        depends_on => { "image_fs_unmounted" },
-        handle => "loop_finished";
-
-    bootstrap_no_multilib::
-
-      "/$(file_names.tar_app)"
-        args => "-xjpf $(best.stage3_amd64_nomultilib) -C /$(directory_names.fs_mount_cryptoo)",
-        depends_on => { "image_fs_mounted" },
-        handle => "skeleton_extracted";
-
-    bootstrap_multilib::
-
-      "/$(file_names.tar_app)"
-        args => "-xjpf $(best.stage3_amd64_multilib) -C /$(directory_names.fs_mount_cryptoo)",
-        depends_on => { "image_fs_mounted" },
-        handle => "skeleton_extracted";
+        depends_on => { "image_fs_unmounted" };
 
 }

@@ -1,0 +1,77 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/best.cf",
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/site.cf"
+            };
+
+}
+
+bundle agent prepare_image(role, multilib)
+
+{
+
+  vars:
+
+    any::
+
+      "image_file"
+        string => "/$(directory_names.fs_libvirt_images)/$(this.role).img";
+
+      "role_set"
+        string => concat("@", "$(this.role)");
+
+      "image_size_mb"
+        string => "4096";
+
+  classes:
+
+    any::
+
+      "need_image"
+        not => fileexists($(this.image_file));
+
+  commands:
+
+    need_image::
+
+      "/$(file_names.dd_app)"
+        args => "if=/dev/zero of=$(this.image_file) bs=1M count=$(this.image_size_mb)",
+        handle => "image_created";
+
+      "/$(file_names.losetup_app)"
+        args => "-D",
+        depends_on => { "image_created" },
+        handle => "loop_ready";
+
+      "/$(file_names.losetup_app)"
+        args => "/dev/loop0 $(this.image_file)",
+        depends_on => { "loop_ready" },
+        handle => "loop_attached";
+
+      "/$(file_names.mkfs_app)"
+        args => "-t $(site.config[guest_fs][filesystem]) -E nodiscard /dev/loop0",
+        depends_on => { "loop_attached" },
+        handle => "image_fs_created";
+
+      "/$(file_names.mount_app)"
+        args => "-o $(site.config[guest_fs][options]) /dev/loop0 /$(directory_names.fs_mount_cryptoo)",
+        depends_on => { "image_fs_created" },
+        handle => "image_fs_mounted";
+
+      "/$(file_names.tar_app)"
+        args => "-xjpf $(best.stage3_amd64_$(this.multilib)) -C /$(directory_names.fs_mount_cryptoo)",
+        depends_on => { "image_fs_mounted" },
+        handle => "skeleton_extracted";
+
+      "/$(file_names.rm_app)"
+        args => "-r /$(directory_names.fs_mount_cryptoo)/$(directory_names.fs_config_pm)",
+        depends_on => { "skeleton_extracted" };
+
+}

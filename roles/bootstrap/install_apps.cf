@@ -1,0 +1,60 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/util/classes.cf",
+              "cryptoo/util/contain.cf"
+            };
+
+}
+
+bundle agent install_apps(role, multilib)
+
+{
+
+  vars:
+
+    any::
+
+      "role_set"
+        string => concat("@", "$(this.role)");
+
+  methods:
+
+    apps_installed::
+
+      "configure system"
+        usebundle => server_guest("/$(directory_names.fs_mount_cryptoo)/", "$(this.role)", "x86_64", "$(this.multilib)"),
+        classes => default:if_ok("image_configured");
+
+  commands:
+
+    any::
+
+      "/$(file_names.emerge_app)"
+        args => "--config-root=/$(directory_names.fs_volatile_images)/server/x86_64/no_multilib/ --root=/$(directory_names.fs_mount_cryptoo) --root-deps --emptytree @system",
+        contain => silent,
+        handle => "basic_system_emerged";
+
+      "/$(file_names.emerge_app)"
+        args => "--config-root=/$(directory_names.fs_volatile_images)/server/x86_64/no_multilib/ --root=/$(directory_names.fs_mount_cryptoo) --root-deps $(this.role_set)",
+        contain => silent,
+        depends_on => { "basic_system_emerged" },
+        classes => default:if_ok("apps_installed");
+
+  reports:
+
+    apps_installed::
+
+      "apps_installed";
+
+    image_configured::
+
+      "$(this.role) configured";
+
+}
