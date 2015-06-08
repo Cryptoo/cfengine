@@ -5,7 +5,6 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
-              "cryptoo/control.cf",
               "cryptoo/config/directory_names.cf",
               "cryptoo/config/file_names.cf",
               "cryptoo/util/classes.cf",
@@ -27,7 +26,7 @@ bundle agent install_apps(role)
         string => concat("@", "$(this.role)");
 
       "role_bundle"
-        slist => bundlesmatching(".*:$(control.configured_role)", "cryptoo_role");
+        slist => bundlesmatching(".*:$(this.role)", "cryptoo_role");
 
   methods:
 
