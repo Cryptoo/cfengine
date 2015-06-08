@@ -6,7 +6,7 @@ body file control
 
 }
 
-bundle agent mail_client
+bundle agent mail_client(root)
 
 {
 
@@ -19,6 +19,6 @@ bundle agent mail_client
     any::
 
       "configure system as a mail client guest"
-        usebundle => cryptoo:desktop_guest("/", "mail_client", "x86_64", "no_multilib");
+        usebundle => cryptoo:desktop_guest("$(this.root)", "mail_client", "x86_64", "no_multilib");
 
 }

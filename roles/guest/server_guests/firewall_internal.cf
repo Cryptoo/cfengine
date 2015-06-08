@@ -6,7 +6,7 @@ body file control
 
 }
 
-bundle agent firewall_internal
+bundle agent firewall_internal(root)
 
 {
 
@@ -19,6 +19,6 @@ bundle agent firewall_internal
     any::
 
       "configure system as an internal firewall"
-        usebundle => server_guest("/", "firewall_internal", "x86_64", "no_multilib");
+        usebundle => server_guest("$(this.root)", "firewall_internal", "x86_64", "no_multilib");
 
 }

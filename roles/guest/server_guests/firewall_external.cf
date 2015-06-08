@@ -6,7 +6,7 @@ body file control
 
 }
 
-bundle agent firewall_external
+bundle agent firewall_external(root)
 
 {
 
@@ -19,6 +19,6 @@ bundle agent firewall_external
     any::
 
       "configure system as a external firewall"
-        usebundle => server_guest("/", "firewall_external", "x86_64", "no_multilib");
+        usebundle => server_guest("$(this.root)", "firewall_external", "x86_64", "no_multilib");
 
 }

@@ -12,7 +12,7 @@ body file control
 
 }
 
-bundle agent dns
+bundle agent dns(root)
 
 {
 
@@ -59,21 +59,21 @@ bundle agent dns
 
     any::
 
-      "/$(file_names.dnsmasq_conf)"
+      "$(this.root)$(file_names.dnsmasq_conf)"
         perms => system,
         create => "true",
         edit_template => "/$(templates.template[dnsmasq])",
         template_method => "mustache",
         template_data => parsejson($(this.dnsmasq));
 
-      "/$(file_names.dns_config)"
+      "$(this.root)$(file_names.dns_config)"
         perms => system,
         create => "true",
         edit_template => "/$(templates.template[resolv])",
         template_method => "mustache",
         template_data => parsejson($(this.dns_internal));
 
-      "/$(file_names.dns_config_dnsmasq)"
+      "$(this.root)$(file_names.dns_config_dnsmasq)"
         perms => system,
         create => "true",
         edit_template => "/$(templates.template[resolv])",
@@ -85,6 +85,6 @@ bundle agent dns
     any::
 
       "configure system as a DNS server"
-        usebundle => server_guest("/", "dns", "x86_64", "no_multilib");
+        usebundle => server_guest("$(this.root)", "dns", "x86_64", "no_multilib");
 
 }

@@ -27,7 +27,7 @@ bundle agent cryptoo
     !default:cryptoo_bootstrap::
 
       "configure system"
-        usebundle => $(role_bundle);
+        usebundle => $(role_bundle)("/");
 
     default:cryptoo_bootstrap::
 

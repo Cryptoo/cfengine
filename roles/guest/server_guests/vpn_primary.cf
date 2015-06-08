@@ -6,7 +6,7 @@ body file control
 
 }
 
-bundle agent vpn_primary
+bundle agent vpn_primary(root)
 
 {
 
@@ -19,6 +19,6 @@ bundle agent vpn_primary
     any::
 
       "configure system as the primary VPN client router"
-        usebundle => server_guest("/", "vpn_primary", "x86_64", "no_multilib");
+        usebundle => server_guest("$(this.root)", "vpn_primary", "x86_64", "no_multilib");
 
 }

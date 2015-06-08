@@ -6,7 +6,7 @@ body file control
 
 }
 
-bundle agent vpn_server
+bundle agent vpn_server(root)
 
 {
 
@@ -19,6 +19,6 @@ bundle agent vpn_server
     any::
 
       "configure system as a VPN server"
-        usebundle => server_guest("/", "vpn_server", "x86_64", "no_multilib");
+        usebundle => server_guest("$(this.root)", "vpn_server", "x86_64", "no_multilib");
 
 }

@@ -15,7 +15,7 @@ body file control
 
 }
 
-bundle agent master
+bundle agent master(root)
 
 {
 
@@ -52,29 +52,29 @@ bundle agent master
     any::
 
       "have_systemctl"
-        expression => fileexists("/$(file_names.systemd_app)");
+        expression => fileexists("$(this.root)$(file_names.systemd_app)");
 
       "need_master_ssh_key"
-        not => fileexists("/$(file_names.master_ssh_key)");
+        not => fileexists("$(this.root)$(file_names.master_ssh_key)");
 
       "have_master_ssh_key"
-        expression => fileexists("/$(file_names.master_ssh_key)");
+        expression => fileexists("$(this.root)$(file_names.master_ssh_key)");
 
       "need_default_key"
-        not => fileexists("/$(file_names.default_key_public)");
+        not => fileexists("$(this.root)$(file_names.default_key_public)");
 
       "have_default_key"
-        expression => fileexists("/$(file_names.default_key_public)");
+        expression => fileexists("$(this.root)$(file_names.default_key_public)");
 
   files:
 
     any::
 
-      "/$(directory_names.fs_storage_backup)/$(config.server_guests)/."
+      "$(this.root)$(directory_names.fs_storage_backup)/$(config.server_guests)/."
         perms => qemu,
         create => "true";
 
-      "/$(file_names.console_autologin)"
+      "$(this.root)$(file_names.console_autologin)"
         perms => system,
         create => "true",
         edit_template => "/$(templates.template[ini])",
@@ -84,7 +84,7 @@ bundle agent master
 
     need_master_ssh_key&have_default_key::
 
-      "/$(file_names.master_ssh_key)"
+      "$(this.root)$(file_names.master_ssh_key)"
         perms => system,
         copy_from => default:local_cp("/$(cryptoo:file_names.default_key_public)");
 
@@ -97,18 +97,18 @@ bundle agent master
         usebundle => cryptoo:host("x86_64");
 
       "configure systemd"
-        usebundle => systemd("/", "master");
+        usebundle => systemd("$(this.root)", "master");
 
   commands:
 
     daemon_reload&have_systemctl::
 
-      "/$(file_names.systemd_app)"
+      "$(this.root)$(file_names.systemd_app)"
         args => "daemon-reload";
 
     need_default_key::
 
-      "/$(file_names.ssh_keygen_app)"
+      "$(this.root)$(file_names.ssh_keygen_app)"
       args => "-t ed25519 -P \"\" -f /$(file_names.default_key)",
       comment => "Change the passphrase with ssh-keygen -p";
 

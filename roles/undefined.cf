@@ -10,7 +10,7 @@ body file control
 
 }
 
-bundle agent undefined
+bundle agent undefined(root)
 
 {
 
@@ -23,6 +23,6 @@ bundle agent undefined
     any::
 
       "configure generic system"
-        usebundle => cryptoo_filesystem("/", "undefined", "x86_64", "no_multilib");
+        usebundle => cryptoo_filesystem("$(this.root)", "undefined", "x86_64", "no_multilib");
 
 }
