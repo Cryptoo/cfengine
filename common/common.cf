@@ -128,7 +128,7 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
         perms => system,
         create => "false",
         ifvarclass => fileexists("$(root)$(file_names.system_bash_logout)"),
-        edit_line => default:uncomment_lines_containing("clear","#");
+        edit_line => default:uncomment_lines_matching("clear","#");
 
       "$(root)$(file_names.env_cryptoo)"
         perms => system,
