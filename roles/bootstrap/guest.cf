@@ -56,16 +56,16 @@ bundle agent bootstrap_guest(role, type, multilib)
     xml_created::
 
       "/$(file_names.virsh_app)"
-        args => "define /$(directory_names.fs_libvirt_images)/$(this.role).img",
+        args => "define $(this.definition)",
         handle => "guest_defined";
 
       "/$(file_names.virsh_app)"
-        args => "autostart $(this.definition)",
+        args => "autostart $(this.role)",
         depends_on => { "guest_defined" },
         handle => "guest_enabled";
 
       "/$(file_names.virsh_app)"
-        args => "start $(this.definition)",
+        args => "start $(this.role)",
         depends_on => { "guest_enabled" };
 
   reports:
