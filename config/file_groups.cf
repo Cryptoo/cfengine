@@ -308,7 +308,7 @@ bundle common file_groups
 ################################################################################
 
       "make_profile[chroot_server]"
-        string => "$(make_profile[server_guest])";
+        string => "cryptoo/chroot";
 
       "pm_env[chroot_server]"
         slist => {
