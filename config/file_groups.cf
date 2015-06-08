@@ -886,7 +886,77 @@ bundle common file_groups
       "systemd_enabled[vpn_primary]"
         slist => {
                     "@(systemd_enabled[server_guest])",
-                    "openvpn.service"
+                    "openvpn@primary.service"
+                 };
+
+################################################################################
+#                             dns
+################################################################################
+
+      "make_profile[dns]"
+        string => "$(make_profile[server_guest])";
+
+      "pm_env[dns]"
+        slist => {
+                    "@(pm_env[server_guest])"
+                 };
+
+      "pm_environment[dns]"
+        slist => {
+                    "@(pm_environment[server_guest])"
+                 };
+
+      "keywords[dns]"
+        slist => {
+                    "@(keywords[server_guest])",
+                    "dns"
+                 };
+
+      "mask[dns]"
+        slist => {
+                    "@(mask[server_guest])"
+                 };
+
+      "unmask[dns]"
+        slist => {
+                    "@(unmask[server_guest])"
+                 };
+
+      "use[dns]"
+        slist => {
+                    "@(use[server_guest])",
+                    "dns"
+                 };
+
+      "profile[dns]"
+        slist => {
+                    "@(profile[server_guest])"
+                 };
+
+      "use_udev[dns]"
+        slist => {
+                    "@(use_udev[server_guest])"
+                 };
+
+      "use_systemd[dns]"
+        slist => {
+                    "@(use_systemd[server_guest])"
+                 };
+
+      "unuse_udev[dns]"
+        slist => {
+                    "@(unuse_udev[server_guest])"
+                 };
+
+      "unuse_systemd[dns]"
+        slist => {
+                    "@(unuse_systemd[server_guest])"
+                 };
+
+      "systemd_enabled[dns]"
+        slist => {
+                    "@(systemd_enabled[server_guest])",
+                    "dnsmasq"
                  };
 
 ################################################################################

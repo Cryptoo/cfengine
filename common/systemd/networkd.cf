@@ -476,6 +476,70 @@ bundle agent networkd(root, role)
           }
         ';
 
+      "network_vpndmz"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "Match",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "eth0" }
+                     ]
+                 },
+                 { "section": "Network",
+                   "values":
+                     [
+                       { "LHS": "DHCP", "RHS": "false" },
+                       { "LHS": "Address", "RHS": "192.168.$(this.vpndmz_subnet).$(this.role_number)/24" },
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.vpndmz_subnet).$(config.defined_numbers[vpn_primary])" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
+                     ]
+                 },
+                 { "section": "Route",
+                   "values":
+                     [
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.vpndmz_subnet).$(config.defined_numbers[firewall_internal])" },
+                       { "LHS": "Destination", "RHS": "$(this.onion_subnet)" },
+                       { "LHS": "Metric", "RHS": "0" }
+                     ]
+                 },
+                 { "section": "Route",
+                   "values":
+                     [
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.vpndmz_subnet).$(config.defined_numbers[firewall_internal])" },
+                       { "LHS": "Destination", "RHS": "$(this.eep_subnet)" },
+                       { "LHS": "Metric", "RHS": "0" }
+                     ]
+                 },
+                 { "section": "Route",
+                   "values":
+                     [
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.vpndmz_subnet).$(config.defined_numbers[firewall_internal])" },
+                       { "LHS": "Destination", "RHS": "192.168.$(this.tor_subnet).0/24" },
+                       { "LHS": "Metric", "RHS": "0" }
+                     ]
+                 },
+                 { "section": "Route",
+                   "values":
+                     [
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.vpndmz_subnet).$(config.defined_numbers[firewall_internal])" },
+                       { "LHS": "Destination", "RHS": "192.168.$(this.i2p_subnet).0/24" },
+                       { "LHS": "Metric", "RHS": "0" }
+                     ]
+                 },
+                 { "section": "Route",
+                   "values":
+                     [
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.vpndmz_subnet).$(config.defined_numbers[firewall_internal])" },
+                       { "LHS": "Destination", "RHS": "192.168.$(this.lan_subnet).0/24" },
+                       { "LHS": "Metric", "RHS": "0" }
+                     ]
+                 }
+               ]
+          }
+        ';
+
       "network_vpndmz_bridge"
         string => '
           {
@@ -1158,6 +1222,77 @@ bundle agent networkd(root, role)
         template_method => "mustache",
         template_data => parsejson($(this.network_ispdmz_gateway));
 
+    networkd_tor::
+
+      "$(this.root)$(file_names.ispdmz_network)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_ispdmz));
+
+      "$(this.root)$(file_names.tor_network)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_tor_gateway));
+
+    networkd_vpn_primary::
+
+      "$(this.root)$(file_names.ispdmz_network)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_ispdmz_gateway_internal));
+
+      "$(this.root)$(file_names.vpndmz_network)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_vpndmz_gateway_internal));
+
+    networkd_dns::
+
+      "$(this.root)$(file_names.vpndmz_network)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_vpndmz));
+
+    networkd_firewall_internal::
+
+      "$(this.root)$(file_names.vpndmz_network)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_vpndmz_gateway_lan));
+
+      "$(this.root)$(file_names.tor_network)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_tor_gateway_lan));
+
+      "$(this.root)$(file_names.i2p_network)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_i2p_gateway_lan));
+
+      "$(this.root)$(file_names.lan_network)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_lan_gateway));
+
     networkd_vpn_server::
 
       "$(this.root)$(file_names.lan_netdev)"
@@ -1264,67 +1399,5 @@ bundle agent networkd(root, role)
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
         template_data => parsejson($(this.network_lan_openvpn4));
-
-    networkd_vpn_primary::
-
-      "$(this.root)$(file_names.ispdmz_network)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[ini])",
-        template_method => "mustache",
-        template_data => parsejson($(this.network_ispdmz_gateway_internal));
-
-      "$(this.root)$(file_names.vpndmz_network)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[ini])",
-        template_method => "mustache",
-        template_data => parsejson($(this.network_vpndmz_gateway_internal));
-
-    networkd_firewall_internal::
-
-      "$(this.root)$(file_names.vpndmz_network)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[ini])",
-        template_method => "mustache",
-        template_data => parsejson($(this.network_vpndmz_gateway_lan));
-
-      "$(this.root)$(file_names.tor_network)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[ini])",
-        template_method => "mustache",
-        template_data => parsejson($(this.network_tor_gateway_lan));
-
-      "$(this.root)$(file_names.i2p_network)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[ini])",
-        template_method => "mustache",
-        template_data => parsejson($(this.network_i2p_gateway_lan));
-
-      "$(this.root)$(file_names.lan_network)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[ini])",
-        template_method => "mustache",
-        template_data => parsejson($(this.network_lan_gateway));
-
-    networkd_tor::
-
-      "$(this.root)$(file_names.ispdmz_network)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[ini])",
-        template_method => "mustache",
-        template_data => parsejson($(this.network_ispdmz));
-
-      "$(this.root)$(file_names.tor_network)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[ini])",
-        template_method => "mustache",
-        template_data => parsejson($(this.network_tor_gateway));
 
 }

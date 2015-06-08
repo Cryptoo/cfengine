@@ -1,0 +1,8 @@
+port=53
+resolv-file=/{{resolv}}
+server=/onion/{{tor}}
+server=/i2p/{{i2p}}
+interface=eth0
+listen-address={{listen}}
+no-dhcp-interface=eth0
+bind-interfaces

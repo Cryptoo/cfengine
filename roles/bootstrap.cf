@@ -16,6 +16,17 @@ bundle agent cryptoo_bootstrap
 
   vars:
 
+    default:bootstrap_dns::
+
+      "role"
+        string => "dns";
+
+      "type"
+        string => "server";
+
+      "multilib"
+        string => "no_multilib";
+
     default:bootstrap_firewall_external::
 
       "role"
@@ -98,6 +109,11 @@ bundle agent cryptoo_bootstrap
     default:bootstrap_master::
 
       "bootstrap_master"
+        expression => "any";
+
+    default:bootstrap_dns::
+
+      "bootstrap_guest"
         expression => "any";
 
     default:bootstrap_firewall_external::

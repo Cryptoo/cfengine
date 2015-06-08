@@ -46,6 +46,8 @@ bundle common file_names
         string => "$(directory_names.fs_dev_base)/null";
       "crypttab"
         string => "$(directory_names.fs_config_base)/crypttab";
+      "dnsmasq_conf"
+        string => "$(directory_names.fs_config_base)/dnsmasq.conf";
       "fstab"
         string => "$(directory_names.fs_config_base)/fstab";
       "group"
@@ -64,6 +66,8 @@ bundle common file_names
         string => "$(directory_names.fs_config_base)/passwd";
       "dns_config"
         string => "$(directory_names.fs_config_base)/resolv.conf";
+      "dns_config_dnsmasq"
+        string => "$(directory_names.fs_config_base)/resolv.dnsmasq.conf";
       "shadow"
         string => "$(directory_names.fs_config_base)/shadow";
       "system_bashrc"
@@ -353,11 +357,17 @@ bundle common file_names
       "template_profile_parent"
         string => "common/profile_parent.txt",
         meta => { "template" };
+      "template_resolv"
+        string => "common/resolv_mustache.txt",
+        meta => { "template" };
       "template_serial_autologin"
         string => "common/serial_autologin.txt",
         meta => { "template" };
       "template_value"
         string => "common/value_mustache.txt",
+        meta => { "template" };
+      "template_dnsmasq"
+        string => "guest/dnsmasq_mustache.txt",
         meta => { "template" };
       "template_crypttab"
         string => "host/crypttab.txt",

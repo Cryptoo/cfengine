@@ -7,6 +7,6 @@
     "firewall_internal": "12",
     "vpn_server": "13",
     "tor": "14",
-    "i2p": "15"
-
+    "i2p": "15",
+    "dns": "16"
 }
