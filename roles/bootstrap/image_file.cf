@@ -61,7 +61,7 @@ bundle agent image_file(role, type, multilib)
 
       "set users and groups"
         usebundle => cryptoo_filesystem("/$(directory_names.fs_mount_cryptoo)/","undefined","x86_64","$(this.multilib)"),
-        depends_on => { "skeleton_extracted" },
+        depends_on => { "portage_cleaned" },
         handle => "users_created";
 
     bootstrap_server::
@@ -101,13 +101,13 @@ bundle agent image_file(role, type, multilib)
 
       "/$(file_names.rm_app)"
         args => "-r /$(directory_names.fs_mount_cryptoo)/$(directory_names.fs_config_pm)",
-        depends_on => { "users_created" },
+        depends_on => { "skeleton_extracted" },
         handle => "portage_cleaned";
 
       "/$(file_names.emerge_app)"
         args => "--config-root=/$(directory_names.fs_volatile_images)/server/x86_64/no_multilib/ --root=/$(directory_names.fs_mount_cryptoo) --root-deps --emptytree @system",
         contain => silent,
-        depends_on => { "portage_cleaned" },
+        depends_on => { "users_created" },
         handle => "basic_system_emerged";
 
       "/$(file_names.emerge_app)"
