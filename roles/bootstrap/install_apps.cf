@@ -5,15 +5,17 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
+              "cryptoo/control.cf",
               "cryptoo/config/directory_names.cf",
               "cryptoo/config/file_names.cf",
               "cryptoo/util/classes.cf",
               "cryptoo/util/contain.cf"
+              "@(cryptoo:control.role_inputs)"
             };
 
 }
 
-bundle agent install_apps(role, multilib)
+bundle agent install_apps(role)
 
 {
 
@@ -24,12 +26,15 @@ bundle agent install_apps(role, multilib)
       "role_set"
         string => concat("@", "$(this.role)");
 
+      "role_bundle"
+        slist => bundlesmatching(".*:$(control.configured_role)", "cryptoo_role");
+
   methods:
 
     apps_installed::
 
       "configure system"
-        usebundle => server_guest("/$(directory_names.fs_mount_cryptoo)/", "$(this.role)", "x86_64", "$(this.multilib)"),
+        usebundle => $(role_bundle)("/");
         classes => default:if_ok("image_configured");
 
   commands:
