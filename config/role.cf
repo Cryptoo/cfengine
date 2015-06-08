@@ -96,11 +96,11 @@ bundle common role
                    [
                      {
                        "bridge": "wan",
-                       "device": "wan$(this.defined_numbers[tor])"
+                       "device": "wan$(this.defined_numbers[firewall_external])"
                      },
                      {
                        "bridge": "ispdmz",
-                       "device": "ispdmz$(this.defined_numbers[tor])"
+                       "device": "ispdmz$(this.defined_numbers[firewall_external])"
                      }
                    ]
               }
