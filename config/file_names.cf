@@ -30,6 +30,8 @@ bundle common file_names
         string => "$(directory_names.fs_apps_base)/mount";
       "move_app"
         string => "$(directory_names.fs_apps_base)/mv";
+      "rm_app"
+        string => "$(directory_names.fs_apps_base)/rm";
       "setfattr_app"
         string => "$(directory_names.fs_apps_base)/setfattr";
       "tar_app"

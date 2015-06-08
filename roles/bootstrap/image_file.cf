@@ -99,10 +99,15 @@ bundle agent image_file(role, type, multilib)
         depends_on => { "image_fs_created" },
         handle => "image_fs_mounted";
 
+      "/$(file_names.rm_app)"
+        args => "-r /$(directory_names.fs_mount_cryptoo)/$(directory_names.fs_config_pm)",
+        depends_on => { "users_created" },
+        handle => "portage_cleaned";
+
       "/$(file_names.emerge_app)"
         args => "--config-root=/$(directory_names.fs_volatile_images)/server/x86_64/no_multilib/ --root=/$(directory_names.fs_mount_cryptoo) --root-deps --emptytree @system",
         contain => silent,
-        depends_on => { "users_created" },
+        depends_on => { "portage_cleaned" },
         handle => "basic_system_emerged";
 
       "/$(file_names.emerge_app)"
