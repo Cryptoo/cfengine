@@ -5,6 +5,7 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
+              "cryptoo/common/systemd/default_target.cf",
               "cryptoo/common/systemd/networkd.cf",
               "cryptoo/common/systemd/service.cf",
               "cryptoo/config/file_groups.cf",
@@ -92,7 +93,12 @@ bundle agent systemd(root, role)
 
     have_systemctl&(!bootstrap)::
 
-      "enable systemd services"
+      "set default target"
+        usebundle => default_target("$(this.root)", "$(this.role)");
+
+    have_systemctl::
+
+      "set default target"
         usebundle => systemd_enable($(root), $(file_groups.systemd_enabled[$(this.role)]));
 
 # This bundle always attempts to start systemd-networkd even though it's already running.

@@ -1,0 +1,57 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/role.cf",
+              "cryptoo/util/contain.cf"
+            };
+
+}
+
+bundle agent default_target(root, role)
+
+{
+
+  vars:
+
+    any::
+
+      "params"
+        string => "$(role.params[$(this.role)])";
+
+      "params_data"
+        data => parsejson("$(this.params)");
+
+      "default_target_actual"
+        string => execresult("/$(file_names.chroot_app) $(this.root) /$(file_names.systemd_app) get-default", "noshell");
+
+    guest_type_headless::
+
+      "default_target_desired"
+        string => "multi-user.target";
+
+    guest_type_graphical::
+
+      "default_target_desired"
+        string => "graphical.target";
+
+  classes:
+
+    any::
+
+      "guest_type_$(params_data[make_conf][graphical])"
+        expression => "any";
+
+  commands:
+
+    guest_type_headless|guest_type_graphical::
+
+      "/$(file_names.systemd_app)"
+        args => "set-default $(this.default_target_desired)",
+        contain => basic_chroot("$(this.root)");
+
+}

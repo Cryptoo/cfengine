@@ -262,6 +262,8 @@ bundle common file_names
         string => "$(directory_names.fs_storage_pm_site_profile)/repo_name";
       "kernel_makefile"
         string => "$(directory_names.fs_storage_kernel)/Makefile";
+      "chroot_app"
+        string => "$(directory_names.fs_standard_apps)/chroot";
       "cpu2use_app"
         string => "$(directory_names.fs_standard_apps)/cpuinfo2cpuflags-x86";
       "dracut_app"
