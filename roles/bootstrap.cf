@@ -49,6 +49,17 @@ bundle agent cryptoo_bootstrap
       "multilib"
         string => "no_multilib";
 
+    default:bootstrap_mail_server::
+
+      "role"
+        string => "mail_server";
+
+      "type"
+        string => "server";
+
+      "multilib"
+        string => "no_multilib";
+
     default:bootstrap_tor::
 
       "role"
@@ -122,6 +133,11 @@ bundle agent cryptoo_bootstrap
         expression => "any";
 
     default:bootstrap_firewall_internal::
+
+      "bootstrap_guest"
+        expression => "any";
+
+    default:bootstrap_mail_server::
 
       "bootstrap_guest"
         expression => "any";

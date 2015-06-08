@@ -1263,6 +1263,15 @@ bundle agent networkd(root, role)
         template_method => "mustache",
         template_data => parsejson($(this.network_vpndmz));
 
+    networkd_mail_server::
+
+      "$(this.root)$(file_names.vpndmz_network)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.network_vpndmz));
+
     networkd_firewall_internal::
 
       "$(this.root)$(file_names.vpndmz_network)"

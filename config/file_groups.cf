@@ -960,6 +960,78 @@ bundle common file_groups
                  };
 
 ################################################################################
+#                             mail_server
+################################################################################
+
+      "make_profile[mail_server]"
+        string => "$(make_profile[server_guest])";
+
+      "pm_env[mail_server]"
+        slist => {
+                    "@(pm_env[server_guest])"
+                 };
+
+      "pm_environment[mail_server]"
+        slist => {
+                    "@(pm_environment[server_guest])"
+                 };
+
+      "keywords[mail_server]"
+        slist => {
+                    "@(keywords[server_guest])",
+                    "mail_server"
+                 };
+
+      "mask[mail_server]"
+        slist => {
+                    "@(mask[server_guest])"
+                 };
+
+      "unmask[mail_server]"
+        slist => {
+                    "@(unmask[server_guest])"
+                 };
+
+      "use[mail_server]"
+        slist => {
+                    "@(use[server_guest])",
+                    "mail_server"
+                 };
+
+      "profile[mail_server]"
+        slist => {
+                    "@(profile[server_guest])"
+                 };
+
+      "use_udev[mail_server]"
+        slist => {
+                    "@(use_udev[server_guest])"
+                 };
+
+      "use_systemd[mail_server]"
+        slist => {
+                    "@(use_systemd[server_guest])"
+                 };
+
+      "unuse_udev[mail_server]"
+        slist => {
+                    "@(unuse_udev[server_guest])"
+                 };
+
+      "unuse_systemd[mail_server]"
+        slist => {
+                    "@(unuse_systemd[server_guest])"
+                 };
+
+      "systemd_enabled[mail_server]"
+        slist => {
+                    "@(systemd_enabled[server_guest])",
+                    "dovecot.service",
+                    "fetchmail.service",
+                    "postfix.service"
+                 };
+
+################################################################################
 #                              firewall_internal
 ################################################################################
 

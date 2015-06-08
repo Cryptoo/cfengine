@@ -45,7 +45,7 @@ bundle common config
                    "freenet",
                    "irc_bouncer",
                    "bitmessage",
-                   "mail",
+                   "mail_server",
                    "bitcoin",
                    "namecoin",
                    "bittorrent",

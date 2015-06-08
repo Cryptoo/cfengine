@@ -199,6 +199,34 @@ bundle common role
           }
         ';
 
+      "params[mail_server]"
+        string => '
+          {
+            "number": "$(this.defined_numbers[mail_server])",
+            "make_conf":
+              {
+                "makeopts": "guest",
+                "pkgdir": "server_guest",
+                "runtime": "guest",
+                "graphical": "headless"
+              },
+            "libvirt":
+              {
+                "name": "mail_server",
+                "ram": "16776192",
+                "cpu": "1",
+                "kernel": "/$(directory_names.fs_libvirt_images)/guest-kernel-x86_64",
+                "interfaces":
+                   [
+                     {
+                       "bridge": "vpndmz",
+                       "device": "vpndmz$(this.defined_numbers[mail_server])"
+                     }
+                   ]
+              }
+          }
+        ';
+
       "params[firewall_internal]"
         string => '
           {

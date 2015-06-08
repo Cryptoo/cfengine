@@ -1,0 +1,24 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+}
+
+bundle agent mail_server(root)
+
+{
+
+  meta:
+
+    "tags" slist => { "cryptoo_role" };
+
+  methods:
+
+    any::
+
+      "configure system as a mail server"
+        usebundle => server_guest("$(this.root)", "mail_server", "x86_64", "no_multilib");
+
+}

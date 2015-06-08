@@ -9,7 +9,7 @@ body file control
               "cryptoo/config/directory_names.cf",
               "cryptoo/config/file_names.cf",
               "cryptoo/util/classes.cf",
-              "cryptoo/util/contain.cf"
+              "cryptoo/util/contain.cf",
               "@(cryptoo:control.role_inputs)"
             };
 
@@ -34,7 +34,7 @@ bundle agent install_apps(role)
     apps_installed::
 
       "configure system"
-        usebundle => $(role_bundle)("/");
+        usebundle => $(role_bundle)("/"),
         classes => default:if_ok("image_configured");
 
   commands:
