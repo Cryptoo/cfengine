@@ -4,5 +4,42 @@
                       "DISABLE_IPV6": "Yes",
                       "IP_FORWARDING": "On",
                       "SAVE_IPSETS": "Yes"
+            },
+    "zone": {
+              "wan_bridge": {
+                      "name": "brwan",
+                      "prefix": "w",
+                      "members": [ "0", "10" ]
+                     },
+              "ispdmz_bridge": {
+                      "name": "brimz",
+                      "prefix": "d",
+                      "members": [ "10", "11", "13", "14", "17", "18", "19" ]
+                     },
+              "vpndmz_bridge": {
+                      "name": "brvmz",
+                      "prefix": "u",
+                      "members": [ "11", "12", "16", "17", "18", "19", "20" ]
+                     },
+              "tor_bridge": {
+                      "name": "brtor",
+                      "prefix": "t",
+                      "members": [ "12", "14" ]
+                     },
+              "i2p_bridge": {
+                      "name": "bri2p",
+                      "prefix": "i",
+                      "members": [ "12", "15" ]
+                     },
+              "lan_bridge": {
+                      "name": "brlan",
+                      "prefix": "l",
+                      "members": [ "0", "1", "12", "13"]
+                     },
+              "lan_bridge_vpn": {
+                      "name": "brlan",
+                      "prefix": "l",
+                      "members": [ "0", "1", "2", "3", "4", "13" ]
+                     },
             }
 }

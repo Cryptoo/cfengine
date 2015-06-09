@@ -6,6 +6,7 @@ body file control
 
   inputs => {
               "cryptoo/config/config.cf",
+              "cryptoo/config/file_groups.cf",
               "cryptoo/config/file_names.cf"
             };
 
@@ -18,6 +19,12 @@ bundle agent shorewall(root, role)
   vars:
 
     any::
+
+      "zones"
+        slist => {
+                    "@(file_groups.firewall_zones_ipv4[$(this.role)])",
+                    "@(file_groups.firewall_bridge_ipv4[$(this.role)])"
+                 };
 
   classes:
 
