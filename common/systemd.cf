@@ -29,6 +29,9 @@ bundle agent systemd(root, role)
       "hostname"
         string => '{ "value": "$(machine.hostname)" }';
 
+      "systemd_services"
+        slist => getvalues("file_groups.systemd_enabled[$(this.role)]");
+
   classes:
 
     any::
@@ -98,12 +101,12 @@ bundle agent systemd(root, role)
 
     have_systemctl::
 
-      "set default target"
-        usebundle => systemd_enable($(root), $(file_groups.systemd_enabled[$(this.role)]));
+      "enable services"
+        usebundle => systemd_enable($(root), $(systemd_services));
 
 # This bundle always attempts to start systemd-networkd even though it's already running.
 #      "start systemd services"
-#        usebundle => default:standard_services( $(file_groups.systemd_enabled[$(this.role)]), "start");
+#        usebundle => default:standard_services($(systemd_services), "start");
 
   commands:
 
