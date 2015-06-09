@@ -984,6 +984,30 @@ bundle agent networkd(root, role)
           }
         ';
 
+      "network_lan_lantap_host"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "Match",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "lantap" }
+                     ]
+                 },
+                 { "section": "Network",
+                   "values":
+                     [
+                       { "LHS": "DHCP", "RHS": "false" },
+                       { "LHS": "Address", "RHS": "192.168.$(this.lan_subnet).$(this.role_number)/24" },
+                       { "LHS": "Gateway", "RHS": "192.168.$(this.lan_subnet).$(config.defined_numbers[firewall_internal])" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
+                     ]
+                 }
+               ]
+          }
+        ';
+
       "network_lan_openvpn1"
         string => '
           {
@@ -1183,7 +1207,7 @@ bundle agent networkd(root, role)
         create => "true",
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
-        template_data => parsejson($(this.network_lan_lantap));
+        template_data => parsejson($(this.network_lan_lantap_host));
 
       "$(this.root)$(file_names.lan1_network)"
         perms => system,
