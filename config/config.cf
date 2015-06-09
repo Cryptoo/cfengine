@@ -14,23 +14,26 @@ bundle common config
 
     any::
 
-    "ssh"
-      data => readjson("$(sys.inputdir)/cryptoo/config/ssh.json", 1M);
-
-    "users"
-      data => readjson("$(sys.inputdir)/cryptoo/config/users.json", 1M);
+    "defined_numbers"
+      data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
 
     "extra_groups"
       data => readjson("$(sys.inputdir)/cryptoo/config/groups.json", 1M);
 
-    "defined_numbers"
-      data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
+    "firewall"
+      data => readjson("$(sys.inputdir)/cryptoo/config/firewall.json", 1M);
 
     "git_repositories"
       data => readjson("$(sys.inputdir)/cryptoo/config/git_repositories.json", 1M);
 
+    "ssh"
+      data => readjson("$(sys.inputdir)/cryptoo/config/ssh.json", 1M);
+
     "systemd"
       data => readjson("$(sys.inputdir)/cryptoo/config/systemd.json", 1M);
+
+    "users"
+      data => readjson("$(sys.inputdir)/cryptoo/config/users.json", 1M);
 
     "server_guests"
        slist => {

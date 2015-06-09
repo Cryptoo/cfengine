@@ -1,0 +1,8 @@
+{
+    "shorewall_conf": {
+                      "STARTUP_ENABLED": "Yes",
+                      "DISABLE_IPV6": "Yes",
+                      "IP_FORWARDING": "On",
+                      "SAVE_IPSETS": "Yes"
+            }
+}

@@ -7,6 +7,7 @@ body file control
   inputs => {
               "cryptoo/common/gcc.cf",
               "cryptoo/common/portage.cf",
+              "cryptoo/common/shorewall.cf",
               "cryptoo/common/ssh.cf",
               "cryptoo/common/unix_extra_groups.cf",
               "cryptoo/common/unix_group.cf",
@@ -34,13 +35,13 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
     any::
 
       "groups"
-        slist => getindices("cryptoo:config.gid");
+        slist => getindices("config.gid");
 
       "users"
-        slist => getindices("cryptoo:config.users");
+        slist => getindices("config.users");
 
       "extra_groups"
-        slist => getindices("cryptoo:config.extra_groups");
+        slist => getindices("config.extra_groups");
 
   classes:
 
@@ -116,7 +117,7 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
 
       "$(root)$(file_names.localtime)"
         move_obstructions => "true",
-        link_from => timezone("$(cryptoo:site.config[timezone])");
+        link_from => timezone("$(site.config[timezone])");
 
       "$(root)$(file_names.system_bashrc)"
         perms => system,
@@ -155,23 +156,26 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
     any::
 
       "configure gcc profile"
-        usebundle => cryptoo:gcc("$(root)", "$(arch)");
+        usebundle => gcc("$(root)", "$(arch)");
 
       "configure portage"
-        usebundle => cryptoo:portage("$(root)", "$(role)", "$(arch)", "$(multilib)");
+        usebundle => portage("$(root)", "$(role)", "$(arch)", "$(multilib)");
 
       "set up groups"
-        usebundle => cryptoo:unix_group("$(root)", "$(groups)");
+        usebundle => unix_group("$(root)", "$(groups)");
 
       "set up users"
-        usebundle => cryptoo:unix_user("$(root)", "$(users)"),
+        usebundle => unix_user("$(root)", "$(users)"),
         classes => default:if_ok("users_ok");
 
       "set up additional group memberships"
-        usebundle => cryptoo:unix_extra_groups("$(root)", "$(extra_groups)");
+        usebundle => unix_extra_groups("$(root)", "$(extra_groups)");
 
       "set up ssh"
-        usebundle => cryptoo:ssh($(root), $(role));
+        usebundle => ssh($(root), $(role));
+
+      "set up shorewall"
+        usebundle => shorewall($(this.root), $(this.role));
 
     chroot::
 

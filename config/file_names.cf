@@ -156,6 +156,8 @@ bundle common file_names
         string => "$(directory_names.fs_config_run_sysinit)/kmod-static-nodes";
       "mount_info"
         string => "/proc/self/mountstats";
+      "shorewall_config"
+        string => "$(directory_names.fs_config_shorewall)/shorewall.conf";
       "sshd_config"
         string => "$(directory_names.fs_config_ssh)/sshd_config";
       "ssh_config"
@@ -312,6 +314,8 @@ bundle common file_names
         string => "$(directory_names.fs_standard_admin_apps)/libvirtd";
       "localegen_app"
         string => "$(directory_names.fs_standard_admin_apps)/locale-gen";
+      "shorewall_app"
+        string => "$(directory_names.fs_standard_admin_apps)/shorewall";
       "sshd_app"
         string => "$(directory_names.fs_standard_admin_apps)/sshd";
       "template_cf_execd"

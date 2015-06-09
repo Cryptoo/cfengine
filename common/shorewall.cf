@@ -1,0 +1,49 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/config.cf",
+              "cryptoo/config/file_names.cf"
+            };
+
+}
+
+bundle agent shorewall(root, role)
+
+{
+
+  vars:
+
+    any::
+
+  classes:
+
+    any::
+
+      "bootstrap"
+        not => strcmp("$(this.root)", "/");
+
+      "have_shorewall_app"
+        expression => fileexists("$(root)$(file_names.shorewall_app)");
+
+  files:
+
+    any::
+
+       "$(root)$(file_names.shorewall_config)"
+        create => "false",
+        edit_line => default:set_line_based("cryptoo:config.firewall[shorewall_conf]", "=", "\s+", ".*", "\s*#\s*"),
+        classes => default:if_repaired("update_shorewall");
+
+  commands:
+
+    update_shorewall&have_shorewall_app&(!bootstrap)::
+
+      "/$(file_names.shorewall_app)"
+        args => "restart",
+        contain => basic_chroot($(root));
+
+}
