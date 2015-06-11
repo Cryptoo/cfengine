@@ -1,0 +1,4 @@
+fw             firewall
+{{#zones}}
+{{name}}       {{type}}
+{{/zones}}

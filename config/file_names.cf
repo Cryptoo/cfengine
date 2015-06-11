@@ -158,6 +158,8 @@ bundle common file_names
         string => "/proc/self/mountstats";
       "shorewall_config"
         string => "$(directory_names.fs_config_shorewall)/shorewall.conf";
+      "shorewall_zones"
+        string => "$(directory_names.fs_config_shorewall)/zones";
       "sshd_config"
         string => "$(directory_names.fs_config_ssh)/sshd_config";
       "ssh_config"
@@ -368,6 +370,9 @@ bundle common file_names
         meta => { "template" };
       "template_serial_autologin"
         string => "common/serial_autologin.txt",
+        meta => { "template" };
+      "template_shorewall_zone"
+        string => "common/shorewall_zone_mustache.txt",
         meta => { "template" };
       "template_value"
         string => "common/value_mustache.txt",

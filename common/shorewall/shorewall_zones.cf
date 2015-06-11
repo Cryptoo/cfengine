@@ -1,0 +1,131 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/common/shorewall/bridge_zone_members.cf",
+              "cryptoo/common/shorewall/bridge_zone_names.cf",
+              "cryptoo/config/config.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/templates.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
+bundle agent shorewall_zones(root, role)
+
+{
+
+  vars:
+
+    any::
+
+      "basic_zones_ipv4"
+        slist => getvalues("file_groups.firewall_zones_ipv4[$(this.role)]");
+
+      "bridge_zones_ipv4"
+        slist => getvalues("file_groups.firewall_bridges_ipv4[$(this.role)]");
+
+    bridge_ipv4|no_bridge_ipv4::
+
+      "zone[$(basic_zones_ipv4)][name]"
+        string => '"name": "$(basic_zones_ipv4)"';
+
+      "zone[$(basic_zones_ipv4)][type]"
+        string => '"type": "ipv4"';
+
+      "zone_basic_ipv4_json[$(basic_zones_ipv4)]"
+        string => '{ $(zone[$(basic_zones_ipv4)][name]), $(zone[$(basic_zones_ipv4)][type]) }';
+
+      "zone_basic_ipv4_json_list"
+        slist => getvalues("zone_basic_ipv4_json");
+
+      "zone_basic_ipv4_json"
+        string => join(", ", "zone_basic_ipv4_json_list");
+
+    bridge_ipv4_done::
+
+      "bridge_zone_ipv4_zones"
+        slist => getvalues("bridge_zone_ipv4_zone");
+
+      "zone[$(bridge_zone_ipv4_zones)][name]"
+        string => '"name": "$(bridge_zone_ipv4_zones)"';
+
+      "zone[$(bridge_zone_ipv4_zones)][type]"
+        string => '"type": "ipv4"';
+
+      "zone_bridge_zone_ipv4_json[$(bridge_zone_ipv4_zones)]"
+        string => '{ $(zone[$(bridge_zone_ipv4_zones)][name]), $(zone[$(bridge_zone_ipv4_zones)][type]) }';
+
+      "zone_bridge_zone_ipv4_json_list"
+        slist => getvalues("zone_bridge_zone_ipv4_json");
+
+      "zone_bridge_zone_ipv4_json"
+        string => join(", ", "zone_bridge_zone_ipv4_json_list");
+
+      "bridge_zone_ipv4_names"
+        slist => getvalues("bridge_zone_ipv4_member");
+
+      "zone[$(bridge_zone_ipv4_names)][name]"
+        string => '"name": "$(bridge_zone_ipv4_names)"';
+
+      "zone[$(bridge_zone_ipv4_names)][type]"
+        string => '"type": "bport"';
+
+      "zone_bridge_ipv4_json[$(bridge_zone_ipv4_names)]"
+        string => '{ $(zone[$(bridge_zone_ipv4_names)][name]), $(zone[$(bridge_zone_ipv4_names)][type]) }';
+
+      "zone_bridge_ipv4_json_list"
+        slist => getvalues("zone_bridge_ipv4_json");
+
+      "zone_bridge_ipv4_json"
+        string => join(", ", "zone_bridge_ipv4_json_list");
+
+      "zone_json"
+        string => '{ "zones": [ $(zone_basic_ipv4_json), $(zone_bridge_zone_ipv4_json), $(zone_bridge_ipv4_json) ] }';
+
+    no_bridge_ipv4::
+
+      "zone_json"
+        string => '{ "zones": [ $(zone_basic_ipv4_json) ] }';
+
+  classes:
+
+    any::
+
+      "no_bridge_ipv4"
+        not => isgreaterthan(length("bridge_zones_ipv4"), "0");
+
+      "bridge_ipv4"
+        expression => isgreaterthan(length("bridge_zones_ipv4"), "0");
+
+  files:
+
+    no_bridge_ipv4|bridge_ipv4_done::
+
+      "$(root)$(file_names.shorewall_zones)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[shorewall_zone])",
+        template_method => "mustache",
+        template_data => parsejson("$(zone_json)");
+
+  methods:
+
+    bridge_ipv4::
+
+      "get list of bridge zone names"
+        usebundle => bridge_zone_names("$(bridge_zones_ipv4)"),
+        useresult => "bridge_zone_ipv4_zone",
+        handle => "have_ipv4_bridge_zone_names";
+
+      "get list of members for ipv4 bridge zones"
+        usebundle => bridge_zone_members("$(bridge_zones_ipv4)"),
+        useresult => "bridge_zone_ipv4_member",
+        depends_on => { "have_ipv4_bridge_zone_names" },
+        classes => default:if_ok("bridge_ipv4_done");
+
+}

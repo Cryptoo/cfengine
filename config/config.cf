@@ -1509,7 +1509,7 @@ bundle common config
         string => "\"/boot/dracut.initramfs.cpio\"";
 
       "kconfig_string_host[CONFIG_CMDLINE]"
-        string => "\"root=/dev/hydrogen/root net.ifnames=1 init=init=/usr/lib64/systemd/systemd\"";
+        string => "\"root=/dev/hydrogen/root net.ifnames=1 init=/usr/lib/systemd/systemd\"";
 
       "kconfig_string_host[CONFIG_DEFAULT_HOSTNAME]"
         string => "\"hydrogen\"";

@@ -5,6 +5,7 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
+              "cryptoo/common/shorewall/shorewall_zones.cf",
               "cryptoo/config/config.cf",
               "cryptoo/config/file_groups.cf",
               "cryptoo/config/file_names.cf"
@@ -15,16 +16,6 @@ body file control
 bundle agent shorewall(root, role)
 
 {
-
-  vars:
-
-    any::
-
-      "zones"
-        slist => {
-                    "@(file_groups.firewall_zones_ipv4[$(this.role)])",
-                    "@(file_groups.firewall_bridge_ipv4[$(this.role)])"
-                 };
 
   classes:
 
@@ -44,6 +35,13 @@ bundle agent shorewall(root, role)
         create => "false",
         edit_line => default:set_line_based("cryptoo:config.firewall[shorewall_conf]", "=", "\s+", ".*", "\s*#\s*"),
         classes => default:if_repaired("update_shorewall");
+
+  methods:
+
+    any::
+
+      "configure /etc/shorewall/zones"
+        usebundle => shorewall_zones("$(this.root)", "$(this.role)");
 
   commands:
 

@@ -1,0 +1,34 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/config.cf"
+            };
+
+}
+
+bundle agent bridge_zone_names(zone)
+
+{
+
+  vars:
+
+    any::
+
+      "firewall"
+        data => mergedata("cryptoo:config.firewall[zone]");
+
+      "name"
+        string => "$(firewall[$(zone)][name])";
+
+  reports:
+
+    any::
+
+      "$(name)"
+        bundle_return_value_index => "$(name)";
+
+}
