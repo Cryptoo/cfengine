@@ -68,7 +68,7 @@ bundle agent bootstrap_master
         perms => portage_open,
         create => "true";
 
-      "$(root)$(directory_groups.common_cryptoo_private)/."
+      "/$(directory_groups.common_cryptoo_private)/."
         perms => root,
         create => "true";
 
