@@ -1,0 +1,77 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/config.cf",
+              "cryptoo/config/site.cf"
+            };
+
+}
+
+bundle agent bridge_child_interfaces(zone, child)
+
+{
+
+  vars:
+
+    any::
+
+      "firewall"
+        data => mergedata("cryptoo:config.firewall");
+
+      "device"
+        string => "$(firewall[zone][$(zone)][device])";
+
+    !special_case::
+
+      "interface"
+        string => "$(device):$(device)$(child)";
+
+    special_case::
+
+      "site_config"
+        data => mergedata("cryptoo:site.config");
+
+    zone_wan_bridge&child_0::
+
+      "interface"
+        string => "$(device):$(site_config[host_network][wan_physical])",
+        classes => default:if_ok("done");
+
+    zone_lan_bridge&child_0::
+
+      "interface"
+        string => "$(device):$(site_config[host_network][lan_physical])",
+        classes => default:if_ok("done");
+
+  classes:
+
+    any::
+
+      "zone_$(zone)"
+        expression => "any";
+
+      "child_$(child)"
+        expression => "any";
+
+    zone_wan_bridge&child_0::
+
+      "special_case"
+        expression => "any";
+
+    zone_lan_bridge&child_0::
+
+      "special_case"
+        expression => "any";
+
+  reports:
+
+    !special_case|done::
+
+      "$(interface)"
+        bundle_return_value_index => "$(child)";
+
+}

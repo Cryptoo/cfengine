@@ -1,4 +1,4 @@
 fw             firewall
 {{#zones}}
-{{name}}       {{type}}
+{{zone_full}}       {{type}}
 {{/zones}}

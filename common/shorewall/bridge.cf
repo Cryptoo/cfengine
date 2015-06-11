@@ -1,0 +1,46 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/config.cf"
+            };
+
+}
+
+bundle agent bridge(zone)
+
+{
+
+  vars:
+
+    any::
+
+      "firewall"
+        data => mergedata("cryptoo:config.firewall");
+
+      "zone_name"
+        string => "$(firewall[zone][$(zone)][name])";
+
+      "device"
+        string => "$(firewall[zone][$(zone)][device])";
+
+      "type"
+        string => "$(firewall[zone][$(zone)][type])";
+
+      "options"
+        string => "$(firewall[interface_options][bridge])";
+
+      "bridge"
+        string => '{ "zone_full": "$(zone_name)", "zone": "$(zone_name)", "type": "$(type)", "interface": "$(device)", "interface_options": "$(options)" }';
+
+  reports:
+
+    any::
+
+      "$(bridge)"
+        bundle_return_value_index => "$(zone)";
+
+}

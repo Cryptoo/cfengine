@@ -5,8 +5,8 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
-              "cryptoo/common/shorewall/bridge_zone_members.cf",
-              "cryptoo/common/shorewall/bridge_zone_names.cf",
+              "cryptoo/common/shorewall/bridge.cf",
+              "cryptoo/common/shorewall/bridge_children.cf",
               "cryptoo/config/config.cf",
               "cryptoo/config/file_names.cf",
               "cryptoo/config/templates.cf",
@@ -24,15 +24,15 @@ bundle agent shorewall_zones(root, role)
     any::
 
       "basic_zones_ipv4"
-        slist => getvalues("file_groups.firewall_zones_ipv4[$(this.role)]");
+        slist => getvalues("file_groups.firewall_zones[$(this.role)]");
 
       "bridge_zones_ipv4"
-        slist => getvalues("file_groups.firewall_bridges_ipv4[$(this.role)]");
+        slist => getvalues("file_groups.firewall_bridges[$(this.role)]");
 
     bridge_ipv4|no_bridge_ipv4::
 
       "zone[$(basic_zones_ipv4)][name]"
-        string => '"name": "$(basic_zones_ipv4)"';
+        string => '"zone_full": "$(basic_zones_ipv4)"';
 
       "zone[$(basic_zones_ipv4)][type]"
         string => '"type": "ipv4"';
@@ -46,46 +46,22 @@ bundle agent shorewall_zones(root, role)
       "zone_basic_ipv4_json"
         string => join(", ", "zone_basic_ipv4_json_list");
 
-    bridge_ipv4_done::
+    bridge_children_done::
 
-      "bridge_zone_ipv4_zones"
-        slist => getvalues("bridge_zone_ipv4_zone");
+      "bridge_zones"
+        slist => getvalues("bridges");
 
-      "zone[$(bridge_zone_ipv4_zones)][name]"
-        string => '"name": "$(bridge_zone_ipv4_zones)"';
+      "bridge_zone_json"
+        string => join(", ", "bridge_zones");
 
-      "zone[$(bridge_zone_ipv4_zones)][type]"
-        string => '"type": "ipv4"';
+      "bridge_children"
+        slist => getvalues("bridge_zone_child");
 
-      "zone_bridge_zone_ipv4_json[$(bridge_zone_ipv4_zones)]"
-        string => '{ $(zone[$(bridge_zone_ipv4_zones)][name]), $(zone[$(bridge_zone_ipv4_zones)][type]) }';
-
-      "zone_bridge_zone_ipv4_json_list"
-        slist => getvalues("zone_bridge_zone_ipv4_json");
-
-      "zone_bridge_zone_ipv4_json"
-        string => join(", ", "zone_bridge_zone_ipv4_json_list");
-
-      "bridge_zone_ipv4_names"
-        slist => getvalues("bridge_zone_ipv4_member");
-
-      "zone[$(bridge_zone_ipv4_names)][name]"
-        string => '"name": "$(bridge_zone_ipv4_names)"';
-
-      "zone[$(bridge_zone_ipv4_names)][type]"
-        string => '"type": "bport"';
-
-      "zone_bridge_ipv4_json[$(bridge_zone_ipv4_names)]"
-        string => '{ $(zone[$(bridge_zone_ipv4_names)][name]), $(zone[$(bridge_zone_ipv4_names)][type]) }';
-
-      "zone_bridge_ipv4_json_list"
-        slist => getvalues("zone_bridge_ipv4_json");
-
-      "zone_bridge_ipv4_json"
-        string => join(", ", "zone_bridge_ipv4_json_list");
+      "bridge_children_json"
+        string => join(", ", "bridge_children");
 
       "zone_json"
-        string => '{ "zones": [ $(zone_basic_ipv4_json), $(zone_bridge_zone_ipv4_json), $(zone_bridge_ipv4_json) ] }';
+        string => '{ "zones": [ $(zone_basic_ipv4_json), $(bridge_zone_json), $(bridge_children_json) ] }';
 
     no_bridge_ipv4::
 
@@ -104,7 +80,7 @@ bundle agent shorewall_zones(root, role)
 
   files:
 
-    no_bridge_ipv4|bridge_ipv4_done::
+    no_bridge_ipv4|bridge_children_done::
 
       "$(root)$(file_names.shorewall_zones)"
         perms => system,
@@ -117,15 +93,15 @@ bundle agent shorewall_zones(root, role)
 
     bridge_ipv4::
 
-      "get list of bridge zone names"
-        usebundle => bridge_zone_names("$(bridge_zones_ipv4)"),
-        useresult => "bridge_zone_ipv4_zone",
-        handle => "have_ipv4_bridge_zone_names";
+      "get list of bridge zones"
+        usebundle => bridge("$(bridge_zones_ipv4)"),
+        useresult => "bridges",
+        handle => "have_bridges";
 
-      "get list of members for ipv4 bridge zones"
-        usebundle => bridge_zone_members("$(bridge_zones_ipv4)"),
-        useresult => "bridge_zone_ipv4_member",
-        depends_on => { "have_ipv4_bridge_zone_names" },
-        classes => default:if_ok("bridge_ipv4_done");
+      "get list of children for bridge zones"
+        usebundle => bridge_children("$(bridge_zones_ipv4)"),
+        useresult => "bridge_zone_child",
+        depends_on => { "have_bridges" },
+        classes => default:if_ok("bridge_children_done");
 
 }

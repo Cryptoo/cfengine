@@ -1,0 +1,61 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/common/shorewall/bridge_child_interfaces.cf",
+              "cryptoo/config/config.cf"
+            };
+
+}
+
+bundle agent bridge_children(zone)
+
+{
+
+  vars:
+
+    any::
+
+      "firewall"
+        data => mergedata("cryptoo:config.firewall");
+
+      "children"
+        slist => getvalues("firewall[zone][$(zone)][members]");
+
+      "zone_name"
+        string => "$(firewall[zone][$(zone)][name])";
+
+      "prefix"
+        string => "$(firewall[zone][$(zone)][prefix])";
+
+      "options"
+        string => "$(firewall[interface_options][member])";
+
+    have_child_interfaces::
+
+      "bridge_children"
+        slist => maplist('{ "zone_full": "$(prefix)$(this):$(zone_name)", "zone": "$(prefix)$(this)", "type": "bport", "interface": "$(child_interfaces[$(this)])", "interface_options": "$(options)" }', @(children) );
+
+      "json"
+        string => join(", ", "bridge_children");
+
+  methods:
+
+    any::
+
+      "get the interface names for children of this bridge"
+        usebundle => bridge_child_interfaces("$(zone)", "$(children)"),
+        useresult => "child_interfaces",
+        classes => default:if_ok("have_child_interfaces");
+
+  reports:
+
+    have_child_interfaces::
+
+      "$(json)"
+        bundle_return_value_index => "$(zone)_json";
+
+}

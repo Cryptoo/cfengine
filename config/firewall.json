@@ -5,39 +5,57 @@
                       "IP_FORWARDING": "On",
                       "SAVE_IPSETS": "Yes"
             },
+    "interface_options": {
+              "bridge": "dhcp,nosmurfs,bridge,tcpflags,optional",
+              "member": ""
+            },
     "zone": {
               "wan_bridge": {
                       "name": "brwan",
+                      "device": "wan",
+                      "type": "ipv4",
                       "prefix": "w",
                       "members": [ "0", "10" ]
                      },
               "ispdmz_bridge": {
                       "name": "brimz",
+                      "device": "ispdmz",
+                      "type": "ipv4",
                       "prefix": "d",
                       "members": [ "10", "11", "13", "14", "17", "18", "19" ]
                      },
               "vpndmz_bridge": {
                       "name": "brvmz",
+                      "device": "vpndmz",
+                      "type": "ipv4",
                       "prefix": "u",
                       "members": [ "11", "12", "16", "17", "18", "19", "20" ]
                      },
               "tor_bridge": {
                       "name": "brtor",
+                      "device": "tor",
+                      "type": "ipv4",
                       "prefix": "t",
                       "members": [ "12", "14" ]
                      },
               "i2p_bridge": {
                       "name": "bri2p",
+                      "device": "i2p",
+                      "type": "ipv4",
                       "prefix": "i",
                       "members": [ "12", "15" ]
                      },
               "lan_bridge": {
                       "name": "brlan",
+                      "device": "lan",
+                      "type": "ipv4",
                       "prefix": "l",
                       "members": [ "0", "1", "12", "13"]
                      },
               "lan_bridge_vpn": {
                       "name": "brlan",
+                      "device": "lan",
+                      "type": "ipv4",
                       "prefix": "l",
                       "members": [ "0", "1", "2", "3", "4", "13" ]
                      },

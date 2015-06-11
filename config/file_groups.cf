@@ -96,7 +96,7 @@ bundle common file_groups
                     "vixie-cron.service"
                  };
 
-      "firewall_zones_ipv4[common]"
+      "firewall_zones[common]"
         slist => {
                     "net",
                     "idmz",
@@ -108,7 +108,7 @@ bundle common file_groups
                     "lan",
                  };
 
-      "firewall_bridges_ipv4[common]"
+      "firewall_bridges[common]"
         slist => {
                  };
 
@@ -179,14 +179,14 @@ bundle common file_groups
                     "@(systemd_enabled[common])"
                  };
 
-      "firewall_zones_ipv4[undefined]"
+      "firewall_zones[undefined]"
         slist => {
-                    "@(firewall_zones_ipv4[common])"
+                    "@(firewall_zones[common])"
                  };
 
-      "firewall_bridges_ipv4[undefined]"
+      "firewall_bridges[undefined]"
         slist => {
-                    "@(firewall_bridges_ipv4[common])"
+                    "@(firewall_bridges[common])"
                  };
 
 ################################################################################
@@ -256,14 +256,14 @@ bundle common file_groups
                     "@(systemd_enabled[common])"
                  };
 
-      "firewall_zones_ipv4[server_guest]"
+      "firewall_zones[server_guest]"
         slist => {
-                    "@(firewall_zones_ipv4[common])"
+                    "@(firewall_zones[common])"
                  };
 
-      "firewall_bridges_ipv4[server_guest]"
+      "firewall_bridges[server_guest]"
         slist => {
-                    "@(firewall_bridges_ipv4[common])"
+                    "@(firewall_bridges[common])"
                  };
 
 ################################################################################
@@ -339,14 +339,14 @@ bundle common file_groups
                     "@(systemd_enabled[common])"
                  };
 
-      "firewall_zones_ipv4[desktop_guest]"
+      "firewall_zones[desktop_guest]"
         slist => {
-                    "@(firewall_zones_ipv4[common])"
+                    "@(firewall_zones[common])"
                  };
 
-      "firewall_bridges_ipv4[desktop_guest]"
+      "firewall_bridges[desktop_guest]"
         slist => {
-                    "@(firewall_bridges_ipv4[common])"
+                    "@(firewall_bridges[common])"
                  };
 
 ################################################################################
@@ -446,14 +446,14 @@ bundle common file_groups
                     "@(systemd_enabled[server_guest])"
                  };
 
-      "firewall_zones_ipv4[chroot_server]"
+      "firewall_zones[chroot_server]"
         slist => {
-                    "@(firewall_zones_ipv4[server_guest])"
+                    "@(firewall_zones[server_guest])"
                  };
 
-      "firewall_bridges_ipv4[chroot_server]"
+      "firewall_bridges[chroot_server]"
         slist => {
-                    "@(firewall_bridges_ipv4[server_guest])"
+                    "@(firewall_bridges[server_guest])"
                  };
 
 ################################################################################
@@ -528,14 +528,14 @@ bundle common file_groups
                     "@(systemd_enabled[desktop_guest])"
                  };
 
-      "firewall_zones_ipv4[chroot_desktop]"
+      "firewall_zones[chroot_desktop]"
         slist => {
-                    "@(firewall_zones_ipv4[desktop_guest])"
+                    "@(firewall_zones[desktop_guest])"
                  };
 
-      "firewall_bridges_ipv4[chroot_desktop]"
+      "firewall_bridges[chroot_desktop]"
         slist => {
-                    "@(firewall_bridges_ipv4[desktop_guest])"
+                    "@(firewall_bridges[desktop_guest])"
                  };
 
 ################################################################################
@@ -607,15 +607,15 @@ bundle common file_groups
                     "@(systemd_enabled[common])"
                  };
 
-      "firewall_zones_ipv4[host]"
+      "firewall_zones[host]"
         slist => {
-                    "@(firewall_zones_ipv4[common])",
+                    "@(firewall_zones[common])",
                     "wan"
                  };
 
-      "firewall_bridges_ipv4[host]"
+      "firewall_bridges[host]"
         slist => {
-                    "@(firewall_bridges_ipv4[common])",
+                    "@(firewall_bridges[common])",
                     "wan_bridge",
                     "ispdmz_bridge",
                     "vpndmz_bridge",
@@ -694,14 +694,14 @@ bundle common file_groups
                     "gpm.service"
                  };
 
-      "firewall_zones_ipv4[desktop_host]"
+      "firewall_zones[desktop_host]"
         slist => {
-                    "@(firewall_zones_ipv4[common])"
+                    "@(firewall_zones[common])"
                  };
 
-      "firewall_bridges_ipv4[desktop_host]"
+      "firewall_bridges[desktop_host]"
         slist => {
-                    "@(firewall_bridges_ipv4[common])"
+                    "@(firewall_bridges[common])"
                  };
 
 ################################################################################
@@ -773,14 +773,14 @@ bundle common file_groups
                     "@(systemd_enabled[host])"
                  };
 
-      "firewall_zones_ipv4[master]"
+      "firewall_zones[master]"
         slist => {
-                    "@(firewall_zones_ipv4[host])"
+                    "@(firewall_zones[host])"
                  };
 
-      "firewall_bridges_ipv4[master]"
+      "firewall_bridges[master]"
         slist => {
-                    "@(firewall_bridges_ipv4[host])"
+                    "@(firewall_bridges[host])"
                  };
 
 ################################################################################
@@ -853,14 +853,14 @@ bundle common file_groups
                     "noip.service"
                  };
 
-      "firewall_zones_ipv4[firewall_external]"
+      "firewall_zones[firewall_external]"
         slist => {
-                    "@(firewall_zones_ipv4[server_guest])"
+                    "@(firewall_zones[server_guest])"
                  };
 
-      "firewall_bridges_ipv4[firewall_external]"
+      "firewall_bridges[firewall_external]"
         slist => {
-                    "@(firewall_bridges_ipv4[server_guest])"
+                    "@(firewall_bridges[server_guest])"
                  };
 
 ################################################################################
@@ -932,14 +932,14 @@ bundle common file_groups
                     "@(systemd_enabled[server_guest])"
                  };
 
-      "firewall_zones_ipv4[tor]"
+      "firewall_zones[tor]"
         slist => {
-                    "@(firewall_zones_ipv4[server_guest])"
+                    "@(firewall_zones[server_guest])"
                  };
 
-      "firewall_bridges_ipv4[tor]"
+      "firewall_bridges[tor]"
         slist => {
-                    "@(firewall_bridges_ipv4[server_guest])"
+                    "@(firewall_bridges[server_guest])"
                  };
 
 ################################################################################
@@ -1012,15 +1012,15 @@ bundle common file_groups
                     "openvpn@primary.service"
                  };
 
-      "firewall_zones_ipv4[vpn_primary]"
+      "firewall_zones[vpn_primary]"
         slist => {
-                    "@(firewall_zones_ipv4[server_guest])",
+                    "@(firewall_zones[server_guest])",
                     "vpn"
                  };
 
-      "firewall_bridges_ipv4[vpn_primary]"
+      "firewall_bridges[vpn_primary]"
         slist => {
-                    "@(firewall_bridges_ipv4[server_guest])"
+                    "@(firewall_bridges[server_guest])"
                  };
 
 ################################################################################
@@ -1093,14 +1093,14 @@ bundle common file_groups
                     "dnsmasq"
                  };
 
-      "firewall_zones_ipv4[vpn_primary]"
+      "firewall_zones[vpn_primary]"
         slist => {
-                    "@(firewall_zones_ipv4[server_guest])"
+                    "@(firewall_zones[server_guest])"
                  };
 
-      "firewall_bridges_ipv4[vpn_primary]"
+      "firewall_bridges[vpn_primary]"
         slist => {
-                    "@(firewall_bridges_ipv4[server_guest])"
+                    "@(firewall_bridges[server_guest])"
                  };
 
 ################################################################################
@@ -1175,14 +1175,14 @@ bundle common file_groups
                     "postfix.service"
                  };
 
-      "firewall_zones_ipv4[mail_server]"
+      "firewall_zones[mail_server]"
         slist => {
-                    "@(firewall_zones_ipv4[server_guest])"
+                    "@(firewall_zones[server_guest])"
                  };
 
-      "firewall_bridges_ipv4[mail_server]"
+      "firewall_bridges[mail_server]"
         slist => {
-                    "@(firewall_bridges_ipv4[server_guest])"
+                    "@(firewall_bridges[server_guest])"
                  };
 
 ################################################################################
@@ -1252,14 +1252,14 @@ bundle common file_groups
                     "@(systemd_enabled[server_guest])"
                  };
 
-      "firewall_zones_ipv4[firewall_internal]"
+      "firewall_zones[firewall_internal]"
         slist => {
-                    "@(firewall_zones_ipv4[server_guest])"
+                    "@(firewall_zones[server_guest])"
                  };
 
-      "firewall_bridges_ipv4[firewall_internal]"
+      "firewall_bridges[firewall_internal]"
         slist => {
-                    "@(firewall_bridges_ipv4[server_guest])"
+                    "@(firewall_bridges[server_guest])"
                  };
 
 ################################################################################
@@ -1331,14 +1331,14 @@ bundle common file_groups
                     "@(systemd_enabled[server_guest])"
                  };
 
-      "firewall_zones_ipv4[vpn_server]"
+      "firewall_zones[vpn_server]"
         slist => {
-                    "@(firewall_zones_ipv4[server_guest])"
+                    "@(firewall_zones[server_guest])"
                  };
 
-      "firewall_bridges_ipv4[vpn_server]"
+      "firewall_bridges[vpn_server]"
         slist => {
-                    "@(firewall_bridges_ipv4[server_guest])",
+                    "@(firewall_bridges[server_guest])",
                     "lan_bridge_vpn"
                  };
 
@@ -1410,14 +1410,14 @@ bundle common file_groups
                     "@(systemd_enabled[desktop_guest])"
                  };
 
-      "firewall_zones_ipv4[irc_client]"
+      "firewall_zones[irc_client]"
         slist => {
-                    "@(firewall_zones_ipv4[desktop_guest])"
+                    "@(firewall_zones[desktop_guest])"
                  };
 
-      "firewall_bridges_ipv4[irc_client]"
+      "firewall_bridges[irc_client]"
         slist => {
-                    "@(firewall_bridges_ipv4[desktop_guest])"
+                    "@(firewall_bridges[desktop_guest])"
                  };
 
 ################################################################################
@@ -1489,14 +1489,14 @@ bundle common file_groups
                     "@(systemd_enabled[desktop_guest])"
                  };
 
-      "firewall_zones_ipv4[mail_client]"
+      "firewall_zones[mail_client]"
         slist => {
-                    "@(firewall_zones_ipv4[desktop_guest])"
+                    "@(firewall_zones[desktop_guest])"
                  };
 
-      "firewall_bridges_ipv4[mail_client]"
+      "firewall_bridges[mail_client]"
         slist => {
-                    "@(firewall_bridges_ipv4[desktop_guest])"
+                    "@(firewall_bridges[desktop_guest])"
                  };
 
 ################################################################################
@@ -1568,14 +1568,14 @@ bundle common file_groups
                     "@(systemd_enabled[desktop_guest])"
                  };
 
-      "firewall_zones_ipv4[web]"
+      "firewall_zones[web]"
         slist => {
-                    "@(firewall_zones_ipv4[desktop_guest])"
+                    "@(firewall_zones[desktop_guest])"
                  };
 
-      "firewall_bridges_ipv4[web]"
+      "firewall_bridges[web]"
         slist => {
-                    "@(firewall_bridges_ipv4[desktop_guest])"
+                    "@(firewall_bridges[desktop_guest])"
                  };
 
 ################################################################################
@@ -1647,14 +1647,14 @@ bundle common file_groups
                     "@(systemd_enabled[desktop_guest])"
                  };
 
-      "firewall_zones_ipv4[im]"
+      "firewall_zones[im]"
         slist => {
-                    "@(firewall_zones_ipv4[desktop_guest])"
+                    "@(firewall_zones[desktop_guest])"
                  };
 
-      "firewall_bridges_ipv4[im]"
+      "firewall_bridges[im]"
         slist => {
-                    "@(firewall_bridges_ipv4[desktop_guest])"
+                    "@(firewall_bridges[desktop_guest])"
                  };
 
 }
