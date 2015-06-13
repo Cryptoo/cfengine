@@ -915,13 +915,6 @@ bundle agent networkd(root, role)
 
     networkd_master::
 
-      "$(this.root)$(file_names.lantap_netdev)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[ini])",
-        template_method => "mustache",
-        template_data => parsejson($(netdev_veth[lantap]));
-
       "$(this.root)$(file_names.wan_bridge_network)"
         perms => system,
         create => "true",
@@ -1090,13 +1083,6 @@ bundle agent networkd(root, role)
 
     networkd_vpn_server::
 
-      "$(this.root)$(file_names.lantap_netdev)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[ini])",
-        template_method => "mustache",
-        template_data => parsejson($(netdev_veth[lantap]));
-
       "$(this.root)$(file_names.openvpn1_netdev)"
         perms => system,
         create => "true",
@@ -1196,9 +1182,8 @@ bundle agent networkd(root, role)
         usebundle => netdev_bridge("$(this.root)", "$(bridge_list)"),
         handle => "have_bridges";
 
-      "construct json for veth devices"
-        usebundle => netdev_veth("$(veth_list)", "$(this.role_number)"),
-        useresult => "netdev_veth",
+      "manage .netdev files for veth devices"
+        usebundle => netdev_veth("$(this.root)", "$(veth_list)", "$(this.role_number)"),
         depends_on => { "have_bridges" },
         handle => "have_veth";
 

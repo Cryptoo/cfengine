@@ -164,8 +164,6 @@ bundle common file_names
         string => "$(directory_names.fs_config_ssh)/sshd_config";
       "ssh_config"
         string => "$(directory_names.fs_config_ssh)/ssh_config";
-      "lantap_netdev"
-        string => "$(directory_names.fs_config_network)/lantap.netdev";
       "openvpn1_netdev"
         string => "$(directory_names.fs_config_network)/openvpn1.netdev";
       "openvpn2_netdev"
