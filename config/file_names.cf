@@ -164,12 +164,6 @@ bundle common file_names
         string => "$(directory_names.fs_config_ssh)/sshd_config";
       "ssh_config"
         string => "$(directory_names.fs_config_ssh)/ssh_config";
-      "i2p_netdev"
-        string => "$(directory_names.fs_config_network)/i2p.netdev";
-      "ispdmz_netdev"
-        string => "$(directory_names.fs_config_network)/ispdmz.netdev";
-      "lan_netdev"
-        string => "$(directory_names.fs_config_network)/lan.netdev";
       "lantap_netdev"
         string => "$(directory_names.fs_config_network)/lantap.netdev";
       "openvpn1_netdev"
@@ -180,12 +174,6 @@ bundle common file_names
         string => "$(directory_names.fs_config_network)/openvpn3.netdev";
       "openvpn4_netdev"
         string => "$(directory_names.fs_config_network)/openvpn4.netdev";
-      "tor_netdev"
-        string => "$(directory_names.fs_config_network)/tor.netdev";
-      "vpndmz_netdev"
-        string => "$(directory_names.fs_config_network)/vpndmz.netdev";
-      "wan_netdev"
-        string => "$(directory_names.fs_config_network)/wan.netdev";
       "i2p_network"
         string => "$(directory_names.fs_config_network)/i2p.network";
       "i2p_bridge_network"

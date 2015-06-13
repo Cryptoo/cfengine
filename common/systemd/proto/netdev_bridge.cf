@@ -4,9 +4,15 @@ body file control
 
   namespace => "cryptoo";
 
+  inputs => {
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/templates.cf",
+              "cryptoo/util/perms.cf"
+            };
+
 }
 
-bundle agent netdev_bridge(name)
+bundle agent netdev_bridge(root, name)
 
 {
 
@@ -30,11 +36,22 @@ bundle agent netdev_bridge(name)
           }
         ';
 
-  reports:
+  classes:
 
     any::
 
-      "$(netdev_$(this.name))"
-        bundle_return_value_index => "$(this.name)";
+      "skip"
+        expression => strcmp("$(this.name)", "none");
+
+  files:
+
+    !skip::
+
+      "$(this.root)$(directory_names.fs_config_network)/$(this.name).netdev"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson("$(netdev_$(this.name))");
 
 }

@@ -915,54 +915,12 @@ bundle agent networkd(root, role)
 
     networkd_master::
 
-      "$(this.root)$(file_names.i2p_netdev)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[ini])",
-        template_method => "mustache",
-        template_data => parsejson($(netdev_bridge[i2p]));
-
-      "$(this.root)$(file_names.ispdmz_netdev)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[ini])",
-        template_method => "mustache",
-        template_data => parsejson($(netdev_bridge[ispdmz]));
-
-      "$(this.root)$(file_names.lan_netdev)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[ini])",
-        template_method => "mustache",
-        template_data => parsejson($(netdev_bridge[lan]));
-
       "$(this.root)$(file_names.lantap_netdev)"
         perms => system,
         create => "true",
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
         template_data => parsejson($(netdev_veth[lantap]));
-
-      "$(this.root)$(file_names.tor_netdev)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[ini])",
-        template_method => "mustache",
-        template_data => parsejson($(netdev_bridge[tor]));
-
-      "$(this.root)$(file_names.vpndmz_netdev)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[ini])",
-        template_method => "mustache",
-        template_data => parsejson($(netdev_bridge[vpndmz]));
-
-      "$(this.root)$(file_names.wan_netdev)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[ini])",
-        template_method => "mustache",
-        template_data => parsejson($(netdev_bridge[wan]));
 
       "$(this.root)$(file_names.wan_bridge_network)"
         perms => system,
@@ -1132,13 +1090,6 @@ bundle agent networkd(root, role)
 
     networkd_vpn_server::
 
-      "$(this.root)$(file_names.lan_netdev)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[ini])",
-        template_method => "mustache",
-        template_data => parsejson($(netdev_bridge[lan]));
-
       "$(this.root)$(file_names.lantap_netdev)"
         perms => system,
         create => "true",
@@ -1241,9 +1192,8 @@ bundle agent networkd(root, role)
 
     any::
 
-      "construct json for bridge devices"
-        usebundle => netdev_bridge("$(bridge_list)"),
-        useresult => "netdev_bridge",
+      "manage .netdev files for bridge devices"
+        usebundle => netdev_bridge("$(this.root)", "$(bridge_list)"),
         handle => "have_bridges";
 
       "construct json for veth devices"
