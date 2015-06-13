@@ -1,0 +1,46 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+}
+
+bundle agent netdev_veth(name, peer)
+
+{
+
+  vars:
+
+    any::
+
+      "netdev_$(this.name)"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "NetDev",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "$(this.name)" },
+                       { "LHS": "Kind", "RHS": "veth" }
+                     ]
+                 },
+                 { "section": "Peer",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "lan$(this.peer)" },
+                     ]
+                 }
+               ]
+          }
+        ';
+
+  reports:
+
+    any::
+
+      "$(netdev_$(this.name))"
+        bundle_return_value_index => "$(this.name)";
+
+}

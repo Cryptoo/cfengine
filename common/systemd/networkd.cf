@@ -29,6 +29,9 @@ bundle agent networkd(root, role)
       "bridge_list"
         slist => getvalues("protos[netdev][bridges]");
 
+      "veth_list"
+        slist => getvalues("protos[netdev][veth]");
+
       "role_number"
         string => "$(config.defined_numbers[$(this.role)])";
 
@@ -52,28 +55,6 @@ bundle agent networkd(root, role)
 
       "lan_subnet"
         string => "$(network.subnet_config[lan])";
-
-      "netdev_lantap"
-        string => '
-          {
-            "sections":
-               [
-                 { "section": "NetDev",
-                   "values":
-                     [
-                       { "LHS": "Name", "RHS": "lantap" },
-                       { "LHS": "Kind", "RHS": "veth" }
-                     ]
-                 },
-                 { "section": "Peer",
-                   "values":
-                     [
-                       { "LHS": "Name", "RHS": "lan$(this.role_number)" },
-                     ]
-                 }
-               ]
-          }
-        ';
 
       "netdev_openvpn1"
         string => '
@@ -1048,7 +1029,7 @@ bundle agent networkd(root, role)
         create => "true",
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
-        template_data => parsejson($(this.netdev_lantap));
+        template_data => parsejson($(netdev_veth[lantap]));
 
       "$(this.root)$(file_names.tor_netdev)"
         perms => system,
@@ -1251,7 +1232,7 @@ bundle agent networkd(root, role)
         create => "true",
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
-        template_data => parsejson($(this.netdev_lantap));
+        template_data => parsejson($(netdev_veth[lantap]));
 
       "$(this.root)$(file_names.openvpn1_netdev)"
         perms => system,
@@ -1351,6 +1332,12 @@ bundle agent networkd(root, role)
       "construct json for bridge devices"
         usebundle => netdev_bridge("$(bridge_list)"),
         useresult => "netdev_bridge",
+        handle => "have_bridges";
+
+      "construct json for veth devices"
+        usebundle => netdev_veth("$(veth_list)", "$(this.role_number)"),
+        useresult => "netdev_veth",
+        depends_on => { "have_bridges" },
         classes => default:if_ok("have_devices");
 
 }
