@@ -1,0 +1,40 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+}
+
+bundle agent netdev_bridge(name)
+
+{
+
+  vars:
+
+    any::
+
+      "netdev_$(this.name)"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "NetDev",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "$(this.name)" },
+                       { "LHS": "Kind", "RHS": "bridge" }
+                     ]
+                 }
+               ]
+          }
+        ';
+
+  reports:
+
+    any::
+
+      "$(netdev_$(this.name))"
+        bundle_return_value_index => "$(this.name)";
+
+}

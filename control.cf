@@ -29,6 +29,9 @@ bundle common control
                    "cryptoo:cryptoo"
                  };
 
+      "systemd_proto_inputs"
+        slist => lsdir("$(this.promise_dirname)/common/systemd/proto", ".*\.cf", "true");
+
       "local_inputs"
         slist => lsdir("$(this.promise_dirname)/local/promises", ".*\.cf", "true");
 

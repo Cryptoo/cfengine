@@ -1,0 +1,25 @@
+{
+    "netdev":
+        {
+            "bridges":
+                [
+                      "i2p",
+                      "ispdmz",
+                      "lan",
+                      "tor",
+                      "vpndmz",
+                      "wan"
+                ],
+            "veth":
+                [
+                      "lantap"
+                ],
+            "openvpn_tap":
+                [
+                      "openvpn1",
+                      "openvpn2",
+                      "openvpn3",
+                      "openvpn4"
+                ]
+        }
+}

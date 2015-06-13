@@ -9,7 +9,8 @@ body file control
               "cryptoo/config/file_names.cf",
               "cryptoo/config/network.cf",
               "cryptoo/config/templates.cf",
-              "cryptoo/util/perms.cf"
+              "cryptoo/util/perms.cf",
+              "@(cryptoo:control.systemd_proto_inputs)"
             };
 
 }
@@ -22,8 +23,14 @@ bundle agent networkd(root, role)
 
     any::
 
+      "protos"
+        data => readjson("$(sys.inputdir)/cryptoo/config/networkd.json", 100K);
+
+      "bridge_list"
+        slist => getvalues("protos[netdev][bridges]");
+
       "role_number"
-         string => "$(config.defined_numbers[$(this.role)])";
+        string => "$(config.defined_numbers[$(this.role)])";
 
       "ispdmz_subnet"
         string => "$(network.subnet_config[ispdmz])";
@@ -45,54 +52,6 @@ bundle agent networkd(root, role)
 
       "lan_subnet"
         string => "$(network.subnet_config[lan])";
-
-      "netdev_i2p"
-        string => '
-          {
-            "sections":
-               [
-                 { "section": "NetDev",
-                   "values":
-                     [
-                       { "LHS": "Name", "RHS": "i2p" },
-                       { "LHS": "Kind", "RHS": "bridge" }
-                     ]
-                 }
-               ]
-          }
-        ';
-
-      "netdev_ispdmz"
-        string => '
-          {
-            "sections":
-               [
-                 { "section": "NetDev",
-                   "values":
-                     [
-                       { "LHS": "Name", "RHS": "ispdmz" },
-                       { "LHS": "Kind", "RHS": "bridge" }
-                     ]
-                 }
-               ]
-          }
-        ';
-
-      "netdev_lan"
-        string => '
-          {
-            "sections":
-               [
-                 { "section": "NetDev",
-                   "values":
-                     [
-                       { "LHS": "Name", "RHS": "lan" },
-                       { "LHS": "Kind", "RHS": "bridge" }
-                     ]
-                 }
-               ]
-          }
-        ';
 
       "netdev_lantap"
         string => '
@@ -202,54 +161,6 @@ bundle agent networkd(root, role)
                      [
                        { "LHS": "User", "RHS": "openvpn" },
                        { "LHS": "Group", "RHS": "openvpn" },
-                     ]
-                 }
-               ]
-          }
-        ';
-
-      "netdev_tor"
-        string => '
-          {
-            "sections":
-               [
-                 { "section": "NetDev",
-                   "values":
-                     [
-                       { "LHS": "Name", "RHS": "tor" },
-                       { "LHS": "Kind", "RHS": "bridge" }
-                     ]
-                 }
-               ]
-          }
-        ';
-
-      "netdev_vpndmz"
-        string => '
-          {
-            "sections":
-               [
-                 { "section": "NetDev",
-                   "values":
-                     [
-                       { "LHS": "Name", "RHS": "vpndmz" },
-                       { "LHS": "Kind", "RHS": "bridge" }
-                     ]
-                 }
-               ]
-          }
-        ';
-
-      "netdev_wan"
-        string => '
-          {
-            "sections":
-               [
-                 { "section": "NetDev",
-                   "values":
-                     [
-                       { "LHS": "Name", "RHS": "wan" },
-                       { "LHS": "Kind", "RHS": "bridge" }
                      ]
                  }
                ]
@@ -1102,7 +1013,7 @@ bundle agent networkd(root, role)
 
   classes:
 
-    any::
+    have_devices::
 
       "networkd_$(this.role)"
         expression => "any";
@@ -1116,21 +1027,21 @@ bundle agent networkd(root, role)
         create => "true",
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
-        template_data => parsejson($(this.netdev_i2p));
+        template_data => parsejson($(netdev_bridge[i2p]));
 
       "$(this.root)$(file_names.ispdmz_netdev)"
         perms => system,
         create => "true",
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
-        template_data => parsejson($(this.netdev_ispdmz));
+        template_data => parsejson($(netdev_bridge[ispdmz]));
 
       "$(this.root)$(file_names.lan_netdev)"
         perms => system,
         create => "true",
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
-        template_data => parsejson($(this.netdev_lan));
+        template_data => parsejson($(netdev_bridge[lan]));
 
       "$(this.root)$(file_names.lantap_netdev)"
         perms => system,
@@ -1144,21 +1055,21 @@ bundle agent networkd(root, role)
         create => "true",
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
-        template_data => parsejson($(this.netdev_tor));
+        template_data => parsejson($(netdev_bridge[tor]));
 
       "$(this.root)$(file_names.vpndmz_netdev)"
         perms => system,
         create => "true",
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
-        template_data => parsejson($(this.netdev_vpndmz));
+        template_data => parsejson($(netdev_bridge[vpndmz]));
 
       "$(this.root)$(file_names.wan_netdev)"
         perms => system,
         create => "true",
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
-        template_data => parsejson($(this.netdev_wan));
+        template_data => parsejson($(netdev_bridge[wan]));
 
       "$(this.root)$(file_names.wan_bridge_network)"
         perms => system,
@@ -1333,7 +1244,7 @@ bundle agent networkd(root, role)
         create => "true",
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
-        template_data => parsejson($(this.netdev_lan));
+        template_data => parsejson($(netdev_bridge[lan]));
 
       "$(this.root)$(file_names.lantap_netdev)"
         perms => system,
@@ -1432,5 +1343,14 @@ bundle agent networkd(root, role)
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
         template_data => parsejson($(this.network_lan_openvpn4));
+
+  methods:
+
+    any::
+
+      "construct json for bridge devices"
+        usebundle => netdev_bridge("$(bridge_list)"),
+        useresult => "netdev_bridge",
+        classes => default:if_ok("have_devices");
 
 }
