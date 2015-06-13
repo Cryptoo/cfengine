@@ -164,14 +164,6 @@ bundle common file_names
         string => "$(directory_names.fs_config_ssh)/sshd_config";
       "ssh_config"
         string => "$(directory_names.fs_config_ssh)/ssh_config";
-      "openvpn1_netdev"
-        string => "$(directory_names.fs_config_network)/openvpn1.netdev";
-      "openvpn2_netdev"
-        string => "$(directory_names.fs_config_network)/openvpn2.netdev";
-      "openvpn3_netdev"
-        string => "$(directory_names.fs_config_network)/openvpn3.netdev";
-      "openvpn4_netdev"
-        string => "$(directory_names.fs_config_network)/openvpn4.netdev";
       "i2p_network"
         string => "$(directory_names.fs_config_network)/i2p.network";
       "i2p_bridge_network"

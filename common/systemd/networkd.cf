@@ -1083,34 +1083,6 @@ bundle agent networkd(root, role)
 
     networkd_vpn_server::
 
-      "$(this.root)$(file_names.openvpn1_netdev)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[ini])",
-        template_method => "mustache",
-        template_data => parsejson($(netdev_tap[openvpn1]));
-
-      "$(this.root)$(file_names.openvpn2_netdev)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[ini])",
-        template_method => "mustache",
-        template_data => parsejson($(netdev_tap[openvpn2]));
-
-      "$(this.root)$(file_names.openvpn3_netdev)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[ini])",
-        template_method => "mustache",
-        template_data => parsejson($(netdev_tap[openvpn3]));
-
-      "$(this.root)$(file_names.openvpn4_netdev)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[ini])",
-        template_method => "mustache",
-        template_data => parsejson($(netdev_tap[openvpn4]));
-
       "$(this.root)$(file_names.ispdmz_network)"
         perms => system,
         create => "true",
@@ -1187,9 +1159,8 @@ bundle agent networkd(root, role)
         depends_on => { "have_bridges" },
         handle => "have_veth";
 
-      "construct json for tap devices"
-        usebundle => netdev_tap("$(tap_list)", "openvpn", "openvpn"),
-        useresult => "netdev_tap",
+      "manage .netdev files for tap devices"
+        usebundle => netdev_tap("$(this.root)", "$(tap_list)", "openvpn", "openvpn"),
         depends_on => { "have_veth" },
         classes => default:if_ok("have_devices");
 
