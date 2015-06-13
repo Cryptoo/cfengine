@@ -6,6 +6,7 @@ body file control
 
   inputs => {
               "cryptoo/config/config.cf",
+              "cryptoo/config/file_groups.cf",
               "cryptoo/config/file_names.cf",
               "cryptoo/config/network.cf",
               "cryptoo/config/templates.cf",
@@ -23,17 +24,17 @@ bundle agent networkd(root, role)
 
     any::
 
-      "protos"
-        data => readjson("$(sys.inputdir)/cryptoo/config/networkd.json", 100K);
+      "$(this.role)_config"
+        data => parsejson("$(file_groups.network[$(this.role)])");
 
       "bridge_list"
-        slist => getvalues("protos[netdev][bridges]");
+        slist => getvalues("$(this.role)_config[devices][bridge]");
 
       "veth_list"
-        slist => getvalues("protos[netdev][veth]");
+        slist => getvalues("$(this.role)_config[devices][veth]");
 
       "tap_list"
-        slist => getvalues("protos[netdev][tap]");
+        slist => getvalues("$(this.role)_config[devices][tap]");
 
       "role_number"
         string => "$(config.defined_numbers[$(this.role)])";
@@ -59,7 +60,29 @@ bundle agent networkd(root, role)
       "lan_subnet"
         string => "$(network.subnet_config[lan])";
 
-      "network_wan_physical"
+      "network_wan_bridge"
+          string => '
+            {
+              "sections":
+                 [
+                   { "section": "Match",
+                     "values":
+                       [
+                         { "LHS": "Name", "RHS": "wan" }
+                       ]
+                   },
+                   { "section": "Network",
+                     "values":
+                       [
+                         { "LHS": "DHCP", "RHS": "false" },
+                         { "LHS": "LinkLocalAddressing", "RHS": "No"}
+                       ]
+                   }
+                 ]
+            }
+          ';
+
+        "network_wan_physical"
         string => '
           {
             "sections":

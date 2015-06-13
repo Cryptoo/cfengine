@@ -53,6 +53,7 @@ bundle common file_groups
         slist => {
                     "basic_programs",
                     "simplegit",
+                    "systemd",
                     "virtualization"
                  };
 
@@ -111,6 +112,27 @@ bundle common file_groups
       "firewall_bridges[common]"
         slist => {
                  };
+
+      "network[common]"
+        string => '
+          {
+            "devices":
+               {
+                 "bridge":
+                   [
+                     "none"
+                   ],
+                 "veth":
+                   [
+                     "none"
+                   ],
+                 "tap":
+                   [
+                     "none"
+                   ]
+               }
+          }
+        ';
 
 ################################################################################
 #                                 Undefined
@@ -189,82 +211,362 @@ bundle common file_groups
                     "@(firewall_bridges[common])"
                  };
 
+      "network[undefined]"
+        string => "$(network[common])";
+
 ################################################################################
-#                              server_guest
+#                                    host
 ################################################################################
 
-      "make_profile[server_guest]"
+      "make_profile[host]"
         string => "$(make_profile[common])";
 
-      "pm_env[server_guest]"
+      "pm_env[host]"
         slist => {
                     "@(pm_env[common])"
                  };
 
-      "pm_environment[server_guest]"
+      "pm_environment[host]"
         slist => {
                     "@(pm_environment[common])"
                  };
 
-      "keywords[server_guest]"
+      "keywords[host]"
         slist => {
                     "@(keywords[common])"
                  };
 
-      "mask[server_guest]"
+      "mask[host]"
         slist => {
                     "@(mask[common])"
                  };
 
-      "unmask[server_guest]"
+      "unmask[host]"
         slist => {
                     "@(unmask[common])"
                  };
 
-      "use[server_guest]"
+      "use[host]"
         slist => {
-                    "@(use[common])"
+                    "@(use[common])",
+                    "host"
                  };
 
-      "profile[server_guest]"
+      "profile[host]"
         slist => {
                     "@(profile[common])"
                  };
 
-      "use_udev[server_guest]"
+      "use_udev[host]"
         slist => {
                     "@(use_udev[common])"
                  };
 
-      "use_systemd[server_guest]"
+      "use_systemd[host]"
         slist => {
                     "@(use_systemd[common])"
                  };
 
-      "unuse_udev[server_guest]"
+      "unuse_udev[host]"
         slist => {
                     "@(unuse_udev[common])"
                  };
 
-      "unuse_systemd[server_guest]"
+      "unuse_systemd[host]"
         slist => {
-                    "@(unuse_systemd[common])"
+                    "@(unuse_systemd[common])",
+                    "gpm.service"
                  };
 
-      "systemd_enabled[server_guest]"
+      "systemd_enabled[host]"
         slist => {
                     "@(systemd_enabled[common])"
                  };
 
-      "firewall_zones[server_guest]"
+      "firewall_zones[host]"
         slist => {
                     "@(firewall_zones[common])"
                  };
 
-      "firewall_bridges[server_guest]"
+      "firewall_bridges[host]"
         slist => {
                     "@(firewall_bridges[common])"
                  };
+
+      "network[host]"
+        string => "$(network[common])";
+
+################################################################################
+#                                   master
+################################################################################
+
+      "make_profile[master]"
+        string => "$(make_profile[host])";
+
+      "pm_env[master]"
+        slist => {
+                    "@(pm_env[host])"
+                 };
+
+      "pm_environment[master]"
+        slist => {
+                    "@(pm_environment[host])"
+                 };
+
+      "keywords[master]"
+        slist => {
+                    "@(keywords[host])"
+                 };
+
+      "mask[master]"
+        slist => {
+                    "@(mask[host])"
+                 };
+
+      "unmask[master]"
+        slist => {
+                    "@(unmask[host])"
+                 };
+
+      "use[master]"
+        slist => {
+                    "@(use[host])",
+                    "master"
+                 };
+
+      "profile[master]"
+        slist => {
+                    "@(profile[host])"
+                 };
+
+      "use_udev[master]"
+        slist => {
+                    "@(use_udev[host])"
+                 };
+
+      "use_systemd[master]"
+        slist => {
+                    "@(use_systemd[host])"
+                 };
+
+      "unuse_udev[master]"
+        slist => {
+                    "@(unuse_udev[host])"
+                 };
+
+      "unuse_systemd[master]"
+        slist => {
+                    "@(unuse_systemd[host])"
+                 };
+
+      "systemd_enabled[master]"
+        slist => {
+                    "@(systemd_enabled[host])"
+                 };
+
+      "firewall_zones[master]"
+        slist => {
+                    "@(firewall_zones[host])",
+                    "wan"
+                 };
+
+      "firewall_bridges[master]"
+        slist => {
+                    "@(firewall_bridges[host])",
+                    "wan_bridge",
+                    "ispdmz_bridge",
+                    "vpndmz_bridge",
+                    "tor_bridge",
+                    "i2p_bridge",
+                    "lan_bridge"
+                 };
+
+      "network[master]"
+        string => '
+          {
+            "devices":
+               {
+                 "bridge":
+                   [
+                     "wan",
+                     "ispdmz",
+                     "tor",
+                     "i2p",
+                     "vpndmz",
+                     "lan"
+                   ],
+                 "veth":
+                   [
+                     "lantap"
+                   ],
+                 "tap":
+                   [
+                     "none"
+                   ]
+               }
+          }
+        ';
+
+################################################################################
+#                                desktop_host
+################################################################################
+
+      "make_profile[desktop_host]"
+        string => "cryptoo/desktop/kde";
+
+      "pm_env[desktop_host]"
+        slist => {
+                    "@(pm_env[host])"
+                 };
+
+      "pm_environment[desktop_host]"
+        slist => {
+                    "@(pm_environment[host])"
+                 };
+
+      "keywords[desktop_host]"
+        slist => {
+                    "@(keywords[host])"
+                 };
+
+      "mask[desktop_host]"
+        slist => {
+                    "@(mask[host])"
+                 };
+
+      "unmask[desktop_host]"
+        slist => {
+                    "@(unmask[host])"
+                 };
+
+      "use[desktop_host]"
+        slist => {
+                    "@(use[host])",
+                    "desktop_host"
+                 };
+
+      "profile[desktop_host]"
+        slist => {
+                    "@(profile[host])"
+                 };
+
+      "use_udev[desktop_host]"
+        slist => {
+                    "@(use_udev[host])"
+                 };
+
+      "use_systemd[desktop_host]"
+        slist => {
+                    "@(use_systemd[host])"
+                 };
+
+      "unuse_udev[desktop_host]"
+        slist => {
+                    "@(unuse_udev[host])"
+                 };
+
+      "unuse_systemd[desktop_host]"
+        slist => {
+                    "@(unuse_systemd[host])"
+                 };
+
+      "systemd_enabled[desktop_host]"
+        slist => {
+                    "@(systemd_enabled[host])"
+                 };
+
+      "firewall_zones[desktop_host]"
+        slist => {
+                    "@(firewall_zones[host])"
+                 };
+
+      "firewall_bridges[desktop_host]"
+        slist => {
+                    "@(firewall_bridges[host])"
+                 };
+
+      "network[desktop_host]"
+        string => "$(network[host])";
+
+################################################################################
+#                                    guest
+################################################################################
+
+      "make_profile[guest]"
+        string => "$(make_profile[common])";
+
+      "pm_env[guest]"
+        slist => {
+                    "@(pm_env[common])"
+                 };
+
+      "pm_environment[guest]"
+        slist => {
+                    "@(pm_environment[common])"
+                 };
+
+      "keywords[guest]"
+        slist => {
+                    "@(keywords[common])"
+                 };
+
+      "mask[guest]"
+        slist => {
+                    "@(mask[common])"
+                 };
+
+      "unmask[guest]"
+        slist => {
+                    "@(unmask[common])"
+                 };
+
+      "use[guest]"
+        slist => {
+                    "@(use[common])"
+                 };
+
+      "profile[guest]"
+        slist => {
+                    "@(profile[common])"
+                 };
+
+      "use_udev[guest]"
+        slist => {
+                    "@(use_udev[common])"
+                 };
+
+      "use_systemd[guest]"
+        slist => {
+                    "@(use_systemd[common])"
+                 };
+
+      "unuse_udev[guest]"
+        slist => {
+                    "@(unuse_udev[common])"
+                 };
+
+      "unuse_systemd[guest]"
+        slist => {
+                    "@(unuse_systemd[common])"
+                 };
+
+      "systemd_enabled[guest]"
+        slist => {
+                    "@(systemd_enabled[common])"
+                 };
+
+      "firewall_zones[guest]"
+        slist => {
+                    "@(firewall_zones[common])"
+                 };
+
+      "firewall_bridges[guest]"
+        slist => {
+                    "@(firewall_bridges[common])"
+                 };
+
+      "network[guest]"
+        string => "$(network[common])";
 
 ################################################################################
 #                              desktop_guest
@@ -275,35 +577,35 @@ bundle common file_groups
 
       "pm_env[desktop_guest]"
         slist => {
-                    "@(pm_env[common])"
+                    "@(pm_env[guest])"
                  };
 
       "pm_environment[desktop_guest]"
         slist => {
-                    "@(pm_environment[common])"
+                    "@(pm_environment[guest])"
                  };
 
       "keywords[desktop_guest]"
         slist => {
-                    "@(keywords[common])",
+                    "@(keywords[guest])",
                     "desktop",
                     "X"
                  };
 
       "mask[desktop_guest]"
         slist => {
-                    "@(mask[common])",
+                    "@(mask[guest])",
                     "desktop_guest"
                  };
 
       "unmask[desktop_guest]"
         slist => {
-                    "@(unmask[common])"
+                    "@(unmask[guest])"
                  };
 
       "use[desktop_guest]"
         slist => {
-                    "@(use[common])",
+                    "@(use[guest])",
                     "desktop",
                     "desktop_guest",
                     "X"
@@ -311,43 +613,538 @@ bundle common file_groups
 
       "profile[desktop_guest]"
         slist => {
-                    "@(profile[common])"
+                    "@(profile[guest])"
                  };
 
       "use_udev[desktop_guest]"
         slist => {
-                    "@(use_udev[common])"
+                    "@(use_udev[guest])"
                  };
 
       "use_systemd[desktop_guest]"
         slist => {
-                    "@(use_systemd[common])"
+                    "@(use_systemd[guest])"
                  };
 
       "unuse_udev[desktop_guest]"
         slist => {
-                    "@(unuse_udev[common])"
+                    "@(unuse_udev[guest])"
                  };
 
       "unuse_systemd[desktop_guest]"
         slist => {
-                    "@(unuse_systemd[common])"
+                    "@(unuse_systemd[guest])"
                  };
 
       "systemd_enabled[desktop_guest]"
         slist => {
-                    "@(systemd_enabled[common])"
+                    "@(systemd_enabled[guest])"
                  };
 
       "firewall_zones[desktop_guest]"
         slist => {
-                    "@(firewall_zones[common])"
+                    "@(firewall_zones[guest])"
                  };
 
       "firewall_bridges[desktop_guest]"
         slist => {
-                    "@(firewall_bridges[common])"
+                    "@(firewall_bridges[guest])"
                  };
+
+      "network[desktop_guest]"
+        string => "$(network[guest])";
+
+################################################################################
+#                              chroot_desktop
+################################################################################
+
+      "make_profile[chroot_desktop]"
+        string => "$(make_profile[desktop_guest])";
+
+      "pm_env[chroot_desktop]"
+        slist => {
+                    "@(pm_env[desktop_guest])"
+                 };
+
+      "pm_environment[chroot_desktop]"
+        slist => {
+                    "@(pm_environment[desktop_guest])"
+                 };
+
+      "keywords[chroot_desktop]"
+        slist => {
+                    "@(keywords[desktop_guest])",
+                    "browsers",
+                    "mail_client"
+                 };
+
+      "mask[chroot_desktop]"
+        slist => {
+                    "@(mask[desktop_guest])"
+                 };
+
+      "unmask[chroot_desktop]"
+        slist => {
+                    "@(unmask[desktop_guest])"
+                 };
+
+      "use[chroot_desktop]"
+        slist => {
+                    "@(use[desktop_guest])",
+                    "browsers",
+                    "irc_client",
+                    "mail_client"
+                 };
+
+      "profile[chroot_desktop]"
+        slist => {
+                    "@(profile[desktop_guest])"
+                 };
+
+      "use_udev[chroot_desktop]"
+        slist => {
+                    "@(use_udev[desktop_guest])"
+                 };
+
+      "use_systemd[chroot_desktop]"
+        slist => {
+                    "@(use_systemd[desktop_guest])"
+                 };
+
+      "unuse_udev[chroot_desktop]"
+        slist => {
+                    "@(unuse_udev[desktop_guest])"
+                 };
+
+      "unuse_systemd[chroot_desktop]"
+        slist => {
+                    "@(unuse_systemd[desktop_guest])"
+                 };
+
+      "systemd_enabled[chroot_desktop]"
+        slist => {
+                    "@(systemd_enabled[desktop_guest])"
+                 };
+
+      "firewall_zones[chroot_desktop]"
+        slist => {
+                    "@(firewall_zones[desktop_guest])"
+                 };
+
+      "firewall_bridges[chroot_desktop]"
+        slist => {
+                    "@(firewall_bridges[desktop_guest])"
+                 };
+
+      "network[chroot_desktop]"
+        string => "$(network[desktop_guest])";
+
+################################################################################
+#                                 irc_client
+################################################################################
+
+      "make_profile[irc_client]"
+        string => "$(make_profile[desktop_guest])";
+
+      "pm_env[irc_client]"
+        slist => {
+                    "@(pm_env[desktop_guest])"
+                 };
+
+      "pm_environment[irc_client]"
+        slist => {
+                    "@(pm_environment[desktop_guest])"
+                 };
+
+      "keywords[irc_client]"
+        slist => {
+                    "@(keywords[desktop_guest])"
+                 };
+
+      "mask[irc_client]"
+        slist => {
+                    "@(mask[desktop_guest])"
+                 };
+
+      "unmask[irc_client]"
+        slist => {
+                    "@(unmask[desktop_guest])"
+                 };
+
+      "use[irc_client]"
+        slist => {
+                    "@(use[desktop_guest])",
+                    "irc_client"
+                 };
+
+      "profile[irc_client]"
+        slist => {
+                    "@(profile[desktop_guest])"
+                 };
+
+      "use_udev[irc_client]"
+        slist => {
+                    "@(use_udev[desktop_guest])"
+                 };
+
+      "use_systemd[irc_client]"
+        slist => {
+                    "@(use_systemd[desktop_guest])"
+                 };
+
+      "unuse_udev[irc_client]"
+        slist => {
+                    "@(unuse_udev[desktop_guest])"
+                 };
+
+      "unuse_systemd[irc_client]"
+        slist => {
+                    "@(unuse_systemd[desktop_guest])"
+                 };
+
+      "systemd_enabled[irc_client]"
+        slist => {
+                    "@(systemd_enabled[desktop_guest])"
+                 };
+
+      "firewall_zones[irc_client]"
+        slist => {
+                    "@(firewall_zones[desktop_guest])"
+                 };
+
+      "firewall_bridges[irc_client]"
+        slist => {
+                    "@(firewall_bridges[desktop_guest])"
+                 };
+
+      "network[irc_client]"
+        string => "$(network[desktop_guest])";
+
+################################################################################
+#                                 mail_client
+################################################################################
+
+      "make_profile[mail_client]"
+        string => "$(make_profile[desktop_guest])";
+
+      "pm_env[mail_client]"
+        slist => {
+                    "@(pm_env[desktop_guest])"
+                 };
+
+      "pm_environment[mail_client]"
+        slist => {
+                    "@(pm_environment[desktop_guest])"
+                 };
+
+      "keywords[mail_client]"
+        slist => {
+                    "@(keywords[desktop_guest])",
+                    "mail_client"
+                 };
+
+      "mask[mail_client]"
+        slist => {
+                    "@(mask[desktop_guest])"
+                 };
+
+      "unmask[mail_client]"
+        slist => {
+                    "@(unmask[desktop_guest])"
+                 };
+
+      "use[mail_client]"
+        slist => {
+                    "@(use[desktop_guest])",
+                    "mail_client"
+                 };
+
+      "profile[mail_client]"
+        slist => {
+                    "@(profile[desktop_guest])"
+                 };
+
+      "use_udev[mail_client]"
+        slist => {
+                    "@(use_udev[desktop_guest])"
+                 };
+
+      "use_systemd[mail_client]"
+        slist => {
+                    "@(use_systemd[desktop_guest])"
+                 };
+
+      "unuse_udev[mail_client]"
+        slist => {
+                    "@(unuse_udev[desktop_guest])"
+                 };
+
+      "unuse_systemd[mail_client]"
+        slist => {
+                    "@(unuse_systemd[desktop_guest])"
+                 };
+
+      "systemd_enabled[mail_client]"
+        slist => {
+                    "@(systemd_enabled[desktop_guest])"
+                 };
+
+      "firewall_zones[mail_client]"
+        slist => {
+                    "@(firewall_zones[desktop_guest])"
+                 };
+
+      "firewall_bridges[mail_client]"
+        slist => {
+                    "@(firewall_bridges[desktop_guest])"
+                 };
+
+      "network[mail_client]"
+        string => "$(network[desktop_guest])";
+
+################################################################################
+#                                     web
+################################################################################
+
+      "make_profile[web]"
+        string => "$(make_profile[desktop_guest])";
+
+      "pm_env[web]"
+        slist => {
+                    "@(pm_env[desktop_guest])"
+                 };
+
+      "pm_environment[web]"
+        slist => {
+                    "@(pm_environment[desktop_guest])"
+                 };
+
+      "keywords[web]"
+        slist => {
+                    "@(keywords[desktop_guest])",
+                    "browsers"
+                 };
+
+      "mask[web]"
+        slist => {
+                    "@(mask[desktop_guest])"
+                 };
+
+      "unmask[web]"
+        slist => {
+                    "@(unmask[desktop_guest])"
+                 };
+
+      "use[web]"
+        slist => {
+                    "@(use[desktop_guest])",
+                    "browsers"
+                 };
+
+      "profile[web]"
+        slist => {
+                    "@(profile[desktop_guest])"
+                 };
+
+      "use_udev[web]"
+        slist => {
+                    "@(use_udev[desktop_guest])"
+                 };
+
+      "use_systemd[web]"
+        slist => {
+                    "@(use_systemd[desktop_guest])"
+                 };
+
+      "unuse_udev[web]"
+        slist => {
+                    "@(unuse_udev[desktop_guest])"
+                 };
+
+      "unuse_systemd[web]"
+        slist => {
+                    "@(unuse_systemd[desktop_guest])"
+                 };
+
+      "systemd_enabled[web]"
+        slist => {
+                    "@(systemd_enabled[desktop_guest])"
+                 };
+
+      "firewall_zones[web]"
+        slist => {
+                    "@(firewall_zones[desktop_guest])"
+                 };
+
+      "firewall_bridges[web]"
+        slist => {
+                    "@(firewall_bridges[desktop_guest])"
+                 };
+
+      "network[web]"
+        string => "$(network[desktop_guest])";
+
+################################################################################
+#                                      im
+################################################################################
+
+      "make_profile[im]"
+        string => "$(make_profile[desktop_guest])";
+
+      "pm_env[im]"
+        slist => {
+                    "@(pm_env[desktop_guest])"
+                 };
+
+      "pm_environment[im]"
+        slist => {
+                    "@(pm_environment[desktop_guest])"
+                 };
+
+      "keywords[im]"
+        slist => {
+                    "@(keywords[desktop_guest])",
+                    "im"
+                 };
+
+      "mask[im]"
+        slist => {
+                    "@(mask[desktop_guest])"
+                 };
+
+      "unmask[im]"
+        slist => {
+                    "@(unmask[desktop_guest])"
+                 };
+
+      "use[im]"
+        slist => {
+                    "@(use[desktop_guest])",
+                    "im"
+                 };
+
+      "profile[im]"
+        slist => {
+                    "@(profile[desktop_guest])"
+                 };
+
+      "use_udev[im]"
+        slist => {
+                    "@(use_udev[desktop_guest])"
+                 };
+
+      "use_systemd[im]"
+        slist => {
+                    "@(use_systemd[desktop_guest])"
+                 };
+
+      "unuse_udev[im]"
+        slist => {
+                    "@(unuse_udev[desktop_guest])"
+                 };
+
+      "unuse_systemd[im]"
+        slist => {
+                    "@(unuse_systemd[desktop_guest])"
+                 };
+
+      "systemd_enabled[im]"
+        slist => {
+                    "@(systemd_enabled[desktop_guest])"
+                 };
+
+      "firewall_zones[im]"
+        slist => {
+                    "@(firewall_zones[desktop_guest])"
+                 };
+
+      "firewall_bridges[im]"
+        slist => {
+                    "@(firewall_bridges[desktop_guest])"
+                 };
+
+      "network[im]"
+        string => "$(network[desktop_guest])";
+
+################################################################################
+#                              server_guest
+################################################################################
+
+      "make_profile[server_guest]"
+        string => "$(make_profile[guest])";
+
+      "pm_env[server_guest]"
+        slist => {
+                    "@(pm_env[guest])"
+                 };
+
+      "pm_environment[server_guest]"
+        slist => {
+                    "@(pm_environment[guest])"
+                 };
+
+      "keywords[server_guest]"
+        slist => {
+                    "@(keywords[guest])"
+                 };
+
+      "mask[server_guest]"
+        slist => {
+                    "@(mask[guest])"
+                 };
+
+      "unmask[server_guest]"
+        slist => {
+                    "@(unmask[guest])"
+                 };
+
+      "use[server_guest]"
+        slist => {
+                    "@(use[guest])"
+                 };
+
+      "profile[server_guest]"
+        slist => {
+                    "@(profile[guest])"
+                 };
+
+      "use_udev[server_guest]"
+        slist => {
+                    "@(use_udev[guest])"
+                 };
+
+      "use_systemd[server_guest]"
+        slist => {
+                    "@(use_systemd[guest])"
+                 };
+
+      "unuse_udev[server_guest]"
+        slist => {
+                    "@(unuse_udev[guest])"
+                 };
+
+      "unuse_systemd[server_guest]"
+        slist => {
+                    "@(unuse_systemd[guest])"
+                 };
+
+      "systemd_enabled[server_guest]"
+        slist => {
+                    "@(systemd_enabled[guest])"
+                 };
+
+      "firewall_zones[server_guest]"
+        slist => {
+                    "@(firewall_zones[guest])"
+                 };
+
+      "firewall_bridges[server_guest]"
+        slist => {
+                    "@(firewall_bridges[guest])"
+                 };
+
+      "network[server_guest]"
+        string => "$(network[guest])";
 
 ################################################################################
 #                              chroot_server
@@ -456,332 +1253,8 @@ bundle common file_groups
                     "@(firewall_bridges[server_guest])"
                  };
 
-################################################################################
-#                              chroot_desktop
-################################################################################
-
-      "make_profile[chroot_desktop]"
-        string => "$(make_profile[desktop_guest])";
-
-      "pm_env[chroot_desktop]"
-        slist => {
-                    "@(pm_env[desktop_guest])"
-                 };
-
-      "pm_environment[chroot_desktop]"
-        slist => {
-                    "@(pm_environment[desktop_guest])"
-                 };
-
-      "keywords[chroot_desktop]"
-        slist => {
-                    "@(keywords[desktop_guest])",
-                    "browsers",
-                    "mail_client"
-                 };
-
-      "mask[chroot_desktop]"
-        slist => {
-                    "@(mask[desktop_guest])"
-                 };
-
-      "unmask[chroot_desktop]"
-        slist => {
-                    "@(unmask[desktop_guest])"
-                 };
-
-      "use[chroot_desktop]"
-        slist => {
-                    "@(use[desktop_guest])",
-                    "browsers",
-                    "irc_client",
-                    "mail_client"
-                 };
-
-      "profile[chroot_desktop]"
-        slist => {
-                    "@(profile[desktop_guest])"
-                 };
-
-      "use_udev[chroot_desktop]"
-        slist => {
-                    "@(use_udev[desktop_guest])"
-                 };
-
-      "use_systemd[chroot_desktop]"
-        slist => {
-                    "@(use_systemd[desktop_guest])"
-                 };
-
-      "unuse_udev[chroot_desktop]"
-        slist => {
-                    "@(unuse_udev[desktop_guest])"
-                 };
-
-      "unuse_systemd[chroot_desktop]"
-        slist => {
-                    "@(unuse_systemd[desktop_guest])"
-                 };
-
-      "systemd_enabled[chroot_desktop]"
-        slist => {
-                    "@(systemd_enabled[desktop_guest])"
-                 };
-
-      "firewall_zones[chroot_desktop]"
-        slist => {
-                    "@(firewall_zones[desktop_guest])"
-                 };
-
-      "firewall_bridges[chroot_desktop]"
-        slist => {
-                    "@(firewall_bridges[desktop_guest])"
-                 };
-
-################################################################################
-#                                    host
-################################################################################
-
-      "make_profile[host]"
-        string => "$(make_profile[common])";
-
-      "pm_env[host]"
-        slist => {
-                    "@(pm_env[common])"
-                 };
-
-      "pm_environment[host]"
-        slist => {
-                    "@(pm_environment[common])"
-                 };
-
-      "keywords[host]"
-        slist => {
-                    "@(keywords[common])"
-                 };
-
-      "mask[host]"
-        slist => {
-                    "@(mask[common])"
-                 };
-
-      "unmask[host]"
-        slist => {
-                    "@(unmask[common])"
-                 };
-
-      "use[host]"
-        slist => {
-                    "@(use[common])",
-                    "host"
-                 };
-
-      "profile[host]"
-        slist => {
-                    "@(profile[common])"
-                 };
-
-      "use_udev[host]"
-        slist => {
-                    "@(use_udev[common])"
-                 };
-
-      "use_systemd[host]"
-        slist => {
-                    "@(use_systemd[common])"
-                 };
-
-      "unuse_udev[host]"
-        slist => {
-                    "@(unuse_udev[common])"
-                 };
-
-      "unuse_systemd[host]"
-        slist => {
-                    "@(unuse_systemd[common])",
-                    "gpm.service"
-                 };
-
-      "systemd_enabled[host]"
-        slist => {
-                    "@(systemd_enabled[common])"
-                 };
-
-      "firewall_zones[host]"
-        slist => {
-                    "@(firewall_zones[common])",
-                    "wan"
-                 };
-
-      "firewall_bridges[host]"
-        slist => {
-                    "@(firewall_bridges[common])",
-                    "wan_bridge",
-                    "ispdmz_bridge",
-                    "vpndmz_bridge",
-                    "tor_bridge",
-                    "i2p_bridge",
-                    "lan_bridge"
-                 };
-
-################################################################################
-#                                desktop_host
-################################################################################
-
-      "make_profile[desktop_host]"
-        string => "cryptoo/desktop/kde";
-
-      "pm_env[desktop_host]"
-        slist => {
-                    "@(pm_env[common])"
-                 };
-
-      "pm_environment[desktop_host]"
-        slist => {
-                    "@(pm_environment[common])"
-                 };
-
-      "keywords[desktop_host]"
-        slist => {
-                    "@(keywords[common])"
-                 };
-
-      "mask[desktop_host]"
-        slist => {
-                    "@(mask[common])"
-                 };
-
-      "unmask[desktop_host]"
-        slist => {
-                    "@(unmask[common])"
-                 };
-
-      "use[desktop_host]"
-        slist => {
-                    "@(use[common])",
-                    "udev",
-                    "desktop_host"
-                 };
-
-      "profile[desktop_host]"
-        slist => {
-                    "@(profile[common])"
-                 };
-
-      "use_udev[desktop_host]"
-        slist => {
-                    "@(use_udev[common])"
-                 };
-
-      "use_systemd[desktop_host]"
-        slist => {
-                    "@(use_systemd[common])"
-                 };
-
-      "unuse_udev[desktop_host]"
-        slist => {
-                    "@(unuse_udev[common])"
-                 };
-
-      "unuse_systemd[desktop_host]"
-        slist => {
-                    "@(unuse_systemd[common])"
-                 };
-
-      "systemd_enabled[desktop_host]"
-        slist => {
-                    "@(systemd_enabled[common])",
-                    "gpm.service"
-                 };
-
-      "firewall_zones[desktop_host]"
-        slist => {
-                    "@(firewall_zones[common])"
-                 };
-
-      "firewall_bridges[desktop_host]"
-        slist => {
-                    "@(firewall_bridges[common])"
-                 };
-
-################################################################################
-#                                   master
-################################################################################
-
-      "make_profile[master]"
-        string => "$(make_profile[host])";
-
-      "pm_env[master]"
-        slist => {
-                    "@(pm_env[host])"
-                 };
-
-      "pm_environment[master]"
-        slist => {
-                    "@(pm_environment[host])"
-                 };
-
-      "keywords[master]"
-        slist => {
-                    "@(keywords[host])"
-                 };
-
-      "mask[master]"
-        slist => {
-                    "@(mask[host])"
-                 };
-
-      "unmask[master]"
-        slist => {
-                    "@(unmask[host])"
-                 };
-
-      "use[master]"
-        slist => {
-                    "@(use[host])",
-                    "systemd",
-                    "master"
-                 };
-
-      "profile[master]"
-        slist => {
-                    "@(profile[host])"
-                 };
-
-      "use_udev[master]"
-        slist => {
-                    "@(use_udev[host])"
-                 };
-
-      "use_systemd[master]"
-        slist => {
-                    "@(use_systemd[host])"
-                 };
-
-      "unuse_udev[master]"
-        slist => {
-                    "@(unuse_udev[host])"
-                 };
-
-      "unuse_systemd[master]"
-        slist => {
-                    "@(unuse_systemd[host])"
-                 };
-
-      "systemd_enabled[master]"
-        slist => {
-                    "@(systemd_enabled[host])"
-                 };
-
-      "firewall_zones[master]"
-        slist => {
-                    "@(firewall_zones[host])"
-                 };
-
-      "firewall_bridges[master]"
-        slist => {
-                    "@(firewall_bridges[host])"
-                 };
+      "network[chroot_server]"
+        string => "$(network[server_guest])";
 
 ################################################################################
 #                             firewall_external
@@ -863,6 +1336,9 @@ bundle common file_groups
                     "@(firewall_bridges[server_guest])"
                  };
 
+      "network[firewall_external]"
+        string => "$(network[server_guest])";
+
 ################################################################################
 #                             tor
 ################################################################################
@@ -941,6 +1417,9 @@ bundle common file_groups
         slist => {
                     "@(firewall_bridges[server_guest])"
                  };
+
+      "network[tor]"
+        string => "$(network[server_guest])";
 
 ################################################################################
 #                             vpn_primary
@@ -1023,6 +1502,9 @@ bundle common file_groups
                     "@(firewall_bridges[server_guest])"
                  };
 
+      "network[vpn_primary]"
+        string => "$(network[server_guest])";
+
 ################################################################################
 #                             dns
 ################################################################################
@@ -1102,6 +1584,9 @@ bundle common file_groups
         slist => {
                     "@(firewall_bridges[server_guest])"
                  };
+
+      "network[vpn_primary]"
+        string => "$(network[server_guest])";
 
 ################################################################################
 #                             mail_server
@@ -1185,6 +1670,9 @@ bundle common file_groups
                     "@(firewall_bridges[server_guest])"
                  };
 
+      "network[mail_server]"
+        string => "$(network[server_guest])";
+
 ################################################################################
 #                              firewall_internal
 ################################################################################
@@ -1261,6 +1749,9 @@ bundle common file_groups
         slist => {
                     "@(firewall_bridges[server_guest])"
                  };
+
+      "network[firewall_internal]"
+        string => "$(network[server_guest])";
 
 ################################################################################
 #                              vpn_server
@@ -1342,319 +1833,28 @@ bundle common file_groups
                     "lan_bridge_vpn"
                  };
 
-################################################################################
-#                                 irc_client
-################################################################################
-
-      "make_profile[irc_client]"
-        string => "$(make_profile[desktop_guest])";
-
-      "pm_env[irc_client]"
-        slist => {
-                    "@(pm_env[desktop_guest])"
-                 };
-
-      "pm_environment[irc_client]"
-        slist => {
-                    "@(pm_environment[desktop_guest])"
-                 };
-
-      "keywords[irc_client]"
-        slist => {
-                    "@(keywords[desktop_guest])"
-                 };
-
-      "mask[irc_client]"
-        slist => {
-                    "@(mask[desktop_guest])"
-                 };
-
-      "unmask[irc_client]"
-        slist => {
-                    "@(unmask[desktop_guest])"
-                 };
-
-      "use[irc_client]"
-        slist => {
-                    "@(use[desktop_guest])",
-                    "irc_client"
-                 };
-
-      "profile[irc_client]"
-        slist => {
-                    "@(profile[desktop_guest])"
-                 };
-
-      "use_udev[irc_client]"
-        slist => {
-                    "@(use_udev[desktop_guest])"
-                 };
-
-      "use_systemd[irc_client]"
-        slist => {
-                    "@(use_systemd[desktop_guest])"
-                 };
-
-      "unuse_udev[irc_client]"
-        slist => {
-                    "@(unuse_udev[desktop_guest])"
-                 };
-
-      "unuse_systemd[irc_client]"
-        slist => {
-                    "@(unuse_systemd[desktop_guest])"
-                 };
-
-      "systemd_enabled[irc_client]"
-        slist => {
-                    "@(systemd_enabled[desktop_guest])"
-                 };
-
-      "firewall_zones[irc_client]"
-        slist => {
-                    "@(firewall_zones[desktop_guest])"
-                 };
-
-      "firewall_bridges[irc_client]"
-        slist => {
-                    "@(firewall_bridges[desktop_guest])"
-                 };
-
-################################################################################
-#                                 mail_client
-################################################################################
-
-      "make_profile[mail_client]"
-        string => "$(make_profile[desktop_guest])";
-
-      "pm_env[mail_client]"
-        slist => {
-                    "@(pm_env[desktop_guest])"
-                 };
-
-      "pm_environment[mail_client]"
-        slist => {
-                    "@(pm_environment[desktop_guest])"
-                 };
-
-      "keywords[mail_client]"
-        slist => {
-                    "@(keywords[desktop_guest])",
-                    "mail_client"
-                 };
-
-      "mask[mail_client]"
-        slist => {
-                    "@(mask[desktop_guest])"
-                 };
-
-      "unmask[mail_client]"
-        slist => {
-                    "@(unmask[desktop_guest])"
-                 };
-
-      "use[mail_client]"
-        slist => {
-                    "@(use[desktop_guest])",
-                    "mail_client"
-                 };
-
-      "profile[mail_client]"
-        slist => {
-                    "@(profile[desktop_guest])"
-                 };
-
-      "use_udev[mail_client]"
-        slist => {
-                    "@(use_udev[desktop_guest])"
-                 };
-
-      "use_systemd[mail_client]"
-        slist => {
-                    "@(use_systemd[desktop_guest])"
-                 };
-
-      "unuse_udev[mail_client]"
-        slist => {
-                    "@(unuse_udev[desktop_guest])"
-                 };
-
-      "unuse_systemd[mail_client]"
-        slist => {
-                    "@(unuse_systemd[desktop_guest])"
-                 };
-
-      "systemd_enabled[mail_client]"
-        slist => {
-                    "@(systemd_enabled[desktop_guest])"
-                 };
-
-      "firewall_zones[mail_client]"
-        slist => {
-                    "@(firewall_zones[desktop_guest])"
-                 };
-
-      "firewall_bridges[mail_client]"
-        slist => {
-                    "@(firewall_bridges[desktop_guest])"
-                 };
-
-################################################################################
-#                                     web
-################################################################################
-
-      "make_profile[web]"
-        string => "$(make_profile[desktop_guest])";
-
-      "pm_env[web]"
-        slist => {
-                    "@(pm_env[desktop_guest])"
-                 };
-
-      "pm_environment[web]"
-        slist => {
-                    "@(pm_environment[desktop_guest])"
-                 };
-
-      "keywords[web]"
-        slist => {
-                    "@(keywords[desktop_guest])",
-                    "browsers"
-                 };
-
-      "mask[web]"
-        slist => {
-                    "@(mask[desktop_guest])"
-                 };
-
-      "unmask[web]"
-        slist => {
-                    "@(unmask[desktop_guest])"
-                 };
-
-      "use[web]"
-        slist => {
-                    "@(use[desktop_guest])",
-                    "browsers"
-                 };
-
-      "profile[web]"
-        slist => {
-                    "@(profile[desktop_guest])"
-                 };
-
-      "use_udev[web]"
-        slist => {
-                    "@(use_udev[desktop_guest])"
-                 };
-
-      "use_systemd[web]"
-        slist => {
-                    "@(use_systemd[desktop_guest])"
-                 };
-
-      "unuse_udev[web]"
-        slist => {
-                    "@(unuse_udev[desktop_guest])"
-                 };
-
-      "unuse_systemd[web]"
-        slist => {
-                    "@(unuse_systemd[desktop_guest])"
-                 };
-
-      "systemd_enabled[web]"
-        slist => {
-                    "@(systemd_enabled[desktop_guest])"
-                 };
-
-      "firewall_zones[web]"
-        slist => {
-                    "@(firewall_zones[desktop_guest])"
-                 };
-
-      "firewall_bridges[web]"
-        slist => {
-                    "@(firewall_bridges[desktop_guest])"
-                 };
-
-################################################################################
-#                                      im
-################################################################################
-
-      "make_profile[im]"
-        string => "$(make_profile[desktop_guest])";
-
-      "pm_env[im]"
-        slist => {
-                    "@(pm_env[desktop_guest])"
-                 };
-
-      "pm_environment[im]"
-        slist => {
-                    "@(pm_environment[desktop_guest])"
-                 };
-
-      "keywords[im]"
-        slist => {
-                    "@(keywords[desktop_guest])",
-                    "im"
-                 };
-
-      "mask[im]"
-        slist => {
-                    "@(mask[desktop_guest])"
-                 };
-
-      "unmask[im]"
-        slist => {
-                    "@(unmask[desktop_guest])"
-                 };
-
-      "use[im]"
-        slist => {
-                    "@(use[desktop_guest])",
-                    "im"
-                 };
-
-      "profile[im]"
-        slist => {
-                    "@(profile[desktop_guest])"
-                 };
-
-      "use_udev[im]"
-        slist => {
-                    "@(use_udev[desktop_guest])"
-                 };
-
-      "use_systemd[im]"
-        slist => {
-                    "@(use_systemd[desktop_guest])"
-                 };
-
-      "unuse_udev[im]"
-        slist => {
-                    "@(unuse_udev[desktop_guest])"
-                 };
-
-      "unuse_systemd[im]"
-        slist => {
-                    "@(unuse_systemd[desktop_guest])"
-                 };
-
-      "systemd_enabled[im]"
-        slist => {
-                    "@(systemd_enabled[desktop_guest])"
-                 };
-
-      "firewall_zones[im]"
-        slist => {
-                    "@(firewall_zones[desktop_guest])"
-                 };
-
-      "firewall_bridges[im]"
-        slist => {
-                    "@(firewall_bridges[desktop_guest])"
-                 };
+      "network[vpn_server]"
+        string => '
+          {
+            "devices":
+               {
+                 "bridge":
+                   [
+                     "lan"
+                   ],
+                 "veth":
+                   [
+                     "none"
+                   ],
+                 "tap":
+                   [
+                     "openvpn1",
+                     "openvpn2",
+                     "openvpn3",
+                     "openvpn4"
+                   ]
+               }
+          }
+        ';
 
 }
