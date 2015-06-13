@@ -1,0 +1,47 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+}
+
+bundle agent netdev_tap(name, user, group)
+
+{
+
+  vars:
+
+    any::
+
+      "netdev_$(this.name)"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "NetDev",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "$(this.name)" },
+                       { "LHS": "Kind", "RHS": "tap" }
+                     ]
+                 },
+                 { "section": "Tap",
+                   "values":
+                     [
+                       { "LHS": "User", "RHS": "$(this.user)" },
+                       { "LHS": "Group", "RHS": "$(this.group)" },
+                     ]
+                 }
+               ]
+          }
+        ';
+
+  reports:
+
+    any::
+
+      "$(netdev_$(this.name))"
+        bundle_return_value_index => "$(this.name)";
+
+}

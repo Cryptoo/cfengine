@@ -32,6 +32,9 @@ bundle agent networkd(root, role)
       "veth_list"
         slist => getvalues("protos[netdev][veth]");
 
+      "tap_list"
+        slist => getvalues("protos[netdev][tap]");
+
       "role_number"
         string => "$(config.defined_numbers[$(this.role)])";
 
@@ -55,120 +58,6 @@ bundle agent networkd(root, role)
 
       "lan_subnet"
         string => "$(network.subnet_config[lan])";
-
-      "netdev_openvpn1"
-        string => '
-          {
-            "sections":
-               [
-                 { "section": "NetDev",
-                   "values":
-                     [
-                       { "LHS": "Name", "RHS": "openvpn1" },
-                       { "LHS": "Kind", "RHS": "tap" }
-                     ]
-                 },
-                 { "section": "Tap",
-                   "values":
-                     [
-                       { "LHS": "User", "RHS": "openvpn" },
-                       { "LHS": "Group", "RHS": "openvpn" },
-                     ]
-                 }
-               ]
-          }
-        ';
-
-      "netdev_openvpn2"
-        string => '
-          {
-            "sections":
-               [
-                 { "section": "NetDev",
-                   "values":
-                     [
-                       { "LHS": "Name", "RHS": "openvpn2" },
-                       { "LHS": "Kind", "RHS": "tap" }
-                     ]
-                 },
-                 { "section": "Tap",
-                   "values":
-                     [
-                       { "LHS": "User", "RHS": "openvpn" },
-                       { "LHS": "Group", "RHS": "openvpn" },
-                     ]
-                 }
-               ]
-          }
-        ';
-
-      "netdev_openvpn3"
-        string => '
-          {
-            "sections":
-               [
-                 { "section": "NetDev",
-                   "values":
-                     [
-                       { "LHS": "Name", "RHS": "openvpn3" },
-                       { "LHS": "Kind", "RHS": "tap" }
-                     ]
-                 },
-                 { "section": "Tap",
-                   "values":
-                     [
-                       { "LHS": "User", "RHS": "openvpn" },
-                       { "LHS": "Group", "RHS": "openvpn" },
-                     ]
-                 }
-               ]
-          }
-        ';
-
-      "netdev_openvpn4"
-        string => '
-          {
-            "sections":
-               [
-                 { "section": "NetDev",
-                   "values":
-                     [
-                       { "LHS": "Name", "RHS": "openvpn4" },
-                       { "LHS": "Kind", "RHS": "tap" }
-                     ]
-                 },
-                 { "section": "Tap",
-                   "values":
-                     [
-                       { "LHS": "User", "RHS": "openvpn" },
-                       { "LHS": "Group", "RHS": "openvpn" },
-                     ]
-                 }
-               ]
-          }
-        ';
-
-      "network_wan_bridge"
-        string => '
-          {
-            "sections":
-               [
-                 { "section": "Match",
-                   "values":
-                     [
-                       { "LHS": "Name", "RHS": "wan" }
-                     ]
-                 },
-                 { "section": "Network",
-                   "values":
-                     [
-                       { "LHS": "DHCP", "RHS": "false" },
-                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
-                     ]
-                 }
-               ]
-          }
-        ';
 
       "network_wan_physical"
         string => '
@@ -1239,28 +1128,28 @@ bundle agent networkd(root, role)
         create => "true",
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
-        template_data => parsejson($(this.netdev_openvpn1));
+        template_data => parsejson($(netdev_tap[openvpn1]));
 
       "$(this.root)$(file_names.openvpn2_netdev)"
         perms => system,
         create => "true",
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
-        template_data => parsejson($(this.netdev_openvpn2));
+        template_data => parsejson($(netdev_tap[openvpn2]));
 
       "$(this.root)$(file_names.openvpn3_netdev)"
         perms => system,
         create => "true",
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
-        template_data => parsejson($(this.netdev_openvpn3));
+        template_data => parsejson($(netdev_tap[openvpn3]));
 
       "$(this.root)$(file_names.openvpn4_netdev)"
         perms => system,
         create => "true",
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
-        template_data => parsejson($(this.netdev_openvpn4));
+        template_data => parsejson($(netdev_tap[openvpn4]));
 
       "$(this.root)$(file_names.ispdmz_network)"
         perms => system,
@@ -1338,6 +1227,12 @@ bundle agent networkd(root, role)
         usebundle => netdev_veth("$(veth_list)", "$(this.role_number)"),
         useresult => "netdev_veth",
         depends_on => { "have_bridges" },
+        handle => "have_veth";
+
+      "construct json for tap devices"
+        usebundle => netdev_tap("$(tap_list)", "openvpn", "openvpn"),
+        useresult => "netdev_tap",
+        depends_on => { "have_veth" },
         classes => default:if_ok("have_devices");
 
 }

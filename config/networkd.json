@@ -14,7 +14,7 @@
                 [
                       "lantap"
                 ],
-            "openvpn_tap":
+            "tap":
                 [
                       "openvpn1",
                       "openvpn2",
