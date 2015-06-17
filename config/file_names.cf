@@ -158,32 +158,14 @@ bundle common file_names
         string => "/proc/self/mountstats";
       "shorewall_config"
         string => "$(directory_names.fs_config_shorewall)/shorewall.conf";
+      "shorewall_interfaces"
+        string => "$(directory_names.fs_config_shorewall)/interfaces";
       "shorewall_zones"
         string => "$(directory_names.fs_config_shorewall)/zones";
       "sshd_config"
         string => "$(directory_names.fs_config_ssh)/sshd_config";
       "ssh_config"
         string => "$(directory_names.fs_config_ssh)/ssh_config";
-      "i2p_network"
-        string => "$(directory_names.fs_config_network)/i2p.network";
-      "ispdmz_network"
-        string => "$(directory_names.fs_config_network)/ispdmz.network";
-      "lan_network"
-        string => "$(directory_names.fs_config_network)/lan.network";
-      "openvpn1_network"
-        string => "$(directory_names.fs_config_network)/openvpn1.network";
-      "openvpn2_network"
-        string => "$(directory_names.fs_config_network)/openvpn2.network";
-      "openvpn3_network"
-        string => "$(directory_names.fs_config_network)/openvpn3.network";
-      "openvpn4_network"
-        string => "$(directory_names.fs_config_network)/openvpn4.network";
-      "tor_network"
-        string => "$(directory_names.fs_config_network)/tor.network";
-      "vpndmz_network"
-        string => "$(directory_names.fs_config_network)/vpndmz.network";
-      "wan_network"
-        string => "$(directory_names.fs_config_network)/wan.network";
       "cf_execd_service"
         string => "$(directory_names.fs_config_units)/cf-execd.service";
       "cf_monitord_service"
@@ -326,6 +308,9 @@ bundle common file_names
         meta => { "template" };
       "template_serial_autologin"
         string => "common/serial_autologin.txt",
+        meta => { "template" };
+      "template_shorewall_interface"
+        string => "common/shorewall_interfaces_mustache.txt",
         meta => { "template" };
       "template_shorewall_zone"
         string => "common/shorewall_zone_mustache.txt",

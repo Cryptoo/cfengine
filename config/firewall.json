@@ -7,7 +7,8 @@
             },
     "interface_options": {
               "bridge": "dhcp,nosmurfs,bridge,tcpflags,optional",
-              "member": ""
+              "member": "",
+              "normal": "dhcp,tcpflags"
             },
     "zone": {
               "wan_bridge": {

@@ -7,7 +7,9 @@ body file control
   inputs => {
               "cryptoo/common/shorewall/bridge.cf",
               "cryptoo/common/shorewall/bridge_children.cf",
+              "cryptoo/common/shorewall/shorewall_interfaces.cf",
               "cryptoo/config/config.cf",
+#              "cryptoo/config/file_groups.cf",
               "cryptoo/config/file_names.cf",
               "cryptoo/config/templates.cf",
               "cryptoo/util/perms.cf"
@@ -29,6 +31,12 @@ bundle agent shorewall_zones(root, role)
       "bridge_zones_ipv4"
         slist => getvalues("file_groups.firewall_bridges[$(this.role)]");
 
+      "network_config"
+        data => parsejson("$(file_groups.network[$(this.role)])");
+
+      "interface_list"
+        slist => getindices("network_config[interfaces]");
+
     bridge_ipv4|no_bridge_ipv4::
 
       "zone[$(basic_zones_ipv4)][name]"
@@ -46,7 +54,15 @@ bundle agent shorewall_zones(root, role)
       "zone_basic_ipv4_json"
         string => join(", ", "zone_basic_ipv4_json_list");
 
-    bridge_children_done::
+    interfaces_done::
+
+      "interface_zones"
+        slist => getvalues("interfaces");
+
+      "interface_zone_json"
+        string => join(", ", "interface_zones");
+
+    bridge_children_done&interfaces_done::
 
       "bridge_zones"
         slist => getvalues("bridges");
@@ -61,12 +77,12 @@ bundle agent shorewall_zones(root, role)
         string => join(", ", "bridge_children");
 
       "zone_json"
-        string => '{ "zones": [ $(zone_basic_ipv4_json), $(bridge_zone_json), $(bridge_children_json) ] }';
+        string => '{ "zones": [ $(interface_zone_json), $(zone_basic_ipv4_json), $(bridge_zone_json), $(bridge_children_json) ] }';
 
-    no_bridge_ipv4::
+    no_bridge_ipv4&interfaces_done::
 
       "zone_json"
-        string => '{ "zones": [ $(zone_basic_ipv4_json) ] }';
+        string => '{ "zones": [ $(interface_zone_json), $(zone_basic_ipv4_json) ] }';
 
   classes:
 
@@ -89,7 +105,21 @@ bundle agent shorewall_zones(root, role)
         template_method => "mustache",
         template_data => parsejson("$(zone_json)");
 
+      "$(root)$(file_names.shorewall_interfaces)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[shorewall_interface])",
+        template_method => "mustache",
+        template_data => parsejson("$(zone_json)");
+
   methods:
+
+    any::
+
+      "get list of interfaces"
+        usebundle => shorewall_interfaces("$(interface_list)", "$(network_config[interfaces][$(interface_list)][type])"),
+        useresult => "interfaces",
+        classes => default:if_ok("interfaces_done");
 
     bridge_ipv4::
 

@@ -47,6 +47,12 @@ bundle agent bridge_child_interfaces(zone, child)
         string => "$(device):$(site_config[host_network][lan_physical])",
         classes => default:if_ok("done");
 
+    zone_lan_bridge_vpn&child_0::
+
+      "interface"
+        string => "$(device):eth1",
+        classes => default:if_ok("done");
+
   classes:
 
     any::
@@ -63,6 +69,11 @@ bundle agent bridge_child_interfaces(zone, child)
         expression => "any";
 
     zone_lan_bridge&child_0::
+
+      "special_case"
+        expression => "any";
+
+    zone_lan_bridge_vpn&child_0::
 
       "special_case"
         expression => "any";

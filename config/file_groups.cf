@@ -366,8 +366,7 @@ bundle common file_groups
 
       "firewall_zones[master]"
         slist => {
-                    "@(firewall_zones[host])",
-                    "wan"
+                    "@(firewall_zones[host])"
                  };
 
       "firewall_bridges[master]"
@@ -1733,6 +1732,15 @@ bundle common file_groups
                              "i2p": "firewall_internal",
                              "lan": "firewall_internal"
                            }
+                       }
+                   },
+                 "openvpn":
+                   {
+                     "type": "virtual",
+                     "params":
+                       {
+                         "zone": "vpn",
+                         "ipforward": "ipv4"
                        }
                    }
                }
