@@ -1,0 +1,289 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/config.cf",
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/network.cf",
+              "cryptoo/config/templates.cf",
+              "cryptoo/util/perms.cf",
+              "@(cryptoo:control.systemd_proto_inputs)"
+            };
+
+}
+
+bundle agent network_file(root, name, number, type, params)
+
+{
+
+  vars:
+
+    any::
+
+      "network_params_$(this.name)"
+        data => parsejson("$(this.params)");
+
+    !have_routes::
+
+      "routes_$(this.name)"
+        string => "";
+
+    routes_ready::
+
+      "route_list"
+        slist => getvalues("route_json");
+
+      "route_list_joined"
+        string => join(", ", "route_list");
+
+      "routes_$(this.name)"
+        string => ", $(route_list_joined)";
+
+    type_no_address::
+
+      "file_name_$(this.name)"
+        string => "$(this.root)$(directory_names.fs_config_network)/$(this.name).network";
+
+      "device_$(this.name)"
+        string => "$(network_params_$(this.name)[device])";
+
+      "network_$(this.name)"
+        string => '
+            {
+              "sections":
+                 [
+                   { "section": "Match",
+                     "values":
+                       [
+                         { "LHS": "Name", "RHS": "$(device_$(this.name))" }
+                       ]
+                   },
+                   { "section": "Network",
+                     "values":
+                       [
+                         { "LHS": "DHCP", "RHS": "false" },
+                         { "LHS": "LinkLocalAddressing", "RHS": "No"}
+                       ]
+                   }
+                 ]
+            }
+          ';
+
+    type_bridge_member::
+
+      "bridge_$(this.name)"
+        string => "$(network_params_$(this.name)[bridge])";
+
+      "file_name_$(this.name)"
+        string => "$(this.root)$(directory_names.fs_config_network)/$(bridge_$(this.name))$(this.number).network";
+
+      "network_$(this.name)"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "Match",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "$(bridge_$(this.name))$(this.number)" }
+                     ]
+                 },
+                 { "section": "Network",
+                   "values":
+                     [
+                       { "LHS": "DHCP", "RHS": "false" },
+                       { "LHS": "Bridge", "RHS": "$(bridge_$(this.name))" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
+                     ]
+                 }
+               ]
+          }
+        ';
+
+    type_physical::
+
+      "bridge_$(this.name)"
+        string => "$(network_params_$(this.name)[bridge])";
+
+      "device_$(this.name)"
+        string => "$(network_params_$(this.name)[device])";
+
+      "file_name_$(this.name)"
+        string => "$(this.root)$(directory_names.fs_config_network)/$(bridge_$(this.name))_physical.network";
+
+      "network_$(this.name)"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "Match",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "$(device_$(this.name))" }
+                     ]
+                 },
+                 { "section": "Network",
+                   "values":
+                     [
+                       { "LHS": "DHCP", "RHS": "false" },
+                       { "LHS": "Bridge", "RHS": "$(bridge_$(this.name))" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
+                     ]
+                 }
+               ]
+          }
+        ';
+
+    type_gateway&routes_ready::
+
+      "zone_$(this.name)"
+        string => "$(network_params_$(this.name)[zone])";
+
+      "gateway_$(this.name)"
+        string => "$(network_params_$(this.name)[gateway])";
+
+      "forward_$(this.name)"
+        string => "$(network_params_$(this.name)[ipforward])";
+
+      "file_name_$(this.name)"
+        string => "$(this.root)$(directory_names.fs_config_network)/$(zone_$(this.name)).network";
+
+      "network_$(this.name)"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "Match",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "$(this.name)" }
+                     ]
+                 },
+                 { "section": "Network",
+                   "values":
+                     [
+                       { "LHS": "DHCP", "RHS": "false" },
+                       { "LHS": "Address", "RHS": "192.168.$(network.subnet_config[$(zone_$(this.name))]).$(this.number)/24" },
+                       { "LHS": "Gateway", "RHS": "192.168.$(network.subnet_config[$(zone_$(this.name))]).$(config.defined_numbers[$(gateway_$(this.name))])" },
+                       { "LHS": "IPForward", "RHS": "$(forward_$(this.name))" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
+                     ]
+                 } $(routes_$(this.name))
+               ]
+          }
+        ';
+
+    type_simple&routes_ready::
+
+      "zone_$(this.name)"
+        string => "$(network_params_$(this.name)[zone])";
+
+      "forward_$(this.name)"
+        string => "$(network_params_$(this.name)[ipforward])";
+
+      "file_name_$(this.name)"
+        string => "$(this.root)$(directory_names.fs_config_network)/$(zone_$(this.name)).network";
+
+      "network_$(this.name)"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "Match",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "$(this.name)" }
+                     ]
+                 },
+                 { "section": "Network",
+                   "values":
+                     [
+                       { "LHS": "DHCP", "RHS": "false" },
+                       { "LHS": "Address", "RHS": "192.168.$(network.subnet_config[$(zone_$(this.name))]).$(this.number)/24" },
+                       { "LHS": "IPForward", "RHS": "$(forward_$(this.name))" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
+                     ]
+                 } $(routes_$(this.name))
+               ]
+          }
+        ';
+
+    type_dhcp&routes_ready::
+
+      "zone_$(this.name)"
+        string => "$(network_params_$(this.name)[zone])";
+
+      "file_name_$(this.name)"
+        string => "$(this.root)$(directory_names.fs_config_network)/$(zone_$(this.name)).network";
+
+      "forward_$(this.name)"
+        string => "$(network_params_$(this.name)[ipforward])";
+
+      "network_$(this.name)"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "Match",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "$(this.name)" }
+                     ]
+                 },
+                 { "section": "Network",
+                   "values":
+                     [
+                       { "LHS": "DHCP", "RHS": "true" },
+                       { "LHS": "IPForward", "RHS": "$(forward_$(this.name))" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
+                     ]
+                 } $(routes_$(this.name))
+               ]
+          }
+        ';
+
+  classes:
+
+    any::
+
+      "skip"
+        expression => strcmp("$(this.name)", "none");
+
+      "have_routes"
+        expression => regextract('(?s).*("routes":.*{.*?})', "$(this.params)", "route_regex");
+
+    !have_routes::
+
+      "routes_ready"
+        expression => "any";
+
+    !skip::
+
+      "type_$(this.type)"
+        expression => "any";
+
+  methods:
+
+    have_routes::
+
+      "generate json for routes"
+        usebundle => networkd_routes("$(zone_$(this.name))", "$(this.number)", "{ $(this.route_regex[1]) }"),
+        useresult => "route_json",
+        classes => default:if_ok("routes_ready");
+
+
+  files:
+
+    !skip&routes_ready::
+
+      "$(file_name_$(this.name))"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson("$(network_$(this.name))");
+
+}

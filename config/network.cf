@@ -5,6 +5,7 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
+              "cryptoo/config/config.cf",
               "cryptoo/config/file_names.cf",
               "cryptoo/config/templates.cf",
             };
@@ -41,14 +42,22 @@ bundle common network
         data => readjson("/$(file_names.subnet_config)", 1M),
         classes => default:if_ok("subnet_config_available");
 
-      "local_subnets"
-        slist => {
-                   "192.168.$(this.subnet_config[ispdmz]).0/24",
-                   "192.168.$(this.subnet_config[tor]).0/24",
-                   "192.168.$(this.subnet_config[i2p]).0/24",
-                   "192.168.$(this.subnet_config[vpndmz]).0/24",
-                   "192.168.$(this.subnet_config[lan]).0/24",
-                 };
+      "subnet[ispdmz]"
+        string => "192.168.$(this.subnet_config[ispdmz]).0/24";
+      "subnet[tor]"
+        string => "192.168.$(this.subnet_config[tor]).0/24";
+      "subnet[i2p]"
+        string => "192.168.$(this.subnet_config[i2p]).0/24";
+      "subnet[vpndmz]"
+        string => "192.168.$(this.subnet_config[vpndmz]).0/24";
+      "subnet[lan]"
+        string => "192.168.$(this.subnet_config[lan]).0/24";
+      "subnet[onion]"
+        string => "$(config.transparent_proxy_net[tor])";
+      "subnet[eep]"
+        string => "$(config.transparent_proxy_net[i2p])";
+      "subnet[backup_dns]"
+        string => "$(config.dns[backup])";
 
   classes:
 

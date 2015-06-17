@@ -1,0 +1,36 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/network.cf"
+            };
+}
+
+bundle agent networkd_routes(zone, number, routes)
+
+{
+
+  vars:
+
+    "defined_numbers"
+      data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
+
+    "subnet_config"
+      data => readjson("/$(file_names.subnet_config)", 1M);
+
+    "route_data"
+      data => parsejson("$(this.routes)");
+
+    "route_list"
+      slist => getindices("route_data[routes]");
+
+  reports:
+
+    any::
+
+      '{ "section": "Route", "values": [ { "LHS": "Gateway", "RHS": "192.168.$(subnet_config[$(this.zone)]).$(defined_numbers[$(route_data[routes][$(route_list)])])" }, { "LHS": "Destination", "RHS": "$(network.subnet[$(route_list)])" }, { "LHS": "Metric", "RHS": "0" } ] }'
+        bundle_return_value_index => "$(route_list)";
+}

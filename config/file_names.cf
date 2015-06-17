@@ -166,24 +166,10 @@ bundle common file_names
         string => "$(directory_names.fs_config_ssh)/ssh_config";
       "i2p_network"
         string => "$(directory_names.fs_config_network)/i2p.network";
-      "i2p_bridge_network"
-        string => "$(directory_names.fs_config_network)/i2p_bridge.network";
       "ispdmz_network"
         string => "$(directory_names.fs_config_network)/ispdmz.network";
-      "ispdmz_bridge_network"
-        string => "$(directory_names.fs_config_network)/ispdmz_bridge.network";
       "lan_network"
         string => "$(directory_names.fs_config_network)/lan.network";
-      "lan0_network"
-        string => "$(directory_names.fs_config_network)/lan0.network";
-      "lan1_network"
-        string => "$(directory_names.fs_config_network)/lan1.network";
-      "lan13_network"
-        string => "$(directory_names.fs_config_network)/lan13.network";
-      "lan_bridge_network"
-        string => "$(directory_names.fs_config_network)/lan_bridge.network";
-      "lan_physical_network"
-        string => "$(directory_names.fs_config_network)/lan_physical.network";
       "openvpn1_network"
         string => "$(directory_names.fs_config_network)/openvpn1.network";
       "openvpn2_network"
@@ -194,18 +180,10 @@ bundle common file_names
         string => "$(directory_names.fs_config_network)/openvpn4.network";
       "tor_network"
         string => "$(directory_names.fs_config_network)/tor.network";
-      "tor_bridge_network"
-        string => "$(directory_names.fs_config_network)/tor_bridge.network";
       "vpndmz_network"
         string => "$(directory_names.fs_config_network)/vpndmz.network";
-      "vpndmz_bridge_network"
-        string => "$(directory_names.fs_config_network)/vpndmz_bridge.network";
       "wan_network"
         string => "$(directory_names.fs_config_network)/wan.network";
-      "wan_bridge_network"
-        string => "$(directory_names.fs_config_network)/wan_bridge.network";
-      "wan_physical_network"
-        string => "$(directory_names.fs_config_network)/wan_physical.network";
       "cf_execd_service"
         string => "$(directory_names.fs_config_units)/cf-execd.service";
       "cf_monitord_service"

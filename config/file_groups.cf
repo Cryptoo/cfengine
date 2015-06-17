@@ -403,6 +403,93 @@ bundle common file_groups
                    [
                      "none"
                    ]
+               },
+             "interfaces":
+               {
+                 "wan_bridge":
+                   {
+                     "type": "no_address",
+                     "params":
+                       {
+                         "device": "wan"
+                       }
+                   },
+                 "ispdmz_bridge":
+                   {
+                     "type": "no_address",
+                     "params":
+                       {
+                         "device": "ispdmz"
+                       }
+                   },
+                 "tor_bridge":
+                   {
+                     "type": "no_address",
+                     "params":
+                       {
+                         "device": "tor"
+                       }
+                   },
+                 "i2p_bridge":
+                   {
+                     "type": "no_address",
+                     "params":
+                       {
+                         "device": "i2p"
+                       }
+                   },
+                 "vpndmz_bridge":
+                   {
+                     "type": "no_address",
+                     "params":
+                       {
+                         "device": "vpndmz"
+                       }
+                   },
+                 "lan_bridge":
+                   {
+                     "type": "no_address",
+                     "params":
+                       {
+                         "device": "lan"
+                       }
+                   },
+                 "veth_pair":
+                   {
+                     "type": "bridge_member",
+                     "params":
+                       {
+                         "bridge": "lan"
+                       }
+                   },
+                 "wan_physical":
+                   {
+                     "type": "physical",
+                     "params":
+                       {
+                         "bridge": "wan",
+                         "device": "$(site.config[host_network][wan_physical])"
+                       }
+                   },
+                 "lan_physical":
+                   {
+                     "type": "physical",
+                     "params":
+                       {
+                         "bridge": "lan",
+                         "device": "$(site.config[host_network][lan_physical])"
+                       }
+                   },
+                 "lantap":
+                   {
+                     "type": "gateway",
+                     "params":
+                       {
+                         "zone": "lan",
+                         "gateway": "firewall_internal",
+                         "ipforward": "false"
+                       }
+                   }
                }
           }
         ';
@@ -1337,7 +1424,55 @@ bundle common file_groups
                  };
 
       "network[firewall_external]"
-        string => "$(network[server_guest])";
+        string => '
+          {
+            "devices":
+               {
+                 "bridge":
+                   [
+                     "none"
+                   ],
+                 "veth":
+                   [
+                     "none"
+                   ],
+                 "tap":
+                   [
+                     "none"
+                   ]
+               },
+             "interfaces":
+               {
+                 "eth0":
+                   {
+                     "type": "dhcp",
+                     "params":
+                       {
+                         "zone": "wan",
+                         "ipforward": "ipv4"
+                       }
+                   },
+                 "eth1":
+                   {
+                     "type": "simple",
+                     "params":
+                       {
+                         "zone": "ispdmz",
+                         "ipforward": "ipv4",
+                         "routes":
+                           {
+                             "onion": "vpn_primary",
+                             "eep": "vpn_primary",
+                             "tor": "vpn_primary",
+                             "i2p": "vpn_primary",
+                             "vpndmz": "vpn_primary",
+                             "lan": "vpn_primary"
+                           }
+                       }
+                   }
+               }
+          }
+        ';
 
 ################################################################################
 #                             tor
@@ -1419,7 +1554,54 @@ bundle common file_groups
                  };
 
       "network[tor]"
-        string => "$(network[server_guest])";
+        string => '
+          {
+            "devices":
+               {
+                 "bridge":
+                   [
+                     "none"
+                   ],
+                 "veth":
+                   [
+                     "none"
+                   ],
+                 "tap":
+                   [
+                     "none"
+                   ]
+               },
+             "interfaces":
+               {
+                 "eth0":
+                   {
+                     "type": "gateway",
+                     "params":
+                       {
+                         "zone": "ispdmz",
+                         "gateway": "firewall_external",
+                         "ipforward": "false"
+                       }
+                   },
+                 "eth1":
+                   {
+                     "type": "simple",
+                     "params":
+                       {
+                         "zone": "tor",
+                         "ipforward": "ipv4",
+                         "routes":
+                           {
+                             "eep": "firewall_internal",
+                             "i2p": "firewall_internal",
+                             "vpndmz": "firewall_internal",
+                             "lan": "firewall_internal"
+                           }
+                       }
+                   }
+               }
+          }
+        ';
 
 ################################################################################
 #                             vpn_primary
@@ -1503,7 +1685,59 @@ bundle common file_groups
                  };
 
       "network[vpn_primary]"
-        string => "$(network[server_guest])";
+        string => '
+          {
+            "devices":
+               {
+                 "bridge":
+                   [
+                     "none"
+                   ],
+                 "veth":
+                   [
+                     "none"
+                   ],
+                 "tap":
+                   [
+                     "none"
+                   ]
+               },
+             "interfaces":
+               {
+                 "eth0":
+                   {
+                     "type": "gateway",
+                     "params":
+                       {
+                         "zone": "ispdmz",
+                         "gateway": "firewall_external",
+                         "ipforward": "ipv4",
+                         "routes":
+                           {
+                             "backup_dns": "firewall_external"
+                           }
+                       }
+                   },
+                 "eth1":
+                   {
+                     "type": "simple",
+                     "params":
+                       {
+                         "zone": "vpndmz",
+                         "ipforward": "ipv4",
+                         "routes":
+                           {
+                             "onion": "firewall_internal",
+                             "eep": "firewall_internal",
+                             "tor": "firewall_internal",
+                             "i2p": "firewall_internal",
+                             "lan": "firewall_internal"
+                           }
+                       }
+                   }
+               }
+          }
+        ';
 
 ################################################################################
 #                             dns
@@ -1575,18 +1809,57 @@ bundle common file_groups
                     "dnsmasq"
                  };
 
-      "firewall_zones[vpn_primary]"
+      "firewall_zones[dns]"
         slist => {
                     "@(firewall_zones[server_guest])"
                  };
 
-      "firewall_bridges[vpn_primary]"
+      "firewall_bridges[dns]"
         slist => {
                     "@(firewall_bridges[server_guest])"
                  };
 
-      "network[vpn_primary]"
-        string => "$(network[server_guest])";
+      "network[dns]"
+        string => '
+          {
+            "devices":
+               {
+                 "bridge":
+                   [
+                     "none"
+                   ],
+                 "veth":
+                   [
+                     "none"
+                   ],
+                 "tap":
+                   [
+                     "none"
+                   ]
+               },
+             "interfaces":
+               {
+                 "eth0":
+                   {
+                     "type": "gateway",
+                     "params":
+                       {
+                         "zone": "vpndmz",
+                         "gateway": "vpn_primary",
+                         "ipforward": "ipv4",
+                         "routes":
+                           {
+                             "onion": "firewall_internal",
+                             "eep": "firewall_internal",
+                             "tor": "firewall_internal",
+                             "i2p": "firewall_internal",
+                             "lan": "firewall_internal"
+                           }
+                       }
+                   }
+               }
+          }
+        ';
 
 ################################################################################
 #                             mail_server
@@ -1671,7 +1944,46 @@ bundle common file_groups
                  };
 
       "network[mail_server]"
-        string => "$(network[server_guest])";
+        string => '
+          {
+            "devices":
+               {
+                 "bridge":
+                   [
+                     "none"
+                   ],
+                 "veth":
+                   [
+                     "none"
+                   ],
+                 "tap":
+                   [
+                     "none"
+                   ]
+               },
+             "interfaces":
+               {
+                 "eth0":
+                   {
+                     "type": "gateway",
+                     "params":
+                       {
+                         "zone": "vpndmz",
+                         "gateway": "vpn_primary",
+                         "ipforward": "ipv4",
+                         "routes":
+                           {
+                             "onion": "firewall_internal",
+                             "eep": "firewall_internal",
+                             "tor": "firewall_internal",
+                             "i2p": "firewall_internal",
+                             "lan": "firewall_internal"
+                           }
+                       }
+                   }
+               }
+          }
+        ';
 
 ################################################################################
 #                              firewall_internal
@@ -1751,7 +2063,73 @@ bundle common file_groups
                  };
 
       "network[firewall_internal]"
-        string => "$(network[server_guest])";
+        string => '
+          {
+            "devices":
+               {
+                 "bridge":
+                   [
+                     "none"
+                   ],
+                 "veth":
+                   [
+                     "none"
+                   ],
+                 "tap":
+                   [
+                     "none"
+                   ]
+               },
+             "interfaces":
+               {
+                 "eth0":
+                   {
+                     "type": "gateway",
+                     "params":
+                       {
+                         "zone": "vpndmz",
+                         "gateway": "vpn_primary",
+                         "ipforward": "ipv4"
+                       }
+                   },
+                 "eth1":
+                   {
+                     "type": "simple",
+                     "params":
+                       {
+                         "zone": "tor",
+                         "ipforward": "ipv4",
+                         "routes":
+                           {
+                             "onion": "tor"
+                           }
+                       }
+                   },
+                 "eth2":
+                   {
+                     "type": "simple",
+                     "params":
+                       {
+                         "zone": "i2p",
+                         "ipforward": "ipv4",
+                         "routes":
+                           {
+                             "eep": "i2p"
+                           }
+                       }
+                   },
+                 "eth3":
+                   {
+                     "type": "simple",
+                     "params":
+                       {
+                         "zone": "lan",
+                         "ipforward": "ipv4"
+                       }
+                   }
+               }
+          }
+        ';
 
 ################################################################################
 #                              vpn_server
@@ -1853,6 +2231,93 @@ bundle common file_groups
                      "openvpn3",
                      "openvpn4"
                    ]
+               },
+             "interfaces":
+               {
+                 "openvpn_bridge_udp":
+                   {
+                     "type": "no_address",
+                     "params":
+                       {
+                         "device": "openvpn1"
+                       }
+                   },
+                 "openvpn_bridge_tcp":
+                   {
+                     "type": "no_address",
+                     "params":
+                       {
+                         "device": "openvpn2"
+                       }
+                   },
+                 "openvpn_route_udp":
+                   {
+                     "type": "no_address",
+                     "params":
+                       {
+                         "device": "openvpn3"
+                       }
+                   },
+                 "openvpn_route_tcp":
+                   {
+                     "type": "no_address",
+                     "params":
+                       {
+                         "device": "openvpn4"
+                       }
+                   },
+                 "lan_bridge":
+                   {
+                     "type": "no_address",
+                     "params":
+                       {
+                         "device": "lan"
+                       }
+                   },
+                 "veth_pair":
+                   {
+                     "type": "bridge_member",
+                     "params":
+                       {
+                         "bridge": "lan"
+                       }
+                   },
+                 "lan_physical":
+                   {
+                     "type": "physical",
+                     "params":
+                       {
+                         "bridge": "lan",
+                         "device": "eth1"
+                       }
+                   },
+                 "lantap":
+                   {
+                     "type": "simple",
+                     "params":
+                       {
+                         "zone": "lan",
+                         "ipforward": "false",
+                         "routes":
+                           {
+                             "onion": "firewall_internal",
+                             "eep": "firewall_internal",
+                             "tor": "firewall_internal",
+                             "i2p": "firewall_internal",
+                             "vpndmz": "firewall_internal"
+                           }
+                       }
+                   },
+                 "eth0":
+                   {
+                     "type": "gateway",
+                     "params":
+                       {
+                         "zone": "ispdmz",
+                         "gateway": "firewall_external",
+                         "ipforward": "false"
+                       }
+                   }
                }
           }
         ';
