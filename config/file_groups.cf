@@ -2320,7 +2320,15 @@ bundle common file_groups
                  };
 
       "firewall[vpn_server]"
-        string => "$(firewall[server_guest])";
+        string => '
+          {
+            "policy":
+                 [
+                   { "source": "l13", "destination": "l0", "policy": "ACCEPT", "log_level": "" }
+                 ],
+               }
+          }
+        ';
 
       "network[vpn_server]"
         string => '
