@@ -1,0 +1,59 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+}
+
+bundle agent shorewall_routes(interface, params)
+
+{
+
+  vars:
+
+    any::
+
+      "interface_params_$(this.interface)"
+        data => parsejson("$(this.params)");
+
+      "zone"
+        string => "$(interface_params_$(this.interface)[zone])";
+
+      "route_json"
+        ifvarclass => "have_routes_$(this.interface)",
+        string => "{ $(this.route_regex[1]) }";
+
+      "route_data_$(this.interface)"
+        ifvarclass => "have_routes_$(this.interface)",
+        data => parsejson("$(route_json)");
+
+      "route_list"
+        slist => getindices("route_data_$(this.interface)[routes]"),
+        ifvarclass => "have_routes_$(this.interface)",
+        classes => default:if_ok("routes_ready_$(this.interface)");
+
+      "route_list"
+        slist => {},
+        ifvarclass => "!have_routes_$(this.interface)",
+        classes => default:if_ok("routes_ready_$(this.interface)");
+
+  classes:
+
+    any::
+
+      "have_routes_$(this.interface)"
+        expression => regextract('(?s).*("routes":.*{.*?})', "$(this.params)", "route_regex");
+
+  reports:
+
+    any::
+
+      "$(this.interface)"
+        bundle_return_value_index => "$(zone)";
+
+      "$(this.interface)"
+        ifvarclass => "routes_ready_$(this.interface)",
+        bundle_return_value_index => "$(route_list)";
+
+}

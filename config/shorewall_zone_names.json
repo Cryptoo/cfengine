@@ -1,0 +1,10 @@
+{
+  "net": "net",
+  "ispdmz": "idmz",
+  "vpndmz": "vdmz",
+  "tor": "tor",
+  "i2p": "i2p",
+  "onion": "onion",
+  "eep": "eep",
+  "lan": "lan"
+}

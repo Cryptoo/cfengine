@@ -9,7 +9,7 @@ body file control
               "cryptoo/common/shorewall/bridge_children.cf",
               "cryptoo/common/shorewall/shorewall_interfaces.cf",
               "cryptoo/config/config.cf",
-#              "cryptoo/config/file_groups.cf",
+              "cryptoo/config/file_groups.cf",
               "cryptoo/config/file_names.cf",
               "cryptoo/config/templates.cf",
               "cryptoo/util/perms.cf"

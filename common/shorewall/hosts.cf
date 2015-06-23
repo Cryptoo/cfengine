@@ -1,0 +1,146 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/common/shorewall/gateway_interface.cf",
+              "cryptoo/common/shorewall/routable_interface.cf",
+              "cryptoo/common/shorewall/routes.cf",
+              "cryptoo/config/network.cf"
+            };
+
+}
+
+bundle agent shorewall_hosts(root, role)
+
+{
+
+  vars:
+
+    any::
+
+      "network_config"
+        data => parsejson("$(file_groups.network[$(this.role)])");
+
+      "zone_names"
+        data => readjson("$(sys.inputdir)/cryptoo/config/shorewall_zone_names.json", 1M);
+
+      "interface_list"
+        slist => getindices("network_config[interfaces]");
+
+      "interface[$(interface_list)][type]"
+        string => "$(network_config[interfaces][$(interface_list)][type])";
+
+      "interface[$(interface_list)][params]"
+        string => storejson("network_config[interfaces][$(interface_list)][params]");
+
+    gateway_interface_done::
+
+      "gateway_interface_list"
+        slist => getindices("gateway_interfaces");
+
+      "gateway_interface_index"
+        string => nth("gateway_interface_list", "0");
+
+      "gateway_interface"
+        string => "$(gateway_interfaces[$(gateway_interface_index)])";
+
+    additional_interface_scan::
+
+      "additional_interface_list"
+        slist => getindices("routable_interfaces");
+
+    gateway_interface_done&additional_interfaces::
+
+      "routable_interface_list"
+        slist => { "$(gateway_interface)", "@(additional_interface_list)" };
+
+    gateway_interface_done&(!additional_interfaces)::
+
+      "routable_interface_list"
+        slist => { "$(gateway_interface)" };
+
+    interfaces_found&!routes_assigned::
+
+      "owner[net]"
+        string => "$(gateway_interface)";
+      "owner[ispdmz]"
+        string => "$(gateway_interface)";
+      "owner[tor]"
+        string => "$(gateway_interface)";
+      "owner[onion]"
+        string => "$(gateway_interface)";
+      "owner[i2p]"
+        string => "$(gateway_interface)";
+      "owner[eep]"
+        string => "$(gateway_interface)";
+      "owner[vpndmz]"
+        string => "$(gateway_interface)";
+      "owner[lan]"
+        string => "$(gateway_interface)";
+
+      "routes"
+        slist => getindices("owner");
+
+    routes_assigned::
+
+      "route_json[$(routes)]"
+        string => '{ "zone": "$(zone_names[$(routes)])", "hosts": "$(owner[$(routes)]):$(network.subnet[$(routes)])" }';
+
+      "route_json_list"
+        slist => getvalues("route_json");
+
+      "route_json_joined"
+        string => join(", ", "route_json_list");
+
+      "route_json_final"
+        string => '{ "zones": [ $(route_json_joined) ] }',
+        classes => default:if_ok("route_json_ready");
+
+  classes:
+
+    additional_interface_scan::
+
+      "additional_interfaces"
+        expression => isgreaterthan(length("additional_interface_list"), "0");
+
+    additional_interface_scan&gateway_interface_done::
+
+      "interfaces_found"
+        expression => "any";
+
+  files:
+
+    route_json_ready::
+
+      "$(root)$(file_names.shorewall_hosts)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[shorewall_hosts])",
+        template_method => "mustache",
+        template_data => parsejson("$(route_json_final)");
+
+  methods:
+
+    any::
+
+      "find the gateway interface (more than one is a misconfiguration)"
+        usebundle => gateway_interface("$(interface_list)", "$(interface[$(interface_list)][type])"),
+        useresult => "gateway_interfaces",
+        classes => default:if_ok("gateway_interface_done");
+
+      "get list of non-gateway interfaces"
+        usebundle => routable_interface("$(interface_list)", "$(interface[$(interface_list)][type])"),
+        useresult => "routable_interfaces",
+        classes => default:if_ok("additional_interface_scan");
+
+    interfaces_found::
+
+      "assign routes to correct interface"
+        usebundle => shorewall_routes("$(routable_interface_list)", "$(interface[$(routable_interface_list)][params])"),
+        useresult => "owner",
+        classes => default:if_ok("routes_assigned");
+
+}

@@ -1,0 +1,32 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+}
+
+bundle agent routable_interface(interface, type)
+
+{
+
+  classes:
+
+    any::
+
+      "type_$(this.type)"
+        expression => "any";
+
+    type_simple|type_virtual::
+
+      "routable"
+        expression => "any";
+
+  reports:
+
+    routable::
+
+      "$(interface)"
+        bundle_return_value_index => "$(interface)";
+
+}

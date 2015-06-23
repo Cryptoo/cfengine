@@ -250,7 +250,7 @@ bundle agent network_file(root, name, number, type, params)
     any::
 
       "skip"
-        expression => strcmp("$(this.name)", "none");
+        or => { strcmp("$(this.name)", "none"), strcmp("$(this.type)", "virtual") };
 
       "have_routes"
         expression => regextract('(?s).*("routes":.*{.*?})', "$(this.params)", "route_regex");

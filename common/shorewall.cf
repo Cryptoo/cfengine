@@ -5,6 +5,7 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
+              "cryptoo/common/shorewall/hosts.cf",
               "cryptoo/common/shorewall/shorewall_zones.cf",
               "cryptoo/config/config.cf",
               "cryptoo/config/file_groups.cf",
@@ -40,8 +41,11 @@ bundle agent shorewall(root, role)
 
     any::
 
-      "configure /etc/shorewall/zones"
+      "configure /etc/shorewall/zones and /etc/shorewall/interfaces"
         usebundle => shorewall_zones("$(this.root)", "$(this.role)");
+
+      "configure /etc/shorewall/hosts"
+        usebundle => shorewall_hosts("$(this.root)", "$(this.role)");
 
   commands:
 

@@ -42,6 +42,8 @@ bundle common network
         data => readjson("/$(file_names.subnet_config)", 1M),
         classes => default:if_ok("subnet_config_available");
 
+      "subnet[net]"
+        string => "!+private";
       "subnet[ispdmz]"
         string => "192.168.$(this.subnet_config[ispdmz]).0/24";
       "subnet[tor]"
