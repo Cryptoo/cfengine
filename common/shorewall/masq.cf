@@ -1,0 +1,113 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/templates.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
+bundle agent shorewall_masq(root, role)
+
+{
+
+  vars:
+
+    any::
+
+      "defined_numbers"
+        data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
+
+      "subnet_config"
+        data => readjson("/$(file_names.subnet_config)", 1M);
+
+    !have_masq::
+
+      "masq_json"
+        string => '{ "masq": [ ] }';
+
+    masq_firewall_external::
+
+      "masq_json"
+        string => '
+          {
+            "masq":
+              [
+                {
+                  "interface": "eth0:!+private",
+                  "source": "192.168.$(subnet_config[ispdmz]).0/24",
+                  "address": "",
+                  "protocol": "",
+                  "port": ""
+                },
+                {
+                  "interface": "eth1",
+                  "source": "-",
+                  "address": "192.168.$(subnet_config[ispdmz]).$(defined_numbers[firewall_external])",
+                  "protocol": "tcp",
+                  "port": "22"
+                }
+              ]
+          }';
+
+    masq_vpn_primary::
+
+      "masq_json"
+        string => '
+          {
+            "masq":
+              [
+                {
+                  "interface": "openvpn:!+private",
+                  "source": "192.168.$(subnet_config[vpndmz]).0/24",
+                  "address": "",
+                  "protocol": "",
+                  "port": ""
+                },
+                {
+                  "interface": "openvpn:!+private",
+                  "source": "192.168.$(subnet_config[lan]).0/24",
+                  "address": "",
+                  "protocol": "",
+                  "port": ""
+                }
+              ]
+          }';
+
+  classes:
+
+    second::
+
+      "json_ready"
+        expression => "any";
+
+    masq_firewall_external|masq_vpn_primary::
+
+      "have_masq"
+        expression => "any";
+
+    any::
+
+      "masq_$(this.role)"
+        expression => "any";
+
+      "second"
+        expression => "any";
+
+  files:
+
+    json_ready::
+
+      "$(root)$(file_names.shorewall_masq)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[shorewall_masq])",
+        template_method => "mustache",
+        template_data => parsejson("$(masq_json)");
+
+}
