@@ -113,6 +113,16 @@ bundle common file_groups
         slist => {
                  };
 
+      "firewall[common]"
+        string => '
+          {
+            "policy":
+                 [
+                 ],
+               }
+          }
+        ';
+
       "network[common]"
         string => '
           {
@@ -211,6 +221,9 @@ bundle common file_groups
                     "@(firewall_bridges[common])"
                  };
 
+      "firewall[undefined]"
+        string => "$(firewall[common])";
+
       "network[undefined]"
         string => "$(network[common])";
 
@@ -292,6 +305,9 @@ bundle common file_groups
         slist => {
                     "@(firewall_bridges[common])"
                  };
+
+      "firewall[host]"
+        string => "$(firewall[common])";
 
       "network[host]"
         string => "$(network[common])";
@@ -379,6 +395,9 @@ bundle common file_groups
                     "i2p_bridge",
                     "lan_bridge"
                  };
+
+      "firewall[master]"
+        string => "$(firewall[host])";
 
       "network[master]"
         string => '
@@ -571,6 +590,9 @@ bundle common file_groups
                     "@(firewall_bridges[host])"
                  };
 
+      "firewall[desktop_host]"
+        string => "$(firewall[host])";
+
       "network[desktop_host]"
         string => "$(network[host])";
 
@@ -650,6 +672,9 @@ bundle common file_groups
         slist => {
                     "@(firewall_bridges[common])"
                  };
+
+      "firewall[guest]"
+        string => "$(firewall[common])";
 
       "network[guest]"
         string => "$(network[common])";
@@ -737,6 +762,9 @@ bundle common file_groups
                     "@(firewall_bridges[guest])"
                  };
 
+      "firewall[desktop_guest]"
+        string => "$(firewall[guest])";
+
       "network[desktop_guest]"
         string => "$(network[guest])";
 
@@ -822,6 +850,9 @@ bundle common file_groups
                     "@(firewall_bridges[desktop_guest])"
                  };
 
+      "firewall[chroot_desktop]"
+        string => "$(firewall[desktop_guest])";
+
       "network[chroot_desktop]"
         string => "$(network[desktop_guest])";
 
@@ -902,6 +933,9 @@ bundle common file_groups
         slist => {
                     "@(firewall_bridges[desktop_guest])"
                  };
+
+      "firewall[irc_client]"
+        string => "$(firewall[desktop_guest])";
 
       "network[irc_client]"
         string => "$(network[desktop_guest])";
@@ -985,6 +1019,9 @@ bundle common file_groups
                     "@(firewall_bridges[desktop_guest])"
                  };
 
+      "firewall[mail_client]"
+        string => "$(firewall[desktop_guest])";
+
       "network[mail_client]"
         string => "$(network[desktop_guest])";
 
@@ -1066,6 +1103,9 @@ bundle common file_groups
         slist => {
                     "@(firewall_bridges[desktop_guest])"
                  };
+
+      "firewall[web]"
+        string => "$(firewall[desktop_guest])";
 
       "network[web]"
         string => "$(network[desktop_guest])";
@@ -1149,6 +1189,9 @@ bundle common file_groups
                     "@(firewall_bridges[desktop_guest])"
                  };
 
+      "firewall[im]"
+        string => "$(firewall[desktop_guest])";
+
       "network[im]"
         string => "$(network[desktop_guest])";
 
@@ -1228,6 +1271,9 @@ bundle common file_groups
         slist => {
                     "@(firewall_bridges[guest])"
                  };
+
+      "firewall[server_guest]"
+        string => "$(firewall[guest])";
 
       "network[server_guest]"
         string => "$(network[guest])";
@@ -1339,6 +1385,9 @@ bundle common file_groups
                     "@(firewall_bridges[server_guest])"
                  };
 
+      "firewall[chroot_server]"
+        string => "$(firewall[server_guest])";
+
       "network[chroot_server]"
         string => "$(network[server_guest])";
 
@@ -1421,6 +1470,18 @@ bundle common file_groups
         slist => {
                     "@(firewall_bridges[server_guest])"
                  };
+
+      "firewall[firewall_external]"
+        string => '
+          {
+            "policy":
+                 [
+                   { "source": "idmz", "destination": "net", "policy": "ACCEPT", "log_level": "" },
+                   { "source": "net", "destination": "fw", "policy": "DROP", "log_level": "" }
+                 ],
+               }
+          }
+        ';
 
       "network[firewall_external]"
         string => '
@@ -1552,6 +1613,9 @@ bundle common file_groups
                     "@(firewall_bridges[server_guest])"
                  };
 
+      "firewall[tor]"
+        string => "$(firewall[server_guest])";
+
       "network[tor]"
         string => '
           {
@@ -1682,6 +1746,21 @@ bundle common file_groups
         slist => {
                     "@(firewall_bridges[server_guest])"
                  };
+
+      "firewall[vpn_primary]"
+        string => '
+          {
+            "policy":
+                 [
+                   { "source": "vdmz", "destination": "vpn", "policy": "ACCEPT", "log_level": "" },
+                   { "source": "vdmz", "destination": "net", "policy": "DROP", "log_level": "" },
+                   { "source": "lan", "destination": "vpn", "policy": "ACCEPT", "log_level": "" },
+                   { "source": "lan", "destination": "net", "policy": "DROP", "log_level": "" },
+                   { "source": "vpn", "destination": "fw", "policy": "DROP", "log_level": "" }
+                 ],
+               }
+          }
+        ';
 
       "network[vpn_primary]"
         string => '
@@ -1827,6 +1906,9 @@ bundle common file_groups
                     "@(firewall_bridges[server_guest])"
                  };
 
+      "firewall[dns]"
+        string => "$(firewall[server_guest])";
+
       "network[dns]"
         string => '
           {
@@ -1951,6 +2033,9 @@ bundle common file_groups
                     "@(firewall_bridges[server_guest])"
                  };
 
+      "firewall[mail_server]"
+        string => "$(firewall[server_guest])";
+
       "network[mail_server]"
         string => '
           {
@@ -2069,6 +2154,21 @@ bundle common file_groups
         slist => {
                     "@(firewall_bridges[server_guest])"
                  };
+
+      "firewall[firewall_internal]"
+        string => '
+          {
+            "policy":
+                 [
+                   { "source": "lan", "destination": "net", "policy": "ACCEPT", "log_level": "" },
+                   { "source": "lan", "destination": "onion", "policy": "ACCEPT", "log_level": "" },
+                   { "source": "lan", "destination": "eep", "policy": "ACCEPT", "log_level": "" },
+                   { "source": "vdmz", "destination": "onion", "policy": "ACCEPT", "log_level": "" },
+                   { "source": "vdmz", "destination": "eep", "policy": "ACCEPT", "log_level": "" }
+                 ],
+               }
+          }
+        ';
 
       "network[firewall_internal]"
         string => '
@@ -2218,6 +2318,9 @@ bundle common file_groups
                     "@(firewall_bridges[server_guest])",
                     "lan_bridge_vpn"
                  };
+
+      "firewall[vpn_server]"
+        string => "$(firewall[server_guest])";
 
       "network[vpn_server]"
         string => '

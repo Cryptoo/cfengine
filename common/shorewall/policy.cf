@@ -1,0 +1,31 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/file_groups.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/templates.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
+bundle agent shorewall_policy(root, role)
+
+{
+
+  files:
+
+    any::
+
+      "$(root)$(file_names.shorewall_policy)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[shorewall_policy])",
+        template_method => "mustache",
+        template_data => parsejson("$(file_groups.firewall[$(this.role)])");
+
+}
