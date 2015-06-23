@@ -44,6 +44,8 @@ bundle common network
 
       "subnet[net]"
         string => "!+private";
+      "subnet[vpn]"
+        string => "!+private";
       "subnet[ispdmz]"
         string => "192.168.$(this.subnet_config[ispdmz]).0/24";
       "subnet[tor]"

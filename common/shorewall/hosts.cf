@@ -36,6 +36,11 @@ bundle agent shorewall_hosts(root, role)
       "interface[$(interface_list)][params]"
         string => storejson("network_config[interfaces][$(interface_list)][params]");
 
+    vpn_role&!routes_assigned::
+
+      "owner[vpn]"
+        string => "";
+
     gateway_interface_done::
 
       "gateway_interface_list"
@@ -100,6 +105,11 @@ bundle agent shorewall_hosts(root, role)
         classes => default:if_ok("route_json_ready");
 
   classes:
+
+    any::
+
+      "vpn_role"
+        expression => strcmp("$(this.role)", "vpn_primary");
 
     additional_interface_scan::
 
