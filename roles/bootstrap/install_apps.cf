@@ -33,7 +33,7 @@ bundle agent install_apps(role)
     apps_installed::
 
       "configure system"
-        usebundle => $(role_bundle)("/$(directory_names.fs_mount_cryptoo)"),
+        usebundle => $(role_bundle)("/$(directory_names.fs_mount_cryptoo)/"),
         classes => default:if_ok("image_configured");
 
   commands:
@@ -41,12 +41,17 @@ bundle agent install_apps(role)
     basic_system_emerged::
 
       "/$(file_names.emerge_app)"
+        args => "--config-root=/$(directory_names.fs_volatile_images)/server/x86_64/no_multilib/ --root=/$(directory_names.fs_mount_cryptoo) --root-deps @guest",
+        contain => silent,
+        classes => always_success;
+
+      "/$(file_names.emerge_app)"
         args => "--config-root=/$(directory_names.fs_volatile_images)/server/x86_64/no_multilib/ --root=/$(directory_names.fs_mount_cryptoo) --root-deps $(this.role_set)",
         contain => silent,
         classes => always_success;
 
       "/$(file_names.emerge_app)"
-        args => "--config-root=/$(directory_names.fs_volatile_images)/server/x86_64/no_multilib/ --root=/$(directory_names.fs_mount_cryptoo) --root-deps -uD --reinstall changed-use @world",
+        args => "--config-root=/$(directory_names.fs_volatile_images)/server/x86_64/no_multilib/ --root=/$(directory_names.fs_mount_cryptoo) --root-deps -u $(this.role_set)",
         contain => silent,
         classes => default:if_ok("apps_installed");
 

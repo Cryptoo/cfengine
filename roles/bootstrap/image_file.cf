@@ -55,6 +55,7 @@ bundle agent image_file(role, type, multilib)
 
       "/$(file_names.dd_app)"
         args => "if=/dev/urandom of=/$(directory_names.fs_mount_cryptoo)/$(file_names.random_seed) bs=512 count=1",
+        contain => silent,
         handle => "random_seed_created";
 
       "/$(file_names.rsync_app)"
