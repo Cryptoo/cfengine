@@ -43,6 +43,11 @@ bundle agent install_apps(role)
       "/$(file_names.emerge_app)"
         args => "--config-root=/$(directory_names.fs_volatile_images)/server/x86_64/no_multilib/ --root=/$(directory_names.fs_mount_cryptoo) --root-deps $(this.role_set)",
         contain => silent,
+        classes => always_success;
+
+      "/$(file_names.emerge_app)"
+        args => "--config-root=/$(directory_names.fs_volatile_images)/server/x86_64/no_multilib/ --root=/$(directory_names.fs_mount_cryptoo) --root-deps -uD --reinstall changed-use @world",
+        contain => silent,
         classes => default:if_ok("apps_installed");
 
     any::
