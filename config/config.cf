@@ -205,13 +205,17 @@ bundle common config
         string => "PARAVIRT_TIME_ACCOUNTING",
         meta => { "enabled", "guest", "guest_multilib" };
 
+      "kconfig[NO_GENERIC_CPU]"
+        string => "GENERIC_CPU",
+        meta => { "disabled", "host" };
+
       "kconfig[GENERIC_CPU]"
         string => "GENERIC_CPU",
-        meta => { "disabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "guest", "guest_multilib" };
 
       "kconfig[MCORE2]"
         string => "MCORE2",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host" };
 
       "kconfig[SCHED_SMT]"
         string => "SCHED_SMT",
