@@ -38,6 +38,14 @@ body perms system
       groups  => { "root" };
 }
 
+body perms system_exec
+
+{
+      mode  => "0755";
+      owners  => { "root" };
+      groups  => { "root" };
+}
+
 body perms restricted
 
 {

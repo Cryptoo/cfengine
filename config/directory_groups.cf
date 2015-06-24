@@ -31,6 +31,7 @@ bundle common directory_groups
                     $(cryptoo:directory_names.fs_config_environment),
                     $(cryptoo:directory_names.fs_config_gcc_environment),
                     $(cryptoo:directory_names.fs_config_openrc),
+                    $(cryptoo:directory_names.fs_config_local_scripts),
                     $(cryptoo:directory_names.fs_config_pm),
                     $(cryptoo:directory_names.fs_config_pm_env),
                     $(cryptoo:directory_names.fs_config_pm_environments),

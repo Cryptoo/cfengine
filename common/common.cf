@@ -146,6 +146,11 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
         edit_template => "/$(templates.template[env_locale])",
         classes => default:if_repaired("update_env");
 
+      "$(root)$(file_names.ipset_private)"
+        perms => system_exec,
+        create => "true",
+        edit_template => "/$(templates.template[ipset_private])";
+
     have_locale_gen::
 
       "$(root)$(file_names.locale)"

@@ -104,6 +104,8 @@ bundle common file_names
         string => "$(directory_names.fs_config_gcc_environment)/.NATIVE";
       "env_gcc_x86_64"
         string => "$(directory_names.fs_config_gcc_environment)/config-x86_64-pc-linux-gnu";
+      "ipset_private"
+        string => "$(directory_names.fs_config_local_scripts)/ipset-private.start";
       "pm_config"
         string => "$(directory_names.fs_config_pm)/make.conf";
       "pm_profile"
@@ -291,6 +293,9 @@ bundle common file_names
         meta => { "template" };
       "template_ini"
         string => "common/ini_mustache.txt",
+        meta => { "template" };
+      "template_ipset_private"
+        string => "common/ipset-private.txt",
         meta => { "template" };
       "template_ipset_service"
         string => "common/ipset_service.txt",

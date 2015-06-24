@@ -1,0 +1,12 @@
+#!/bin/sh
+
+/usr/sbin/ipset -quiet destroy temp-private
+/usr/sbin/ipset create temp-private hash:net
+/usr/sbin/ipset -quiet create private hash:net
+
+/usr/sbin/ipset add temp-private 10.0.0.0/8
+/usr/sbin/ipset add temp-private 172.16.0.0/12
+/usr/sbin/ipset add temp-private 192.168.0.0/16
+
+/usr/sbin/ipset swap temp-private private
+/usr/sbin/ipset destroy temp-private
