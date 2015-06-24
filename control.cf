@@ -35,6 +35,9 @@ bundle common control
       "shorewall_macro_inputs"
         slist => lsdir("$(this.promise_dirname)/common/shorewall/macros", ".*\.cf", "true");
 
+      "shorewall_rules_inputs"
+        slist => lsdir("$(this.promise_dirname)/common/shorewall/rules", ".*\.cf", "true");
+
       "local_inputs"
         slist => lsdir("$(this.promise_dirname)/local/promises", ".*\.cf", "true");
 

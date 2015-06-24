@@ -5,7 +5,8 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
-              "@(cryptoo:control.shorewall_macro_inputs)"
+              "@(cryptoo:control.shorewall_macro_inputs)",
+              "@(cryptoo:control.shorewall_rules_inputs)"
             };
 
 }
@@ -19,7 +20,7 @@ bundle agent shorewall_rules(root, role)
     any::
 
       "shorewall_macros"
-        slist => bundlesmatching("cryptoo:shorewall_macro_.*", "shorewall_macro", "$(this.role)");
+        slist => bundlesmatching("cryptoo:shorewall_macro_.*", "shorewall_macro");
 
       "role_macros"
         slist => bundlesmatching("cryptoo:shorewall_macro_.*", "$(this.role)");
@@ -27,11 +28,23 @@ bundle agent shorewall_rules(root, role)
       "relevant_macros"
         slist => intersection(shorewall_macros, role_macros);
 
+      "shorewall_rules"
+        slist => bundlesmatching("cryptoo:shorewall_rules_.*", "shorewall_rules");
+
+      "role_rules"
+        slist => bundlesmatching("cryptoo:shorewall_rules_.*", "$(this.role)");
+
+      "relevant_rules"
+        slist => intersection(shorewall_rules, role_rules);
+
   methods:
 
     any::
 
       "configure shorewall macros"
         usebundle => $(relevant_macros)("$(this.root)");
+
+      "configure /etc/shorewall/rules"
+        usebundle => $(relevant_rules)("$(this.root)");
 
 }
