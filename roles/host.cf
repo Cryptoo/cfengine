@@ -251,7 +251,7 @@ bundle agent host(arch)
     have_libvirtd_app::
 
       "/$(cryptoo:directory_groups.host_qemu)/."
-        perms => cryptoo:guest,
+        perms => qemu,
         create => "true",
         handle => "done_$(cryptoo:directory_groups.host_qemu)",
         comment => "create qemu storage directories";
