@@ -31,9 +31,12 @@ bundle agent shorewall(root, role)
       "have_shorewall_app"
         expression => fileexists("$(root)$(file_names.shorewall_app)");
 
+      "have_shorewall_conf"
+        expression => fileexists("$(root)$(file_names.shorewall_config)");
+
   files:
 
-    any::
+    have_shorewall_conf::
 
        "$(root)$(file_names.shorewall_config)"
         create => "false",
