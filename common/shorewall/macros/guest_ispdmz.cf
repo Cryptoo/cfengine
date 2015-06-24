@@ -26,6 +26,9 @@ bundle agent shorewall_macro_guest_ispdmz(root)
 
     any::
 
+      "macro_name"
+        string => "guest";
+
       "defined_numbers"
         data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
 
@@ -35,7 +38,7 @@ bundle agent shorewall_macro_guest_ispdmz(root)
       "macro_json"
         string => '
           {
-            "name": "guest",
+            "name": "$(this.macro_name)",
             "default": "ACCEPT",
             "rules":
                  [
@@ -88,7 +91,7 @@ bundle agent shorewall_macro_guest_ispdmz(root)
 
     any::
 
-      "$(root)$(directory_names.fs_config_shorewall)/macro.guest"
+      "$(root)$(directory_names.fs_config_shorewall)/macro.$(this.macro_name)"
         perms => system,
         create => "true",
         edit_template => "/$(templates.template[shorewall_macro])",
