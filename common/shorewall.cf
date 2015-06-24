@@ -9,6 +9,7 @@ body file control
               "cryptoo/common/shorewall/masq.cf",
               "cryptoo/common/shorewall/shorewall_zones.cf",
               "cryptoo/common/shorewall/policy.cf",
+              "cryptoo/common/shorewall/rules.cf",
               "cryptoo/config/config.cf",
               "cryptoo/config/file_groups.cf",
               "cryptoo/config/file_names.cf"
@@ -54,6 +55,9 @@ bundle agent shorewall(root, role)
 
       "configure /etc/shorewall/masq"
         usebundle => shorewall_masq("$(this.root)", "$(this.role)");
+
+      "configure /etc/shorewall/rules"
+        usebundle => shorewall_rules("$(this.root)", "$(this.role)");
 
   commands:
 

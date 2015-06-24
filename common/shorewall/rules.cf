@@ -1,0 +1,31 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "@(cryptoo:control.shorewall_macro_inputs)"
+            };
+
+}
+
+bundle agent shorewall_rules(root, role)
+
+{
+
+  vars:
+
+    any::
+
+      "role_macros"
+        slist => bundlesmatching("cryptoo:.*", "shorewall_macro", "$(this.role)");
+
+  methods:
+
+    any::
+
+      "configure shorewall macros"
+        usebundle => $(role_macros)("$(this.root)");
+
+}

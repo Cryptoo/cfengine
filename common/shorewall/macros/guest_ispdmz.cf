@@ -1,0 +1,98 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/config.cf",
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/templates.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
+bundle agent shorewall_macro_guest_ispdmz(root)
+
+{
+
+  meta:
+
+    "tags" slist => { "shorewall_macro", "firewall_external" };
+
+  vars:
+
+    any::
+
+      "defined_numbers"
+        data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
+
+      "subnet_config"
+        data => readjson("/$(file_names.subnet_config)", 1M);
+
+      "macro_json"
+        string => '
+          {
+            "name": "guest",
+            "default": "ACCEPT",
+            "rules":
+                 [
+                   {
+                     "action": "DNS(PARAM)",
+                     "source": "fw",
+                     "destination": "net:$(config.dns[primary])",
+                     "protocol": "",
+                     "source_port": "",
+                     "destination_port": ""
+                   },
+                   {
+                     "action": "DNS(PARAM)",
+                     "source": "fw",
+                     "destination": "net:$(config.dns[backup])",
+                     "protocol": "",
+                     "source_port": "",
+                     "destination_port": ""
+                   },
+                   {
+                     "action": "NTP(PARAM)",
+                     "source": "fw",
+                     "destination": "net",
+                     "protocol": "",
+                     "source_port": "",
+                     "destination_port": ""
+                   },
+                   {
+                     "action": "SSH(PARAM)",
+                     "source": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
+                     "destination": "fw",
+                     "protocol": "",
+                     "source_port": "",
+                     "destination_port": ""
+                   },
+                   {
+                     "action": "cfengine(PARAM)",
+                     "source": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
+                     "destination": "fw",
+                     "protocol": "",
+                     "source_port": "",
+                     "destination_port": ""
+                   }
+                 ],
+               }
+          }
+        ';
+
+  files:
+
+    any::
+
+      "$(root)$(directory_names.fs_config_shorewall)/macro.guest"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[shorewall_macro])",
+        template_method => "mustache",
+        template_data => parsejson("$(macro_json)");
+
+}

@@ -32,6 +32,9 @@ bundle common control
       "systemd_proto_inputs"
         slist => lsdir("$(this.promise_dirname)/common/systemd/proto", ".*\.cf", "true");
 
+      "shorewall_macro_inputs"
+        slist => lsdir("$(this.promise_dirname)/common/shorewall/macros", ".*\.cf", "true");
+
       "local_inputs"
         slist => lsdir("$(this.promise_dirname)/local/promises", ".*\.cf", "true");
 
