@@ -18,14 +18,20 @@ bundle agent shorewall_rules(root, role)
 
     any::
 
+      "shorewall_macros"
+        slist => bundlesmatching("cryptoo:shorewall_macro_.*", "shorewall_macro", "$(this.role)");
+
       "role_macros"
-        slist => bundlesmatching("cryptoo:.*", "shorewall_macro", "$(this.role)");
+        slist => bundlesmatching("cryptoo:shorewall_macro_.*", "$(this.role)");
+
+      "relevant_macros"
+        slist => intersection(shorewall_macros, role_macros);
 
   methods:
 
     any::
 
       "configure shorewall macros"
-        usebundle => $(role_macros)("$(this.root)");
+        usebundle => $(relevant_macros)("$(this.root)");
 
 }
