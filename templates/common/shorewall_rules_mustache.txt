@@ -1,0 +1,14 @@
+#
+# Shorewall version 4 - Rules File
+#
+# For information on the settings in this file, type "man shorewall-rules"
+#
+# The manpage is also online at
+# http://www.shorewall.net/manpages/shorewall-rules.html
+#
+######################################################################################################################################################
+#ACTION SOURCE  DEST    PROTO   DEST    SOURCE  ORIGIN  RATE    USER/   MARK    CONNLIMIT       TIME            HEADERS         SWITCH          HELPER
+#                               PORT(S) PORT(S) DEST    LIMIT   GROUP
+{{#rules}}
+{{action}}  {{source}}  {{destination}} {{protocol}} {{destination_port}}  {{source_port}}
+{{/rules}}

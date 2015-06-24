@@ -166,6 +166,8 @@ bundle common file_names
         string => "$(directory_names.fs_config_shorewall)/masq";
       "shorewall_policy"
         string => "$(directory_names.fs_config_shorewall)/policy";
+      "shorewall_rules"
+        string => "$(directory_names.fs_config_shorewall)/rules";
       "shorewall_zones"
         string => "$(directory_names.fs_config_shorewall)/zones";
       "sshd_config"
@@ -329,6 +331,9 @@ bundle common file_names
         meta => { "template" };
       "template_shorewall_policy"
         string => "common/shorewall_policy_mustache.txt",
+        meta => { "template" };
+      "template_shorewall_rules"
+        string => "common/shorewall_rules_mustache.txt",
         meta => { "template" };
       "template_shorewall_zone"
         string => "common/shorewall_zone_mustache.txt",
