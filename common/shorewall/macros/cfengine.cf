@@ -18,7 +18,7 @@ bundle agent shorewall_macro_cfengine(root)
 
   meta:
 
-    "tags" slist => { "shorewall_macro", "firewall_external", "vpn_primary" };
+    "tags" slist => { "shorewall_macro", "firewall_external", "vpn_primary", "dns" };
 
   vars:
 
