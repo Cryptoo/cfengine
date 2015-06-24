@@ -318,6 +318,9 @@ bundle common file_names
       "template_shorewall_hosts"
         string => "common/shorewall_hosts_mustache.txt",
         meta => { "template" };
+      "template_shorewall_macro"
+        string => "common/shorewall_macro_mustache.txt",
+        meta => { "template" };
       "template_shorewall_masq"
         string => "common/shorewall_masq_mustache.txt",
         meta => { "template" };
