@@ -52,6 +52,10 @@ bundle agent install_apps(role)
 
       "/$(file_names.emerge_app)"
         args => "--config-root=/$(directory_names.fs_volatile_images)/server/x86_64/no_multilib/ --root=/$(directory_names.fs_mount_cryptoo) --root-deps -u $(this.role_set)",
+        contain => silent;
+
+      "/$(file_names.etcupdate_app)"
+        args => "--automode -5",
         contain => silent,
         classes => default:if_ok("apps_installed");
 

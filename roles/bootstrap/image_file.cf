@@ -47,6 +47,11 @@ bundle agent image_file(role, type, multilib)
       "install and configure apps"
         usebundle => install_apps("$(this.role)"),
         depends_on => { "image_ready" },
+        handle => "apps_installed";
+
+      "finalize configuration"
+        usebundle => cryptoo_filesystem("/$(directory_names.fs_mount_cryptoo)/","undefined","x86_64","$(this.multilib)"),
+        depends_on => { "apps_installed" },
         classes => default:if_ok("filesystem_ready");
 
   commands:
@@ -59,7 +64,7 @@ bundle agent image_file(role, type, multilib)
         handle => "random_seed_created";
 
       "/$(file_names.rsync_app)"
-        args => "-aX $(sys.inputdir)/ /$(directory_names.fs_mount_cryptoo)$(sys.inputdir)",
+        args => "-aX /$(sys.inputdir)/ /$(directory_names.fs_mount_cryptoo)/$(sys.inputdir)",
         depends_on => { "random_seed_created" },
         handle => "cfengine_installed";
 

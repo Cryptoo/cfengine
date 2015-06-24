@@ -252,6 +252,8 @@ bundle common file_names
         string => "$(directory_names.fs_machine_pm_profile)/repo_name";
       "envupdate_app"
         string => "$(directory_names.fs_standard_admin_apps)/env-update";
+      "etcupdate_app"
+        string => "$(directory_names.fs_standard_admin_apps)/etc-update";
       "groupadd_app"
         string => "$(directory_names.fs_standard_admin_apps)/groupadd";
       "groupmems_app"
