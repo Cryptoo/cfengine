@@ -56,7 +56,11 @@ bundle agent install_apps(role)
 
       "/$(file_names.etcupdate_app)"
         args => "--automode -5",
-        contain => silent,
+        contain => silent;
+
+      "/$(file_names.emerge_app)"
+        args => "--ask n --config cfengine",
+        contain => silent_chroot(/$(directory_names.fs_mount_cryptoo)),
         classes => default:if_ok("apps_installed");
 
     any::
