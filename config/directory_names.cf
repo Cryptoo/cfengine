@@ -56,6 +56,7 @@ bundle common directory_names
       "fs_config_units_multi_user" string => "$(fs_config_units)/multi-user.target.wants";
       "fs_home" string => "home";
       "fs_mount_base" string => "mnt";
+      "fs_mount_backup" string => "$(fs_mount_base)/backup";
       "fs_mount_cryptoo" string => "$(fs_mount_base)/cryptoo";
       "fs_mount_root" string => "$(fs_mount_base)/root";
       "fs_mount_shared" string => "$(fs_mount_base)/shared";
