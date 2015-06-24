@@ -38,7 +38,7 @@
       <readonly/>
       <alias name='fs0'/>
     </filesystem>
-    <filesystem type='mount' accessmode='passthrough'>
+    <filesystem type='mount' accessmode='mapped'>
       <source dir='/etc/cryptoo/guest/outbox/{{name}}'/>
       <target dir='/outbox'/>
       <alias name='fs1'/>
@@ -49,7 +49,7 @@
       <readonly/>
       <alias name='fs2'/>
     </filesystem>
-    <filesystem type='mount' accessmode='passthrough'>
+    <filesystem type='mount' accessmode='mapped'>
       <source dir='/srv/nfs/backup/{{name}}'/>
       <target dir='/backup'/>
       <alias name='fs3'/>
@@ -82,7 +82,7 @@
       <readonly/>
       <alias name='fs8'/>
     </filesystem>
-    <filesystem type='mount' accessmode='mapped'>
+    <filesystem type='mount' accessmode='passthrough'>
       <source dir='/srv/nfs/site-local/portage-local'/>
       <target dir='/portage-local'/>
       <readonly/>
@@ -94,7 +94,7 @@
       <readonly/>
       <alias name='fs10'/>
     </filesystem>
-    <filesystem type='mount' accessmode='passthrough'>
+    <filesystem type='mount' accessmode='mapped'>
       <source dir='/srv/nfs/site-local/storage'/>
       <target dir='/storage'/>
       <alias name='fs11'/>
