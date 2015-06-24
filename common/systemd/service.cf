@@ -21,14 +21,14 @@ bundle agent systemd_enable(root, service)
     any::
 
       "/$(file_names.systemd_app)"
-        args => "is-enabled $(this.service)",
-        contain => silent_chroot($(this.root)),
+        args => "--root=$(this.root) is-enabled $(this.service)",
+        contain => silent,
         classes => systemd_enabled;
 
     service_needs_enable::
 
       "/$(file_names.systemd_app)"
-        args => "enable $(this.service)",
-        contain => silent_chroot($(this.root));
+        args => "--root=$(this.root) enable $(this.service)",
+        contain => silent;
 
 }

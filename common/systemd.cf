@@ -94,7 +94,7 @@ bundle agent systemd(root, role)
       "configure systemd-networkd"
         usebundle => networkd($(this.root), $(this.role));
 
-    have_systemctl&(!bootstrap)::
+    have_systemctl::
 
       "set default target"
         usebundle => default_target("$(this.root)", "$(this.role)");
