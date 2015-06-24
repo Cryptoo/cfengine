@@ -1251,47 +1251,31 @@ bundle common config
 
       "kconfig[USB_SUPPORT]"
         string => "USB_SUPPORT",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
-
-      "kconfig[SOUND]"
-        string => "SOUND",
-        meta => { "enabled", "guest", "guest_multilib" };
-
-      "kconfig[SND]"
-        string => "SND",
-        meta => { "enabled", "guest", "guest_multilib" };
-
-      "kconfig[SND_PCI]"
-        string => "SND_PCI",
-        meta => { "enabled", "guest", "guest_multilib" };
-
-      "kconfig[SND_INTEL8X0]"
-        string => "SND_INTEL8X0",
-        meta => { "enabled", "guest", "guest_multilib" };
+        meta => { "enabled", "host" };
 
       "kconfig[USB]"
         string => "USB",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host" };
 
       "kconfig[USB_DYNAMIC_MINORS]"
         string => "USB_DYNAMIC_MINORS",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host" };
 
       "kconfig[USB_XHCI_HCD]"
         string => "USB_XHCI_HCD",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host" };
 
       "kconfig[USB_EHCI_HCD]"
         string => "USB_EHCI_HCD",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host" };
 
       "kconfig[USB_EHCI_ROOT_HUB_TT]"
         string => "USB_EHCI_ROOT_HUB_TT",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host" };
 
       "kconfig[USB_EHCI_TT_NEWSCHED]"
         string => "USB_EHCI_TT_NEWSCHED",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host" };
 
       "kconfig[USB_UHCI_HCD]"
         string => "USB_UHCI_HCD",
@@ -1303,15 +1287,15 @@ bundle common config
 
       "kconfig[USBIP_CORE]"
         string => "USBIP_CORE",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host" };
 
       "kconfig[USBIP_VHCI_HCD]"
         string => "USBIP_VHCI_HCD",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host" };
 
       "kconfig[USBIP_HOST]"
         string => "USBIP_HOST",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host" };
 
       "kconfig[RTC_CLASS]"
         string => "RTC_CLASS",
@@ -1416,6 +1400,10 @@ bundle common config
       "kconfig[9P_FS]"
         string => "9P_FS",
         meta => { "enabled", "guest", "guest_multilib" };
+
+      "kconfig[PRINTK_TIME]"
+        string => "PRINTK_TIME",
+        meta => { "enabled", "host", "guest", "guest_multilib" };
 
       "kconfig[MAGIC_SYSRQ]"
         string => "MAGIC_SYSRQ",
