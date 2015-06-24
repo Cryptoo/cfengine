@@ -1,0 +1,119 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/config.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/templates.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
+bundle agent shorewall_rules_vpn_primary(root)
+
+{
+
+  meta:
+
+    "tags" slist => { "shorewall_rules", "vpn_primary" };
+
+  vars:
+
+    any::
+
+      "defined_numbers"
+        data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
+
+      "subnet_config"
+        data => readjson("/$(file_names.subnet_config)", 1M);
+
+      "rules_json"
+        string => '
+          {
+            "new":
+                 [
+                   {
+                     "action": "guest",
+                     "source": "",
+                     "destination": "",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "portmapping",
+                     "source": "vdmz",
+                     "destination": "",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "vpn_client",
+                     "source": "fw",
+                     "destination": "net",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "cfengine(ACCEPT)",
+                     "source": "idmz:192.168.$(subnet_config[ispdmz]).$(defined_numbers[firewall_external])",
+                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "SSH(DNAT)",
+                     "source": "vpn",
+                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "SSH(ACCEPT)",
+                     "source": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
+                     "destination": "idmz:192.168.$(subnet_config[ispdmz]).$(defined_numbers[firewall_external])",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "SSH(ACCEPT)",
+                     "source": "idmz:192.168.$(subnet_config[ispdmz]).$(defined_numbers[firewall_external])",
+                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "OpenVPN(DNAT)",
+                     "source": "net",
+                     "destination": "idmz:192.168.$(subnet_config[ispdmz]).$(defined_numbers[vpn_server])",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   }
+                 ],
+               }
+          }
+        ';
+
+  files:
+
+    any::
+
+      "$(root)$(file_names.shorewall_rules)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[shorewall_rules])",
+        template_method => "mustache",
+        template_data => parsejson("$(rules_json)");
+
+}
