@@ -1191,7 +1191,7 @@ bundle common config
 
       "kconfig[HW_RANDOM_VIRTIO]"
         string => "HW_RANDOM_VIRTIO",
-        meta => { "enabled", "guest", "guest_multilib" };
+        meta => { "disabled", "guest", "guest_multilib" };
 
       "kconfig[HPET]"
         string => "HPET",
