@@ -99,8 +99,6 @@ bundle agent systemd(root, role)
       "set default target"
         usebundle => default_target("$(this.root)", "$(this.role)");
 
-    have_systemctl::
-
       "enable services"
         usebundle => systemd_enable($(root), $(systemd_services));
 
@@ -115,5 +113,11 @@ bundle agent systemd(root, role)
       "/$(file_names.systemd_app)"
         args => "daemon-reload",
         contain => basic_chroot($(root));
+
+  reports:
+
+    bootstrap::
+
+      "Bootstrapping systemd in $(this.root)";
 
 }

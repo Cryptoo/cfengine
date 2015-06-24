@@ -112,4 +112,10 @@ bundle agent master(root)
       args => "-t ed25519 -P \"\" -f /$(file_names.default_key)",
       comment => "Change the passphrase with ssh-keygen -p";
 
+  reports:
+
+    bootstrap::
+
+      "Bootstrapping master in $(this.root)";
+
 }

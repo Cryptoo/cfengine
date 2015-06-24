@@ -98,4 +98,10 @@ bundle agent common_guest(root, type, role, arch)
         args => "daemon-reload",
         contain => basic_chroot($(root));
 
+  reports:
+
+    bootstrap::
+
+      "Bootstrapping guest in $(this.root)";
+
 }
