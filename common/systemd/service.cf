@@ -28,7 +28,6 @@ bundle agent systemd_enable(root, service)
     service_needs_enable::
 
       "/$(file_names.systemd_app)"
-        args => "--root=$(this.root) enable $(this.service)",
-        contain => silent;
+        args => "--root=$(this.root) enable $(this.service)";
 
 }
