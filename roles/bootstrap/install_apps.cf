@@ -38,24 +38,29 @@ bundle agent install_apps(role)
 
   commands:
 
+    basic_system_emerged::
+
+      "/$(file_names.emerge_app)"
+        args => "--config-root=/$(directory_names.fs_volatile_images)/server/x86_64/no_multilib/ --root=/$(directory_names.fs_mount_cryptoo) --root-deps $(this.role_set)",
+        contain => silent,
+        classes => default:if_ok("apps_installed");
+
     any::
 
       "/$(file_names.emerge_app)"
         args => "--config-root=/$(directory_names.fs_volatile_images)/server/x86_64/no_multilib/ --root=/$(directory_names.fs_mount_cryptoo) --root-deps --emptytree @system",
         contain => silent,
-        handle => "basic_system_emerged";
-
-      "/$(file_names.emerge_app)"
-        args => "--config-root=/$(directory_names.fs_volatile_images)/server/x86_64/no_multilib/ --root=/$(directory_names.fs_mount_cryptoo) --root-deps $(this.role_set)",
-        contain => silent,
-        depends_on => { "basic_system_emerged" },
-        classes => default:if_ok("apps_installed");
+        classes => default:if_ok("basic_system_emerged");
 
   reports:
 
+    basic_system_emerged::
+
+      "basic system installed";
+
     apps_installed::
 
-      "apps_installed";
+      "role apps installed";
 
     image_configured::
 

@@ -8,7 +8,8 @@ body file control
               "cryptoo/config/best.cf",
               "cryptoo/config/directory_names.cf",
               "cryptoo/config/file_names.cf",
-              "cryptoo/config/site.cf"
+              "cryptoo/config/site.cf",
+              "cryptoo/util/contain.cf"
             };
 
 }
@@ -43,6 +44,7 @@ bundle agent prepare_image(role, multilib)
 
       "/$(file_names.dd_app)"
         args => "if=/dev/zero of=$(this.image_file) bs=1M count=$(this.image_size_mb)",
+        contain => silent,
         handle => "image_created";
 
       "/$(file_names.losetup_app)"
@@ -58,11 +60,13 @@ bundle agent prepare_image(role, multilib)
       "/$(file_names.mkfs_app)"
         args => "-t $(site.config[guest_fs][filesystem]) -E nodiscard /dev/loop0",
         depends_on => { "loop_attached" },
+        contain => silent,
         handle => "image_fs_created";
 
       "/$(file_names.mount_app)"
         args => "-o $(site.config[guest_fs][options]) /dev/loop0 /$(directory_names.fs_mount_cryptoo)",
         depends_on => { "image_fs_created" },
+        contain => silent,
         handle => "image_fs_mounted";
 
       "/$(file_names.tar_app)"
@@ -72,6 +76,13 @@ bundle agent prepare_image(role, multilib)
 
       "/$(file_names.rm_app)"
         args => "-r /$(directory_names.fs_mount_cryptoo)/$(directory_names.fs_config_pm)",
-        depends_on => { "skeleton_extracted" };
+        depends_on => { "skeleton_extracted" },
+        classes => default:if_ok("image_prepared");
+
+  reports:
+
+    image_prepared::
+
+      "image file created";
 
 }
