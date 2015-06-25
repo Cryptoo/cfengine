@@ -12,20 +12,20 @@ body file control
 
 }
 
-bundle agent shorewall_macro_vpn_server(root)
+bundle agent shorewall_macro_mail_server_out(root)
 
 {
 
   meta:
 
-    "tags" slist => { "shorewall_macro", "firewall_external", "vpn_server", "master" };
+    "tags" slist => { "shorewall_macro", "mail_server_out", "master" };
 
   vars:
 
     any::
 
       "macro_name"
-        string => "vpn_server";
+        string => "mail_server_out";
 
       "macro_json"
         string => '
@@ -35,7 +35,7 @@ bundle agent shorewall_macro_vpn_server(root)
             "rules":
                  [
                    {
-                     "action": "OpenVPN(PARAM)",
+                     "action": "POP3(PARAM)",
                      "source": "-",
                      "destination": "-",
                      "protocol": "",
@@ -43,27 +43,43 @@ bundle agent shorewall_macro_vpn_server(root)
                      "source_port": ""
                    },
                    {
-                     "action": "PARAM",
+                     "action": "POP3S(PARAM)",
                      "source": "-",
                      "destination": "-",
-                     "protocol": "tcp",
-                     "destination_port": "1194",
+                     "protocol": "",
+                     "destination_port": "",
                      "source_port": ""
                    },
                    {
-                     "action": "PARAM",
+                     "action": "IMAP(PARAM)",
                      "source": "-",
                      "destination": "-",
-                     "protocol": "udp",
-                     "destination_port": "1195",
+                     "protocol": "",
+                     "destination_port": "",
                      "source_port": ""
                    },
                    {
-                     "action": "PARAM",
+                     "action": "IMAPS(PARAM)",
                      "source": "-",
                      "destination": "-",
-                     "protocol": "tcp",
-                     "destination_port": "1195",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "SMTP(PARAM)",
+                     "source": "-",
+                     "destination": "-",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "SMTPS(PARAM)",
+                     "source": "-",
+                     "destination": "-",
+                     "protocol": "",
+                     "destination_port": "",
                      "source_port": ""
                    }
                  ],

@@ -356,6 +356,9 @@ bundle common file_names
       "template_shorewall_rules"
         string => "common/shorewall_rules_mustache.txt",
         meta => { "template" };
+      "template_shorewall_rules_workaround"
+        string => "common/shorewall_rules_workaround.txt",
+        meta => { "template" };
       "template_shorewall_zone"
         string => "common/shorewall_zone_mustache.txt",
         meta => { "template" };

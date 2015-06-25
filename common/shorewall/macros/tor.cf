@@ -20,7 +20,7 @@ bundle agent shorewall_macro_tor(root)
 
   meta:
 
-    "tags" slist => { "shorewall_macro", "firewall_internal" };
+    "tags" slist => { "shorewall_macro", "firewall_internal", "master" };
 
   vars:
 

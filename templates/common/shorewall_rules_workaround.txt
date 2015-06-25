@@ -1,0 +1,38 @@
+#
+# Shorewall version 4 - Rules File
+#
+# For information on the settings in this file, type "man shorewall-rules"
+#
+# The manpage is also online at
+# http://www.shorewall.net/manpages/shorewall-rules.html
+#
+######################################################################################################################################################
+#ACTION SOURCE  DEST    PROTO   DEST    SOURCE  ORIGIN  RATE    USER/   MARK    CONNLIMIT       TIME            HEADERS         SWITCH          HELPER
+#                               PORT(S) PORT(S) DEST    LIMIT   GROUP
+?SECTION ALL
+?SECTION ESTABLISHED
+?SECTION RELATED
+?SECTION INVALID
+?SECTION UNTRACKED
+?SECTION NEW
+{{#host}}
+{{action}}  {{source}}  {{destination}} {{protocol}} {{destination_port}}  {{source_port}}  {{original_destination}}  {{rate}}  {{user}}
+{{/host}}
+{{#wan}}
+{{action}}  {{source}}  {{destination}} {{protocol}} {{destination_port}}  {{source_port}}  {{original_destination}}  {{rate}}  {{user}}
+{{/wan}}
+{{#ispdmz}}
+{{action}}  {{source}}  {{destination}} {{protocol}} {{destination_port}}  {{source_port}}  {{original_destination}}  {{rate}}  {{user}}
+{{/ispdmz}}
+{{#tor}}
+{{action}}  {{source}}  {{destination}} {{protocol}} {{destination_port}}  {{source_port}}  {{original_destination}}  {{rate}}  {{user}}
+{{/tor}}
+{{#i2p}}
+{{action}}  {{source}}  {{destination}} {{protocol}} {{destination_port}}  {{source_port}}  {{original_destination}}  {{rate}}  {{user}}
+{{/i2p}}
+{{#vpndmz}}
+{{action}}  {{source}}  {{destination}} {{protocol}} {{destination_port}}  {{source_port}}  {{original_destination}}  {{rate}}  {{user}}
+{{/vpndmz}}
+{{#lan}}
+{{action}}  {{source}}  {{destination}} {{protocol}} {{destination_port}}  {{source_port}}  {{original_destination}}  {{rate}}  {{user}}
+{{/lan}}
