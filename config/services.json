@@ -3,6 +3,7 @@
       {
           "socks_port": "9050",
           "tproxy_port": "9040",
-          "http_port":  "3128"
+          "http_port":  "3128",
+          "dns_port":  "53"
       }
 }

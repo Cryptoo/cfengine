@@ -194,6 +194,8 @@ bundle common file_names
         string => "$(directory_names.fs_config_units)/getty@tty1.service.d/autologin.conf";
       "serial_autologin"
         string => "$(directory_names.fs_config_units)/serial-getty@ttyS0.service.d/autologin.conf";
+      "torrc"
+        string => "$(directory_names.fs_config_tor)/torrc";
       "proc_mounts"
         string => "proc/self/mounts";
       "authorized_keys"
@@ -360,6 +362,9 @@ bundle common file_names
         meta => { "template" };
       "template_dnsmasq"
         string => "guest/dnsmasq_mustache.txt",
+        meta => { "template" };
+      "template_torrc"
+        string => "guest/torrc_mustache.txt",
         meta => { "template" };
       "template_crypttab"
         string => "host/crypttab.txt",

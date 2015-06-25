@@ -1,0 +1,19 @@
+User tor
+PIDFile /var/run/tor/tor.pid
+Log notice syslog
+DataDirectory   /var/lib/tor/data
+
+OutboundBindAddress {{external}}
+
+SocksPort {{internal}}:{{socks_port}}
+{{#socks}}
+SocksPolicy accept {{subnet}}
+{{/socks}}
+SocksPolicy reject *
+
+VirtualAddrNetworkIPv4 {{onion_subnet}}
+AutomapHostsOnResolve 1
+TransPort {{trans_port}}
+TransListenAddress {{internal}}
+DNSPort {{dns_port}}
+DNSListenAddress {{internal}}

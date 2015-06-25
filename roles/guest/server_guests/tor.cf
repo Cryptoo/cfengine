@@ -4,6 +4,13 @@ body file control
 
   namespace => "cryptoo";
 
+  inputs => {
+              "cryptoo/config/config.cf",
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/network.cf"
+            };
+
 }
 
 bundle agent tor(root)
@@ -13,6 +20,43 @@ bundle agent tor(root)
   meta:
 
     "tags" slist => { "cryptoo_role" };
+
+  vars:
+
+    any::
+
+      "torrc"
+        string => '
+          {
+            "external": "192.168.$(network.subnet_config[ispdmz]).$(config.defined_numbers[tor])",
+            "internal": "192.168.$(network.subnet_config[tor]).$(config.defined_numbers[tor])",
+            "socks_port": "$(config.services[tor][socks_port])",
+            "dns_port": "$(config.services[tor][dns_port])",
+            "trans_port": "$(config.services[tor][tproxy_port])",
+            "onion_subnet": "$(config.transparent_proxy_net[tor])",
+            "socks":
+              [
+                { "subnet": "192.168.$(network.subnet_config[tor]).0/24" },
+                { "subnet": "192.168.$(network.subnet_config[vpndmz]).0/24" },
+                { "subnet": "192.168.$(network.subnet_config[lan]).0/24" }
+              ]
+          }
+        ';
+
+  files:
+
+    any::
+
+      "$(this.root)$(directory_names.fs_config_tor)/."
+        perms => system,
+        create => "true";
+
+      "$(this.root)$(file_names.torrc)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[torrc])",
+        template_method => "mustache",
+        template_data => parsejson($(this.torrc));
 
   methods:
 
