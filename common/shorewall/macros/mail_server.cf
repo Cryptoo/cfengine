@@ -12,48 +12,56 @@ body file control
 
 }
 
-bundle agent shorewall_macro_portmap(root)
+bundle agent shorewall_macro_mail_server(root)
 
 {
 
   meta:
 
-    "tags" slist => { "shorewall_macro", "firewall_external", "vpn_primary", "firewall_internal" };
+    "tags" slist => { "shorewall_macro", "mail_server", "firewall_internal" };
 
   vars:
 
     any::
 
       "macro_name"
-        string => "portmapping";
+        string => "mail_server";
 
       "macro_json"
         string => '
           {
             "name": "$(this.macro_name)",
-            "default": "DROP",
+            "default": "ACCEPT",
             "rules":
                  [
                    {
-                     "action": "PARAM",
+                     "action": "IMAP(PARAM)",
                      "source": "-",
-                     "destination": "fw",
-                     "protocol": "tcp",
-                     "destination_port": "5351",
+                     "destination": "-",
+                     "protocol": "",
+                     "destination_port": "",
                      "source_port": ""
                    },
                    {
-                     "action": "PARAM",
+                     "action": "IMAPS(PARAM)",
                      "source": "-",
-                     "destination": "fw",
-                     "protocol": "udp",
-                     "destination_port": "5351",
+                     "destination": "-",
+                     "protocol": "",
+                     "destination_port": "",
                      "source_port": ""
                    },
                    {
-                     "action": "DropUPnP(PARAM)",
+                     "action": "SMTP(PARAM)",
                      "source": "-",
-                     "destination": "fw",
+                     "destination": "-",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "SMTPS(PARAM)",
+                     "source": "-",
+                     "destination": "-",
                      "protocol": "",
                      "destination_port": "",
                      "source_port": ""

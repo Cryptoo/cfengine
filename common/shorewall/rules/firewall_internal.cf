@@ -1,0 +1,199 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/config.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/templates.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
+bundle agent shorewall_rules_firewall_internal(root)
+
+{
+
+  meta:
+
+    "tags" slist => { "shorewall_rules", "firewall_internal" };
+
+  vars:
+
+    any::
+
+      "defined_numbers"
+        data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
+
+      "subnet_config"
+        data => readjson("/$(file_names.subnet_config)", 1M);
+
+      "rules_json"
+        string => '
+          {
+            "new":
+                 [
+                   {
+                     "action": "guest",
+                     "source": "",
+                     "destination": "",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "portmapping",
+                     "source": "lan",
+                     "destination": "",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "DNS(ACCEPT)",
+                     "source": "lan",
+                     "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "DNS(ACCEPT)",
+                     "source": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])",
+                     "destination": "tor:192.168.$(subnet_config[tor]).$(defined_numbers[tor])",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "DNS(ACCEPT)",
+                     "source": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])",
+                     "destination": "i2p:192.168.$(subnet_config[i2p]).$(defined_numbers[i2p])",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "SSH(ACCEPT)",
+                     "source": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
+                     "destination": "vdmz",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "SSH(ACCEPT)",
+                     "source": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
+                     "destination": "idmz",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "SSH(ACCEPT)",
+                     "source": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
+                     "destination": "tor",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "SSH(ACCEPT)",
+                     "source": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
+                     "destination": "i2p",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "SSH(ACCEPT)",
+                     "source": "net",
+                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "SSH(ACCEPT)",
+                     "source": "idmz:192.168.$(subnet_config[ispdmz]).$(defined_numbers[firewall_external])",
+                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "cfengine(ACCEPT)",
+                     "source": "idmz:192.168.$(subnet_config[ispdmz]).$(defined_numbers[firewall_external])",
+                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "cfengine(ACCEPT)",
+                     "source": "vdmz",
+                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "cfengine(ACCEPT)",
+                     "source": "tor",
+                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "cfengine(ACCEPT)",
+                     "source": "i2p",
+                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "mail_server(ACCEPT)",
+                     "source": "lan",
+                     "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "tor(ACCEPT)",
+                     "source": "lan",
+                     "destination": "tor:192.168.$(subnet_config[tor]).$(defined_numbers[tor])",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "tor(ACCEPT)",
+                     "source": "vdmz",
+                     "destination": "tor:192.168.$(subnet_config[tor]).$(defined_numbers[tor])",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   }
+                 ],
+               }
+          }
+        ';
+
+  files:
+
+    any::
+
+      "$(root)$(file_names.shorewall_rules)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[shorewall_rules])",
+        template_method => "mustache",
+        template_data => parsejson("$(rules_json)");
+
+}

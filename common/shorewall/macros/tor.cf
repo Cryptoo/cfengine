@@ -5,60 +5,60 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
+              "cryptoo/config/config.cf",
               "cryptoo/config/directory_names.cf",
+              "cryptoo/config/file_names.cf",
               "cryptoo/config/templates.cf",
               "cryptoo/util/perms.cf"
             };
 
 }
 
-bundle agent shorewall_macro_portmap(root)
+bundle agent shorewall_macro_tor(root)
 
 {
 
   meta:
 
-    "tags" slist => { "shorewall_macro", "firewall_external", "vpn_primary", "firewall_internal" };
+    "tags" slist => { "shorewall_macro", "firewall_internal" };
 
   vars:
 
     any::
 
       "macro_name"
-        string => "portmapping";
+        string => "tor";
+
+      "defined_numbers"
+        data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
+
+      "subnet_config"
+        data => readjson("/$(file_names.subnet_config)", 1M);
 
       "macro_json"
         string => '
           {
             "name": "$(this.macro_name)",
-            "default": "DROP",
+            "default": "ACCEPT",
             "rules":
                  [
                    {
                      "action": "PARAM",
                      "source": "-",
-                     "destination": "fw",
+                     "destination": "-",
                      "protocol": "tcp",
-                     "destination_port": "5351",
+                     "destination_port": "$(config.services[tor][socks_port])",
                      "source_port": ""
                    },
                    {
                      "action": "PARAM",
                      "source": "-",
-                     "destination": "fw",
-                     "protocol": "udp",
-                     "destination_port": "5351",
-                     "source_port": ""
-                   },
-                   {
-                     "action": "DropUPnP(PARAM)",
-                     "source": "-",
-                     "destination": "fw",
-                     "protocol": "",
-                     "destination_port": "",
+                     "destination": "-",
+                     "protocol": "tcp",
+                     "destination_port": "$(config.services[tor][http_port])",
                      "source_port": ""
                    }
-                 ],
+                 ]
                }
           }
         ';

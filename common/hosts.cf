@@ -165,7 +165,7 @@ bundle agent hosts(root)
                 {
                   "fqdn": "$(network.machine_names[12][name]).localnet",
                   "ip": "192.168.$(subnet_config[lan]).12",
-                  "alias": ""
+                  "alias": "firewall_internal"
                 },
                 {
                   "fqdn": "$(network.machine_names[13][name]).localnet",
