@@ -16,5 +16,5 @@
 ?SECTION UNTRACKED
 ?SECTION NEW
 {{#new}}
-{{action}}  {{source}}  {{destination}} {{protocol}} {{destination_port}}  {{source_port}}
+{{action}}  {{source}}  {{destination}} {{protocol}} {{destination_port}}  {{source_port}}  {{original_destination}}  {{rate}}  {{user}}
 {{/new}}

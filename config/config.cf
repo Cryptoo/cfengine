@@ -35,6 +35,9 @@ bundle common config
     "users"
       data => readjson("$(sys.inputdir)/cryptoo/config/users.json", 1M);
 
+    "services"
+      data => readjson("$(sys.inputdir)/cryptoo/config/services.json", 1M);
+
     "server_guests"
        slist => {
                    "firewall_external",

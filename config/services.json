@@ -1,0 +1,8 @@
+{
+    "tor":
+      {
+          "socks_port": "9050",
+          "tproxy_port": "9040",
+          "http_port":  "3128"
+      }
+}

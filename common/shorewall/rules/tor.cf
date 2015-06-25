@@ -6,7 +6,6 @@ body file control
 
   inputs => {
               "cryptoo/config/config.cf",
-              "cryptoo/config/directory_names.cf",
               "cryptoo/config/file_names.cf",
               "cryptoo/config/templates.cf",
               "cryptoo/util/perms.cf"
@@ -14,20 +13,17 @@ body file control
 
 }
 
-bundle agent shorewall_macro_guest_ispdmz(root)
+bundle agent shorewall_rules_tor(root)
 
 {
 
   meta:
 
-    "tags" slist => { "shorewall_macro", "tor", "firewall_external" };
+    "tags" slist => { "shorewall_rules", "tor" };
 
   vars:
 
     any::
-
-      "macro_name"
-        string => "guest";
 
       "defined_numbers"
         data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
@@ -35,48 +31,58 @@ bundle agent shorewall_macro_guest_ispdmz(root)
       "subnet_config"
         data => readjson("/$(file_names.subnet_config)", 1M);
 
-      "macro_json"
+      "rules_json"
         string => '
           {
-            "name": "$(this.macro_name)",
-            "default": "ACCEPT",
-            "rules":
+            "new":
                  [
                    {
-                     "action": "DNS(PARAM)",
-                     "source": "fw",
-                     "destination": "net:$(config.dns[primary])",
+                     "action": "guest",
+                     "source": "",
+                     "destination": "",
                      "protocol": "",
                      "destination_port": "",
                      "source_port": ""
                    },
                    {
-                     "action": "DNS(PARAM)",
-                     "source": "fw",
-                     "destination": "net:$(config.dns[backup])",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
-                   },
-                   {
-                     "action": "NTP(PARAM)",
-                     "source": "fw",
+                     "action": "ACCEPT",
+                     "source": "fw:192.168.$(subnet_config[ispdmz]).$(defined_numbers[tor])",
                      "destination": "net",
+                     "protocol": "tcp",
+                     "destination_port": "-",
+                     "source_port": "-",
+                     "original_destination": "-",
+                     "rate": "-",
+                     "user": "tor:tor"
+
+                   },
+                   {
+                     "action": "tor",
+                     "source": "tor",
+                     "destination": "",
                      "protocol": "",
                      "destination_port": "",
                      "source_port": ""
                    },
                    {
-                     "action": "SSH(PARAM)",
-                     "source": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
-                     "destination": "fw",
+                     "action": "tor",
+                     "source": "vpndmz",
+                     "destination": "",
                      "protocol": "",
                      "destination_port": "",
                      "source_port": ""
                    },
                    {
-                     "action": "cfengine(PARAM)",
-                     "source": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
+                     "action": "tor",
+                     "source": "lan",
+                     "destination": "",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "DNS(PARAM)",
+                     "source": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])",
                      "destination": "fw",
                      "protocol": "",
                      "destination_port": "",
@@ -91,11 +97,11 @@ bundle agent shorewall_macro_guest_ispdmz(root)
 
     any::
 
-      "$(root)$(directory_names.fs_config_shorewall)/macro.$(this.macro_name)"
+      "$(root)$(file_names.shorewall_rules)"
         perms => system,
         create => "true",
-        edit_template => "/$(templates.template[shorewall_macro])",
+        edit_template => "/$(templates.template[shorewall_rules])",
         template_method => "mustache",
-        template_data => parsejson("$(macro_json)");
+        template_data => parsejson("$(rules_json)");
 
 }

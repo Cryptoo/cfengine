@@ -1,0 +1,86 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/config.cf",
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/templates.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
+bundle agent shorewall_macro_tor_gateway(root)
+
+{
+
+  meta:
+
+    "tags" slist => { "shorewall_macro", "tor" };
+
+  vars:
+
+    any::
+
+      "macro_name"
+        string => "tor";
+
+      "defined_numbers"
+        data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
+
+      "subnet_config"
+        data => readjson("/$(file_names.subnet_config)", 1M);
+
+      "macro_json"
+        string => '
+          {
+            "name": "$(this.macro_name)",
+            "default": "ACCEPT",
+            "rules":
+                 [
+                   {
+                     "action": "PARAM",
+                     "source": "-",
+                     "destination": "fw",
+                     "protocol": "tcp",
+                     "destination_port": "$(config.services[tor][socks_port])",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "PARAM",
+                     "source": "-",
+                     "destination": "fw",
+                     "protocol": "tcp",
+                     "destination_port": "$(config.services[tor][http_port])",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "REDIRECT",
+                     "source": "-",
+                     "destination": "$(config.services[tor][9040])",
+                     "protocol": "tcp",
+                     "destination_port": "-",
+                     "source_port": "-",
+                     "original_destination": "$(config.transparent_proxy_net[tor])"
+                   }
+                 ]
+               }
+          }
+        ';
+
+  files:
+
+    any::
+
+      "$(root)$(directory_names.fs_config_shorewall)/macro.$(this.macro_name)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[shorewall_macro])",
+        template_method => "mustache",
+        template_data => parsejson("$(macro_json)");
+
+}
