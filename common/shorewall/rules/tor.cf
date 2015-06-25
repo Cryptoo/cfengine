@@ -66,7 +66,7 @@ bundle agent shorewall_rules_tor(root)
                    },
                    {
                      "action": "tor",
-                     "source": "vpndmz",
+                     "source": "vdmz",
                      "destination": "",
                      "protocol": "",
                      "destination_port": "",
@@ -81,7 +81,7 @@ bundle agent shorewall_rules_tor(root)
                      "source_port": ""
                    },
                    {
-                     "action": "DNS(PARAM)",
+                     "action": "DNS(ACCEPT)",
                      "source": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])",
                      "destination": "fw",
                      "protocol": "",

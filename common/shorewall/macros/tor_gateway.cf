@@ -61,7 +61,7 @@ bundle agent shorewall_macro_tor_gateway(root)
                    {
                      "action": "REDIRECT",
                      "source": "-",
-                     "destination": "$(config.services[tor][9040])",
+                     "destination": "$(config.services[tor][tproxy_port])",
                      "protocol": "tcp",
                      "destination_port": "-",
                      "source_port": "-",
