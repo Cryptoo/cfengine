@@ -1,0 +1,163 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/config.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/templates.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
+bundle agent shorewall_rules_vpn_server(root)
+
+{
+
+  meta:
+
+    "tags" slist => { "shorewall_rules", "vpn_server" };
+
+  vars:
+
+    any::
+
+      "defined_numbers"
+        data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
+
+      "subnet_config"
+        data => readjson("/$(file_names.subnet_config)", 1M);
+
+      "rules_json"
+        string => '
+          {
+            "new":
+                 [
+                   {
+                     "action": "guest",
+                     "source": "",
+                     "destination": "",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "vpn_server_out(ACCEPT)",
+                     "source": "fw:192.168.$(subnet_config[ispdmz]).$(defined_numbers[vpn_server])",
+                     "destination": "net",
+                     "protocol": "-",
+                     "destination_port": "-",
+                     "source_port": "-",
+                     "original_destination": "-",
+                     "rate": "-",
+                     "user": "openvpn:openvpn"
+
+                   },
+                   {
+                     "action": "vpn_server",
+                     "source": "net",
+                     "destination": "fw:192.168.$(subnet_config[ispdmz]).$(defined_numbers[vpn_server])",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "ACCEPT",
+                     "source": "l0",
+                     "destination": "l1",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "ACCEPT",
+                     "source": "l0",
+                     "destination": "l2",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "ACCEPT",
+                     "source": "l0",
+                     "destination": "l3",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "ACCEPT",
+                     "source": "l0",
+                     "destination": "l4",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "SSH(ACCEPT)",
+                     "source": "l0",
+                     "destination": "l13",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "ACCEPT",
+                     "source": "l1",
+                     "destination": "l0",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "ACCEPT",
+                     "source": "l2",
+                     "destination": "l0",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "ACCEPT",
+                     "source": "l3",
+                     "destination": "l0",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "ACCEPT",
+                     "source": "l4",
+                     "destination": "l0",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "ACCEPT",
+                     "source": "l13",
+                     "destination": "l0",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   }
+                 ],
+               }
+          }
+        ';
+
+  files:
+
+    any::
+
+      "$(root)$(file_names.shorewall_rules)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[shorewall_rules])",
+        template_method => "mustache",
+        template_data => parsejson("$(rules_json)");
+
+}
