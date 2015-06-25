@@ -60,7 +60,7 @@ bundle agent install_apps(role)
 
       "/$(file_names.emerge_app)"
         args => "--ask n --config cfengine",
-        contain => silent_chroot(/$(directory_names.fs_mount_cryptoo)),
+        contain => silent_chroot("/$(directory_names.fs_mount_cryptoo)"),
         classes => default:if_ok("apps_installed");
 
     any::
