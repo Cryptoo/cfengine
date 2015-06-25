@@ -104,6 +104,8 @@ bundle common file_names
         string => "$(directory_names.fs_config_gcc_environment)/.NATIVE";
       "env_gcc_x86_64"
         string => "$(directory_names.fs_config_gcc_environment)/config-x86_64-pc-linux-gnu";
+      "firstrun"
+        string => "$(directory_names.fs_config_local_scripts)/firstrun.start";
       "ipset_private"
         string => "$(directory_names.fs_config_local_scripts)/ipset-private.start";
       "pm_config"
@@ -284,6 +286,9 @@ bundle common file_names
         meta => { "template" };
       "template_env_locale"
         string => "common/env_locale.txt",
+        meta => { "template" };
+      "template_firstrun"
+        string => "common/firstrun.txt",
         meta => { "template" };
       "template_fstab"
         string => "common/fstab.txt",

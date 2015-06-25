@@ -1,0 +1,7 @@
+#!/bin/sh
+
+/etc/local.d/ipset-private.start
+/usr/bin/systemctl restart shorewall
+/usr/bin/emerge --config --ask n cfengine
+/usr/sbin/cf-agent -B {{master}}
+/bin/rm /etc/local.d/firstrun.start

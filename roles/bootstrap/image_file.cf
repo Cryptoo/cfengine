@@ -7,7 +7,9 @@ body file control
   inputs => {
               "cryptoo/config/directory_names.cf",
               "cryptoo/config/file_names.cf",
+              "cryptoo/config/templates.cf",
               "cryptoo/util/contain.cf",
+              "cryptoo/util/perms.cf",
               "@(cryptoo:control.guest_inputs)"
             };
 
@@ -21,8 +23,14 @@ bundle agent image_file(role, type, multilib)
 
     any::
 
-      "role_set"
-        string => concat("@", "$(this.role)");
+      "defined_numbers"
+        data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
+
+      "subnet_config"
+        data => readjson("/$(file_names.subnet_config)", 1M);
+
+      "firstrun_json"
+        string => '{ "master": "192.168.$(subnet_config[lan]).$(defined_numbers[master])" }';
 
   classes:
 
@@ -30,6 +38,18 @@ bundle agent image_file(role, type, multilib)
 
       "bootstrap_$(this.type)"
         expression => "any";
+
+  files:
+
+    image_configured::
+
+      "/$(directory_names.fs_mount_cryptoo)/$(file_names.firstrun)"
+        perms => system_exec,
+        create => "true",
+        edit_template => "/$(templates.template[firstrun])",
+        template_method => "mustache",
+        template_data => parsejson("$(firstrun_json)"),
+        classes => default:if_ok("filesystem_ready");
 
   methods:
 
@@ -52,7 +72,7 @@ bundle agent image_file(role, type, multilib)
       "finalize configuration"
         usebundle => cryptoo_filesystem("/$(directory_names.fs_mount_cryptoo)/","undefined","x86_64","$(this.multilib)"),
         depends_on => { "apps_installed" },
-        classes => default:if_ok("filesystem_ready");
+        classes => default:if_ok("image_configured");
 
   commands:
 
