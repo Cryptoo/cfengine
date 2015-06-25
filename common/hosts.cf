@@ -1,0 +1,196 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/network.cf",
+              "cryptoo/config/templates.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
+bundle agent hosts(root)
+
+{
+
+  vars:
+
+    any::
+
+      "defined_numbers"
+        data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
+
+      "subnet_config"
+        data => readjson("/$(file_names.subnet_config)", 1M);
+
+      "network[loopback]"
+        string => "127.0.0.0";
+      "network[link-local]"
+        string => "169.254.0.0";
+      "network[ispdmz]"
+        string => "$(network.subnet[ispdmz])";
+      "network[vpndmz]"
+        string => "$(network.subnet[vpndmz])";
+      "network[tornet]"
+        string => "$(network.subnet[tor])";
+      "network[i2pnet]"
+        string => "$(network.subnet[i2p])";
+      "network[localnet]"
+        string => "$(network.subnet[lan])";
+
+      "networks"
+        slist => getindices("network");
+
+      "network_string[$(networks)]"
+        string => '{ "network": "$(networks)", "address": "$(network[$(networks)])" }';
+
+      "network_strings"
+        slist => getvalues("network_string");
+
+      "network_strings_joined"
+        string => join(", ", "network_strings");
+
+      "network_json"
+        string => '{ "networks": [ $(network_strings_joined) ] }';
+
+      "host_json"
+        string => '
+          {
+            "hosts":
+              [
+                {
+                  "fqdn": "$(network.machine_names[10][name]).ispdmz",
+                  "ip": "192.168.$(subnet_config[ispdmz]).10",
+                  "alias": "firewall_external"
+                },
+                {
+                  "fqdn": "$(network.machine_names[11][name]).ispdmz",
+                  "ip": "192.168.$(subnet_config[ispdmz]).11",
+                  "alias": ""
+                },
+                {
+                  "fqdn": "$(network.machine_names[13][name]).ispdmz",
+                  "ip": "192.168.$(subnet_config[ispdmz]).13",
+                  "alias": ""
+                },
+                {
+                  "fqdn": "$(network.machine_names[14][name]).ispdmz",
+                  "ip": "192.168.$(subnet_config[ispdmz]).14",
+                  "alias": ""
+                },
+                {
+                  "fqdn": "$(network.machine_names[15][name]).ispdmz",
+                  "ip": "192.168.$(subnet_config[ispdmz]).15",
+                  "alias": ""
+                },
+                {
+                  "fqdn": "$(network.machine_names[17][name]).ispdmz",
+                  "ip": "192.168.$(subnet_config[ispdmz]).17",
+                  "alias": ""
+                },
+                {
+                  "fqdn": "$(network.machine_names[18][name]).ispdmz",
+                  "ip": "192.168.$(subnet_config[ispdmz]).18",
+                  "alias": ""
+                },
+                {
+                  "fqdn": "$(network.machine_names[19][name]).ispdmz",
+                  "ip": "192.168.$(subnet_config[ispdmz]).19",
+                  "alias": ""
+                },
+                {
+                  "fqdn": "$(network.machine_names[11][name]).vpndmz",
+                  "ip": "192.168.$(subnet_config[vpndmz]).11",
+                  "alias": "vpn_primary"
+                },
+                {
+                  "fqdn": "$(network.machine_names[12][name]).vpndmz",
+                  "ip": "192.168.$(subnet_config[vpndmz]).12",
+                  "alias": ""
+                },
+                {
+                  "fqdn": "$(network.machine_names[16][name]).vpndmz",
+                  "ip": "192.168.$(subnet_config[vpndmz]).16",
+                  "alias": "dns"
+                },
+                {
+                  "fqdn": "$(network.machine_names[17][name]).vpndmz",
+                  "ip": "192.168.$(subnet_config[vpndmz]).17",
+                  "alias": "freenet"
+                },
+                {
+                  "fqdn": "$(network.machine_names[18][name]).vpndmz",
+                  "ip": "192.168.$(subnet_config[vpndmz]).18",
+                  "alias": "namecoin"
+                },
+                {
+                  "fqdn": "$(network.machine_names[19][name]).vpndmz",
+                  "ip": "192.168.$(subnet_config[vpndmz]).19",
+                  "alias": "bitmessage"
+                },
+                {
+                  "fqdn": "$(network.machine_names[20][name]).vpndmz",
+                  "ip": "192.168.$(subnet_config[vpndmz]).20",
+                  "alias": "mail_server"
+                },
+                {
+                  "fqdn": "$(network.machine_names[12][name]).tornet",
+                  "ip": "192.168.$(subnet_config[tor]).12",
+                  "alias": ""
+                },
+                {
+                  "fqdn": "$(network.machine_names[14][name]).tornet",
+                  "ip": "192.168.$(subnet_config[tor]).14",
+                  "alias": "tor"
+                },
+                {
+                  "fqdn": "$(network.machine_names[12][name]).i2pnet",
+                  "ip": "192.168.$(subnet_config[i2p]).12",
+                  "alias": ""
+                },
+                {
+                  "fqdn": "$(network.machine_names[15][name]).i2pnet",
+                  "ip": "192.168.$(subnet_config[i2p]).15",
+                  "alias": "i2p"
+                },
+                {
+                  "fqdn": "$(network.machine_names[1][name]).localnet",
+                  "ip": "192.168.$(subnet_config[lan]).1",
+                  "alias": "master"
+                },
+                {
+                  "fqdn": "$(network.machine_names[12][name]).localnet",
+                  "ip": "192.168.$(subnet_config[lan]).12",
+                  "alias": ""
+                },
+                {
+                  "fqdn": "$(network.machine_names[13][name]).localnet",
+                  "ip": "192.168.$(subnet_config[lan]).13",
+                  "alias": "vpn_server"
+                }
+              ]
+          }';
+
+  files:
+
+    any::
+
+      "$(root)$(file_names.networks)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[networks])",
+        template_method => "mustache",
+        template_data => parsejson("$(network_json)");
+
+      "$(root)$(file_names.hosts)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[hosts])",
+        template_method => "mustache",
+        template_data => parsejson("$(host_json)");
+
+}

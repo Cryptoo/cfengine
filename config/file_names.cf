@@ -52,6 +52,8 @@ bundle common file_names
         string => "$(directory_names.fs_config_base)/fstab";
       "group"
         string => "$(directory_names.fs_config_base)/group";
+      "hosts"
+        string => "$(directory_names.fs_config_base)/hosts";
       "hostname_systemd"
         string => "$(directory_names.fs_config_base)/hostname";
       "locale"
@@ -295,6 +297,9 @@ bundle common file_names
         meta => { "template" };
       "template_fstab_mustache"
         string => "common/fstab_mustache.txt",
+        meta => { "template" };
+      "template_hosts"
+        string => "common/hosts_mustache.txt",
         meta => { "template" };
       "template_ini"
         string => "common/ini_mustache.txt",

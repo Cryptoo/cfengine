@@ -1,7 +1,3 @@
-loopback	127.0.0.0
-link-local	169.254.0.0
-ispdmz		192.168.$(cryptoo:network.subnet_config[ispdmz]).0
-vpndmz		192.168.$(cryptoo:network.subnet_config[vpndmz]).0
-tornet		192.168.$(cryptoo:network.subnet_config[tor]).0
-i2pnet		192.168.$(cryptoo:network.subnet_config[i2p]).0
-localnet	192.168.$(cryptoo:network.subnet_config[lan]).0
+{{#networks}}
+{{network}}       {{address}}
+{{/networks}}

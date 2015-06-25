@@ -6,6 +6,7 @@ body file control
 
   inputs => {
               "cryptoo/common/gcc.cf",
+              "cryptoo/common/hosts.cf",
               "cryptoo/common/portage.cf",
               "cryptoo/common/shorewall.cf",
               "cryptoo/common/ssh.cf",
@@ -109,11 +110,6 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
         move_obstructions => "true",
         link_from => proc_mounts;
 
-      "$(root)$(file_names.networks)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[networks])";
-
       "$(root)$(directory_names.fs_standard_kernel)"
         move_obstructions => "true",
         link_from => kernel_dir;
@@ -162,6 +158,9 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
   methods:
 
     any::
+
+      "configure /etc/hosts and /etc/networks"
+        usebundle => hosts("$(root)");
 
       "configure gcc profile"
         usebundle => gcc("$(root)", "$(arch)");
