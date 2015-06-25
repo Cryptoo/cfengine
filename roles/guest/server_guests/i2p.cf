@@ -1,0 +1,41 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
+bundle agent i2p(root)
+
+{
+
+  meta:
+
+    "tags" slist => { "cryptoo_role" };
+
+  vars:
+
+    any::
+
+  files:
+
+    any::
+
+      "$(this.root)$(directory_names.fs_i2p_base)/."
+        perms => i2p,
+        create => "true";
+
+  methods:
+
+    any::
+
+      "configure system as an I2P node"
+        usebundle => server_guest("$(this.root)", "i2p", "x86_64", "no_multilib");
+
+}

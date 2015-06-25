@@ -44,8 +44,11 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
       "users"
         slist => getindices("user_data");
 
+      "extra_groups_data"
+        data => readjson("$(sys.inputdir)/cryptoo/config/groups.json", 1M);
+
       "extra_groups"
-        slist => getindices("config.extra_groups");
+        slist => getindices("extra_groups_data");
 
   classes:
 

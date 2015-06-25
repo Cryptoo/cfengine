@@ -71,6 +71,17 @@ bundle agent cryptoo_bootstrap
       "multilib"
         string => "no_multilib";
 
+    default:bootstrap_i2p::
+
+      "role"
+        string => "i2p";
+
+      "type"
+        string => "server";
+
+      "multilib"
+        string => "no_multilib";
+
     default:bootstrap_vpn_primary::
 
       "role"
@@ -143,6 +154,11 @@ bundle agent cryptoo_bootstrap
         expression => "any";
 
     default:bootstrap_tor::
+
+      "bootstrap_guest"
+        expression => "any";
+
+    default:bootstrap_i2p::
 
       "bootstrap_guest"
         expression => "any";

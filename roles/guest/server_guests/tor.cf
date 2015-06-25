@@ -8,7 +8,8 @@ body file control
               "cryptoo/config/config.cf",
               "cryptoo/config/directory_names.cf",
               "cryptoo/config/file_names.cf",
-              "cryptoo/config/network.cf"
+              "cryptoo/config/network.cf",
+              "cryptoo/util/perms.cf"
             };
 
 }

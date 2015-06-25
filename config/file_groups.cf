@@ -1669,6 +1669,140 @@ bundle common file_groups
         ';
 
 ################################################################################
+#                             i2p
+################################################################################
+
+      "make_profile[i2p]"
+        string => "$(make_profile[server_guest])";
+
+      "pm_env[i2p]"
+        slist => {
+                    "@(pm_env[server_guest])"
+                 };
+
+      "pm_environment[i2p]"
+        slist => {
+                    "@(pm_environment[server_guest])"
+                 };
+
+      "keywords[i2p]"
+        slist => {
+                    "@(keywords[server_guest])",
+                    "i2p",
+                    "java"
+                 };
+
+      "mask[i2p]"
+        slist => {
+                    "@(mask[server_guest])"
+                 };
+
+      "unmask[i2p]"
+        slist => {
+                    "@(unmask[server_guest])"
+                 };
+
+      "use[i2p]"
+        slist => {
+                    "@(use[server_guest])",
+                    "i2p",
+                    "java"
+                 };
+
+      "profile[i2p]"
+        slist => {
+                    "@(profile[server_guest])"
+                 };
+
+      "use_udev[i2p]"
+        slist => {
+                    "@(use_udev[server_guest])"
+                 };
+
+      "use_systemd[i2p]"
+        slist => {
+                    "@(use_systemd[server_guest])"
+                 };
+
+      "unuse_udev[i2p]"
+        slist => {
+                    "@(unuse_udev[server_guest])"
+                 };
+
+      "unuse_systemd[i2p]"
+        slist => {
+                    "@(unuse_systemd[server_guest])"
+                 };
+
+      "systemd_enabled[i2p]"
+        slist => {
+                    "@(systemd_enabled[server_guest])"
+                 };
+
+      "firewall_zones[i2p]"
+        slist => {
+                    "@(firewall_zones[server_guest])"
+                 };
+
+      "firewall_bridges[i2p]"
+        slist => {
+                    "@(firewall_bridges[server_guest])"
+                 };
+
+      "firewall[i2p]"
+        string => "$(firewall[server_guest])";
+
+      "network[i2p]"
+        string => '
+          {
+            "devices":
+               {
+                 "bridge":
+                   [
+                     "none"
+                   ],
+                 "veth":
+                   [
+                     "none"
+                   ],
+                 "tap":
+                   [
+                     "none"
+                   ]
+               },
+             "interfaces":
+               {
+                 "eth0":
+                   {
+                     "type": "gateway",
+                     "params":
+                       {
+                         "zone": "ispdmz",
+                         "gateway": "firewall_external",
+                         "ipforward": "false"
+                       }
+                   },
+                 "eth1":
+                   {
+                     "type": "simple",
+                     "params":
+                       {
+                         "zone": "i2p",
+                         "ipforward": "ipv4",
+                         "routes":
+                           {
+                             "eep": "firewall_internal",
+                             "tor": "firewall_internal",
+                             "vpndmz": "firewall_internal",
+                             "lan": "firewall_internal"
+                           }
+                       }
+                   }
+               }
+          }
+        ';
+
+################################################################################
 #                             vpn_primary
 ################################################################################
 

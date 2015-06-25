@@ -64,6 +64,8 @@ bundle common directory_names
       "fs_mount_root" string => "$(fs_mount_base)/root";
       "fs_mount_shared" string => "$(fs_mount_base)/shared";
       "fs_mount_temp" string => "$(fs_mount_base)/tmp";
+      "fs_opt_base" string => "opt";
+      "fs_i2p_base" string => "$(fs_opt_base)/i2p";
       "fs_proc_base" string => "proc";
       "fs_admin_base" string => "root";
       "fs_admin_ssh" string => "$(fs_admin_base)/.ssh";

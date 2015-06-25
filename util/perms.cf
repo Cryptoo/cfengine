@@ -85,3 +85,11 @@ body perms root_qemu
       owners  => { "root" };
       groups  => { "qemu" };
 }
+
+body perms i2p
+
+{
+      mode  => "0600";
+      owners  => { "i2p" };
+      groups  => { "i2p" };
+}

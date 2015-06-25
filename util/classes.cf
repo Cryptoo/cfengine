@@ -34,6 +34,15 @@ body classes always_success
 
 }
 
+body classes groupmems
+
+{
+
+  kept_returncodes => { "0", "7" };
+  repaired_returncodes => { "0" };
+
+}
+
 body classes systemd_enabled
 
 {
