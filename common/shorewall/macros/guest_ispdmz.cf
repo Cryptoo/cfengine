@@ -76,8 +76,8 @@ bundle agent shorewall_macro_guest_ispdmz(root)
                    },
                    {
                      "action": "cfengine(PARAM)",
-                     "source": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
-                     "destination": "fw",
+                     "source": "fw",
+                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
                      "protocol": "",
                      "destination_port": "",
                      "source_port": ""
