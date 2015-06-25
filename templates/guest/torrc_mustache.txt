@@ -5,6 +5,7 @@ DataDirectory   /var/lib/tor/data
 
 OutboundBindAddress {{external}}
 
+SocksPort 127.0.0.1:{{socks_port}}
 SocksPort {{internal}}:{{socks_port}}
 {{#socks}}
 SocksPolicy accept {{subnet}}

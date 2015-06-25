@@ -43,11 +43,25 @@ bundle agent tor(root)
           }
         ';
 
+      "polipo"
+        string => '
+          {
+            "tor_port": "$(config.services[tor][socks_port])",
+            "address": "192.168.$(network.subnet_config[tor]).$(config.defined_numbers[tor])",
+            "hostname": "$(network.machine_names[$(config.defined_numbers[tor])][name])",
+            "allowed": "192.168.$(network.subnet_config[tor]).0/24, 192.168.$(network.subnet_config[vpndmz]).0/24, 192.168.$(network.subnet_config[lan]).0/24"
+          }
+        ';
+
   files:
 
     any::
 
       "$(this.root)$(directory_names.fs_config_tor)/."
+        perms => system,
+        create => "true";
+
+      "$(this.root)$(directory_names.fs_config_polipo)/."
         perms => system,
         create => "true";
 
@@ -57,6 +71,13 @@ bundle agent tor(root)
         edit_template => "/$(templates.template[torrc])",
         template_method => "mustache",
         template_data => parsejson($(this.torrc));
+
+      "$(this.root)$(file_names.polipo_config)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[polipo])",
+        template_method => "mustache",
+        template_data => parsejson($(this.polipo));
 
   methods:
 

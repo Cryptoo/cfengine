@@ -1601,6 +1601,7 @@ bundle common file_groups
       "systemd_enabled[tor]"
         slist => {
                     "@(systemd_enabled[server_guest])",
+                    "polipo@tor",
                     "tor"
                  };
 

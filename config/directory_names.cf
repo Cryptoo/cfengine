@@ -35,6 +35,7 @@ bundle common directory_names
       "fs_config_libvirt" string => "$(fs_config_base)/libvirt";
       "fs_config_qemu" string => "$(fs_config_libvirt)/qemu";
       "fs_config_local_scripts" string => "$(fs_config_base)/local.d";
+      "fs_config_polipo" string => "$(fs_config_base)/polipo";
       "fs_config_pm" string => "$(fs_config_base)/$(pm)";
       "fs_config_pm_env" string => "$(fs_config_pm)/env";
       "fs_config_pm_environments" string => "$(fs_config_pm)/package.env";

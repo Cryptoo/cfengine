@@ -110,6 +110,8 @@ bundle common file_names
         string => "$(directory_names.fs_config_local_scripts)/firstrun.start";
       "ipset_private"
         string => "$(directory_names.fs_config_local_scripts)/ipset-private.start";
+      "polipo_config"
+        string => "$(directory_names.fs_config_polipo)/tor";
       "pm_config"
         string => "$(directory_names.fs_config_pm)/make.conf";
       "pm_profile"
@@ -362,6 +364,9 @@ bundle common file_names
         meta => { "template" };
       "template_dnsmasq"
         string => "guest/dnsmasq_mustache.txt",
+        meta => { "template" };
+      "template_polipo"
+        string => "guest/polipo_mustache.txt",
         meta => { "template" };
       "template_torrc"
         string => "guest/torrc_mustache.txt",

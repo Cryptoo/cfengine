@@ -1,0 +1,12 @@
+daemonise=false
+diskCacheRoot=""
+socksParentProxy = localhost:{{tor_port}}
+disableLocalInterface=true
+censoredHeaders = from, accept-language, x-pad
+censorReferer = maybe
+proxyAddress={{address}}
+proxyName={{hostname}}
+serverSlots=4
+serverMaxSlots=8
+cacheIsShared=true
+allowedClients={{allowed}}
