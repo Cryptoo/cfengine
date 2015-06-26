@@ -198,6 +198,8 @@ bundle common file_names
         string => "$(directory_names.fs_config_units)/serial-getty@ttyS0.service.d/autologin.conf";
       "torrc"
         string => "$(directory_names.fs_config_tor)/torrc";
+      "i2p_config"
+        string => "$(directory_names.fs_i2p_base)/clients.config";
       "proc_mounts"
         string => "proc/self/mounts";
       "authorized_keys"

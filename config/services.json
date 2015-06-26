@@ -5,5 +5,11 @@
           "tproxy_port": "9040",
           "http_port":  "3128",
           "dns_port":  "53"
-      }
+      },
+    "i2p":
+      {
+          "console_port": "7657",
+          "sam_port": "7656",
+          "i2cp_port": "7654"
+      },
 }

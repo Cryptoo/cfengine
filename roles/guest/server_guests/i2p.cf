@@ -5,7 +5,9 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
+              "cryptoo/config/config.cf",
               "cryptoo/config/directory_names.cf",
+              "cryptoo/config/file_names.cf",
               "cryptoo/util/perms.cf"
             };
 
@@ -23,6 +25,24 @@ bundle agent i2p(root)
 
     any::
 
+      "defined_numbers"
+        data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
+
+      "subnet_config"
+        data => readjson("/$(file_names.subnet_config)", 1M);
+
+      "i2p_conf[clientApp.0.args]"
+        string => "$(config.services[i2p][console_port]) ::1,127.0.0.1,192.168.$(subnet_config[i2p]).$(defined_numbers[i2p]) ./webapps/";
+      "i2p_conf[clientApp.1.args]"
+        string => "sam.keys 127.0.0.1,192.168.$(subnet_config[i2p]).$(defined_numbers[i2p]) $(config.services[i2p][sam_port]) i2cp.tcp.host=127.0.0.1 i2cp.tcp.port=$(config.services[i2p][i2cp_port])";
+
+  classes:
+
+    any::
+
+      "have_i2p_config"
+        expression => fileexists("$(this.root)$(file_names.i2p_config)");
+
   files:
 
     any::
@@ -30,6 +50,12 @@ bundle agent i2p(root)
       "$(this.root)$(directory_names.fs_i2p_base)/."
         perms => i2p,
         create => "true";
+
+    have_i2p_config::
+
+      "$(this.root)$(file_names.i2p_config)"
+        create => "false",
+        edit_line => default:set_line_based("cryptoo:i2p.i2p_conf", "=", "\s*=\s*", ".*", "\s*#\s*");
 
   methods:
 
