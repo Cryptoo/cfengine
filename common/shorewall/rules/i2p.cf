@@ -81,6 +81,24 @@ bundle agent shorewall_rules_i2p(root)
                   "original_destination": "192.168.$(subnet_config[i2p]).$(defined_numbers[i2p])"
                 },
                 {
+                  "action": "REDIRECT",
+                  "source": "lan",
+                  "destination": "$(config.services[i2p][tproxy_port])",
+                  "protocol": "tcp",
+                  "destination_port": "-",
+                  "source_port": "-",
+                  "original_destination": "$(config.transparent_proxy_net[i2p])"
+                },
+                {
+                  "action": "REDIRECT",
+                  "source": "vdmz",
+                  "destination": "$(config.services[i2p][tproxy_port])",
+                  "protocol": "tcp",
+                  "destination_port": "-",
+                  "source_port": "-",
+                  "original_destination": "$(config.transparent_proxy_net[i2p])"
+                },
+                {
                   "action": "POP3(REDIRECT)",
                   "source": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])",
                   "destination": "$(config.services[i2p][pop_port])",

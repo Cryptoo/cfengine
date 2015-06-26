@@ -126,6 +126,8 @@ bundle common file_names
         string => "$(directory_names.fs_config_pm)/make.profile";
       "pm_profile_upstream"
         string => "$(directory_names.fs_config_pm_upstream)/parent";
+      "privoxy_config"
+        string => "$(directory_names.fs_config_privoxy)/config";
       "openrc_acpid"
         string => "$(directory_names.fs_config_run_boot)/acpid";
       "openrc_devicemapper"

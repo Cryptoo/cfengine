@@ -8,6 +8,7 @@ body file control
               "cryptoo/config/config.cf",
               "cryptoo/config/directory_names.cf",
               "cryptoo/config/file_names.cf",
+              "cryptoo/config/network.cf",
               "cryptoo/config/templates.cf",
               "cryptoo/util/perms.cf"
             };
@@ -83,13 +84,22 @@ bundle agent i2p(root)
       "unbound_conf[interface]"
         string => "192.168.$(subnet_config[i2p]).$(defined_numbers[i2p])";
       "unbound_conf[port]"
-        string => "53";
+        string => "$(config.services[i2p][dns_port])";
       "unbound_conf[access-control]"
         string => "192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns]) allow";
       "unbound_conf[local-zone]"
         string => "\"i2p\" redirect";
       "unbound_conf[local-data]"
         string => "\"i2p A $(config.transparent_proxy_dns[i2p])\"";
+
+      "privoxy_conf[hostname]"
+        string => "$(network.machine_names[$(defined_numbers[i2p])][name])";
+      "privoxy_conf[listen-address]"
+        string => "192.168.$(subnet_config[i2p]).$(defined_numbers[i2p]):$(config.services[i2p][tproxy_port])";
+      "privoxy_conf[forward]"
+        string => "/ 192.168.$(subnet_config[i2p]).$(defined_numbers[i2p]):$(config.services[i2p][proxy_port])";
+      "privoxy_conf[accept-intercepted-requests]"
+        string => "1";
 
     have_i2p_router_config::
 
@@ -124,6 +134,9 @@ bundle agent i2p(root)
       "have_unbound_config"
         expression => fileexists("$(this.root)$(file_names.unbound_config)");
 
+      "have_privoxy_config"
+        expression => fileexists("$(this.root)$(file_names.privoxy_config)");
+
     have_i2p_router_config::
 
       "router_internal_port_configured"
@@ -137,6 +150,10 @@ bundle agent i2p(root)
     any::
 
       "$(this.root)$(directory_names.fs_config_unbound)/."
+        perms => system,
+        create => "true";
+
+      "$(this.root)$(directory_names.fs_config_privoxy)/."
         perms => system,
         create => "true";
 
@@ -170,6 +187,12 @@ bundle agent i2p(root)
       "$(this.root)$(file_names.unbound_config)"
         create => "false",
         edit_line => default:set_line_based("cryptoo:i2p.unbound_conf", ": ", ":\s", ".*", "\s*#\s*");
+
+    have_privoxy_config::
+
+      "$(this.root)$(file_names.privoxy_config)"
+        create => "false",
+        edit_line => default:set_line_based("cryptoo:i2p.privoxy_conf", " ", "\s+", ".*", "\s*#\s*");
 
   methods:
 

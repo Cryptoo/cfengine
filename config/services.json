@@ -8,6 +8,8 @@
       },
     "i2p":
       {
+          "dns_port": "53",
+          "tproxy_port": "3128",
           "proxy_port": "4444",
           "sproxy_port": "4445",
           "irc2p_port": "6667",

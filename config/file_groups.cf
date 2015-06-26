@@ -1790,6 +1790,7 @@ bundle common file_groups
         slist => {
                     "@(systemd_enabled[server_guest])",
                     "i2p",
+                    "privoxy",
                     "unbound"
                  };
 
