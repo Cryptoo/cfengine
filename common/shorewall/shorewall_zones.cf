@@ -38,7 +38,7 @@ bundle agent shorewall_zones(root, role)
       "interface_list"
         slist => getindices("network_config[interfaces]");
 
-    bridge_ipv4|no_bridge_ipv4::
+    bridge_ipv4_evaluated::
 
       "zone[$(basic_zones_ipv4)][name]"
         string => '"zone_full": "$(basic_zones_ipv4)"';
@@ -78,12 +78,14 @@ bundle agent shorewall_zones(root, role)
         string => join(", ", "bridge_children");
 
       "zone_json"
-        string => '{ "zones": [ $(interface_zone_json), $(zone_basic_ipv4_json), $(bridge_zone_json), $(bridge_children_json) ] }';
+        string => '{ "zones": [ $(interface_zone_json), $(zone_basic_ipv4_json), $(bridge_zone_json), $(bridge_children_json) ] }',
+        classes => default:if_ok("zone_json_ready");
 
     no_bridge_ipv4&interfaces_done::
 
       "zone_json"
-        string => '{ "zones": [ $(interface_zone_json), $(zone_basic_ipv4_json) ] }';
+        string => '{ "zones": [ $(interface_zone_json), $(zone_basic_ipv4_json) ] }',
+        classes => default:if_ok("zone_json_ready");
 
   classes:
 
@@ -95,9 +97,12 @@ bundle agent shorewall_zones(root, role)
       "bridge_ipv4"
         expression => isgreaterthan(length("bridge_zones_ipv4"), "0");
 
+      "bridge_ipv4_evaluated"
+        expression => "any";
+
   files:
 
-    no_bridge_ipv4|bridge_children_done::
+    zone_json_ready::
 
       "$(root)$(file_names.shorewall_zones)"
         perms => system,

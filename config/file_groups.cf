@@ -2579,7 +2579,7 @@ bundle common file_groups
                  "openvpn_route_udp":
                    {
                      "type": "no_address",
-                     "params":vpn_server
+                     "params":
                        {
                          "device": "openvpn3"
                        }
