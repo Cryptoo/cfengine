@@ -29,10 +29,10 @@ bundle agent shorewall(root, role)
         not => strcmp("$(this.root)", "/");
 
       "have_shorewall_app"
-        expression => fileexists("$(root)$(file_names.shorewall_app)");
+        expression => fileexists("$(this.root)$(file_names.shorewall_app)");
 
       "have_shorewall_conf"
-        expression => fileexists("$(root)$(file_names.shorewall_config)");
+        expression => fileexists("$(this.root)$(file_names.shorewall_config)");
 
   files:
 
@@ -67,7 +67,6 @@ bundle agent shorewall(root, role)
     update_shorewall&have_shorewall_app&(!bootstrap)::
 
       "/$(file_names.shorewall_app)"
-        args => "restart",
-        contain => basic_chroot($(root));
+        args => "restart";
 
 }
