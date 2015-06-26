@@ -35,19 +35,42 @@ bundle agent shorewall_rules_i2p(root)
         string => '
           {
             "new":
-                 [
-                   {
-                     "action": "guest",
-                     "source": "",
-                     "destination": "",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
-                   },
-                 ]
-               }
-          }
-        ';
+              [
+                {
+                  "action": "guest"
+                },
+                {
+                  "action": "ACCEPT",
+                  "source": "fw:192.168.$(subnet_config[ispdmz]).$(defined_numbers[i2p])",
+                  "destination": "net",
+                  "protocol": "-",
+                  "destination_port": "-",
+                  "source_port": "-",
+                  "original_destination": "-",
+                  "rate": "-",
+                  "user": "i2p:i2p"
+                },
+                {
+                  "action": "bob",
+                  "source": "i2p",
+                  "destination": "fw"
+                },
+                {
+                  "action": "bob",
+                  "source": "vdmz",
+                  "destination": "fw"
+                },
+                {
+                  "action": "HTTP(REDIRECT)",
+                  "source": "lan",
+                  "destination": "$(config.services[i2p][console_port])",
+                  "protocol": "-",
+                  "destination_port": "-",
+                  "source_port": "-",
+                  "original_destination": "192.168.$(subnet_config[i2p]).$(defined_numbers[i2p])"
+                }
+              ]
+          }';
 
   files:
 

@@ -223,6 +223,16 @@ bundle agent shorewall_rules_master(root)
                      "action": "NTP(ACCEPT)",
                      "source": "d$(defined_numbers[tor]):192.168.$(subnet_config[ispdmz]).$(defined_numbers[tor])",
                      "destination": "d$(defined_numbers[firewall_external]):!+private"
+                   },
+                   {
+                     "action": "ACCEPT",
+                     "source": "d$(defined_numbers[i2p]):192.168.$(subnet_config[ispdmz]).$(defined_numbers[i2p])",
+                     "destination": "d$(defined_numbers[firewall_external]):!+private"
+                   },
+                   {
+                     "action": "NTP(ACCEPT)",
+                     "source": "d$(defined_numbers[i2p]):192.168.$(subnet_config[ispdmz]).$(defined_numbers[i2p])",
+                     "destination": "d$(defined_numbers[firewall_external]):!+private"
                    }
                  ]
                }
@@ -271,6 +281,16 @@ bundle agent shorewall_rules_master(root)
                      "action": "cfengine(ACCEPT)",
                      "source": "i$(defined_numbers[i2p]):192.168.$(subnet_config[i2p]).$(defined_numbers[i2p])",
                      "destination": "i$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])"
+                   },
+                   {
+                     "action": "bob(ACCEPT)",
+                     "source": "i$(defined_numbers[firewall_internal]):192.168.$(subnet_config[vpndmz]).0/24",
+                     "destination": "i$(defined_numbers[i2p]):192.168.$(subnet_config[i2p]).$(defined_numbers[i2p])"
+                   },
+                   {
+                     "action": "HTTP(ACCEPT)",
+                     "source": "i$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).0/24",
+                     "destination": "i$(defined_numbers[i2p]):192.168.$(subnet_config[i2p]).$(defined_numbers[i2p])"
                    }
                  ]
                }

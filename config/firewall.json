@@ -23,7 +23,7 @@
                       "device": "ispdmz",
                       "type": "ipv4",
                       "prefix": "d",
-                      "members": [ "10", "11", "13", "14", "17", "18", "19" ]
+                      "members": [ "10", "11", "13", "14", "15", "17", "18", "19" ]
                      },
               "vpndmz_bridge": {
                       "name": "brvmz",
