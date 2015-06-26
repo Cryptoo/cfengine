@@ -8,8 +8,16 @@
       },
     "i2p":
       {
-          "console_port": "7657",
+          "proxy_port": "4444",
+          "sproxy_port": "4445",
+          "irc2p_port": "6667",
+          "i2cp_port": "7654",
           "sam_port": "7656",
-          "i2cp_port": "7654"
+          "console_port": "7657",
+          "eepsite_port": "7658",
+          "smtp_port": "7659",
+          "pop_port": "7660",
+          "monotone_port": "8998",
+          "eepsite_host": "127.0.0.1"
       },
 }

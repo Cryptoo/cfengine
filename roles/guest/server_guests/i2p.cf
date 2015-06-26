@@ -37,6 +37,49 @@ bundle agent i2p(root)
       "i2p_conf[clientApp.1.args]"
         string => "sam.keys 127.0.0.1,192.168.$(subnet_config[i2p]).$(defined_numbers[i2p]) $(config.services[i2p][sam_port]) i2cp.tcp.host=127.0.0.1 i2cp.tcp.port=$(config.services[i2p][i2cp_port])";
 
+      "i2ptunnel_conf[tunnel.0.interface]"
+        string => "192.168.$(subnet_config[i2p]).$(defined_numbers[i2p])";
+      "i2ptunnel_conf[tunnel.0.listenPort]"
+        string => "$(config.services[i2p][proxy_port])";
+      "i2ptunnel_conf[tunnel.0.i2cpPort]"
+        string => "$(config.services[i2p][i2cp_port])";
+      "i2ptunnel_conf[tunnel.1.interface]"
+        string => "192.168.$(subnet_config[i2p]).$(defined_numbers[i2p])";
+      "i2ptunnel_conf[tunnel.1.listenPort]"
+        string => "$(config.services[i2p][irc2p_port])";
+      "i2ptunnel_conf[tunnel.1.i2cpPort]"
+        string => "$(config.services[i2p][i2cp_port])";
+      "i2ptunnel_conf[tunnel.2.interface]"
+        string => "192.168.$(subnet_config[i2p]).$(defined_numbers[i2p])";
+      "i2ptunnel_conf[tunnel.2.listenPort]"
+        string => "$(config.services[i2p][monotone_port])";
+      "i2ptunnel_conf[tunnel.2.i2cpPort]"
+        string => "$(config.services[i2p][i2cp_port])";
+      "i2ptunnel_conf[tunnel.3.targetHost]"
+        string => "$(config.services[i2p][eepsite_host])";
+      "i2ptunnel_conf[tunnel.3.targetPort]"
+        string => "$(config.services[i2p][eepsite_port])";
+      "i2ptunnel_conf[tunnel.3.i2cpPort]"
+        string => "$(config.services[i2p][i2cp_port])";
+      "i2ptunnel_conf[tunnel.4.interface]"
+        string => "192.168.$(subnet_config[i2p]).$(defined_numbers[i2p])";
+      "i2ptunnel_conf[tunnel.4.listenPort]"
+        string => "$(config.services[i2p][smtp_port])";
+      "i2ptunnel_conf[tunnel.4.i2cpPort]"
+        string => "$(config.services[i2p][i2cp_port])";
+      "i2ptunnel_conf[tunnel.5.interface]"
+        string => "192.168.$(subnet_config[i2p]).$(defined_numbers[i2p])";
+      "i2ptunnel_conf[tunnel.5.listenPort]"
+        string => "$(config.services[i2p][pop_port])";
+      "i2ptunnel_conf[tunnel.5.i2cpPort]"
+        string => "$(config.services[i2p][i2cp_port])";
+      "i2ptunnel_conf[tunnel.6.interface]"
+        string => "192.168.$(subnet_config[i2p]).$(defined_numbers[i2p])";
+      "i2ptunnel_conf[tunnel.6.listenPort]"
+        string => "$(config.services[i2p][sproxy_port])";
+      "i2ptunnel_conf[tunnel.6.i2cpPort]"
+        string => "$(config.services[i2p][i2cp_port])";
+
     have_i2p_router_config::
 
       "router_config_string"
@@ -60,6 +103,9 @@ bundle agent i2p(root)
 
       "have_i2p_config"
         expression => fileexists("$(this.root)$(file_names.i2p_config)");
+
+      "have_i2ptunnel_config"
+        expression => fileexists("$(this.root)$(file_names.i2ptunnel_config)");
 
       "have_i2p_router_config"
         expression => fileexists("$(this.root)$(file_names.i2p_router_config)");
@@ -94,6 +140,12 @@ bundle agent i2p(root)
       "$(this.root)$(file_names.i2p_config)"
         create => "false",
         edit_line => default:set_line_based("cryptoo:i2p.i2p_conf", "=", "\s*=\s*", ".*", "\s*#\s*");
+
+    have_i2ptunnel_config::
+
+      "$(this.root)$(file_names.i2ptunnel_config)"
+        create => "false",
+        edit_line => default:set_line_based("cryptoo:i2p.i2ptunnel_conf", "=", "\s*=\s*", ".*", "\s*#\s*");
 
   methods:
 

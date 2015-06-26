@@ -210,6 +210,8 @@ bundle common file_names
         string => "$(directory_names.fs_config_tor)/torrc";
       "i2p_config"
         string => "$(directory_names.fs_i2p_base)/clients.config";
+      "i2ptunnel_config"
+        string => "$(directory_names.fs_i2p_base)/i2ptunnel.config";
       "i2p_router_config"
         string => "$(directory_names.fs_i2p_user)/router.config";
       "proc_mounts"
