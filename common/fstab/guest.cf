@@ -1,0 +1,177 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/file_groups.cf"
+            };
+}
+
+bundle agent fstab_guest(role)
+
+{
+
+  vars:
+
+    any::
+
+      "backup"
+        string => "$(file_groups.backup_dir[$(this.role)])";
+
+      "fstab_json[001]"
+        string => '
+          {
+            "source": "/dev/vda",
+            "target": "/",
+            "type": "$(site.config[guest_fs][filesystem])",
+            "options": "$(site.config[guest_fs][options])",
+            "dump": "0",
+            "pass": "1"
+          }';
+
+      "fstab_json[002]"
+        string => '
+          {
+            "source": "/bin",
+            "target": "/$(directory_names.fs_site_apps)",
+            "type": "9p",
+            "options": "trans=virtio,version=9p2000.L,ro,nodev,nosuid,noatime",
+            "dump": "0",
+            "pass": "0"
+          }';
+
+      "fstab_json[003]"
+        string => '
+          {
+            "source": "/backup",
+            "target": "$(backup)",
+            "type": "9p",
+            "options": "trans=virtio,version=9p2000.L,rw,nodev,nosuid,noatime",
+            "dump": "0",
+            "pass": "0"
+          }';
+
+      "fstab_json[004]"
+        string => '
+          {
+            "source": "/cryptoo",
+            "target": "/$(directory_names.fs_cryptoo)",
+            "type": "9p",
+            "options": "trans=virtio,version=9p2000.L,ro,nodev,nosuid,noatime",
+            "dump": "0",
+            "pass": "2"
+          }';
+
+      "fstab_json[005]"
+        string => '
+          {
+            "source": "/distfiles",
+            "target": "/$(directory_names.fs_site_srcpkg)",
+            "type": "9p",
+            "options": "trans=virtio,version=9p2000.L,rw,noexec,nodev,nosuid,noatime",
+            "dump": "0",
+            "pass": "0"
+          }';
+
+      "fstab_json[006]"
+        string => '
+          {
+            "source": "/inbox",
+            "target": "/$(directory_names.fs_config_cryptoo_incoming)",
+            "type": "9p",
+            "options": "trans=virtio,version=9p2000.L,ro,nodev,nosuid,noatime",
+            "dump": "0",
+            "pass": "0"
+          }';
+
+      "fstab_json[007]"
+        string => '
+          {
+            "source": "/layman",
+            "target": "/$(directory_names.fs_volatile_overlay)",
+            "type": "9p",
+            "options": "trans=virtio,version=9p2000.L,ro,noexec,nodev,nosuid,noatime",
+            "dump": "0",
+            "pass": "0"
+          }';
+
+      "fstab_json[008]"
+        string => '
+          {
+            "source": "/outbox",
+            "target": "/$(directory_names.fs_config_cryptoo_outgoing)",
+            "type": "9p",
+            "options": "trans=virtio,version=9p2000.L,rw,nodev,nosuid,noatime",
+            "dump": "0",
+            "pass": "0"
+          }';
+
+      "fstab_json[009]"
+        string => '
+          {
+            "source": "/packages",
+            "target": "/$(directory_names.fs_site_binpkg)",
+            "type": "9p",
+            "options": "trans=virtio,version=9p2000.L,rw,noexec,nodev,nosuid,noatime",
+            "dump": "0",
+            "pass": "0"
+          }';
+
+      "fstab_json[010]"
+        string => '
+          {
+            "source": "/portage",
+            "target": "/$(directory_names.fs_pm)",
+            "type": "9p",
+            "options": "trans=virtio,version=9p2000.L,ro,noexec,nodev,nosuid,noatime",
+            "dump": "0",
+            "pass": "0"
+          }';
+
+      "fstab_json[011]"
+        string => '
+          {
+            "source": "/portage-local",
+            "target": "/$(directory_names.fs_site_pm)",
+            "type": "9p",
+            "options": "trans=virtio,version=9p2000.L,ro,noexec,nodev,nosuid,noatime",
+            "dump": "0",
+            "pass": "0"
+          }';
+
+      "fstab_json[012]"
+        string => '
+          {
+            "source": "/src",
+            "target": "/$(directory_names.fs_site_sources)",
+            "type": "9p",
+            "options": "trans=virtio,version=9p2000.L,ro,noexec,nodev,nosuid,noatime",
+            "dump": "0",
+            "pass": "0"
+          }';
+
+      "fstab_json[013]"
+        string => '
+          {
+            "source": "/storage",
+            "target": "/$(directory_names.fs_mount_shared)",
+            "type": "9p",
+            "options": "trans=virtio,version=9p2000.L,rw,noexec,nodev,nosuid,noatime",
+            "dump": "0",
+            "pass": "0"
+          }';
+
+      "fstab_list"
+        slist => getindices("fstab_json");
+
+  reports:
+
+    any::
+
+      "$(fstab_json[$(fstab_list)])"
+        bundle_return_value_index => "$(fstab_list)";
+
+}

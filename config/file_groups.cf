@@ -4,6 +4,10 @@ body file control
 
   namespace => "cryptoo";
 
+  inputs => {
+              "cryptoo/config/directory_names.cf",
+            };
+
 }
 
 bundle common file_groups
@@ -96,6 +100,9 @@ bundle common file_groups
                     "systemd-networkd.service",
                     "vixie-cron.service"
                  };
+
+      "backup_dir[common]"
+        string => "/$(directory_names.fs_mount_backup)";
 
       "firewall_zones[common]"
         slist => {
@@ -211,6 +218,9 @@ bundle common file_groups
                     "@(systemd_enabled[common])"
                  };
 
+      "backup_dir[undefined]"
+        string => "$(backup_dir[common])";
+
       "firewall_zones[undefined]"
         slist => {
                     "@(firewall_zones[common])"
@@ -296,6 +306,9 @@ bundle common file_groups
                     "@(systemd_enabled[common])"
                  };
 
+      "backup_dir[host]"
+        string => "$(backup_dir[common])";
+
       "firewall_zones[host]"
         slist => {
                     "@(firewall_zones[common])"
@@ -379,6 +392,9 @@ bundle common file_groups
         slist => {
                     "@(systemd_enabled[host])"
                  };
+
+      "backup_dir[master]"
+        string => "$(backup_dir[host])";
 
       "firewall_zones[master]"
         slist => {
@@ -580,6 +596,9 @@ bundle common file_groups
                     "@(systemd_enabled[host])"
                  };
 
+      "backup_dir[desktop_host]"
+        string => "$(backup_dir[host])";
+
       "firewall_zones[desktop_host]"
         slist => {
                     "@(firewall_zones[host])"
@@ -662,6 +681,9 @@ bundle common file_groups
         slist => {
                     "@(systemd_enabled[common])"
                  };
+
+      "backup_dir[guest]"
+        string => "$(backup_dir[common])";
 
       "firewall_zones[guest]"
         slist => {
@@ -752,6 +774,9 @@ bundle common file_groups
                     "@(systemd_enabled[guest])"
                  };
 
+      "backup_dir[desktop_guest]"
+        string => "$(backup_dir[guest])";
+
       "firewall_zones[desktop_guest]"
         slist => {
                     "@(firewall_zones[guest])"
@@ -840,6 +865,9 @@ bundle common file_groups
                     "@(systemd_enabled[desktop_guest])"
                  };
 
+      "backup_dir[chroot_desktop]"
+        string => "$(backup_dir[desktop_guest])";
+
       "firewall_zones[chroot_desktop]"
         slist => {
                     "@(firewall_zones[desktop_guest])"
@@ -923,6 +951,9 @@ bundle common file_groups
         slist => {
                     "@(systemd_enabled[desktop_guest])"
                  };
+
+      "backup_dir[irc_client]"
+        string => "$(backup_dir[desktop_guest])";
 
       "firewall_zones[irc_client]"
         slist => {
@@ -1009,6 +1040,9 @@ bundle common file_groups
                     "@(systemd_enabled[desktop_guest])"
                  };
 
+      "backup_dir[mail_client]"
+        string => "$(backup_dir[desktop_guest])";
+
       "firewall_zones[mail_client]"
         slist => {
                     "@(firewall_zones[desktop_guest])"
@@ -1093,6 +1127,9 @@ bundle common file_groups
         slist => {
                     "@(systemd_enabled[desktop_guest])"
                  };
+
+      "backup_dir[web]"
+        string => "$(backup_dir[desktop_guest])";
 
       "firewall_zones[web]"
         slist => {
@@ -1179,6 +1216,9 @@ bundle common file_groups
                     "@(systemd_enabled[desktop_guest])"
                  };
 
+      "backup_dir[im]"
+        string => "$(backup_dir[desktop_guest])";
+
       "firewall_zones[im]"
         slist => {
                     "@(firewall_zones[desktop_guest])"
@@ -1261,6 +1301,9 @@ bundle common file_groups
         slist => {
                     "@(systemd_enabled[guest])"
                  };
+
+      "backup_dir[server_guest]"
+        string => "$(backup_dir[guest])";
 
       "firewall_zones[server_guest]"
         slist => {
@@ -1375,6 +1418,9 @@ bundle common file_groups
                     "@(systemd_enabled[server_guest])"
                  };
 
+      "backup_dir[chroot_server]"
+        string => "$(backup_dir[server_guest])";
+
       "firewall_zones[chroot_server]"
         slist => {
                     "@(firewall_zones[server_guest])"
@@ -1460,6 +1506,9 @@ bundle common file_groups
                     "@(systemd_enabled[server_guest])",
                     "noip.service"
                  };
+
+      "backup_dir[firewall_external]"
+        string => "$(backup_dir[server_guest])";
 
       "firewall_zones[firewall_external]"
         slist => {
@@ -1605,6 +1654,9 @@ bundle common file_groups
                     "tor"
                  };
 
+      "backup_dir[tor]"
+        string => "$(backup_dir[server_guest])";
+
       "firewall_zones[tor]"
         slist => {
                     "@(firewall_zones[server_guest])"
@@ -1739,6 +1791,9 @@ bundle common file_groups
                     "@(systemd_enabled[server_guest])"
                  };
 
+      "backup_dir[i2p]"
+        string => "/$(directory_names.fs_i2p_base)";
+
       "firewall_zones[i2p]"
         slist => {
                     "@(firewall_zones[server_guest])"
@@ -1871,6 +1926,9 @@ bundle common file_groups
                     "@(systemd_enabled[server_guest])",
                     "openvpn@primary.service"
                  };
+
+      "backup_dir[vpn_primary]"
+        string => "$(backup_dir[server_guest])";
 
       "firewall_zones[vpn_primary]"
         slist => {
@@ -2032,6 +2090,9 @@ bundle common file_groups
                     "dnsmasq"
                  };
 
+      "backup_dir[dns]"
+        string => "$(backup_dir[server_guest])";
+
       "firewall_zones[dns]"
         slist => {
                     "@(firewall_zones[server_guest])"
@@ -2159,6 +2220,9 @@ bundle common file_groups
                     "postfix.service"
                  };
 
+      "backup_dir[mail_server]"
+        string => "$(backup_dir[server_guest])";
+
       "firewall_zones[mail_server]"
         slist => {
                     "@(firewall_zones[server_guest])"
@@ -2280,6 +2344,9 @@ bundle common file_groups
         slist => {
                     "@(systemd_enabled[server_guest])"
                  };
+
+      "backup_dir[firewall_internal]"
+        string => "$(backup_dir[server_guest])";
 
       "firewall_zones[firewall_internal]"
         slist => {
@@ -2444,6 +2511,9 @@ bundle common file_groups
                     "@(systemd_enabled[server_guest])"
                  };
 
+      "backup_dir[vpn_server]"
+        string => "$(backup_dir[server_guest])";
+
       "firewall_zones[vpn_server]"
         slist => {
                     "@(firewall_zones[server_guest])"
@@ -2508,7 +2578,7 @@ bundle common file_groups
                  "openvpn_route_udp":
                    {
                      "type": "no_address",
-                     "params":
+                     "params":vpn_server
                        {
                          "device": "openvpn3"
                        }

@@ -5,9 +5,11 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
+              "cryptoo/common/fstab/chroot.cf",
+              "cryptoo/common/fstab/guest.cf",
+              "cryptoo/common/fstab/master.cf",
               "cryptoo/config/directory_names.cf",
               "cryptoo/config/file_names.cf",
-              "cryptoo/config/machine.cf",
               "cryptoo/config/site.cf",
               "cryptoo/config/templates.cf",
               "cryptoo/util/perms.cf"
@@ -15,7 +17,7 @@ body file control
 
 }
 
-bundle agent fstab(root)
+bundle agent fstab(root, type, role)
 
 {
 
@@ -29,201 +31,110 @@ bundle agent fstab(root)
       "chroot_list"
         slist => getindices("chroot");
 
-      "chroot_mounts[$(chroot_list)][1]"
-        string => '{ "source": "/$(directory_names.fs_volatile_overlay)", "target": "/$(directory_names.fs_volatile_images)/$(chroot[$(chroot_list)][class])/$(chroot[$(chroot_list)][arch])/$(chroot[$(chroot_list)][multilib])/$(directory_names.fs_volatile_overlay)", "type": "none", "options": "bind", "dump": "0", "pass": "0", }';
+      "chroot_path[$(chroot_list)]"
+        string => "/$(directory_names.fs_volatile_images)/$(chroot[$(chroot_list)][class])/$(chroot[$(chroot_list)][arch])/$(chroot[$(chroot_list)][multilib])/";
 
-      "chroot_mounts[$(chroot_list)][2]"
-        string => '{ "source": "/$(directory_names.fs_cryptoo)", "target": "/$(directory_names.fs_volatile_images)/$(chroot[$(chroot_list)][class])/$(chroot[$(chroot_list)][arch])/$(chroot[$(chroot_list)][multilib])/$(directory_names.fs_cryptoo)", "type": "none", "options": "bind", "dump": "0", "pass": "0", }';
+      "chroot_path_list"
+        slist => getvalues("chroot_path");
 
-      "chroot_mounts[$(chroot_list)][3]"
-        string => '{ "source": "/$(directory_names.fs_pm)", "target": "/$(directory_names.fs_volatile_images)/$(chroot[$(chroot_list)][class])/$(chroot[$(chroot_list)][arch])/$(chroot[$(chroot_list)][multilib])/$(directory_names.fs_pm)", "type": "none", "options": "bind", "dump": "0", "pass": "0", }';
+    fstab_host&have_mounts::
 
-      "chroot_mounts[$(chroot_list)][4]"
-        string => '{ "source": "/$(directory_names.fs_site_pm)", "target": "/$(directory_names.fs_volatile_images)/$(chroot[$(chroot_list)][class])/$(chroot[$(chroot_list)][arch])/$(chroot[$(chroot_list)][multilib])/$(directory_names.fs_site_pm)", "type": "none", "options": "bind", "dump": "0", "pass": "0", }';
+      "mount_list"
+        slist => getvalues("fstab_chroot");
 
-      "chroot_mounts[$(chroot_list)][5]"
-        string => '{ "source": "/$(directory_names.fs_site_sources)", "target": "/$(directory_names.fs_volatile_images)/$(chroot[$(chroot_list)][class])/$(chroot[$(chroot_list)][arch])/$(chroot[$(chroot_list)][multilib])/$(directory_names.fs_site_sources)", "type": "none", "options": "bind", "dump": "0", "pass": "0", }';
+      "mounts"
+        string => join(", ", "mount_list");
 
-      "chroot_mounts[$(chroot_list)][6]"
-        string => '{ "source": "/$(directory_names.fs_dev_base)", "target": "/$(directory_names.fs_volatile_images)/$(chroot[$(chroot_list)][class])/$(chroot[$(chroot_list)][arch])/$(chroot[$(chroot_list)][multilib])/$(directory_names.fs_dev_base)", "type": "none", "options": "bind", "dump": "0", "pass": "0", }';
-
-      "chroot_mounts[$(chroot_list)][7]"
-        string => '{ "source": "/$(directory_names.fs_proc_base)", "target": "/$(directory_names.fs_volatile_images)/$(chroot[$(chroot_list)][class])/$(chroot[$(chroot_list)][arch])/$(chroot[$(chroot_list)][multilib])/$(directory_names.fs_proc_base)", "type": "none", "options": "bind", "dump": "0", "pass": "0", }';
-
-      "chroot_mounts[$(chroot_list)][8]"
-        string => '{ "source": "/$(directory_names.fs_sys_base)", "target": "/$(directory_names.fs_volatile_images)/$(chroot[$(chroot_list)][class])/$(chroot[$(chroot_list)][arch])/$(chroot[$(chroot_list)][multilib])/$(directory_names.fs_sys_base)", "type": "none", "options": "bind", "dump": "0", "pass": "0", }';
-
-      "chroot_mounts[$(chroot_list)][9]"
-        string => '{ "source": "/$(directory_names.fs_site_apps)", "target": "/$(directory_names.fs_volatile_images)/$(chroot[$(chroot_list)][class])/$(chroot[$(chroot_list)][arch])/$(chroot[$(chroot_list)][multilib])/$(directory_names.fs_site_apps)", "type": "none", "options": "bind", "dump": "0", "pass": "0", }';
-
-      "chroot_mounts[$(chroot_list)][10]"
-        string => '{ "source": "/$(directory_names.fs_site_srcpkg) ", "target": "/$(directory_names.fs_volatile_images)/$(chroot[$(chroot_list)][class])/$(chroot[$(chroot_list)][arch])/$(chroot[$(chroot_list)][multilib])/$(directory_names.fs_site_srcpkg) ", "type": "none", "options": "bind", "dump": "0", "pass": "0", }';
-
-      "chroot_mounts[$(chroot_list)][11]"
-        string => '{ "source": "/$(directory_names.fs_site_binpkg)", "target": "/$(directory_names.fs_volatile_images)/$(chroot[$(chroot_list)][class])/$(chroot[$(chroot_list)][arch])/$(chroot[$(chroot_list)][multilib])/$(directory_names.fs_site_binpkg)", "type": "none", "options": "bind", "dump": "0", "pass": "0", }';
-
-      "chroot_mounts[$(chroot_list)][12]"
-        string => '{ "source": "$(chroot[$(chroot_list)][class])_$(chroot[$(chroot_list)][arch])_$(chroot[$(chroot_list)][multilib])_tmp", "target": "/$(directory_names.fs_volatile_images)/$(chroot[$(chroot_list)][class])/$(chroot[$(chroot_list)][arch])/$(chroot[$(chroot_list)][multilib])/$(directory_names.fs_temp_base)", "type": "tmpfs", "options": "size=1G,nosuid,nodev", "dump": "0", "pass": "0", }';
-
-      "chroot_mount_$(chroot_list)_index"
-        slist => getindices("chroot_mounts[$(chroot_list)]");
-
-      "chroot_data_$(chroot_list)_$(chroot_mount_$(chroot_list)_index)"
-        data => parsejson("$(chroot_mounts[$(chroot_list)][$(chroot_mount_$(chroot_list)_index)])");
-
-      "fstab_json"
+      "fstab_final"
         string => '
           {
             "mounts":
-               [
-                 {
-                   "source": "LABEL=$(machine.hostname)-boot",
-                   "target": "/$(directory_names.fs_boot_base)",
-                   "type": "$(site.config[boot_fs][filesystem])",
-                   "options": "$(site.config[boot_fs][options])",
-                   "dump": "0",
-                   "pass": "2"
-                 },
-                 {
-                   "source": "UUID=$(machine.root_uuid)",
-                   "target": "/",
-                   "type": "$(site.config[host_fs][filesystem])",
-                   "options": "$(site.config[host_fs][options])",
-                   "dump": "0",
-                   "pass": "1"
-                 },
-                 {
-                   "source": "/dev/mapper/$(machine.hostname)-swap",
-                   "target": "none",
-                   "type": "swap",
-                   "options": "sw",
-                   "dump": "0",
-                   "pass": "0"
-                 },
-                 {
-                   "source": "/dev/mapper/$(machine.hostname)-storage",
-                   "target": "/$(directory_names.fs_storage_base)",
-                   "type": "$(site.config[host_fs][filesystem])",
-                   "options": "$(site.config[host_fs][options])",
-                   "dump": "0",
-                   "pass": "2"
-                 },
-                 {
-                   "source": "/$(directory_names.fs_storage_apps)",
-                   "target": "/usr/site-local/bin",
-                   "type": "none",
-                   "options": "bind",
-                   "dump": "0",
-                   "pass": "0"
-                 },
-                 {
-                   "source": "/$(directory_names.fs_storage_cryptoo)",
-                   "target": "/$(directory_names.fs_cryptoo)",
-                   "type": "none",
-                   "options": "bind",
-                   "dump": "0",
-                   "pass": "0"
-                 },
-                 {
-                   "source": "/$(directory_names.fs_storage_home)",
-                   "target": "/$(directory_names.fs_home)",
-                   "type": "none",
-                   "options": "bind",
-                   "dump": "0",
-                   "pass": "0"
-                 },
-                 {
-                   "source": "/$(directory_names.fs_storage_srcpkg)",
-                   "target": "/$(directory_names.fs_site_srcpkg)",
-                   "type": "none",
-                   "options": "bind",
-                   "dump": "0",
-                   "pass": "0"
-                 },
-                 {
-                   "source": "/$(directory_names.fs_storage_overlay)",
-                   "target": "/$(directory_names.fs_volatile_overlay)",
-                   "type": "none",
-                   "options": "bind",
-                   "dump": "0",
-                   "pass": "0"
-                 },
-                 {
-                   "source": "/$(directory_names.fs_storage_binpkg)",
-                   "target": "/$(directory_names.fs_site_binpkg)",
-                   "type": "none",
-                   "options": "bind",
-                   "dump": "0",
-                   "pass": "0"
-                 },
-                 {
-                   "source": "/$(directory_names.fs_storage_pm)",
-                   "target": "/$(directory_names.fs_pm)",
-                   "type": "none",
-                   "options": "bind",
-                   "dump": "0",
-                   "pass": "0"
-                 },
-                 {
-                   "source": "/$(directory_names.fs_storage_pm_site)",
-                   "target": "/$(directory_names.fs_site_pm)",
-                   "type": "none",
-                   "options": "bind",
-                   "dump": "0",
-                   "pass": "0"
-                 },
-                 {
-                   "source": "/$(directory_names.fs_storage_shared) ",
-                   "target": "/$(directory_names.fs_mount_shared)",
-                   "type": "none",
-                   "options": "bind",
-                   "dump": "0",
-                   "pass": "0"
-                 },
-                 {
-                   "source": "/$(directory_names.fs_storage_sources)",
-                   "target": "/$(directory_names.fs_site_sources)",
-                   "type": "none",
-                   "options": "bind",
-                   "dump": "0",
-                   "pass": "0"
-                 },
-                 {
-                   "source": "/",
-                   "target": "/$(directory_names.fs_mount_root)",
-                   "type": "none",
-                   "options": "bind",
-                   "dump": "0",
-                   "pass": "0"
-                 },
-                 {
-                   "source": "system-tmp",
-                   "target": "/$(directory_names.fs_temp_base)",
-                   "type": "tmpfs",
-                   "options": "size=1G",
-                   "dump": "0",
-                   "pass": "0"
-                 }
-               ]
-          }
-        ';
+              [
+                 $(fstab_host[001]),
+                 $(fstab_host[002]),
+                 $(fstab_host[003]),
+                 $(fstab_host[004]),
+                 $(fstab_host[005]),
+                 $(fstab_host[006]),
+                 $(fstab_host[007]),
+                 $(fstab_host[008]),
+                 $(fstab_host[009]),
+                 $(fstab_host[010]),
+                 $(fstab_host[011]),
+                 $(fstab_host[012]),
+                 $(fstab_host[013]),
+                 $(fstab_host[014]),
+                 $(fstab_host[015]),
+                 $(fstab_host[016]),
+                 $(mounts)
+              ]
+          }',
+        classes => default:if_ok("mounts_ready");
+
+    fstab_guest&have_mounts::
+
+      "fstab_final"
+        string => '
+          {
+            "mounts":
+              [
+                 $(fstab_guest[001]),
+                 $(fstab_guest[002]),
+                 $(fstab_guest[003]),
+                 $(fstab_guest[004]),
+                 $(fstab_guest[005]),
+                 $(fstab_guest[006]),
+                 $(fstab_guest[007]),
+                 $(fstab_guest[008]),
+                 $(fstab_guest[009]),
+                 $(fstab_guest[010]),
+                 $(fstab_guest[011]),
+                 $(fstab_guest[012]),
+                 $(fstab_guest[013])
+              ]
+          }',
+        classes => default:if_ok("mounts_ready");
+
+  classes:
+
+    any::
+
+      "fstab_$(type)"
+        expression => "any";
 
   files:
 
-    any::
+    mounts_ready::
 
       "$(root)$(file_names.fstab)"
         perms => system,
         create => "true",
         edit_template => "/$(templates.template[fstab_mustache])",
         template_method => "mustache",
-        template_data => parsejson($(this.fstab_json)),
+        template_data => parsejson($(this.fstab_final)),
         comment => "configure /etc/fstab";
 
-  reports:
+  methods:
 
-    any::
+    fstab_host::
 
-#      "$(chroot_mounts[$(chroot_list)][$(chroot_mount_$(chroot_list)_index)])";
+      "get basic host mounts"
+        usebundle => fstab_master,
+        useresult => "fstab_host",
+        classes => default:if_ok("basic_mounts");
+
+    fstab_guest::
+
+      "get guest mounts"
+        usebundle => fstab_guest($(this.role)),
+        useresult => "fstab_guest",
+        classes => default:if_ok("have_mounts");
+
+    basic_mounts::
+
+      "get basic chroot mounts"
+        usebundle => fstab_chroot("$(chroot_path_list)"),
+        useresult => "fstab_chroot",
+        classes => default:if_ok("have_mounts");
 
 }

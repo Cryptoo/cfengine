@@ -129,7 +129,7 @@ bundle agent bootstrap_master
   any::
 
     "create_fstab"
-      usebundle => fstab("/"),
+      usebundle => fstab("/", "host", "master"),
         classes => default:if_ok("have_fstab");
 
     have_fstab&srv_created::

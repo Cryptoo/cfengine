@@ -6,6 +6,7 @@ body file control
 
   inputs => {
               "cryptoo/common/common.cf",
+              "cryptoo/common/fstab.cf",
               "cryptoo/common/mounts.cf",
               "cryptoo/config/config.cf",
               "cryptoo/config/directory_names.cf",
@@ -24,7 +25,7 @@ body file control
 
 }
 
-bundle agent host(arch)
+bundle agent host(arch, role)
 
 {
 
@@ -161,13 +162,6 @@ bundle agent host(arch)
         classes => default:if_repaired("update_env"),
         comment => "create /etc/env.d/99kernel";
 
-      "/$(cryptoo:file_names.fstab)"
-        perms => cryptoo:system,
-        create => "true",
-        edit_template => "/$(cryptoo:templates.template[fstab])",
-        classes => default:if_repaired("fstab_repaired"),
-        comment => "configure /etc/fstab";
-
       "/$(cryptoo:directory_names.fs_storage_base)/."
         perms => cryptoo:system,
         create => "true",
@@ -280,10 +274,14 @@ bundle agent host(arch)
       "manage guest inboxes and outboxes"
         usebundle => cryptoo:guest_boxes;
 
+      "configure /etc/fstab"
+        usebundle => fstab("/", "host", "$(this.role)"),
+        classes => default:if_repaired("fstab_repaired");
+
     (all_mounted)|(all_ready)::
 
       "manage common files"
-        usebundle => cryptoo:cryptoo_filesystem("/","master","$(arch)","no_multilib");
+        usebundle => cryptoo:cryptoo_filesystem("/","$(this.role)", "$(arch)", "no_multilib");
 
       "configure host kernel"
         usebundle => cryptoo:kconfig("host", "$(arch)"),

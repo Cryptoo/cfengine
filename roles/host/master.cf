@@ -94,7 +94,7 @@ bundle agent master(root)
     have_master_ssh_key::
 
       "configure system as a host"
-        usebundle => cryptoo:host("x86_64");
+        usebundle => cryptoo:host("x86_64", "master");
 
       "configure systemd"
         usebundle => systemd("$(this.root)", "master");

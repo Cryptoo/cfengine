@@ -296,9 +296,6 @@ bundle common file_names
       "template_firstrun"
         string => "common/firstrun.txt",
         meta => { "template" };
-      "template_fstab"
-        string => "common/fstab.txt",
-        meta => { "template" };
       "template_fstab_mustache"
         string => "common/fstab_mustache.txt",
         meta => { "template" };
