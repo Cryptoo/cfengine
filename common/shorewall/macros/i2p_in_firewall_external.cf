@@ -50,24 +50,21 @@ bundle agent shorewall_macro_i2p_in_firewall_external(root)
         string => '
           {
             "name": "$(this.macro_name)",
-            "default": "ACCEPT",
             "rules":
                  [
                    {
-                     "action": "PARAM",
-                     "source": "-",
-                     "destination": "-",
+                     "action": "DNAT",
+                     "source": "net",
+                     "destination": "idmz:192.168.$(subnet_config[ispdmz]).$(defined_numbers[i2p]):$(port_info[i2p][internal])",
                      "protocol": "udp",
-                     "destination_port": "$(port_info[i2p][external])",
-                     "source_port": ""
+                     "destination_port": "$(port_info[i2p][external])"
                    },
                    {
-                     "action": "PARAM",
-                     "source": "-",
-                     "destination": "-",
+                     "action": "DNAT",
+                     "source": "net",
+                     "destination": "idmz:192.168.$(subnet_config[ispdmz]).$(defined_numbers[i2p]):$(port_info[i2p][internal])",
                      "protocol": "tcp",
-                     "destination_port": "$(port_info[i2p][external])",
-                     "source_port": ""
+                     "destination_port": "$(port_info[i2p][external])"
                    }
                  ]
                }
@@ -105,7 +102,7 @@ bundle agent shorewall_macro_i2p_in_firewall_external(root)
 
     any::
 
-      "have_i2p_port_info"
+      "have_port_info"
         expression => fileexists("/$(file_names.port_info_incoming)");
 
       "first"
