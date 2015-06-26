@@ -1,0 +1,57 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/file_names.cf"
+            };
+
+}
+
+bundle agent port_info
+
+{
+
+  vars:
+
+    have_port_info_i2p::
+
+      "port_info_i2p"
+        string => readfile("/$(file_names.port_info_i2p)", "0");
+
+      "port_info_i2p_data"
+        data => parsejson("$(this.port_info_i2p)");
+
+      "port_info"
+        data => mergedata("port_info_i2p_data");
+
+      "port_info_string"
+        string => storejson("port_info"),
+        classes => default:if_ok("have_port_info");
+
+  classes:
+
+    any::
+
+      "have_port_info_i2p"
+        expression => fileexists("/$(file_names.port_info_i2p)");
+
+  files:
+
+    port_info_firewall_external::
+
+      "/$(file_names.port_info_firewall_external)"
+        perms => root_qemu,
+        create => "false";
+
+  methods:
+
+    have_port_info::
+
+      "save port info to firewall_external inbox"
+        usebundle => default:file_make("/$(file_names.port_info_firewall_external)", "$(this.port_info_string)"),
+        classes => default:if_ok("port_info_firewall_external");
+
+}

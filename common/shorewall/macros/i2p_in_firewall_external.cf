@@ -1,0 +1,125 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/config.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/templates.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
+bundle agent shorewall_macro_i2p_in_firewall_external(root)
+
+{
+
+  meta:
+
+    "tags" slist => { "shorewall_macro", "firewall_external" };
+
+  vars:
+
+    any::
+
+      "macro_name"
+        string => "i2p_in";
+
+      "defined_numbers"
+        data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
+
+      "subnet_config"
+        data => readjson("/$(file_names.subnet_config)", 1M);
+
+    have_port_info::
+
+      "port_info_string"
+        string => readfile("/$(file_names.port_info_incoming)", 0);
+
+      "port_info"
+        data => parsejson("$(port_info_string)");
+
+    have_i2p_port_info::
+
+      "macro_json"
+        string => '
+          {
+            "name": "$(this.macro_name)",
+            "default": "ACCEPT",
+            "rules":
+                 [
+                   {
+                     "action": "PARAM",
+                     "source": "-",
+                     "destination": "-",
+                     "protocol": "udp",
+                     "destination_port": "$(port_info[i2p][external])",
+                     "source_port": ""
+                   },
+                   {
+                     "action": "PARAM",
+                     "source": "-",
+                     "destination": "-",
+                     "protocol": "tcp",
+                     "destination_port": "$(port_info[i2p][external])",
+                     "source_port": ""
+                   }
+                 ]
+               }
+          }
+        ';
+
+    !have_i2p_port_info::
+
+      "rules_json"
+        string => '
+          {
+            "new":
+                 [
+                 ],
+               }
+          }
+        ';
+
+  classes:
+
+    have_port_info::
+
+      "have_i2p_port_info"
+        expression => regextract('"i2p":', "$(port_info_string)", "regextract_i2p");
+
+    second::
+
+      "third"
+        expression => "any";
+
+    first::
+
+      "second"
+        expression => "any";
+
+    any::
+
+      "have_i2p_port_info"
+        expression => fileexists("/$(file_names.port_info_incoming)");
+
+      "first"
+        expression => "any";
+
+  files:
+
+    third::
+
+      "$(root)$(directory_names.fs_config_shorewall)/macro.$(this.macro_name)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[shorewall_macro])",
+        template_method => "mustache",
+        template_data => parsejson("$(macro_json)");
+
+}

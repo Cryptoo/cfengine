@@ -37,6 +37,23 @@ bundle agent i2p(root)
       "i2p_conf[clientApp.1.args]"
         string => "sam.keys 127.0.0.1,192.168.$(subnet_config[i2p]).$(defined_numbers[i2p]) $(config.services[i2p][sam_port]) i2cp.tcp.host=127.0.0.1 i2cp.tcp.port=$(config.services[i2p][i2cp_port])";
 
+    have_i2p_router_config::
+
+      "router_config_string"
+        string => readfile("$(this.root)$(file_names.i2p_router_config)", "0");
+
+    router_internal_port_configured::
+
+      "port_data"
+        string => '
+          {
+            "i2p":
+              {
+                "internal": "$(i2p_internal_port[1])",
+                "external": "$(i2p_external_port[1])",
+              }
+          }';
+
   classes:
 
     any::
@@ -44,11 +61,26 @@ bundle agent i2p(root)
       "have_i2p_config"
         expression => fileexists("$(this.root)$(file_names.i2p_config)");
 
+      "have_i2p_router_config"
+        expression => fileexists("$(this.root)$(file_names.i2p_router_config)");
+
+    have_i2p_router_config::
+
+      "router_internal_port_configured"
+        expression => regextract("i2np\.udp\.internalPort=([0-9]+)", "$(router_config_string)", "i2p_internal_port");
+
+      "router_external_port_configured"
+        expression => regextract("i2np\.udp\.port=([0-9]+)", "$(router_config_string)", "i2p_external_port");
+
   files:
 
     any::
 
       "$(this.root)$(directory_names.fs_i2p_base)/."
+        perms => i2p,
+        create => "true";
+
+      "$(this.root)$(directory_names.fs_i2p_user)/."
         perms => i2p,
         create => "true";
 
@@ -69,5 +101,10 @@ bundle agent i2p(root)
 
       "configure system as an I2P node"
         usebundle => server_guest("$(this.root)", "i2p", "x86_64", "no_multilib");
+
+    router_internal_port_configured::
+
+      "save port info to outbox"
+        usebundle => default:file_make("$(this.root)$(file_names.port_info_outgoing)", "$(this.port_data)");
 
 }

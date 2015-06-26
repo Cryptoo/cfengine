@@ -35,51 +35,35 @@ bundle agent shorewall_rules_firewall_external(root)
         string => '
           {
             "new":
-                 [
-                   {
-                     "action": "guest",
-                     "source": "",
-                     "destination": "",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
-                   },
-                   {
-                     "action": "portmapping",
-                     "source": "idmz",
-                     "destination": "",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
-                   },
-                   {
-                     "action": "noip",
-                     "source": "fw",
-                     "destination": "",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
-                   },
-                   {
-                     "action": "SSH(DNAT)",
-                     "source": "net",
-                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
-                   },
-                   {
-                     "action": "vpn_server(DNAT)",
-                     "source": "net",
-                     "destination": "idmz:192.168.$(subnet_config[ispdmz]).$(defined_numbers[vpn_server])",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
-                   }
-                 ],
-               }
-          }
-        ';
+              [
+                {
+                  "action": "guest"
+                },
+                {
+                  "action": "portmapping",
+                  "source": "idmz"
+                },
+                {
+                  "action": "noip",
+                  "source": "fw"
+                },
+                {
+                  "action": "i2p_in(DNAT)",
+                  "source": "net",
+                  "destination": "idmz:192.168.$(subnet_config[ispdmz]).$(defined_numbers[i2p])"
+                },
+                {
+                  "action": "vpn_server(DNAT)",
+                  "source": "net",
+                  "destination": "idmz:192.168.$(subnet_config[ispdmz]).$(defined_numbers[vpn_server])"
+                },
+                {
+                  "action": "SSH(DNAT)",
+                  "source": "net",
+                  "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])"
+                }
+              ]
+          }';
 
   files:
 

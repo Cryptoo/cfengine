@@ -92,6 +92,14 @@ bundle common file_names
         string => "$(directory_names.fs_config_cryptoo_incoming)/subnet_config.json";
       "master_ssh_key"
         string => "$(directory_names.fs_config_cryptoo_incoming)/master_ssh_key";
+      "port_info_incoming"
+        string => "$(directory_names.fs_config_cryptoo_incoming)/port_info.json";
+      "port_info_outgoing"
+        string => "$(directory_names.fs_config_cryptoo_outgoing)/port_info.json";
+      "port_info_firewall_external"
+        string => "$(directory_names.fs_config_guest_inboxes)/firewall_external/port_info.json";
+      "port_info_i2p"
+        string => "$(directory_names.fs_config_guest_outboxes)/i2p/port_info.json";
       "grub_defaults"
         string => "$(directory_names.fs_config_default)/grub";
       "dracut_conf"
@@ -202,6 +210,8 @@ bundle common file_names
         string => "$(directory_names.fs_config_tor)/torrc";
       "i2p_config"
         string => "$(directory_names.fs_i2p_base)/clients.config";
+      "i2p_router_config"
+        string => "$(directory_names.fs_i2p_user)/router.config";
       "proc_mounts"
         string => "proc/self/mounts";
       "authorized_keys"
