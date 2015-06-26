@@ -1,0 +1,13 @@
+[Unit]
+Description=Invisible Internet Project
+After=network.target
+
+[Service]
+User=i2p
+Group=i2p
+Type=simple
+Restart=always
+ExecStart=/opt/i2p/i2prouter console
+
+[Install]
+WantedBy=multi-user.target

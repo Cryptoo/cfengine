@@ -8,6 +8,7 @@ body file control
               "cryptoo/config/config.cf",
               "cryptoo/config/directory_names.cf",
               "cryptoo/config/file_names.cf",
+              "cryptoo/config/templates.cf",
               "cryptoo/util/perms.cf"
             };
 
@@ -50,6 +51,11 @@ bundle agent i2p(root)
       "$(this.root)$(directory_names.fs_i2p_base)/."
         perms => i2p,
         create => "true";
+
+      "$(this.root)$(file_names.i2p_service)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[i2p_service])";
 
     have_i2p_config::
 
