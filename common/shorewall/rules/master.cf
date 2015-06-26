@@ -182,7 +182,7 @@ bundle agent shorewall_rules_master(root)
                    {
                      "action": "cfengine(ACCEPT)",
                      "source": "d$(defined_numbers[firewall_external]):192.168.$(subnet_config[ispdmz]).$(defined_numbers[firewall_external])",
-                     "destination": "d$(defined_numbers[vpn_primary]):192.168.$(subnet_config[ispdmz]).$(defined_numbers[vpn_primary])"
+                     "destination": "d$(defined_numbers[vpn_primary]):192.168.$(subnet_config[lan]).$(defined_numbers[master])"
                    },
                    {
                      "action": "vpn_server(ACCEPT)",
@@ -448,6 +448,11 @@ bundle agent shorewall_rules_master(root)
                    {
                      "action": "SSH(ACCEPT)",
                      "source": "l$(defined_numbers[firewall_internal])",
+                     "destination": "l$(defined_numbers[master]):192.168.$(subnet_config[lan]).$(defined_numbers[master])"
+                   },
+                   {
+                     "action": "cfengine(ACCEPT)",
+                     "source": "l$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[firewall_internal])",
                      "destination": "l$(defined_numbers[master]):192.168.$(subnet_config[lan]).$(defined_numbers[master])"
                    },
                    {
