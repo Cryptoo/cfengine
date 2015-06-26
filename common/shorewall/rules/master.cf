@@ -279,6 +279,11 @@ bundle agent shorewall_rules_master(root)
             "i2p":
                  [
                    {
+                     "action": "HTTP(ACCEPT)",
+                     "source": "i$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).0/24",
+                     "destination": "i$(defined_numbers[i2p]):192.168.$(subnet_config[i2p]).$(defined_numbers[i2p])"
+                   },
+                   {
                      "action": "SSH(ACCEPT)",
                      "source": "i$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])",
                      "destination": "i$(defined_numbers[i2p]):192.168.$(subnet_config[i2p]).$(defined_numbers[i2p])"
@@ -289,8 +294,8 @@ bundle agent shorewall_rules_master(root)
                      "destination": "i$(defined_numbers[i2p]):192.168.$(subnet_config[i2p]).$(defined_numbers[i2p])"
                    },
                    {
-                     "action": "HTTP(ACCEPT)",
-                     "source": "i$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).0/24",
+                     "action": "DNS(ACCEPT)",
+                     "source": "i$(defined_numbers[firewall_internal]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])",
                      "destination": "i$(defined_numbers[i2p]):192.168.$(subnet_config[i2p]).$(defined_numbers[i2p])"
                    },
                    {

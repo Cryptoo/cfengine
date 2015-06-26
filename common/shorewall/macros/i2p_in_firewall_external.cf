@@ -45,14 +45,15 @@ bundle agent shorewall_macro_i2p_in_firewall_external(root)
       "port_info"
         data => parsejson("$(port_info_string)");
 
-    have_i2p_port_info::
+    i2p_port_info_evaluated::
 
       "macro_json"
-        string => '
-          {
-            "name": "$(this.macro_name)",
-            "rules":
-                 [
+        string => ifelse( "have_i2p_port_info",
+          '{
+             "name": "$(this.macro_name)",
+             "default": "ACCEPT",
+             "rules":
+                  [
                    {
                      "action": "DNAT",
                      "source": "net",
@@ -67,22 +68,14 @@ bundle agent shorewall_macro_i2p_in_firewall_external(root)
                      "protocol": "tcp",
                      "destination_port": "$(port_info[i2p][external])"
                    }
-                 ]
-               }
-          }
-        ';
-
-    !have_i2p_port_info::
-
-      "rules_json"
-        string => '
-          {
-            "new":
-                 [
-                 ],
-               }
-          }
-        ';
+                  ]
+                }
+           } ',
+          '{
+             "name": "$(this.macro_name)",
+             "default": "ACCEPT"
+           }'),
+        classes => default:if_ok("have_macro_json");
 
   classes:
 
@@ -91,14 +84,7 @@ bundle agent shorewall_macro_i2p_in_firewall_external(root)
       "have_i2p_port_info"
         expression => regextract('"i2p":', "$(port_info_string)", "regextract_i2p");
 
-    second::
-
-      "third"
-        expression => "any";
-
-    first::
-
-      "second"
+      "i2p_port_info_evaluated"
         expression => "any";
 
     any::
@@ -106,12 +92,17 @@ bundle agent shorewall_macro_i2p_in_firewall_external(root)
       "have_port_info"
         expression => fileexists("/$(file_names.port_info_incoming)");
 
-      "first"
+      "port_info_evaluated"
+        expression => "any";
+
+    port_info_evaluated&!have_port_info::
+
+      "i2p_port_info_evaluated"
         expression => "any";
 
   files:
 
-    third::
+    have_macro_json::
 
       "$(root)$(directory_names.fs_config_shorewall)/macro.$(this.macro_name)"
         perms => system,

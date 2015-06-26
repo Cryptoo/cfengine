@@ -45,66 +45,53 @@ bundle agent shorewall_macro_i2p_in_i2p(root)
       "port_info"
         data => parsejson("$(port_info_string)");
 
+    i2p_port_info_evaluated::
+
       "macro_json"
-        string => '
-          {
-            "name": "$(this.macro_name)",
-            "default": "ACCEPT",
-            "rules":
-                 [
-                   {
-                     "action": "PARAM",
-                     "source": "-",
-                     "destination": "-",
-                     "protocol": "udp",
-                     "destination_port": "$(port_info[i2p][external])",
-                     "source_port": ""
-                   },
-                   {
-                     "action": "PARAM",
-                     "source": "-",
-                     "destination": "-",
-                     "protocol": "tcp",
-                     "destination_port": "$(port_info[i2p][external])",
-                     "source_port": ""
-                   }
-                 ]
-               }
-          }
-        ';
-
-    !have_i2p_port_info::
-
-      "rules_json"
-        string => '
-          {
-            "new":
-                 [
-                 ],
-               }
-          }
-        ';
-
-    have_port_info::
+        string => ifelse( "have_i2p_port_info",
+          '{
+             "name": "$(this.macro_name)",
+             "default": "ACCEPT",
+             "rules":
+                  [
+                    {
+                      "action": "PARAM",
+                      "source": "-",
+                      "destination": "-",
+                      "protocol": "udp",
+                      "destination_port": "$(port_info[i2p][external])",
+                      "source_port": ""
+                    },
+                    {
+                      "action": "PARAM",
+                      "source": "-",
+                      "destination": "-",
+                      "protocol": "tcp",
+                      "destination_port": "$(port_info[i2p][external])",
+                      "source_port": ""
+                    }
+                  ]
+                }
+           } ',
+          '{
+             "name": "$(this.macro_name)",
+             "default": "ACCEPT"
+           }'),
+        classes => default:if_ok("have_macro_json");
 
   classes:
-
-    first::
-
-      "second"
-        expression => "any";
 
     any::
 
       "have_i2p_port_info"
         expression => fileexists("/$(file_names.port_info_outgoing)");
 
-      "first"
+      "i2p_port_info_evaluated"
         expression => "any";
 
   files:
 
-    second::
+    have_macro_json::
 
       "$(root)$(directory_names.fs_config_shorewall)/macro.$(this.macro_name)"
         perms => system,
