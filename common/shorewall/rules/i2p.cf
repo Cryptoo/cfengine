@@ -8,6 +8,7 @@ body file control
               "cryptoo/config/config.cf",
               "cryptoo/config/file_names.cf",
               "cryptoo/config/templates.cf",
+              "cryptoo/util/classes.cf",
               "cryptoo/util/perms.cf"
             };
 
@@ -104,6 +105,7 @@ bundle agent shorewall_rules_i2p(root)
         create => "true",
         edit_template => "/$(templates.template[shorewall_rules])",
         template_method => "mustache",
-        template_data => parsejson("$(rules_json)");
+        template_data => parsejson("$(rules_json)"),
+        classes => shorewall;
 
 }

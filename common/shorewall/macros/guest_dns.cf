@@ -9,6 +9,7 @@ body file control
               "cryptoo/config/directory_names.cf",
               "cryptoo/config/file_names.cf",
               "cryptoo/config/templates.cf",
+              "cryptoo/util/classes.cf",
               "cryptoo/util/perms.cf"
             };
 
@@ -96,6 +97,7 @@ bundle agent shorewall_macro_guest_dns(root)
         create => "true",
         edit_template => "/$(templates.template[shorewall_macro])",
         template_method => "mustache",
-        template_data => parsejson("$(macro_json)");
+        template_data => parsejson("$(macro_json)"),
+        classes => shorewall;
 
 }

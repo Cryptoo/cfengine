@@ -8,6 +8,7 @@ body file control
               "cryptoo/config/config.cf",
               "cryptoo/config/file_names.cf",
               "cryptoo/config/templates.cf",
+              "cryptoo/util/classes.cf",
               "cryptoo/util/perms.cf"
             };
 
@@ -535,6 +536,7 @@ bundle agent shorewall_rules_master(root)
         create => "true",
         edit_template => "/$(templates.template[shorewall_rules_workaround])",
         template_method => "mustache",
-        template_data => mergedata("rules_data_host", "rules_data_wan", "rules_data_ispdmz", "rules_data_tor", "rules_data_i2p", "rules_data_vpndmz", "rules_data_lan");
+        template_data => mergedata("rules_data_host", "rules_data_wan", "rules_data_ispdmz", "rules_data_tor", "rules_data_i2p", "rules_data_vpndmz", "rules_data_lan"),
+        classes => shorewall;
 
 }

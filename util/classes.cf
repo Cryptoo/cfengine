@@ -52,3 +52,12 @@ body classes systemd_enabled
   promise_repaired => { "service_needs_enable" };
 
 }
+
+body classes shorewall
+
+{
+
+  scope => "namespace";
+  promise_repaired => { "need_shorewall_restart" };
+
+}

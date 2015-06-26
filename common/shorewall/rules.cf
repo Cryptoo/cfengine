@@ -5,7 +5,6 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
-              "cryptoo/config/file_names.cf",
               "@(cryptoo:control.shorewall_macro_inputs)",
               "@(cryptoo:control.shorewall_rules_inputs)"
             };
@@ -38,33 +37,14 @@ bundle agent shorewall_rules(root, role)
       "relevant_rules"
         slist => intersection(shorewall_rules, role_rules);
 
-  classes:
-
-    any::
-
-      "bootstrap"
-        not => strcmp("$(this.root)", "/");
-
-      "have_shorewall_app"
-        expression => fileexists("$(this.root)$(file_names.shorewall_app)");
-
   methods:
 
     any::
 
       "configure shorewall macros"
-        usebundle => $(relevant_macros)("$(this.root)"),
-        classes => default:if_repaired("update_shorewall");
+        usebundle => $(relevant_macros)("$(this.root)");
 
       "configure /etc/shorewall/rules"
-        usebundle => $(relevant_rules)("$(this.root)"),
-        classes => default:if_repaired("update_shorewall");
-
-  commands:
-
-    update_shorewall&have_shorewall_app&(!bootstrap)::
-
-      "/$(file_names.shorewall_app)"
-        args => "restart";
+        usebundle => $(relevant_rules)("$(this.root)");
 
 }

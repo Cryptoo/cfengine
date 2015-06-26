@@ -8,6 +8,7 @@ body file control
               "cryptoo/config/file_groups.cf",
               "cryptoo/config/file_names.cf",
               "cryptoo/config/templates.cf",
+              "cryptoo/util/classes.cf",
               "cryptoo/util/perms.cf"
             };
 
@@ -26,6 +27,7 @@ bundle agent shorewall_policy(root, role)
         create => "true",
         edit_template => "/$(templates.template[shorewall_policy])",
         template_method => "mustache",
-        template_data => parsejson("$(file_groups.firewall[$(this.role)])");
+        template_data => parsejson("$(file_groups.firewall[$(this.role)])"),
+        classes => shorewall;
 
 }

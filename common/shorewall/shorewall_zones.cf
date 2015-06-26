@@ -12,6 +12,7 @@ body file control
               "cryptoo/config/file_groups.cf",
               "cryptoo/config/file_names.cf",
               "cryptoo/config/templates.cf",
+              "cryptoo/util/classes.cf",
               "cryptoo/util/perms.cf"
             };
 
@@ -103,14 +104,16 @@ bundle agent shorewall_zones(root, role)
         create => "true",
         edit_template => "/$(templates.template[shorewall_zone])",
         template_method => "mustache",
-        template_data => parsejson("$(zone_json)");
+        template_data => parsejson("$(zone_json)"),
+        classes => shorewall;
 
       "$(root)$(file_names.shorewall_interfaces)"
         perms => system,
         create => "true",
         edit_template => "/$(templates.template[shorewall_interface])",
         template_method => "mustache",
-        template_data => parsejson("$(zone_json)");
+        template_data => parsejson("$(zone_json)"),
+        classes => shorewall;
 
   methods:
 

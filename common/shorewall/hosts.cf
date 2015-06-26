@@ -8,7 +8,8 @@ body file control
               "cryptoo/common/shorewall/gateway_interface.cf",
               "cryptoo/common/shorewall/routable_interface.cf",
               "cryptoo/common/shorewall/routes.cf",
-              "cryptoo/config/network.cf"
+              "cryptoo/config/network.cf",
+              "cryptoo/util/classes.cf"
             };
 
 }
@@ -130,7 +131,8 @@ bundle agent shorewall_hosts(root, role)
         create => "true",
         edit_template => "/$(templates.template[shorewall_hosts])",
         template_method => "mustache",
-        template_data => parsejson("$(route_json_final)");
+        template_data => parsejson("$(route_json_final)"),
+        classes => shorewall;
 
   methods:
 
