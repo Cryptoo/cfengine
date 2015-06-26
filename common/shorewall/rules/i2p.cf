@@ -67,6 +67,11 @@ bundle agent shorewall_rules_i2p(root)
                   "destination": "fw:192.168.$(subnet_config[i2p]).$(defined_numbers[i2p])"
                 },
                 {
+                  "action": "DNS(ACCEPT)",
+                  "source": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])",
+                  "destination": "fw:192.168.$(subnet_config[i2p]).$(defined_numbers[i2p])"
+                },
+                {
                   "action": "HTTP(REDIRECT)",
                   "source": "lan",
                   "destination": "$(config.services[i2p][console_port])",

@@ -57,6 +57,7 @@ bundle common directory_names
       "fs_config_units" string => "$(fs_config_systemd)/system";
       "fs_config_units_multi_user" string => "$(fs_config_units)/multi-user.target.wants";
       "fs_config_tor" string => "$(fs_config_base)/tor";
+      "fs_config_unbound" string => "$(fs_config_base)/unbound";
       "fs_home" string => "home";
       "fs_mount_base" string => "mnt";
       "fs_mount_backup" string => "$(fs_mount_base)/backup";

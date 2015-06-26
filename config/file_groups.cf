@@ -1789,7 +1789,8 @@ bundle common file_groups
       "systemd_enabled[i2p]"
         slist => {
                     "@(systemd_enabled[server_guest])",
-                    "i2p"
+                    "i2p",
+                    "unbound"
                  };
 
       "backup_dir[i2p]"
