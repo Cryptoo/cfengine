@@ -10,15 +10,15 @@
     "boot_fs": {
                 "filesystem": "ext4",
                 "options": "defaults,noatime,user_xattr"
-              }
+              },
     "host_fs": {
                 "filesystem": "ext4",
                 "options": "defaults,noatime,user_xattr"
-              }
+              },
     "guest_fs": {
                 "filesystem": "ext4",
                 "options": "defaults,noatime,user_xattr"
-              }
+              },
     "chroot_guest": {
                    "1": {
                               "class": "server",
@@ -35,10 +35,13 @@
                               "arch": "x86_64",
                               "multilib": "multilib"
                             }
-                 }
+                 },
     "host_network": {
                 "wan_physical": "eth0",
                 "lan_physical": "eth1"
+              },
+    "firewall": {
+                "external_ssh": "22"
               }
 
 }
