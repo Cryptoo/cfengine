@@ -98,6 +98,8 @@ bundle common file_names
         string => "$(directory_names.fs_config_cryptoo_outgoing)/port_info.json";
       "port_info_firewall_external"
         string => "$(directory_names.fs_config_guest_inboxes)/firewall_external/port_info.json";
+      "port_info_freenet"
+        string => "$(directory_names.fs_config_guest_outboxes)/freenet/port_info.json";
       "port_info_i2p"
         string => "$(directory_names.fs_config_guest_outboxes)/i2p/port_info.json";
       "grub_defaults"

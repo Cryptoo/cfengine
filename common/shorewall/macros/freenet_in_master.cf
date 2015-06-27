@@ -16,7 +16,7 @@ body file control
 
 }
 
-bundle agent shorewall_macro_i2p_in_master(root)
+bundle agent shorewall_macro_freenet_in_master(root)
 
 {
 
@@ -29,7 +29,7 @@ bundle agent shorewall_macro_i2p_in_master(root)
     any::
 
       "macro_name"
-        string => "i2p_in";
+        string => "freenet_in";
 
       "defined_numbers"
         data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
@@ -37,18 +37,18 @@ bundle agent shorewall_macro_i2p_in_master(root)
       "subnet_config"
         data => readjson("/$(file_names.subnet_config)", 1M);
 
-    have_i2p_port_info::
+    have_freenet_port_info::
 
       "port_info_string"
-        string => readfile("/$(file_names.port_info_i2p)", 0);
+        string => readfile("/$(file_names.port_info_freenet)", 0);
 
       "port_info"
         data => parsejson("$(port_info_string)");
 
-    i2p_port_info_evaluated::
+    freenet_port_info_evaluated::
 
       "macro_json"
-        string => ifelse( "have_i2p_port_info",
+        string => ifelse( "have_freenet_port_info",
           '{
              "name": "$(this.macro_name)",
              "default": "ACCEPT",
@@ -59,15 +59,15 @@ bundle agent shorewall_macro_i2p_in_master(root)
                       "source": "-",
                       "destination": "-",
                       "protocol": "udp",
-                      "destination_port": "$(port_info[i2p][external])",
+                      "destination_port": "$(port_info[freenet][opennet])",
                       "source_port": ""
                     },
                     {
                       "action": "PARAM",
                       "source": "-",
                       "destination": "-",
-                      "protocol": "tcp",
-                      "destination_port": "$(port_info[i2p][external])",
+                      "protocol": "udp",
+                      "destination_port": "$(port_info[freenet][darknet])",
                       "source_port": ""
                     }
                   ]
@@ -83,10 +83,10 @@ bundle agent shorewall_macro_i2p_in_master(root)
 
     any::
 
-      "have_i2p_port_info"
-        expression => fileexists("/$(file_names.port_info_i2p)");
+      "have_freenet_port_info"
+        expression => fileexists("/$(file_names.port_info_freenet)");
 
-      "i2p_port_info_evaluated"
+      "freenet_port_info_evaluated"
         expression => "any";
 
   files:

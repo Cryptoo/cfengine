@@ -191,9 +191,14 @@ bundle agent shorewall_rules_master(root)
                      "destination": "d$(defined_numbers[vpn_server]):192.168.$(subnet_config[ispdmz]).$(defined_numbers[vpn_server])"
                    },
                    {
-                     "action": "i2p_in(DNAT)",
+                     "action": "i2p_in(ACCEPT)",
                      "source": "d$(defined_numbers[firewall_external]):!+private",
                      "destination": "d$(defined_numbers[i2p]):192.168.$(subnet_config[ispdmz]).$(defined_numbers[i2p])"
+                   },
+                   {
+                     "action": "freenet_in(ACCEPT)",
+                     "source": "d$(defined_numbers[firewall_external]):!+private",
+                     "destination": "d$(defined_numbers[freenet]):192.168.$(subnet_config[ispdmz]).$(defined_numbers[freenet])"
                    },
                    {
                      "action": "vpn_client(ACCEPT)",
@@ -238,6 +243,11 @@ bundle agent shorewall_rules_master(root)
                    {
                      "action": "NTP(ACCEPT)",
                      "source": "d$(defined_numbers[i2p]):192.168.$(subnet_config[ispdmz]).$(defined_numbers[i2p])",
+                     "destination": "d$(defined_numbers[firewall_external]):!+private"
+                   },
+                   {
+                     "action": "freenet_out(ACCEPT)",
+                     "source": "d$(defined_numbers[freenet]):192.168.$(subnet_config[ispdmz]).$(defined_numbers[freenet])",
                      "destination": "d$(defined_numbers[firewall_external]):!+private"
                    }
                  ]

@@ -1,0 +1,115 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/config.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/templates.cf",
+              "cryptoo/util/classes.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
+bundle agent shorewall_macro_freenet_in_firewall_external(root)
+
+{
+
+  meta:
+
+    "tags" slist => { "shorewall_macro", "firewall_external" };
+
+  vars:
+
+    any::
+
+      "macro_name"
+        string => "freenet_in";
+
+      "defined_numbers"
+        data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
+
+      "subnet_config"
+        data => readjson("/$(file_names.subnet_config)", 1M);
+
+    have_port_info::
+
+      "port_info_string"
+        string => readfile("/$(file_names.port_info_incoming)", 0);
+
+      "port_info"
+        data => parsejson("$(port_info_string)");
+
+    freenet_port_info_evaluated::
+
+      "macro_json"
+        string => ifelse( "have_freenet_port_info",
+          '{
+             "name": "$(this.macro_name)",
+             "default": "ACCEPT",
+             "rules":
+                  [
+                   {
+                     "action": "DNAT",
+                     "source": "net",
+                     "destination": "idmz:192.168.$(subnet_config[ispdmz]).$(defined_numbers[freenet]):$(port_info[freenet][opennet])",
+                     "protocol": "udp",
+                     "destination_port": "$(port_info[freenet][opennet])"
+                   },
+                   {
+                     "action": "DNAT",
+                     "source": "net",
+                     "destination": "idmz:192.168.$(subnet_config[ispdmz]).$(defined_numbers[freenet]):$(port_info[freenet][darknet])",
+                     "protocol": "udp",
+                     "destination_port": "$(port_info[freenet][darknet])"
+                   }
+                  ]
+                }
+           } ',
+          '{
+             "name": "$(this.macro_name)",
+             "default": "ACCEPT"
+           }'),
+        classes => default:if_ok("have_macro_json");
+
+  classes:
+
+    have_port_info::
+
+      "have_freenet_port_info"
+        expression => regextract('"freenet":', "$(port_info_string)", "regextract_freenet");
+
+      "freenet_port_info_evaluated"
+        expression => "any";
+
+    any::
+
+      "have_port_info"
+        expression => fileexists("/$(file_names.port_info_incoming)");
+
+      "port_info_evaluated"
+        expression => "any";
+
+    port_info_evaluated&!have_port_info::
+
+      "freenet_port_info_evaluated"
+        expression => "any";
+
+  files:
+
+    have_macro_json::
+
+      "$(root)$(directory_names.fs_config_shorewall)/macro.$(this.macro_name)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[shorewall_macro])",
+        template_method => "mustache",
+        template_data => parsejson("$(macro_json)"),
+        classes => shorewall;
+
+}

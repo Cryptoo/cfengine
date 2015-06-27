@@ -41,6 +41,22 @@ bundle agent shorewall_rules_freenet(root)
                   "action": "guest"
                 },
                 {
+                  "action": "freenet_out(ACCEPT)",
+                  "source": "fw:192.168.$(subnet_config[ispdmz]).$(defined_numbers[freenet])",
+                  "destination": "net",
+                  "protocol": "-",
+                  "destination_port": "-",
+                  "source_port": "-",
+                  "original_destination": "-",
+                  "rate": "-",
+                  "user": "freenet:freenet"
+                },
+                {
+                  "action": "freenet(ACCEPT)",
+                  "source": "net",
+                  "destination": "fw:192.168.$(subnet_config[ispdmz]).$(defined_numbers[freenet])"
+                },
+                {
                   "action": "HTTP(REDIRECT)",
                   "source": "lan",
                   "destination": "$(config.services[freenet][fproxy_port])",

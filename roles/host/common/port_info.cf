@@ -24,8 +24,36 @@ bundle agent port_info
       "port_info_i2p_data"
         data => parsejson("$(this.port_info_i2p)");
 
+    have_port_info_freenet::
+
+      "port_info_freenet"
+        string => readfile("/$(file_names.port_info_freenet)", "0");
+
+      "port_info_freenet_data"
+        data => parsejson("$(this.port_info_freenet)");
+
+    port_info_evaluated&have_port_info_i2p&(!have_port_info_freenet)::
+
       "port_info"
         data => mergedata("port_info_i2p_data");
+
+      "port_info_string"
+        string => storejson("port_info"),
+        classes => default:if_ok("have_port_info");
+
+    port_info_evaluated&(!have_port_info_i2p)&have_port_info_freenet::
+
+      "port_info"
+        data => mergedata("port_info_freenet_data");
+
+      "port_info_string"
+        string => storejson("port_info"),
+        classes => default:if_ok("have_port_info");
+
+    port_info_evaluated&have_port_info_i2p&have_port_info_freenet::
+
+      "port_info"
+        data => mergedata("port_info_i2p_data", "port_info_freenet_data");
 
       "port_info_string"
         string => storejson("port_info"),
@@ -37,6 +65,12 @@ bundle agent port_info
 
       "have_port_info_i2p"
         expression => fileexists("/$(file_names.port_info_i2p)");
+
+      "have_port_info_freenet"
+        expression => fileexists("/$(file_names.port_info_freenet)");
+
+      "port_info_evaluated"
+        expression => "any";
 
   files:
 
