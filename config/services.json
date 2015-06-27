@@ -22,4 +22,9 @@
           "monotone_port": "8998",
           "eepsite_host": "127.0.0.1"
       },
+    "freenet":
+      {
+          "fproxy_port": "8888",
+          "fcp_port": "9481"
+      }
 }

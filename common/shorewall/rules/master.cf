@@ -388,6 +388,16 @@ bundle agent shorewall_rules_master(root)
                      "destination": "u$(defined_numbers[dns]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])"
                    },
                    {
+                     "action": "HTTP(ACCEPT)",
+                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).0/24",
+                     "destination": "u$(defined_numbers[freenet]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[freenet])"
+                   },
+                   {
+                     "action": "fcp(ACCEPT)",
+                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).0/24",
+                     "destination": "u$(defined_numbers[freenet]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[freenet])"
+                   },
+                   {
                      "action": "SSH(ACCEPT)",
                      "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])",
                      "destination": "u$(defined_numbers[freenet]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[freenet])"

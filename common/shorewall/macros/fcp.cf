@@ -1,0 +1,64 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/config.cf",
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/templates.cf",
+              "cryptoo/util/classes.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
+bundle agent shorewall_macro_fcp(root)
+
+{
+
+  meta:
+
+    "tags" slist => { "shorewall_macro", "freenet", "firewall_internal", "master" };
+
+  vars:
+
+    any::
+
+      "macro_name"
+        string => "fcp";
+
+      "macro_json"
+        string => '
+          {
+            "name": "$(this.macro_name)",
+            "default": "ACCEPT",
+            "rules":
+                 [
+                   {
+                     "action": "PARAM",
+                     "source": "-",
+                     "destination": "-",
+                     "protocol": "tcp",
+                     "destination_port": "$(config.services[freenet][fproxy_port])",
+                     "source_port": ""
+                   }
+                 ],
+               }
+          }
+        ';
+
+  files:
+
+    any::
+
+      "$(root)$(directory_names.fs_config_shorewall)/macro.$(this.macro_name)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[shorewall_macro])",
+        template_method => "mustache",
+        template_data => parsejson("$(macro_json)"),
+        classes => shorewall;
+
+}

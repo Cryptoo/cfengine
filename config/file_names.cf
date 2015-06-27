@@ -212,6 +212,8 @@ bundle common file_names
         string => "$(directory_names.fs_config_tor)/torrc";
       "unbound_config"
         string => "$(directory_names.fs_config_unbound)/unbound.conf";
+      "freenet_config"
+        string => "$(directory_names.fs_freenet_base)/freenet.ini";
       "i2p_config"
         string => "$(directory_names.fs_i2p_base)/clients.config";
       "i2ptunnel_config"

@@ -33,6 +33,29 @@ bundle agent freenet(root)
       "subnet_config"
         data => readjson("/$(file_names.subnet_config)", 1M);
 
+      "freenet_conf[fproxy.allowedHosts]"
+        string => "127.0.0.1,0:0:0:0:0:0:0:1,192.168.$(subnet_config[lan]).0/24";
+      "freenet_conf[fproxy.bindTo]"
+        string => "127.0.0.1,0:0:0:0:0:0:0:1,192.168.$(subnet_config[vpndmz]).$(defined_numbers[freenet])";
+      "freenet_conf[fproxy.allowedHostsFullAccess]"
+        string => "127.0.0.1,0:0:0:0:0:0:0:1,192.168.$(subnet_config[lan]).0/24";
+      "freenet_conf[fproxy.port]"
+        string => "$(config.services[freenet][fproxy_port])";
+      "freenet_conf[fcp.allowedHosts]"
+        string => "127.0.0.1,0:0:0:0:0:0:0:1,192.168.$(subnet_config[lan]).0/24";
+      "freenet_conf[fcp.bindTo]"
+        string => "127.0.0.1,0:0:0:0:0:0:0:1,192.168.$(subnet_config[vpndmz]).$(defined_numbers[freenet])";
+      "freenet_conf[fcp.allowedHostsFullAccess]"
+        string => "127.0.0.1,0:0:0:0:0:0:0:1,192.168.$(subnet_config[lan]).0/24";
+      "freenet_conf[fcp.port]"
+        string => "$(config.services[freenet][fcp_port])";
+      "freenet_conf[node.opennet.bindTo]"
+        string => "192.168.$(subnet_config[ispdmz]).$(defined_numbers[freenet])";
+      "freenet_conf[node.bindTo]"
+        string => "192.168.$(subnet_config[ispdmz]).$(defined_numbers[freenet])";
+      "freenet_conf[node.opennet.acceptSeedConnections]"
+        string => "true";
+
   files:
 
     any::
@@ -41,6 +64,10 @@ bundle agent freenet(root)
         perms => freenet,
         create => "true";
 
+      "$(this.root)$(file_names.freenet_config)"
+        perms => freenet,
+        create => "true",
+        edit_line => default:set_line_based("cryptoo:freenet.freenet_conf", "=", "\s*=\s*", ".*", "\s*#\s*");
 
   methods:
 
