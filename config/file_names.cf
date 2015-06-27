@@ -198,6 +198,8 @@ bundle common file_names
         string => "$(directory_names.fs_config_units)/cf-monitord.service";
       "cf_serverd_service"
         string => "$(directory_names.fs_config_units)/cf-serverd.service";
+      "freenet_service"
+        string => "$(directory_names.fs_config_units)/freenet.service";
       "i2p_service"
         string => "$(directory_names.fs_config_units)/i2p.service";
       "ipset_service"
@@ -386,6 +388,9 @@ bundle common file_names
         meta => { "template" };
       "template_dnsmasq"
         string => "guest/dnsmasq_mustache.txt",
+        meta => { "template" };
+      "template_freenet_service"
+        string => "guest/freenet_service.txt",
         meta => { "template" };
       "template_i2p_service"
         string => "guest/i2p_service.txt",

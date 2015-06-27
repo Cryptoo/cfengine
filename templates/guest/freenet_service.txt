@@ -1,0 +1,15 @@
+[Unit]
+Description=Freenet
+After=network.target
+
+[Service]
+User=freenet
+Group=freenet
+Type=simple
+Restart=always
+ExecStart=/opt/freenet/run.sh console
+ExecReload=/opt/freenet/run.sh reload
+ExecStop=/opt/freenet/run.sh stop
+
+[Install]
+WantedBy=multi-user.target

@@ -1928,7 +1928,8 @@ bundle common file_groups
 
       "systemd_enabled[freenet]"
         slist => {
-                    "@(systemd_enabled[server_guest])"
+                    "@(systemd_enabled[server_guest])",
+                    "freenet"
                  };
 
       "backup_dir[freenet]"

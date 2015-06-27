@@ -56,6 +56,40 @@ bundle agent freenet(root)
       "freenet_conf[node.opennet.acceptSeedConnections]"
         string => "true";
 
+    have_freenet_config::
+
+      "freenet_config_string"
+        string => readfile("$(this.root)$(file_names.freenet_config)", "0"),
+        classes => default:if_ok("have_config_string");
+
+    opennet_port_configured::
+
+      "port_data"
+        string => '
+          {
+            "freenet":
+              {
+                "opennet": "$(opennet_port[1])",
+                "darknet": "$(darknet_port[1])"
+              }
+          }',
+          classes => default:if_ok("have_port_json");
+
+  classes:
+
+    any::
+
+      "have_freenet_config"
+        expression => fileexists("$(this.root)$(file_names.freenet_config)");
+
+    have_config_string::
+
+      "opennet_port_configured"
+        expression => regextract("node\.opennet\.listenPort=([0-9]+)", "$(freenet_config_string)", "opennet_port");
+
+      "darknet_port_configured"
+        expression => regextract("node\.listenPort=([0-9]+)", "$(freenet_config_string)", "darknet_port");
+
   files:
 
     any::
@@ -69,11 +103,21 @@ bundle agent freenet(root)
         create => "true",
         edit_line => default:set_line_based("cryptoo:freenet.freenet_conf", "=", "\s*=\s*", ".*", "\s*#\s*");
 
+      "$(this.root)$(file_names.freenet_service)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[freenet_service])";
+
   methods:
 
     any::
 
       "configure system as an freenet node"
         usebundle => server_guest("$(this.root)", "freenet", "x86_64", "no_multilib");
+
+    have_port_json::
+
+      "save port info to outbox"
+        usebundle => default:file_make("$(this.root)$(file_names.port_info_outgoing)", "$(this.port_data)");
 
 }

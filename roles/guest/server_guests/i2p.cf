@@ -114,7 +114,7 @@ bundle agent i2p(root)
             "i2p":
               {
                 "internal": "$(i2p_internal_port[1])",
-                "external": "$(i2p_external_port[1])",
+                "external": "$(i2p_external_port[1])"
               }
           }';
 
