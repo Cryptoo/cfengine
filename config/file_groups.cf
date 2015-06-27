@@ -1861,6 +1861,144 @@ bundle common file_groups
         ';
 
 ################################################################################
+#                             freenet
+################################################################################
+
+      "make_profile[freenet]"
+        string => "$(make_profile[server_guest])";
+
+      "pm_env[freenet]"
+        slist => {
+                    "@(pm_env[server_guest])"
+                 };
+
+      "pm_environment[freenet]"
+        slist => {
+                    "@(pm_environment[server_guest])"
+                 };
+
+      "keywords[freenet]"
+        slist => {
+                    "@(keywords[server_guest])",
+                    "freenet",
+                    "java"
+                 };
+
+      "mask[freenet]"
+        slist => {
+                    "@(mask[server_guest])"
+                 };
+
+      "unmask[freenet]"
+        slist => {
+                    "@(unmask[server_guest])"
+                 };
+
+      "use[freenet]"
+        slist => {
+                    "@(use[server_guest])",
+                    "freenet",
+                    "java"
+                 };
+
+      "profile[freenet]"
+        slist => {
+                    "@(profile[server_guest])"
+                 };
+
+      "use_udev[freenet]"
+        slist => {
+                    "@(use_udev[server_guest])"
+                 };
+
+      "use_systemd[freenet]"
+        slist => {
+                    "@(use_systemd[server_guest])"
+                 };
+
+      "unuse_udev[freenet]"
+        slist => {
+                    "@(unuse_udev[server_guest])"
+                 };
+
+      "unuse_systemd[freenet]"
+        slist => {
+                    "@(unuse_systemd[server_guest])"
+                 };
+
+      "systemd_enabled[freenet]"
+        slist => {
+                    "@(systemd_enabled[server_guest])"
+                 };
+
+      "backup_dir[freenet]"
+        string => "/$(directory_names.fs_freenet_base)";
+
+      "firewall_zones[freenet]"
+        slist => {
+                    "@(firewall_zones[server_guest])"
+                 };
+
+      "firewall_bridges[freenet]"
+        slist => {
+                    "@(firewall_bridges[server_guest])"
+                 };
+
+      "firewall[freenet]"
+        string => "$(firewall[server_guest])";
+
+      "network[freenet]"
+        string => '
+          {
+            "devices":
+               {
+                 "bridge":
+                   [
+                     "none"
+                   ],
+                 "veth":
+                   [
+                     "none"
+                   ],
+                 "tap":
+                   [
+                     "none"
+                   ]
+               },
+             "interfaces":
+               {
+                 "eth0":
+                   {
+                     "type": "gateway",
+                     "params":
+                       {
+                         "zone": "ispdmz",
+                         "gateway": "firewall_external",
+                         "ipforward": "false"
+                       }
+                   },
+                 "eth1":
+                   {
+                     "type": "simple",
+                     "params":
+                       {
+                         "zone": "vpndmz",
+                         "ipforward": "ipv4",
+                         "routes":
+                           {
+                             "i2p": "firewall_internal",
+                             "eep": "firewall_internal",
+                             "tor": "firewall_internal",
+                             "onion": "firewall_internal",
+                             "lan": "firewall_internal"
+                           }
+                       }
+                   }
+               }
+          }
+        ';
+
+################################################################################
 #                             vpn_primary
 ################################################################################
 

@@ -93,3 +93,11 @@ body perms i2p
       owners  => { "i2p" };
       groups  => { "i2p" };
 }
+
+body perms freenet
+
+{
+      mode  => "0600";
+      owners  => { "freenet" };
+      groups  => { "freenet" };
+}

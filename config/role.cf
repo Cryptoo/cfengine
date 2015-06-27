@@ -171,6 +171,38 @@ bundle common role
           }
         ';
 
+      "params[freenet]"
+        string => '
+          {
+            "number": "$(this.defined_numbers[freenet])",
+            "make_conf":
+              {
+                "makeopts": "guest",
+                "pkgdir": "server_guest",
+                "runtime": "guest",
+                "graphical": "headless"
+              },
+            "libvirt":
+              {
+                "name": "freenet",
+                "ram": "16776192",
+                "cpu": "1",
+                "kernel": "/$(directory_names.fs_libvirt_images)/guest-kernel-x86_64",
+                "interfaces":
+                   [
+                     {
+                       "bridge": "ispdmz",
+                       "device": "ispdmz$(this.defined_numbers[freenet])"
+                     },
+                     {
+                       "bridge": "vpndmz",
+                       "device": "vpndmz$(this.defined_numbers[freenet])"
+                     }
+                   ]
+              }
+          }
+        ';
+
       "params[vpn_primary]"
         string => '
           {

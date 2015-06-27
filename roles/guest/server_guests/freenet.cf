@@ -1,0 +1,52 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/config.cf",
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/network.cf",
+              "cryptoo/config/templates.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
+bundle agent freenet(root)
+
+{
+
+  meta:
+
+    "tags" slist => { "cryptoo_role" };
+
+  vars:
+
+    any::
+
+      "defined_numbers"
+        data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
+
+      "subnet_config"
+        data => readjson("/$(file_names.subnet_config)", 1M);
+
+  files:
+
+    any::
+
+      "$(this.root)$(directory_names.fs_freenet_base)/."
+        perms => freenet,
+        create => "true";
+
+
+  methods:
+
+    any::
+
+      "configure system as an freenet node"
+        usebundle => server_guest("$(this.root)", "freenet", "x86_64", "no_multilib");
+
+}
