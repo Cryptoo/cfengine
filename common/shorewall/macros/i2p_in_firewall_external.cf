@@ -45,36 +45,43 @@ bundle agent shorewall_macro_i2p_in_firewall_external(root)
       "port_info"
         data => parsejson("$(port_info_string)");
 
-    i2p_port_info_evaluated::
+    (!have_i2p_port_info)&(!i2p_port_info_evaluated)::
 
       "macro_json"
-        string => ifelse( "have_i2p_port_info",
-          '{
+        string => '
+          {
+            "name": "$(this.macro_name)",
+            "default": "ACCEPT"
+          }';
+
+    have_i2p_port_info::
+
+      "macro_json"
+        string => '
+          {
              "name": "$(this.macro_name)",
              "default": "ACCEPT",
              "rules":
                   [
-                   {
-                     "action": "DNAT",
-                     "source": "net",
-                     "destination": "idmz:192.168.$(subnet_config[ispdmz]).$(defined_numbers[i2p]):$(port_info[i2p][internal])",
-                     "protocol": "udp",
-                     "destination_port": "$(port_info[i2p][external])"
-                   },
-                   {
-                     "action": "DNAT",
-                     "source": "net",
-                     "destination": "idmz:192.168.$(subnet_config[ispdmz]).$(defined_numbers[i2p]):$(port_info[i2p][internal])",
-                     "protocol": "tcp",
-                     "destination_port": "$(port_info[i2p][external])"
-                   }
+                    {
+                      "action": "PARAM",
+                      "source": "-",
+                      "destination": "-",
+                      "protocol": "udp",
+                      "destination_port": "$(port_info[i2p][external])",
+                      "source_port": ""
+                    },
+                    {
+                      "action": "PARAM",
+                      "source": "-",
+                      "destination": "-",
+                      "protocol": "tcp",
+                      "destination_port": "$(port_info[i2p][external])",
+                      "source_port": ""
+                    }
                   ]
                 }
-           } ',
-          '{
-             "name": "$(this.macro_name)",
-             "default": "ACCEPT"
-           }'),
+           }',
         classes => default:if_ok("have_macro_json");
 
   classes:
@@ -102,7 +109,7 @@ bundle agent shorewall_macro_i2p_in_firewall_external(root)
 
   files:
 
-    have_macro_json::
+    have_macro_json|(!have_i2p_port_info)::
 
       "$(root)$(directory_names.fs_config_shorewall)/macro.$(this.macro_name)"
         perms => system,
