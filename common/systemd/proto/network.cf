@@ -26,21 +26,23 @@ bundle agent network_file(root, name, number, type, params)
       "network_params_$(this.name)"
         data => parsejson("$(this.params)");
 
-    !have_routes::
-
       "routes_$(this.name)"
-        string => "";
-
-    routes_ready::
+        string => "",
+        ifvarclass => "routes_evaluated_$(this.name)&!have_routes_$(this.name)",
+        classes => default:if_ok("routes_ready");
 
       "route_list"
-        slist => getvalues("route_json");
+        slist => getvalues("route_json_$(this.name)"),
+        ifvarclass => "routes_obtained_$(this.name)";
 
       "route_list_joined"
-        string => join(", ", "route_list");
+        string => join(", ", "route_list"),
+        ifvarclass => "routes_obtained_$(this.name)";
 
       "routes_$(this.name)"
-        string => ", $(route_list_joined)";
+        string => ", $(route_list_joined)",
+        classes => default:if_ok("routes_ready"),
+        ifvarclass => "routes_obtained_$(this.name)";
 
     type_no_address::
 
@@ -70,7 +72,8 @@ bundle agent network_file(root, name, number, type, params)
                    }
                  ]
             }
-          ';
+          ',
+        classes => default:if_ok("network_json_ready");
 
     type_bridge_member::
 
@@ -101,7 +104,8 @@ bundle agent network_file(root, name, number, type, params)
                  }
                ]
           }
-        ';
+        ',
+        classes => default:if_ok("network_json_ready");
 
     type_physical::
 
@@ -135,7 +139,8 @@ bundle agent network_file(root, name, number, type, params)
                  }
                ]
           }
-        ';
+        ',
+        classes => default:if_ok("network_json_ready");
 
     type_gateway&routes_ready::
 
@@ -174,7 +179,8 @@ bundle agent network_file(root, name, number, type, params)
                  } $(routes_$(this.name))
                ]
           }
-        ';
+        ',
+        classes => default:if_ok("network_json_ready");
 
     type_simple&routes_ready::
 
@@ -209,7 +215,8 @@ bundle agent network_file(root, name, number, type, params)
                  } $(routes_$(this.name))
                ]
           }
-        ';
+        ',
+        classes => default:if_ok("network_json_ready");
 
     type_dhcp&routes_ready::
 
@@ -243,7 +250,8 @@ bundle agent network_file(root, name, number, type, params)
                  } $(routes_$(this.name))
                ]
           }
-        ';
+        ',
+        classes => default:if_ok("network_json_ready");
 
   classes:
 
@@ -252,12 +260,10 @@ bundle agent network_file(root, name, number, type, params)
       "skip"
         or => { strcmp("$(this.name)", "none"), strcmp("$(this.type)", "virtual") };
 
-      "have_routes"
+      "have_routes_$(this.name)"
         expression => regextract('(?s).*("routes":.*{.*?})', "$(this.params)", "route_regex");
 
-    !have_routes::
-
-      "routes_ready"
+      "routes_evaluated_$(this.name)"
         expression => "any";
 
     !skip::
@@ -267,17 +273,16 @@ bundle agent network_file(root, name, number, type, params)
 
   methods:
 
-    have_routes::
-
       "generate json for routes"
-        usebundle => networkd_routes("$(zone_$(this.name))", "$(this.number)", "{ $(this.route_regex[1]) }"),
-        useresult => "route_json",
-        classes => default:if_ok("routes_ready");
+        usebundle => networkd_routes("$(zone_$(this.name))", "{ $(this.route_regex[1]) }"),
+        ifvarclass => "have_routes_$(this.name)",
+        useresult => "route_json_$(this.name)",
+        classes => default:if_ok("routes_obtained_$(this.name)");
 
 
   files:
 
-    !skip&routes_ready::
+    !skip&network_json_ready::
 
       "$(file_name_$(this.name))"
         perms => system,

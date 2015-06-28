@@ -9,7 +9,7 @@ body file control
             };
 }
 
-bundle agent networkd_routes(zone, number, routes)
+bundle agent networkd_routes(zone, routes)
 
 {
 
@@ -33,4 +33,5 @@ bundle agent networkd_routes(zone, number, routes)
 
       '{ "section": "Route", "values": [ { "LHS": "Gateway", "RHS": "192.168.$(subnet_config[$(this.zone)]).$(defined_numbers[$(route_data[routes][$(route_list)])])" }, { "LHS": "Destination", "RHS": "$(network.subnet[$(route_list)])" }, { "LHS": "Metric", "RHS": "0" } ] }'
         bundle_return_value_index => "$(route_list)";
+
 }
