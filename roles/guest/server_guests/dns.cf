@@ -7,7 +7,9 @@ body file control
   inputs => {
               "cryptoo/config/config.cf",
               "cryptoo/config/file_names.cf",
-              "cryptoo/config/network.cf"
+              "cryptoo/config/network.cf",
+              "cryptoo/config/templates.cf",
+              "cryptoo/util/perms.cf"
             };
 
 }
@@ -45,16 +47,6 @@ bundle agent dns(root)
           }
         ';
 
-      "dns_internal"
-        string => '
-          {
-            "nameservers":
-               [
-                 { "nameserver": "192.168.$(network.subnet_config[vpndmz]).$(config.defined_numbers[dns])" }
-               ]
-          }
-        ';
-
   files:
 
     any::
@@ -65,13 +57,6 @@ bundle agent dns(root)
         edit_template => "/$(templates.template[dnsmasq])",
         template_method => "mustache",
         template_data => parsejson($(this.dnsmasq));
-
-      "$(this.root)$(file_names.dns_config)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[resolv])",
-        template_method => "mustache",
-        template_data => parsejson($(this.dns_internal));
 
       "$(this.root)$(file_names.dns_config_dnsmasq)"
         perms => system,

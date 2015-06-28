@@ -151,6 +151,9 @@ bundle common file_groups
           }
         ';
 
+      "dns_type[common]"
+        string => "internal";
+
 ################################################################################
 #                                 Undefined
 ################################################################################
@@ -236,6 +239,9 @@ bundle common file_groups
 
       "network[undefined]"
         string => "$(network[common])";
+
+      "dns_type[undefined]"
+        string => "$(dns_type[common])";
 
 ################################################################################
 #                                    host
@@ -324,6 +330,9 @@ bundle common file_groups
 
       "network[host]"
         string => "$(network[common])";
+
+      "dns_type[host]"
+        string => "$(dns_type[common])";
 
 ################################################################################
 #                                   master
@@ -528,6 +537,9 @@ bundle common file_groups
           }
         ';
 
+      "dns_type[master]"
+        string => "$(dns_type[host])";
+
 ################################################################################
 #                                desktop_host
 ################################################################################
@@ -615,6 +627,9 @@ bundle common file_groups
       "network[desktop_host]"
         string => "$(network[host])";
 
+      "dns_type[desktop_host]"
+        string => "$(dns_type[host])";
+
 ################################################################################
 #                                    guest
 ################################################################################
@@ -700,6 +715,9 @@ bundle common file_groups
 
       "network[guest]"
         string => "$(network[common])";
+
+      "dns_type[guest]"
+        string => "$(dns_type[common])";
 
 ################################################################################
 #                              desktop_guest
@@ -793,6 +811,9 @@ bundle common file_groups
       "network[desktop_guest]"
         string => "$(network[guest])";
 
+      "dns_type[desktop_guest]"
+        string => "$(dns_type[guest])";
+
 ################################################################################
 #                              chroot_desktop
 ################################################################################
@@ -884,6 +905,9 @@ bundle common file_groups
       "network[chroot_desktop]"
         string => "$(network[desktop_guest])";
 
+      "dns_type[chroot_desktop]"
+        string => "$(dns_type[desktop_guest])";
+
 ################################################################################
 #                                 irc_client
 ################################################################################
@@ -970,6 +994,9 @@ bundle common file_groups
 
       "network[irc_client]"
         string => "$(network[desktop_guest])";
+
+      "dns_type[irc_client]"
+        string => "$(dns_type[desktop_guest])";
 
 ################################################################################
 #                                 mail_client
@@ -1059,6 +1086,9 @@ bundle common file_groups
       "network[mail_client]"
         string => "$(network[desktop_guest])";
 
+      "dns_type[mail_client]"
+        string => "$(dns_type[desktop_guest])";
+
 ################################################################################
 #                                     web
 ################################################################################
@@ -1146,6 +1176,9 @@ bundle common file_groups
 
       "network[web]"
         string => "$(network[desktop_guest])";
+
+      "dns_type[web]"
+        string => "$(dns_type[desktop_guest])";
 
 ################################################################################
 #                                      im
@@ -1235,6 +1268,9 @@ bundle common file_groups
       "network[im]"
         string => "$(network[desktop_guest])";
 
+      "dns_type[im]"
+        string => "$(dns_type[desktop_guest])";
+
 ################################################################################
 #                              server_guest
 ################################################################################
@@ -1320,6 +1356,9 @@ bundle common file_groups
 
       "network[server_guest]"
         string => "$(network[guest])";
+
+      "dns_type[server_guest]"
+        string => "$(dns_type[guest])";
 
 ################################################################################
 #                              chroot_server
@@ -1436,6 +1475,9 @@ bundle common file_groups
 
       "network[chroot_server]"
         string => "$(network[server_guest])";
+
+      "dns_type[chroot_server]"
+        string => "$(dns_type[server_guest])";
 
 ################################################################################
 #                             firewall_external
@@ -1583,6 +1625,9 @@ bundle common file_groups
           }
         ';
 
+      "dns_type[firewall_external]"
+        string => "external";
+
 ################################################################################
 #                             tor
 ################################################################################
@@ -1719,6 +1764,9 @@ bundle common file_groups
                }
           }
         ';
+
+      "dns_type[tor]"
+        string => "external";
 
 ################################################################################
 #                             i2p
@@ -1860,6 +1908,9 @@ bundle common file_groups
           }
         ';
 
+      "dns_type[i2p]"
+        string => "external";
+
 ################################################################################
 #                             freenet
 ################################################################################
@@ -1998,6 +2049,9 @@ bundle common file_groups
                }
           }
         ';
+
+      "dns_type[freenet]"
+        string => "external";
 
 ################################################################################
 #                             vpn_primary
@@ -2162,6 +2216,9 @@ bundle common file_groups
           }
         ';
 
+      "dns_type[vpn_primary]"
+        string => "alternate";
+
 ################################################################################
 #                             dns
 ################################################################################
@@ -2289,6 +2346,9 @@ bundle common file_groups
                }
           }
         ';
+
+      "dns_type[dns]"
+        string => "$(dns_type[server_guest])";
 
 ################################################################################
 #                             mail_server
@@ -2419,6 +2479,9 @@ bundle common file_groups
                }
           }
         ';
+
+      "dns_type[mail_server]"
+        string => "$(dns_type[server_guest])";
 
 ################################################################################
 #                              firewall_internal
@@ -2583,6 +2646,9 @@ bundle common file_groups
                }
           }
         ';
+
+      "dns_type[firewall_internal]"
+        string => "$(dns_type[server_guest])";
 
 ################################################################################
 #                              vpn_server
@@ -2788,5 +2854,8 @@ bundle common file_groups
                }
           }
         ';
+
+      "dns_type[vpn_server]"
+        string => "$(dns_type[server_guest])";
 
 }

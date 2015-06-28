@@ -21,9 +21,6 @@ bundle agent chroot_files(root, role)
       "template_type_$(role)"
         expression => "any";
 
-      "need_resolv_conf"
-        not => fileexists("$(root)$(file_names.dns_config)");
-
       "need_group"
         not => fileexists("$(root)$(file_names.group)");
 
@@ -49,10 +46,5 @@ bundle agent chroot_files(root, role)
 
       "$(root)$(file_names.shadow)"
         copy_from => default:local_cp("/$(file_names.shadow)");
-
-    need_resolv_conf::
-
-      "$(root)$(file_names.dns_config)"
-          copy_from => default:local_cp("/$(file_names.dns_config)");
 
 }

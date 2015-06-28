@@ -8,6 +8,7 @@ body file control
               "cryptoo/common/gcc.cf",
               "cryptoo/common/hosts.cf",
               "cryptoo/common/portage.cf",
+              "cryptoo/common/resolv_conf.cf",
               "cryptoo/common/shorewall.cf",
               "cryptoo/common/ssh.cf",
               "cryptoo/common/unix_extra_groups.cf",
@@ -186,6 +187,9 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
 
       "set up shorewall"
         usebundle => shorewall($(this.root), $(this.role));
+
+      "configure /etc/resolv/conf"
+        usebundle => resolv_conf($(this.root), $(this.role));
 
     chroot::
 

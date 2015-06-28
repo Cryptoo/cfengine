@@ -1,0 +1,86 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/config.cf",
+              "cryptoo/config/file_groups.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/network.cf",
+              "cryptoo/config/templates.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
+bundle agent resolv_conf(root, role)
+
+{
+
+  vars:
+
+    any::
+
+      "dns_json_$(role)"
+        string => '
+          {
+            "nameservers":
+               [
+                 { "nameserver": "$(config.dns[primary])" },
+                 { "nameserver": "$(config.dns[backup])" }
+               ]
+          }
+        ',
+        ifvarclass => "resolv_external_$(role)",
+        classes => default:if_ok("have_dns_json_$(role)");
+
+      "dns_json_$(role)"
+        string => '
+          {
+            "nameservers":
+               [
+                 { "nameserver": "$(config.dns[backup])" }
+               ]
+          }
+        ',
+        ifvarclass => "resolv_alternate_$(role)",
+        classes => default:if_ok("have_dns_json_$(role)");
+
+      "dns_json_$(role)"
+        string => '
+          {
+            "nameservers":
+               [
+                 { "nameserver": "192.168.$(network.subnet_config[vpndmz]).$(config.defined_numbers[dns])" }
+               ]
+          }
+        ',
+        ifvarclass => "resolv_internal_$(role)",
+        classes => default:if_ok("have_dns_json_$(role)");
+
+  classes:
+
+    any::
+
+      "resolv_$(file_groups.dns_type[$(role)])_$(role)"
+        expression => "any";
+
+  files:
+
+    any::
+
+      "$(this.root)$(file_names.dns_config)"
+        ifvarclass => "have_dns_json_$(role)",
+        delete => default:tidy;
+
+      "$(this.root)$(file_names.dns_config)"
+        ifvarclass => "have_dns_json_$(role)",
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[resolv])",
+        template_method => "mustache",
+        template_data => parsejson("$(dns_json_$(role))");
+
+}
