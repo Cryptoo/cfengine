@@ -82,6 +82,14 @@ bundle agent shorewall_macro_mail_server_out(root)
                      "protocol": "",
                      "destination_port": "",
                      "source_port": ""
+                   },
+                   {
+                     "action": "Mail(PARAM)",
+                     "source": "-",
+                     "destination": "-",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
                    }
                  ],
                }
