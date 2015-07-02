@@ -13,7 +13,7 @@ body file control
 
 }
 
-bundle agent shorewall_macro_mail_server_out(root)
+bundle agent shorewall_macro_mail_server_out(root, port_info)
 
 {
 

@@ -5,6 +5,7 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
+              "cryptoo/common/shorewall/get_port_info.cf",
               "@(cryptoo:control.shorewall_macro_inputs)",
               "@(cryptoo:control.shorewall_rules_inputs)"
             };
@@ -41,8 +42,15 @@ bundle agent shorewall_rules(root, role)
 
     any::
 
+      "get port info"
+        usebundle => get_port_info("$(this.root)", "$(this.role)"),
+        useresult => "port_info",
+        classes => default:if_ok("have_port_info");
+
+    have_port_info::
+
       "configure shorewall macros"
-        usebundle => $(relevant_macros)("$(this.root)");
+        usebundle => $(relevant_macros)("$(this.root)", "$(port_info[port_info])");
 
       "configure /etc/shorewall/rules"
         usebundle => $(relevant_rules)("$(this.root)");

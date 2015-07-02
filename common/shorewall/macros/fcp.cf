@@ -14,7 +14,7 @@ body file control
 
 }
 
-bundle agent shorewall_macro_fcp(root)
+bundle agent shorewall_macro_fcp(root, port_info)
 
 {
 

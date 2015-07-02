@@ -13,7 +13,7 @@ body file control
 
 }
 
-bundle agent shorewall_macro_vpn_server(root)
+bundle agent shorewall_macro_vpn_server(root, port_info)
 
 {
 

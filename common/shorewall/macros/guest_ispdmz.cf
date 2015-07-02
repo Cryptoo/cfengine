@@ -15,7 +15,7 @@ body file control
 
 }
 
-bundle agent shorewall_macro_guest_ispdmz(root)
+bundle agent shorewall_macro_guest_ispdmz(root, port_info)
 
 {
 

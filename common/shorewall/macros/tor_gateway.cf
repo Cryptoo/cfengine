@@ -15,7 +15,7 @@ body file control
 
 }
 
-bundle agent shorewall_macro_tor_gateway(root)
+bundle agent shorewall_macro_tor_gateway(root, port_info)
 
 {
 

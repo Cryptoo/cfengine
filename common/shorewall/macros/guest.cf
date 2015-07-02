@@ -15,7 +15,7 @@ body file control
 
 }
 
-bundle agent shorewall_macro_guest(root)
+bundle agent shorewall_macro_guest(root, port_info)
 
 {
 

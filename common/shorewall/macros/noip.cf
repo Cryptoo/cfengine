@@ -13,7 +13,7 @@ body file control
 
 }
 
-bundle agent shorewall_macro_noip(root)
+bundle agent shorewall_macro_noip(root, port_info)
 
 {
 

@@ -13,7 +13,7 @@ body file control
 
 }
 
-bundle agent shorewall_macro_cfengine(root)
+bundle agent shorewall_macro_cfengine(root, port_info)
 
 {
 

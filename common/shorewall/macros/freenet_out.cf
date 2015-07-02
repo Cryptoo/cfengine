@@ -16,20 +16,20 @@ body file control
 
 }
 
-bundle agent shorewall_macro_i2p_in_i2p(root)
+bundle agent shorewall_macro_freenet_out(root, port_info)
 
 {
 
   meta:
 
-    "tags" slist => { "shorewall_macro", "i2p" };
+    "tags" slist => { "shorewall_macro", "freenet", "master" };
 
   vars:
 
     any::
 
       "macro_name"
-        string => "i2p_in";
+        string => "freenet_in";
 
       "defined_numbers"
         data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
@@ -37,19 +37,23 @@ bundle agent shorewall_macro_i2p_in_i2p(root)
       "subnet_config"
         data => readjson("/$(file_names.subnet_config)", 1M);
 
-    have_i2p_port_info::
-
-      "port_info_string"
-        string => readfile("/$(file_names.port_info_outgoing)", 0);
-
-      "port_info"
-        data => parsejson("$(port_info_string)");
-
-    i2p_port_info_evaluated::
+    no_freenet_port_info::
 
       "macro_json"
-        string => ifelse( "have_i2p_port_info",
-          '{
+        string => '
+          {
+            "name": "$(this.macro_name)",
+            "default": "ACCEPT"
+          }';
+
+    have_freenet_port_info::
+
+      "port_info"
+        data => parsejson("$(this.port_info)");
+
+      "macro_json"
+        string => '
+          {
              "name": "$(this.macro_name)",
              "default": "ACCEPT",
              "rules":
@@ -59,39 +63,45 @@ bundle agent shorewall_macro_i2p_in_i2p(root)
                       "source": "-",
                       "destination": "-",
                       "protocol": "udp",
-                      "destination_port": "$(port_info[i2p][external])",
-                      "source_port": ""
+                      "destination_port": "-",
+                      "source_port": "$(port_info[freenet][opennet])"
                     },
                     {
                       "action": "PARAM",
                       "source": "-",
                       "destination": "-",
-                      "protocol": "tcp",
-                      "destination_port": "$(port_info[i2p][external])",
-                      "source_port": ""
+                      "protocol": "udp",
+                      "destination_port": "-",
+                      "source_port": "$(port_info[freenet][darknet])"
                     }
                   ]
                 }
-           } ',
-          '{
-             "name": "$(this.macro_name)",
-             "default": "ACCEPT"
-           }'),
+           }',
         classes => default:if_ok("have_macro_json");
 
   classes:
 
+    have_macro_json|no_freenet_port_info::
+
+      "done"
+        expression => "any";
+
+    freenet_port_info_evaluated|(!have_freenet_port_info)::
+
+      "no_freenet_port_info"
+        expression => "any";
+
     any::
 
-      "have_i2p_port_info"
-        expression => fileexists("/$(file_names.port_info_outgoing)");
+      "have_freenet_port_info"
+        expression => regextract('(?s).*("freenet":.*{.*?})', "$(this.port_info)", "freenet_regex");
 
-      "i2p_port_info_evaluated"
+      "freenet_port_info_evaluated"
         expression => "any";
 
   files:
 
-    have_macro_json::
+    done::
 
       "$(root)$(directory_names.fs_config_shorewall)/macro.$(this.macro_name)"
         perms => system,

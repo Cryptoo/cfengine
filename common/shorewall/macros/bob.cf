@@ -15,7 +15,7 @@ body file control
 
 }
 
-bundle agent shorewall_macro_bob(root)
+bundle agent shorewall_macro_bob(root, port_info)
 
 {
 

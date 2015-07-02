@@ -1,0 +1,88 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/file_names.cf"
+            };
+
+}
+
+bundle agent get_port_info(root, role)
+
+{
+
+  vars:
+
+    !port_info_role_set::
+
+      "port_info_json"
+        string => '{ "none": "" }';
+
+    port_info_role_master::
+
+      "port_info_file"
+        string => "$(this.root)$(file_names.port_info_firewall_external)",
+        classes => default:if_ok("know_port_info_file");
+
+    port_info_role_firewall_external::
+
+      "port_info_file"
+        string => "$(this.root)$(file_names.port_info_incoming)",
+        classes => default:if_ok("know_port_info_file");
+
+    port_info_role_i2p|port_info_role_freenet::
+
+      "port_info_file"
+        string => "$(this.root)$(file_names.port_info_outgoing)",
+        classes => default:if_ok("know_port_info_file");
+
+    have_port_info_file::
+
+      "port_info_json"
+        string => readfile("$(this.port_info_file)", 0),
+        classes => default:if_ok("have_port_info_json");
+
+  classes:
+
+    have_port_info_json|port_info_file_missing|port_info_file_not_specified::
+
+      "done"
+        expression => "any";
+
+    port_info_evaluated&(!have_port_info_file)::
+
+      "port_info_file_missing"
+        expression => "any";
+
+    know_port_info_file::
+
+      "have_port_info_file"
+        expression => fileexists("$(this.port_info_file)");
+
+      "port_info_evaluated"
+        expression => "any";
+
+    port_info_role_set&(!know_port_info_file)::
+
+      "port_info_file_not_specified"
+        expression => "any";
+
+    any::
+
+      "port_info_role_$(this.role)"
+        expression => "any";
+
+      "port_info_role_set"
+        expression => "any";
+
+  reports:
+
+    done::
+
+      "$(this.port_info_json)"
+        bundle_return_value_index => "port_info";
+
+}

@@ -13,7 +13,7 @@ body file control
 
 }
 
-bundle agent shorewall_macro_portmap(root)
+bundle agent shorewall_macro_portmap(root, port_info)
 
 {
 
