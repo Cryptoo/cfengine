@@ -23,14 +23,14 @@
                       "device": "ispdmz",
                       "type": "ipv4",
                       "prefix": "d",
-                      "members": [ "10", "11", "13", "14", "15", "17", "18", "19" ]
+                      "members": [ "10", "11", "13", "14", "15", "17", "18", "19", "21" ]
                      },
               "vpndmz_bridge": {
                       "name": "brvmz",
                       "device": "vpndmz",
                       "type": "ipv4",
                       "prefix": "u",
-                      "members": [ "11", "12", "16", "17", "18", "19", "20" ]
+                      "members": [ "11", "12", "16", "17", "18", "19", "20", "21" ]
                      },
               "tor_bridge": {
                       "name": "brtor",

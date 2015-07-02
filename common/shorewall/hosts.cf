@@ -112,6 +112,9 @@ bundle agent shorewall_hosts(root, role)
       "vpn_role"
         expression => strcmp("$(this.role)", "vpn_primary");
 
+      "vpn_role"
+        expression => strcmp("$(this.role)", "vpn_secondary");
+
     additional_interface_scan::
 
       "additional_interfaces"

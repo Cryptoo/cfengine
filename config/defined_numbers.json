@@ -12,5 +12,6 @@
     "freenet": "17",
     "namecoin": "18",
     "bitmessage": "19",
-    "mail_server": "20"
+    "mail_server": "20",
+    "vpn_secondary": "21"
 }

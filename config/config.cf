@@ -42,6 +42,7 @@ bundle common config
        slist => {
                    "firewall_external",
                    "vpn_primary",
+                   "vpn_secondary",
                    "firewall_internal",
                    "tor",
                    "i2p",

@@ -235,6 +235,38 @@ bundle common role
           }
         ';
 
+      "params[vpn_secondary]"
+        string => '
+          {
+            "number": "$(this.defined_numbers[vpn_secondary])",
+            "make_conf":
+              {
+                "makeopts": "guest",
+                "pkgdir": "server_guest",
+                "runtime": "guest",
+                "graphical": "headless"
+              },
+            "libvirt":
+              {
+                "name": "vpn_secondary",
+                "ram": "16776192",
+                "cpu": "1",
+                "kernel": "/$(directory_names.fs_libvirt_images)/guest-kernel-x86_64",
+                "interfaces":
+                   [
+                     {
+                       "bridge": "ispdmz",
+                       "device": "ispdmz$(this.defined_numbers[vpn_secondary])"
+                     },
+                     {
+                       "bridge": "vpndmz",
+                       "device": "vpndmz$(this.defined_numbers[vpn_secondary])"
+                     }
+                   ]
+              }
+          }
+        ';
+
       "params[dns]"
         string => '
           {

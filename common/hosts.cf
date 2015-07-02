@@ -103,6 +103,11 @@ bundle agent hosts(root)
                   "alias": ""
                 },
                 {
+                  "fqdn": "$(network.machine_names[21][name]).ispdmz",
+                  "ip": "192.168.$(subnet_config[ispdmz]).21",
+                  "alias": ""
+                },
+                {
                   "fqdn": "$(network.machine_names[11][name]).vpndmz",
                   "ip": "192.168.$(subnet_config[vpndmz]).11",
                   "alias": "vpn_primary"
@@ -136,6 +141,11 @@ bundle agent hosts(root)
                   "fqdn": "$(network.machine_names[20][name]).vpndmz",
                   "ip": "192.168.$(subnet_config[vpndmz]).20",
                   "alias": "mail_server"
+                },
+                {
+                  "fqdn": "$(network.machine_names[21][name]).vpndmz",
+                  "ip": "192.168.$(subnet_config[vpndmz]).21",
+                  "alias": "vpn_secondary"
                 },
                 {
                   "fqdn": "$(network.machine_names[12][name]).tornet",

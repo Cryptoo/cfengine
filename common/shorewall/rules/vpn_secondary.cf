@@ -14,13 +14,13 @@ body file control
 
 }
 
-bundle agent shorewall_rules_vpn_primary(root)
+bundle agent shorewall_rules_vpn_secondary(root)
 
 {
 
   meta:
 
-    "tags" slist => { "shorewall_rules", "vpn_primary" };
+    "tags" slist => { "shorewall_rules", "vpn_secondary" };
 
   vars:
 
@@ -70,25 +70,9 @@ bundle agent shorewall_rules_vpn_primary(root)
                      "source_port": ""
                    },
                    {
-                     "action": "SSH(DNAT)",
-                     "source": "vpn",
-                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
-                   },
-                   {
                      "action": "SSH(ACCEPT)",
                      "source": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
                      "destination": "idmz:192.168.$(subnet_config[ispdmz]).$(defined_numbers[firewall_external])",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
-                   },
-                   {
-                     "action": "SSH(ACCEPT)",
-                     "source": "idmz:192.168.$(subnet_config[ispdmz]).$(defined_numbers[firewall_external])",
-                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
                      "protocol": "",
                      "destination_port": "",
                      "source_port": ""

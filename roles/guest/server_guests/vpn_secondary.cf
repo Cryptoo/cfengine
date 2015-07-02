@@ -1,0 +1,24 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+}
+
+bundle agent vpn_secondary(root)
+
+{
+
+  meta:
+
+    "tags" slist => { "cryptoo_role" };
+
+  methods:
+
+    any::
+
+      "configure system as the secondary VPN client router"
+        usebundle => server_guest("$(this.root)", "vpn_secondary", "x86_64", "no_multilib");
+
+}

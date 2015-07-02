@@ -2484,6 +2484,172 @@ bundle common file_groups
         string => "$(dns_type[server_guest])";
 
 ################################################################################
+#                             vpn_secondary
+################################################################################
+
+      "make_profile[vpn_secondary]"
+        string => "$(make_profile[server_guest])";
+
+      "pm_env[vpn_secondary]"
+        slist => {
+                    "@(pm_env[server_guest])"
+                 };
+
+      "pm_environment[vpn_secondary]"
+        slist => {
+                    "@(pm_environment[server_guest])"
+                 };
+
+      "keywords[vpn_secondary]"
+        slist => {
+                    "@(keywords[server_guest])",
+                    "router"
+                 };
+
+      "mask[vpn_secondary]"
+        slist => {
+                    "@(mask[server_guest])"
+                 };
+
+      "unmask[vpn_secondary]"
+        slist => {
+                    "@(unmask[server_guest])"
+                 };
+
+      "use[vpn_secondary]"
+        slist => {
+                    "@(use[server_guest])",
+                    "router"
+                 };
+
+      "profile[vpn_secondary]"
+        slist => {
+                    "@(profile[server_guest])"
+                 };
+
+      "use_udev[vpn_secondary]"
+        slist => {
+                    "@(use_udev[server_guest])"
+                 };
+
+      "use_systemd[vpn_secondary]"
+        slist => {
+                    "@(use_systemd[server_guest])"
+                 };
+
+      "unuse_udev[vpn_secondary]"
+        slist => {
+                    "@(unuse_udev[server_guest])"
+                 };
+
+      "unuse_systemd[vpn_secondary]"
+        slist => {
+                    "@(unuse_systemd[server_guest])"
+                 };
+
+      "systemd_enabled[vpn_secondary]"
+        slist => {
+                    "@(systemd_enabled[server_guest])",
+                    "openvpn@secondary.service"
+                 };
+
+      "backup_dir[vpn_secondary]"
+        string => "$(backup_dir[server_guest])";
+
+      "firewall_zones[vpn_secondary]"
+        slist => {
+                    "@(firewall_zones[server_guest])",
+                    "vpn"
+                 };
+
+      "firewall_bridges[vpn_secondary]"
+        slist => {
+                    "@(firewall_bridges[server_guest])"
+                 };
+
+      "firewall[vpn_secondary]"
+        string => '
+          {
+            "policy":
+                 [
+                   { "source": "vdmz", "destination": "vpn", "policy": "ACCEPT", "log_level": "" },
+                   { "source": "vdmz", "destination": "net", "policy": "DROP", "log_level": "" },
+                   { "source": "lan", "destination": "vpn", "policy": "ACCEPT", "log_level": "" },
+                   { "source": "lan", "destination": "net", "policy": "DROP", "log_level": "" },
+                   { "source": "vpn", "destination": "fw", "policy": "DROP", "log_level": "" }
+                 ],
+               }
+          }
+        ';
+
+      "network[vpn_secondary]"
+        string => '
+          {
+            "devices":
+               {
+                 "bridge":
+                   [
+                     "none"
+                   ],
+                 "veth":
+                   [
+                     "none"
+                   ],
+                 "tap":
+                   [
+                     "none"
+                   ]
+               },
+             "interfaces":
+               {
+                 "eth0":
+                   {
+                     "type": "gateway",
+                     "params":
+                       {
+                         "zone": "ispdmz",
+                         "gateway": "firewall_external",
+                         "ipforward": "ipv4",
+                         "routes":
+                           {
+                             "backup_dns": "firewall_external"
+                           }
+                       }
+                   },
+                 "eth1":
+                   {
+                     "type": "simple",
+                     "params":
+                       {
+                         "zone": "vpndmz",
+                         "ipforward": "ipv4",
+                         "routes":
+                           {
+                             "onion": "firewall_internal",
+                             "eep": "firewall_internal",
+                             "tor": "firewall_internal",
+                             "i2p": "firewall_internal",
+                             "lan": "firewall_internal"
+                           }
+                       }
+                   },
+                 "openvpn":
+                   {
+                     "type": "virtual",
+                     "params":
+                       {
+                         "zone": "vpn",
+                         "ipforward": "ipv4"
+                       }
+                   }
+               }
+          }
+        ';
+
+      "dns_type[vpn_secondary]"
+        string => "alternate";
+
+################################################################################
 #                              firewall_internal
 ################################################################################
 

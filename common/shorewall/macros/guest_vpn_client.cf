@@ -21,7 +21,7 @@ bundle agent shorewall_macro_guest_vpn_client(root, port_info)
 
   meta:
 
-    "tags" slist => { "shorewall_macro", "vpn_primary" };
+    "tags" slist => { "shorewall_macro", "vpn_primary", "vpn_secondary" };
 
   vars:
 

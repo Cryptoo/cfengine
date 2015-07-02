@@ -104,6 +104,17 @@ bundle agent cryptoo_bootstrap
       "multilib"
         string => "no_multilib";
 
+    default:bootstrap_vpn_secondary::
+
+      "role"
+        string => "vpn_secondary";
+
+      "type"
+        string => "server";
+
+      "multilib"
+        string => "no_multilib";
+
     default:bootstrap_vpn_server::
 
       "role"
@@ -180,6 +191,11 @@ bundle agent cryptoo_bootstrap
         expression => "any";
 
     default:bootstrap_vpn_primary::
+
+      "bootstrap_guest"
+        expression => "any";
+
+    default:bootstrap_vpn_secondary::
 
       "bootstrap_guest"
         expression => "any";

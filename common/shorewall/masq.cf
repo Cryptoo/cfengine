@@ -80,6 +80,23 @@ bundle agent shorewall_masq(root, role)
               ]
           }';
 
+    masq_vpn_secondary::
+
+      "masq_json"
+        string => '
+          {
+            "masq":
+              [
+                {
+                  "interface": "openvpn:!+private",
+                  "source": "192.168.$(subnet_config[vpndmz]).0/24",
+                  "address": "",
+                  "protocol": "",
+                  "port": ""
+                }
+              ]
+          }';
+
   classes:
 
     second::
@@ -87,7 +104,7 @@ bundle agent shorewall_masq(root, role)
       "json_ready"
         expression => "any";
 
-    masq_firewall_external|masq_vpn_primary::
+    masq_firewall_external|masq_vpn_primary|masq_vpn_secondary::
 
       "have_masq"
         expression => "any";

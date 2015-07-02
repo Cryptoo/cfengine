@@ -19,7 +19,7 @@ bundle agent shorewall_macro_portmap(root, port_info)
 
   meta:
 
-    "tags" slist => { "shorewall_macro", "firewall_external", "vpn_primary", "firewall_internal" };
+    "tags" slist => { "shorewall_macro", "firewall_external", "vpn_primary", "vpn_secondary", "firewall_internal" };
 
   vars:
 
