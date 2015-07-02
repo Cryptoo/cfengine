@@ -21,7 +21,7 @@ bundle agent shorewall_macro_guest_ispdmz(root, port_info)
 
   meta:
 
-    "tags" slist => { "shorewall_macro", "tor", "i2p", "freenet", "vpn_server", "firewall_external" };
+    "tags" slist => { "shorewall_macro", "firewall_external", "tor", "i2p", "freenet" };
 
   vars:
 
