@@ -16,13 +16,13 @@ CHOST="x86_64-pc-linux-gnu"
 MAKEOPTS="-j8 -l8"
 
 [%CFEngine makeopts_host:: %]
-EMERGE_DEFAULT_OPTS="--ask --jobs --load-average 8.0 --keep-going --usepkg --buildpkg --binpkg-respect-use"
+EMERGE_DEFAULT_OPTS="--ask --jobs --load-average 8.0 --keep-going --usepkg --buildpkg --binpkg-respect-use --binpkg-changed-deps=y"
 [%CFEngine makeopts_chroot:: %]
 EMERGE_DEFAULT_OPTS="--jobs --load-average 8.0 --keep-going --usepkg --buildpkg --binpkg-respect-use --with-bdeps=y --binpkg-changed-deps=n"
 [%CFEngine makeopts_guest:: %]
 MAKEOPTS="-j2 -l1.4"
 
-EMERGE_DEFAULT_OPTS="--quiet --jobs --load-average 1.0 --keep-going --usepkgonly --binpkg-respect-use"
+EMERGE_DEFAULT_OPTS="--quiet --jobs --load-average 1.0 --keep-going --usepkgonly --binpkg-respect-use --binpkg-changed-deps=y"
 [%CFEngine any:: %]
 
 #CPU options
