@@ -61,3 +61,12 @@ body classes shorewall
   promise_repaired => { "need_shorewall_restart" };
 
 }
+
+body classes hosts
+
+{
+
+  scope => "namespace";
+  promise_repaired => { "hosts_file_updated" };
+
+}

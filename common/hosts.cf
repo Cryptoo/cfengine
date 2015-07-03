@@ -8,6 +8,7 @@ body file control
               "cryptoo/config/file_names.cf",
               "cryptoo/config/network.cf",
               "cryptoo/config/templates.cf",
+              "cryptoo/util/classes.cf",
               "cryptoo/util/perms.cf"
             };
 
@@ -206,6 +207,7 @@ bundle agent hosts(root)
         create => "true",
         edit_template => "/$(templates.template[hosts])",
         template_method => "mustache",
-        template_data => parsejson("$(host_json)");
+        template_data => parsejson("$(host_json)"),
+        classes => hosts;
 
 }

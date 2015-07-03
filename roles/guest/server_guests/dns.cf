@@ -47,6 +47,16 @@ bundle agent dns(root)
           }
         ';
 
+  classes:
+
+    any::
+
+      "have_systemctl"
+        expression => fileexists("$(root)$(file_names.systemd_app)");
+
+      "bootstrap"
+        not => strcmp("$(this.root)", "/");
+
   files:
 
     any::
@@ -64,6 +74,13 @@ bundle agent dns(root)
         edit_template => "/$(templates.template[resolv])",
         template_method => "mustache",
         template_data => parsejson($(this.dns_external));
+
+  commands:
+
+    hosts_file_updated&have_systemctl&(!bootstrap)::
+
+      "/$(file_names.systemd_app)"
+        args => "restart dnsmasq";
 
   methods:
 
