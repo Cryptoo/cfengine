@@ -274,6 +274,8 @@ bundle common file_names
         string => "$(directory_names.fs_standard_apps)/systemctl";
       "virsh_app"
         string => "$(directory_names.fs_standard_apps)/virsh";
+      "znc_app"
+        string => "$(directory_names.fs_standard_apps)/znc";
       "cryptoo_perms_app"
         string => "$(directory_names.fs_cryptoo_apps)/cryptoo_perms";
       "distfiles_perms_app"
@@ -403,6 +405,9 @@ bundle common file_names
       "template_torrc"
         string => "guest/torrc_mustache.txt",
         meta => { "template" };
+      "template_znc"
+        string => "guest/znc_mustache.txt",
+        meta => { "template" };
       "template_crypttab"
         string => "host/crypttab.txt",
         meta => { "template" };
@@ -436,6 +441,8 @@ bundle common file_names
         string => "$(directory_names.fs_bitcoin_overlay)/profiles/repo_name";
       "random_seed"
         string => "$(directory_names.fs_volatile_systemd)/random-seed";
+      "znc_ssl"
+        string => "$(directory_names.fs_volatile_znc)/znc.pem";
       "znc_config"
         string => "$(directory_names.fs_znc_config)/znc.conf";
       "pm_installed_sets"

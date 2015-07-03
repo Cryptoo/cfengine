@@ -44,12 +44,16 @@ bundle agent shorewall_macro_irc_out(root, port_info)
             "rules":
                  [
                    {
+                     "action": "IRC(PARAM)",
+                     "source": "-",
+                     "destination": "-"
+                   },
+                   {
                      "action": "PARAM",
                      "source": "-",
                      "destination": "-",
                      "protocol": "tcp",
-                     "destination_port": "$(config.services[irc][irc_ports])",
-                     "source_port": ""
+                     "destination_port": "$(config.services[irc][irc_ports])"
                    }
                  ]
                }

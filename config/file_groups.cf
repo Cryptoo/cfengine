@@ -2720,7 +2720,7 @@ bundle common file_groups
                  };
 
       "backup_dir[irc_bouncer]"
-        string => "$(directory_names.fs_volatile_znc)";
+        string => "/$(directory_names.fs_volatile_znc)";
 
       "firewall_zones[irc_bouncer]"
         slist => {

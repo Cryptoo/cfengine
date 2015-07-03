@@ -4,6 +4,12 @@ body file control
 
   namespace => "cryptoo";
 
+  inputs => {
+              "cryptoo/config/config.cf",
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/util/perms.cf"
+            };
 }
 
 bundle agent irc_bouncer(root)
@@ -14,6 +20,42 @@ bundle agent irc_bouncer(root)
 
     "tags" slist => { "cryptoo_role" };
 
+  vars:
+
+    any::
+
+      "defined_numbers"
+        data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
+
+      "subnet_config"
+        data => readjson("/$(file_names.subnet_config)", 1M);
+
+      "znc_json"
+        string => '
+          {
+            "ssl": "/$(file_names.znc_ssl)",
+            "ip": "192.168.$(subnet_config[vpndmz]).$(defined_numbers[irc_bouncer])",
+            "port": "$(config.services[irc][znc_port])"
+          }';
+
+  classes:
+
+    any::
+
+      "bootstrap"
+        not => strcmp("$(this.root)", "/");
+
+    !bootstrap::
+
+      "have_znc_app"
+        expression => fileexists("$(this.root)$(file_names.znc_app)");
+
+      "need_znc_conf"
+        not => fileexists("$(this.root)$(file_names.znc_config)");
+
+      "need_znc_ssl"
+        not => fileexists("$(this.root)$(file_names.znc_ssl)");
+
   files:
 
     any::
@@ -22,11 +64,34 @@ bundle agent irc_bouncer(root)
         perms => znc,
         create => "true";
 
+    !bootstrap::
+
+      "$(this.root)$(directory_names.fs_znc_config)/."
+        perms => znc,
+        create => "true";
+
+    need_znc_conf::
+
+      "$(this.root)$(file_names.znc_config)"
+        perms => znc,
+        create => "true",
+        edit_template => "/$(templates.template[znc])",
+        template_method => "mustache",
+        template_data => parsejson($(this.znc_json));
+
   methods:
 
     any::
 
       "configure system as a irc bouncer"
         usebundle => server_guest("$(this.root)", "irc_bouncer", "x86_64", "no_multilib");
+
+  commands:
+
+    need_znc_ssl&have_znc_app::
+
+      "/$(file_names.znc_app)"
+        args => "--system-wide-config-as znc --makepem -d /$(directory_names.fs_volatile_znc)",
+        contain => silent;
 
 }
