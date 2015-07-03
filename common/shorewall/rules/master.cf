@@ -615,7 +615,7 @@ bundle agent shorewall_rules_master(root)
                    {
                      "action": "irc_out(ACCEPT)",
                      "source": "u$(defined_numbers[irc_bouncer]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[irc_bouncer])",
-                     "destination": "u$(defined_numbers[vpn_primary]):!+private"
+                     "destination": "u$(defined_numbers[vpn_secondary]):!+private"
                    },
                    {
                      "action": "irc_out(ACCEPT)",
