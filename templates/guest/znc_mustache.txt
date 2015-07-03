@@ -10,16 +10,17 @@
  
 AnonIPLimit = 10
 ConnectDelay = 5
-HideVersion = false
+HideVersion = true
 LoadModule = partyline
 LoadModule = webadmin
+LoadModule = adminlog
 MaxBufferSize = 500
 ProtectWebSessions = true
 SSLCertFile = {{ssl}}
 ServerThrottle = 30
 Version = 1.6.0
  
-<Listener l>
+<Listener 0>
         AllowIRC = true
         AllowWeb = true
         Host = {{ip}}
