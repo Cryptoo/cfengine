@@ -29,7 +29,7 @@ bundle agent shorewall_macro_freenet_out(root, port_info)
     any::
 
       "macro_name"
-        string => "freenet_in";
+        string => "freenet_out";
 
       "defined_numbers"
         data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
