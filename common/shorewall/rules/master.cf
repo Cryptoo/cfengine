@@ -335,6 +335,11 @@ bundle agent shorewall_rules_master(root)
                      "destination": "t$(defined_numbers[tor]):192.168.$(subnet_config[tor]).$(defined_numbers[tor])"
                    },
                    {
+                     "action": "DNS(ACCEPT)",
+                     "source": "t$(defined_numbers[firewall_internal]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])",
+                     "destination": "t$(defined_numbers[tor]):192.168.$(subnet_config[tor]).$(defined_numbers[tor])"
+                   },
+                   {
                      "action": "cfengine(ACCEPT)",
                      "source": "t$(defined_numbers[tor]):192.168.$(subnet_config[tor]).$(defined_numbers[tor])",
                      "destination": "t$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])"
