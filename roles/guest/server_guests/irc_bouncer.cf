@@ -1,0 +1,32 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+}
+
+bundle agent irc_bouncer(root)
+
+{
+
+  meta:
+
+    "tags" slist => { "cryptoo_role" };
+
+  files:
+
+    any::
+
+      "$(this.root)$(directory_names.fs_volatile_znc)/."
+        perms => znc,
+        create => "true";
+
+  methods:
+
+    any::
+
+      "configure system as a irc bouncer"
+        usebundle => server_guest("$(this.root)", "irc_bouncer", "x86_64", "no_multilib");
+
+}

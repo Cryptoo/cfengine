@@ -21,7 +21,7 @@ bundle agent shorewall_macro_guest(root, port_info)
 
   meta:
 
-    "tags" slist => { "shorewall_macro", "mail_server", "firewall_internal", "vpn_server" };
+    "tags" slist => { "shorewall_macro", "mail_server", "irc_bouncer", "firewall_internal", "vpn_server" };
 
   vars:
 

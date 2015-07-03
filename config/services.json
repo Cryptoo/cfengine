@@ -26,5 +26,10 @@
       {
           "fproxy_port": "8888",
           "fcp_port": "9481"
+      },
+    "irc":
+      {
+          "znc_port": "6667",
+          "irc_ports": "6667:7000"
       }
 }

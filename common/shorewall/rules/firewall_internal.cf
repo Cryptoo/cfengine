@@ -166,6 +166,14 @@ bundle agent shorewall_rules_firewall_internal(root)
                      "source_port": ""
                    },
                    {
+                     "action": "znc(ACCEPT)",
+                     "source": "lan",
+                     "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[irc_bouncer])",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
                      "action": "tor(ACCEPT)",
                      "source": "lan",
                      "destination": "tor:192.168.$(subnet_config[tor]).$(defined_numbers[tor])",

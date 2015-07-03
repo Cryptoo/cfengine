@@ -101,3 +101,11 @@ body perms freenet
       owners  => { "freenet" };
       groups  => { "freenet" };
 }
+
+body perms znc
+
+{
+      mode  => "0600";
+      owners  => { "znc" };
+      groups  => { "znc" };
+}

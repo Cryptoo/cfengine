@@ -141,6 +141,8 @@ bundle common directory_names
       "fs_volatile_overlay" string => "$(fs_volatile_library)/layman";
       "fs_bitcoin_overlay" string => "$(fs_volatile_overlay)/bitcoin";
       "fs_volatile_systemd" string => "$(fs_volatile_library)/systemd";
+      "fs_volatile_znc" string => "$(fs_volatile_library)/znc";
+      "fs_znc_config" string => "$(fs_volatile_znc)/configs";
       "fs_volatile_temp" string => "$(fs_volatile_base)/tmp";
       "fs_volatile_kernel" string => "$(fs_volatile_temp)/kernel";
 

@@ -436,6 +436,8 @@ bundle common file_names
         string => "$(directory_names.fs_bitcoin_overlay)/profiles/repo_name";
       "random_seed"
         string => "$(directory_names.fs_volatile_systemd)/random-seed";
+      "znc_config"
+        string => "$(directory_names.fs_znc_config)/znc.conf";
       "pm_installed_sets"
         string => "$(directory_names.fs_volatile_pm)/world_sets";
 

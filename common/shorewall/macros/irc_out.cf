@@ -5,7 +5,9 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
+              "cryptoo/config/config.cf",
               "cryptoo/config/directory_names.cf",
+              "cryptoo/config/file_names.cf",
               "cryptoo/config/templates.cf",
               "cryptoo/util/classes.cf",
               "cryptoo/util/perms.cf"
@@ -13,36 +15,26 @@ body file control
 
 }
 
-bundle agent shorewall_macro_cfengine(root, port_info)
+bundle agent shorewall_macro_irc_out(root, port_info)
 
 {
 
   meta:
 
-    "tags"
-      slist =>
-        {
-          "shorewall_macro",
-          "firewall_external",
-          "vpn_server",
-          "tor",
-          "i2p",
-          "freenet",
-          "vpn_primary",
-          "dns",
-          "mail_server",
-          "vpn_secondary",
-          "irc_bouncer",
-          "firewall_internal",
-          "master"
-        };
+    "tags" slist => { "shorewall_macro", "i2p", "irc_bouncer", "firewall_internal", "master" };
 
   vars:
 
     any::
 
       "macro_name"
-        string => "cfengine";
+        string => "irc_out";
+
+      "defined_numbers"
+        data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
+
+      "subnet_config"
+        data => readjson("/$(file_names.subnet_config)", 1M);
 
       "macro_json"
         string => '
@@ -56,10 +48,10 @@ bundle agent shorewall_macro_cfengine(root, port_info)
                      "source": "-",
                      "destination": "-",
                      "protocol": "tcp",
-                     "destination_port": "5308",
+                     "destination_port": "$(config.services[irc][irc_ports])",
                      "source_port": ""
                    }
-                 ],
+                 ]
                }
           }
         ';

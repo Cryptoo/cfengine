@@ -2650,6 +2650,137 @@ bundle common file_groups
         string => "alternate";
 
 ################################################################################
+#                             irc_bouncer
+################################################################################
+
+      "make_profile[irc_bouncer]"
+        string => "$(make_profile[server_guest])";
+
+      "pm_env[irc_bouncer]"
+        slist => {
+                    "@(pm_env[server_guest])"
+                 };
+
+      "pm_environment[irc_bouncer]"
+        slist => {
+                    "@(pm_environment[server_guest])"
+                 };
+
+      "keywords[irc_bouncer]"
+        slist => {
+                    "@(keywords[server_guest])",
+                    "znc"
+                 };
+
+      "mask[irc_bouncer]"
+        slist => {
+                    "@(mask[server_guest])"
+                 };
+
+      "unmask[irc_bouncer]"
+        slist => {
+                    "@(unmask[server_guest])"
+                 };
+
+      "use[irc_bouncer]"
+        slist => {
+                    "@(use[server_guest])",
+                    "znc"
+                 };
+
+      "profile[irc_bouncer]"
+        slist => {
+                    "@(profile[server_guest])"
+                 };
+
+      "use_udev[irc_bouncer]"
+        slist => {
+                    "@(use_udev[server_guest])"
+                 };
+
+      "use_systemd[irc_bouncer]"
+        slist => {
+                    "@(use_systemd[server_guest])"
+                 };
+
+      "unuse_udev[irc_bouncer]"
+        slist => {
+                    "@(unuse_udev[server_guest])"
+                 };
+
+      "unuse_systemd[irc_bouncer]"
+        slist => {
+                    "@(unuse_systemd[server_guest])"
+                 };
+
+      "systemd_enabled[irc_bouncer]"
+        slist => {
+                    "@(systemd_enabled[server_guest])",
+                    "znc.service"
+                 };
+
+      "backup_dir[irc_bouncer]"
+        string => "$(directory_names.fs_volatile_znc)";
+
+      "firewall_zones[irc_bouncer]"
+        slist => {
+                    "@(firewall_zones[server_guest])"
+                 };
+
+      "firewall_bridges[irc_bouncer]"
+        slist => {
+                    "@(firewall_bridges[server_guest])"
+                 };
+
+      "firewall[irc_bouncer]"
+        string => "$(firewall[server_guest])";
+
+      "network[irc_bouncer]"
+        string => '
+          {
+            "devices":
+               {
+                 "bridge":
+                   [
+                     "none"
+                   ],
+                 "veth":
+                   [
+                     "none"
+                   ],
+                 "tap":
+                   [
+                     "none"
+                   ]
+               },
+             "interfaces":
+               {
+                 "eth0":
+                   {
+                     "type": "gateway",
+                     "params":
+                       {
+                         "zone": "vpndmz",
+                         "gateway": "vpn_secondary",
+                         "ipforward": "ipv4",
+                         "routes":
+                           {
+                             "onion": "firewall_internal",
+                             "eep": "firewall_internal",
+                             "tor": "firewall_internal",
+                             "i2p": "firewall_internal",
+                             "lan": "firewall_internal"
+                           }
+                       }
+                   }
+               }
+          }
+        ';
+
+      "dns_type[irc_bouncer]"
+        string => "$(dns_type[server_guest])";
+
+################################################################################
 #                              firewall_internal
 ################################################################################
 

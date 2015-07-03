@@ -148,6 +148,11 @@ bundle agent hosts(root)
                   "alias": "vpn_secondary"
                 },
                 {
+                  "fqdn": "$(network.machine_names[22][name]).vpndmz",
+                  "ip": "192.168.$(subnet_config[vpndmz]).22",
+                  "alias": "irc_bouncer"
+                },
+                {
                   "fqdn": "$(network.machine_names[12][name]).tornet",
                   "ip": "192.168.$(subnet_config[tor]).12",
                   "alias": ""

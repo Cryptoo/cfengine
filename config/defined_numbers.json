@@ -13,5 +13,6 @@
     "namecoin": "18",
     "bitmessage": "19",
     "mail_server": "20",
-    "vpn_secondary": "21"
+    "vpn_secondary": "21",
+    "irc_bouncer": "22"
 }

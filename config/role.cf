@@ -323,6 +323,34 @@ bundle common role
           }
         ';
 
+      "params[irc_bouncer]"
+        string => '
+          {
+            "number": "$(this.defined_numbers[irc_bouncer])",
+            "make_conf":
+              {
+                "makeopts": "guest",
+                "pkgdir": "server_guest",
+                "runtime": "guest",
+                "graphical": "headless"
+              },
+            "libvirt":
+              {
+                "name": "irc_bouncer",
+                "ram": "16776192",
+                "cpu": "1",
+                "kernel": "/$(directory_names.fs_libvirt_images)/guest-kernel-x86_64",
+                "interfaces":
+                   [
+                     {
+                       "bridge": "vpndmz",
+                       "device": "vpndmz$(this.defined_numbers[irc_bouncer])"
+                     }
+                   ]
+              }
+          }
+        ';
+
       "params[firewall_internal]"
         string => '
           {
