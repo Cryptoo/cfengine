@@ -79,7 +79,7 @@ bundle agent shorewall_rules_irc_bouncer(root)
                      "destination": "fw"
                    },
                   {
-                    "action": "HTTP(REDIRECT)",
+                    "action": "HTTPS(REDIRECT)",
                     "source": "lan",
                     "destination": "$(config.services[irc][znc_port])",
                     "protocol": "-",
