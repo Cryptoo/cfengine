@@ -330,6 +330,18 @@ bundle agent shorewall_rules_master(root)
                      "destination": "t$(defined_numbers[tor]):192.168.$(subnet_config[tor]).$(defined_numbers[tor])"
                    },
                    {
+                     "action": "ACCEPT",
+                     "source": "t$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).0/24",
+                     "destination": "t$(defined_numbers[tor]):$(config.transparent_proxy_net[tor])",
+                     "protocol": "tcp"
+                   },
+                   {
+                     "action": "ACCEPT",
+                     "source": "t$(defined_numbers[firewall_internal]):192.168.$(subnet_config[vpndmz]).0/24",
+                     "destination": "t$(defined_numbers[tor]):$(config.transparent_proxy_net[tor])",
+                     "protocol": "tcp"
+                   },
+                   {
                      "action": "tor(ACCEPT)",
                      "source": "t$(defined_numbers[firewall_internal]):192.168.$(subnet_config[vpndmz]).0/24",
                      "destination": "t$(defined_numbers[tor]):192.168.$(subnet_config[tor]).$(defined_numbers[tor])"
