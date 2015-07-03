@@ -62,7 +62,7 @@ bundle agent fstab_guest(role)
             "type": "9p",
             "options": "trans=virtio,version=9p2000.L,ro,nodev,nosuid,noatime",
             "dump": "0",
-            "pass": "2"
+            "pass": "0"
           }';
 
       "fstab_json[005]"
