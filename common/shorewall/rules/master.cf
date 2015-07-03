@@ -98,6 +98,16 @@ bundle agent shorewall_rules_master(root)
                      "destination": "net"
                    },
                    {
+                     "action": "HTTP(ACCEPT)",
+                     "source": "fw",
+                     "destination": "vdmz"
+                   },
+                   {
+                     "action": "HTTP(ACCEPT)",
+                     "source": "fw",
+                     "destination": "i2p"
+                   },
+                   {
                      "action": "HTTPS(ACCEPT)",
                      "source": "fw",
                      "destination": "net"
@@ -598,6 +608,16 @@ bundle agent shorewall_rules_master(root)
                      "action": "mail_server_out(ACCEPT)",
                      "source": "u$(defined_numbers[mail_server]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])",
                      "destination": "u$(defined_numbers[firewall_internal]):$(config.transparent_proxy_net[i2p])"
+                   },
+                   {
+                     "action": "mail_server_out(ACCEPT)",
+                     "source": "u$(defined_numbers[mail_server]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])",
+                     "destination": "u$(defined_numbers[freenet]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[freenet])"
+                   },
+                   {
+                     "action": "mail_server_out(ACCEPT)",
+                     "source": "u$(defined_numbers[mail_server]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])",
+                     "destination": "u$(defined_numbers[bitmessage]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitmessage])"
                    },
                    {
                      "action": "cfengine(ACCEPT)",
