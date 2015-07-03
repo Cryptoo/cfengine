@@ -44,7 +44,7 @@ bundle agent shorewall_macro_znc(root, port_info)
             "rules":
                  [
                    {
-                     "action": "irc_out(PARAM)",
+                     "action": "IRC(PARAM)",
                      "source": "-",
                      "destination": "-"
                    },
