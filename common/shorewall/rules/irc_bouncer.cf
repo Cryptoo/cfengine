@@ -74,6 +74,17 @@ bundle agent shorewall_rules_irc_bouncer(root)
                       "user": "znc:znc"
                    },
                    {
+                     "action": "irc_out",
+                     "source": "fw",
+                     "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[freenet])",
+                      "protocol": "-",
+                      "destination_port": "-",
+                      "source_port": "-",
+                      "original_destination": "-",
+                      "rate": "-",
+                      "user": "znc:znc"
+                   },
+                   {
                      "action": "znc(ACCEPT)",
                      "source": "lan",
                      "destination": "fw"

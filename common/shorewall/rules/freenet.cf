@@ -52,7 +52,7 @@ bundle agent shorewall_rules_freenet(root)
                   "user": "freenet:freenet"
                 },
                 {
-                  "action": "freenet(ACCEPT)",
+                  "action": "freenet_in(ACCEPT)",
                   "source": "net",
                   "destination": "fw:192.168.$(subnet_config[ispdmz]).$(defined_numbers[freenet])"
                 },
@@ -73,6 +73,11 @@ bundle agent shorewall_rules_freenet(root)
                 {
                   "action": "fcp(ACCEPT)",
                   "source": "vdmz",
+                  "destination": "fw:192.168.$(subnet_config[vpndmz]).$(defined_numbers[freenet])"
+                },
+                {
+                  "action": "IRC(ACCEPT)",
+                  "source": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[irc_bouncer])",
                   "destination": "fw:192.168.$(subnet_config[vpndmz]).$(defined_numbers[freenet])"
                 }
               ]
