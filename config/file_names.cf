@@ -212,6 +212,8 @@ bundle common file_names
         string => "$(directory_names.fs_config_units)/getty@tty1.service.d/autologin.conf";
       "serial_autologin"
         string => "$(directory_names.fs_config_units)/serial-getty@ttyS0.service.d/autologin.conf";
+      "znc_datadir"
+        string => "$(directory_names.fs_config_units)/znc.service.d/datadir.conf";
       "torrc"
         string => "$(directory_names.fs_config_tor)/torrc";
       "unbound_config"

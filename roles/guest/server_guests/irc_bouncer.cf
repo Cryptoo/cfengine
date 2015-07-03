@@ -38,7 +38,22 @@ bundle agent irc_bouncer(root)
             "port": "$(config.services[irc][znc_port])"
           }';
 
-  classes:
+      "znc_datadir"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "Service",
+                   "values":
+                     [
+                       { "LHS": "ExecStart", "RHS": "" },
+                       { "LHS": "ExecStart", "RHS": "/usr/bin/znc -f -d /$(directory_names.fs_volatile_znc)" }
+                     ]
+                 }
+               ]
+          }';
+
+classes:
 
     any::
 
@@ -56,6 +71,9 @@ bundle agent irc_bouncer(root)
       "need_znc_ssl"
         not => fileexists("$(this.root)$(file_names.znc_ssl)");
 
+      "have_systemctl"
+        expression => fileexists("$(this.root)$(file_names.systemd_app)");
+
   files:
 
     any::
@@ -63,6 +81,14 @@ bundle agent irc_bouncer(root)
       "$(this.root)$(directory_names.fs_volatile_znc)/."
         perms => znc,
         create => "true";
+
+      "$(this.root)$(file_names.znc_datadir)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson($(this.znc_datadir)),
+        classes => default:if_repaired("daemon_reload");
 
     !bootstrap::
 
@@ -87,6 +113,11 @@ bundle agent irc_bouncer(root)
         usebundle => server_guest("$(this.root)", "irc_bouncer", "x86_64", "no_multilib");
 
   commands:
+
+    daemon_reload&have_systemctl::
+
+      "$(this.root)$(file_names.systemd_app)"
+        args => "daemon-reload";
 
     need_znc_ssl&have_znc_app::
 
