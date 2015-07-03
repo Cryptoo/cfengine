@@ -93,6 +93,13 @@ bundle agent shorewall_masq(root, role)
                   "address": "",
                   "protocol": "",
                   "port": ""
+                },
+                {
+                  "interface": "eth1",
+                  "source": "-",
+                  "address": "192.168.$(subnet_config[vpndmz]).$(defined_numbers[vpn_secondary])",
+                  "protocol": "tcp",
+                  "port": "22"
                 }
               ]
           }';
