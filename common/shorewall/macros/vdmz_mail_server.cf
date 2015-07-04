@@ -1,0 +1,113 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/config.cf",
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/templates.cf",
+              "cryptoo/util/classes.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
+bundle agent shorewall_macro_vdmz_mail_server(root, port_info)
+
+{
+
+  meta:
+
+    "tags" slist => { "shorewall_macro", "master" };
+
+  vars:
+
+    any::
+
+      "macro_name"
+        string => "vdmz_mail_server";
+
+      "defined_numbers"
+        data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
+
+      "subnet_config"
+        data => readjson("/$(file_names.subnet_config)", 1M);
+
+      "macro_json"
+        string => '
+          {
+            "name": "$(this.macro_name)",
+            "default": "ACCEPT",
+            "rules":
+                 [
+                   {
+                     "action": "SSH(PARAM)",
+                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])",
+                     "destination": "u$(defined_numbers[mail_server]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])"
+                   },
+                   {
+                     "action": "NTP(PARAM)",
+                     "source": "u$(defined_numbers[mail_server]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])",
+                     "destination": "u$(defined_numbers[vpn_primary]):!+private"
+                   },
+                   {
+                     "action": "mail_server_out(PARAM)",
+                     "source": "u$(defined_numbers[mail_server]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])",
+                     "destination": "u$(defined_numbers[vpn_primary]):!+private"
+                   },
+                   {
+                     "action": "mail_server_out(PARAM)",
+                     "source": "u$(defined_numbers[mail_server]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])",
+                     "destination": "u$(defined_numbers[firewall_internal]):$(config.transparent_proxy_net[tor])"
+                   },
+                   {
+                     "action": "mail_server_out(PARAM)",
+                     "source": "u$(defined_numbers[mail_server]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])",
+                     "destination": "u$(defined_numbers[firewall_internal]):$(config.transparent_proxy_net[i2p])"
+                   },
+                   {
+                     "action": "mail_server_out(PARAM)",
+                     "source": "u$(defined_numbers[mail_server]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])",
+                     "destination": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[i2p]).$(defined_numbers[i2p])"
+                   },
+                   {
+                     "action": "cfengine(PARAM)",
+                     "source": "u$(defined_numbers[mail_server]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])",
+                     "destination": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])"
+                   },
+                   {
+                     "action": "DNS(PARAM)",
+                     "source": "u$(defined_numbers[mail_server]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])",
+                     "destination": "u$(defined_numbers[dns]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])"
+                   },
+                   {
+                     "action": "mail_server_out(PARAM)",
+                     "source": "u$(defined_numbers[mail_server]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])",
+                     "destination": "u$(defined_numbers[freenet]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[freenet])"
+                   },
+                   {
+                     "action": "mail_server_out(PARAM)",
+                     "source": "u$(defined_numbers[mail_server]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])",
+                     "destination": "u$(defined_numbers[bitmessage]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitmessage])"
+                   }
+                 ]
+               }
+          }
+        ';
+
+  files:
+
+    any::
+
+      "$(root)$(directory_names.fs_config_shorewall)/macro.$(this.macro_name)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[shorewall_macro])",
+        template_method => "mustache",
+        template_data => parsejson("$(macro_json)"),
+        classes => shorewall;
+
+}

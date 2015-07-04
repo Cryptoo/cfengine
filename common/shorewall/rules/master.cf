@@ -435,239 +435,31 @@ bundle agent shorewall_rules_master(root)
             "vpndmz":
                  [
                    {
-                     "action": "cfengine(ACCEPT)",
-                     "source": "u$(defined_numbers[vpn_primary]):192.168.$(subnet_config[ispdmz]).$(defined_numbers[firewall_external])",
-                     "destination": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])"
+                     "action": "vdmz_vpn_primary(ACCEPT)"
                    },
                    {
-                     "action": "cfengine(ACCEPT)",
-                     "source": "u$(defined_numbers[vpn_primary]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[vpn_primary])",
-                     "destination": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])"
+                     "action": "vdmz_firewall_internal(ACCEPT)"
                    },
                    {
-                     "action": "SSH(ACCEPT)",
-                     "source": "u$(defined_numbers[vpn_primary]):192.168.$(subnet_config[ispdmz]).$(defined_numbers[firewall_external])",
-                     "destination": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])"
+                     "action": "vdmz_dns(ACCEPT)"
                    },
                    {
-                     "action": "SSH(ACCEPT)",
-                     "source": "u$(defined_numbers[vpn_primary]):!+private",
-                     "destination": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])"
+                     "action": "vdmz_freenet(ACCEPT)"
                    },
                    {
-                     "action": "NTP(ACCEPT)",
-                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[firewall_internal])",
-                     "destination": "u$(defined_numbers[vpn_primary]):!+private"
+                     "action": "vdmz_namecoin(ACCEPT)"
                    },
                    {
-                     "action": "DNS(ACCEPT)",
-                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[firewall_internal])",
-                     "destination": "u$(defined_numbers[dns]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])"
+                     "action": "vdmz_bitmessage(ACCEPT)"
                    },
                    {
-                     "action": "DNS(ACCEPT)",
-                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).0/24",
-                     "destination": "u$(defined_numbers[dns]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])"
+                     "action": "vdmz_mail_server(ACCEPT)"
                    },
                    {
-                     "action": "ACCEPT",
-                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).0/24",
-                     "destination": "u$(defined_numbers[vpn_primary]):!+private"
+                     "action": "vdmz_vpn_secondary(ACCEPT)"
                    },
                    {
-                     "action": "SSH(ACCEPT)",
-                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])",
-                     "destination": "u$(defined_numbers[vpn_primary]):192.168.$(subnet_config[ispdmz]).$(defined_numbers[firewall_external])"
-                   },
-                   {
-                     "action": "SSH(ACCEPT)",
-                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])",
-                     "destination": "u$(defined_numbers[vpn_primary]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[vpn_primary])"
-                   },
-                   {
-                     "action": "SSH(ACCEPT)",
-                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])",
-                     "destination": "u$(defined_numbers[dns]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])"
-                   },
-                   {
-                     "action": "HTTP(ACCEPT)",
-                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).0/24",
-                     "destination": "u$(defined_numbers[freenet]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[freenet])"
-                   },
-                   {
-                     "action": "fcp(ACCEPT)",
-                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).0/24",
-                     "destination": "u$(defined_numbers[freenet]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[freenet])"
-                   },
-                   {
-                     "action": "SSH(ACCEPT)",
-                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])",
-                     "destination": "u$(defined_numbers[freenet]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[freenet])"
-                   },
-                   {
-                     "action": "SSH(ACCEPT)",
-                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])",
-                     "destination": "u$(defined_numbers[namecoin]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[namecoin])"
-                   },
-                   {
-                     "action": "SSH(ACCEPT)",
-                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])",
-                     "destination": "u$(defined_numbers[bitmessage]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitmessage])"
-                   },
-                   {
-                     "action": "SSH(ACCEPT)",
-                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])",
-                     "destination": "u$(defined_numbers[mail_server]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])"
-                   },
-                   {
-                     "action": "SSH(ACCEPT)",
-                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])",
-                     "destination": "u$(defined_numbers[vpn_secondary]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[vpn_secondary])"
-                   },
-                   {
-                     "action": "SSH(ACCEPT)",
-                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])",
-                     "destination": "u$(defined_numbers[irc_bouncer]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[irc_bouncer])"
-                   },
-                   {
-                     "action": "mail_server(ACCEPT)",
-                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).0/24",
-                     "destination": "u$(defined_numbers[mail_server]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])"
-                   },
-                   {
-                     "action": "znc(ACCEPT)",
-                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).0/24",
-                     "destination": "u$(defined_numbers[irc_bouncer]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[irc_bouncer])"
-                   },
-                   {
-                     "action": "DNS(ACCEPT)",
-                     "source": "u$(defined_numbers[dns]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])",
-                     "destination": "u$(defined_numbers[vpn_primary]):$(config.dns[primary])"
-                   },
-                   {
-                     "action": "DNS(ACCEPT)",
-                     "source": "u$(defined_numbers[dns]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])",
-                     "destination": "u$(defined_numbers[vpn_primary]):$(config.dns[backup])"
-                   },
-                   {
-                     "action": "DNS(ACCEPT)",
-                     "source": "u$(defined_numbers[dns]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])",
-                     "destination": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[tor]).$(defined_numbers[tor])"
-                   },
-                   {
-                     "action": "DNS(ACCEPT)",
-                     "source": "u$(defined_numbers[dns]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])",
-                     "destination": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[i2p]).$(defined_numbers[i2p])"
-                   },
-                   {
-                     "action": "cfengine(ACCEPT)",
-                     "source": "u$(defined_numbers[dns]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])",
-                     "destination": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])"
-                   },
-                   {
-                     "action": "cfengine(ACCEPT)",
-                     "source": "u$(defined_numbers[freenet]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[freenet])",
-                     "destination": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])"
-                   },
-                   {
-                     "action": "DNS(ACCEPT)",
-                     "source": "u$(defined_numbers[freenet]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[freenet])",
-                     "destination": "u$(defined_numbers[dns]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])"
-                   },
-                   {
-                     "action": "cfengine(ACCEPT)",
-                     "source": "u$(defined_numbers[namecoin]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[namecoin])",
-                     "destination": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])"
-                   },
-                   {
-                     "action": "DNS(ACCEPT)",
-                     "source": "u$(defined_numbers[namecoin]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[namecoin])",
-                     "destination": "u$(defined_numbers[dns]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])"
-                   },
-                   {
-                     "action": "cfengine(ACCEPT)",
-                     "source": "u$(defined_numbers[bitmessage]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitmessage])",
-                     "destination": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])"
-                   },
-                   {
-                     "action": "DNS(ACCEPT)",
-                     "source": "u$(defined_numbers[bitmessage]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitmessage])",
-                     "destination": "u$(defined_numbers[dns]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])"
-                   },
-                   {
-                     "action": "mail_server_out(ACCEPT)",
-                     "source": "u$(defined_numbers[mail_server]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])",
-                     "destination": "u$(defined_numbers[vpn_primary]):!+private"
-                   },
-                   {
-                     "action": "mail_server_out(ACCEPT)",
-                     "source": "u$(defined_numbers[mail_server]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])",
-                     "destination": "u$(defined_numbers[firewall_internal]):$(config.transparent_proxy_net[tor])"
-                   },
-                   {
-                     "action": "mail_server_out(ACCEPT)",
-                     "source": "u$(defined_numbers[mail_server]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])",
-                     "destination": "u$(defined_numbers[firewall_internal]):$(config.transparent_proxy_net[i2p])"
-                   },
-                   {
-                     "action": "mail_server_out(ACCEPT)",
-                     "source": "u$(defined_numbers[mail_server]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])",
-                     "destination": "u$(defined_numbers[freenet]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[freenet])"
-                   },
-                   {
-                     "action": "mail_server_out(ACCEPT)",
-                     "source": "u$(defined_numbers[mail_server]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])",
-                     "destination": "u$(defined_numbers[bitmessage]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitmessage])"
-                   },
-                   {
-                     "action": "cfengine(ACCEPT)",
-                     "source": "u$(defined_numbers[mail_server]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])",
-                     "destination": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])"
-                   },
-                   {
-                     "action": "DNS(ACCEPT)",
-                     "source": "u$(defined_numbers[mail_server]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])",
-                     "destination": "u$(defined_numbers[dns]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])"
-                   },
-                   {
-                     "action": "cfengine(ACCEPT)",
-                     "source": "u$(defined_numbers[vpn_secondary]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[vpn_secondary])",
-                     "destination": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])"
-                   },
-                   {
-                     "action": "DNS(ACCEPT)",
-                     "source": "u$(defined_numbers[vpn_secondary]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[vpn_secondary])",
-                     "destination": "u$(defined_numbers[dns]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])"
-                   },
-                   {
-                     "action": "cfengine(ACCEPT)",
-                     "source": "u$(defined_numbers[irc_bouncer]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[irc_bouncer])",
-                     "destination": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])"
-                   },
-                   {
-                     "action": "DNS(ACCEPT)",
-                     "source": "u$(defined_numbers[irc_bouncer]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[irc_bouncer])",
-                     "destination": "u$(defined_numbers[dns]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])"
-                   },
-                   {
-                     "action": "irc_out(ACCEPT)",
-                     "source": "u$(defined_numbers[irc_bouncer]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[irc_bouncer])",
-                     "destination": "u$(defined_numbers[vpn_secondary]):!+private"
-                   },
-                   {
-                     "action": "irc_out(ACCEPT)",
-                     "source": "u$(defined_numbers[irc_bouncer]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[irc_bouncer])",
-                     "destination": "u$(defined_numbers[freenet]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[freenet])"
-                   },
-                   {
-                     "action": "irc_out(ACCEPT)",
-                     "source": "u$(defined_numbers[irc_bouncer]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[irc_bouncer])",
-                     "destination": "u$(defined_numbers[firewall_internal]):$(config.transparent_proxy_net[tor])"
-                   },
-                   {
-                     "action": "irc_out(ACCEPT)",
-                     "source": "u$(defined_numbers[irc_bouncer]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[irc_bouncer])",
-                     "destination": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[i2p]).$(defined_numbers[i2p])"
+                     "action": "vdmz_irc_bouncer(ACCEPT)"
                    }
                  ]
                }
