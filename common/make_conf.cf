@@ -27,15 +27,104 @@ bundle agent make_conf(root, role, multilib)
       "params_data"
         data => parsejson("$(this.params)");
 
-    have_cpu2use_app&(!broken_cpu2use)::
+      "cflags[host]"
+        string => "-O2 -pipe -march=native";
+      "cflags[guest]"
+        string => "-O2 -pipe -mtune=$(site.config[make.conf][guest_mtune])";
+      "cflags[chroot]"
+        string => "$(this.cflags[guest])";
 
-      "cpu_flags" string => execresult("/$(cryptoo:file_names.cpu2use_app)","noshell");
+      "makeopts[host]"
+        string => "-j8 -l8";
+      "makeopts[guest]"
+        string => "-j2 -l1.4";
+      "makeopts[chroot]"
+        string => "$(this.makeopts[host])";
 
-    (!have_cpu2use_app)|(broken_cpu2use)::
+      "emerge[host]"
+        string => "--ask --jobs --load-average 8.0 --keep-going --usepkg --buildpkg --binpkg-respect-use --binpkg-changed-deps=y";
+      "emerge[guest]"
+        string => "--quiet --jobs --load-average 1.0 --keep-going --usepkgonly --binpkg-respect-use --binpkg-changed-deps=y";
+      "emerge[chroot]"
+        string => "--jobs --load-average 8.0 --keep-going --usepkg --buildpkg --binpkg-respect-use --with-bdeps=y --binpkg-changed-deps=n";
 
-      "cpu_flags" string => "CPU_FLAGS_X86=\"\"";
+      "input[headless][guest]"
+        string => "void";
+      "input[headless][host]"
+        string => "$(input[headless][guest])";
+      "input[graphical][guest]"
+        string => "$(input[headless][guest])";
+      "input[graphical][host]"
+        string => "evdev";
+
+      "video[headless][guest]"
+        string => "dummy";
+      "video[headless][host]"
+        string => "$(video[headless][guest])";
+      "video[graphical][guest]"
+        string => "$(video[headless][guest])";
+      "video[graphical][host]"
+        string => "$(site.config[make.conf][VIDEO_CARDS])";
+
+      "alsa[headless][guest]"
+        string => "null";
+      "alsa[headless][host]"
+        string => "null";
+      "alsa[graphical][guest]"
+        string => "ac97";
+      "alsa[graphical][host]"
+        string => "$(site.config[make.conf][ALSA_CARDS])";
+
+      "pkgdir"
+        string => "/usr/site-local/packages/$(params_data[make_conf][pkgdir])/$(this.multilib)/";
+
+    have_cpu2use_app::
+
+      "cpu_flags_output"
+        string => execresult("/$(cryptoo:file_names.cpu2use_app)","noshell");
+
+    !layman_evaluated::
+
+      "layman"
+        string => "";
+
+      "cpu_flags"
+        string => "";
+
+    have_layman_conf::
+
+      "layman"
+        string => "source /$(file_names.overlay_conf)";
+
+    have_cpu2use_regex::
+
+      "cpu_flags"
+        string => "$(cpu_flags_regex[1])";
+
+    layman_evaluated::
+
+      "make_conf_json"
+        string => '
+          {
+            "layman": "$(layman)",
+            "cflags": "$(cflags[$(params_data[make_conf][makeopts])])",
+            "makeopts": "$(makeopts[$(params_data[make_conf][makeopts])])",
+            "emerge": "$(emerge[$(params_data[make_conf][makeopts])])",
+            "cpu": "$(cpu_flags)",
+            "use": "$(site.config[make.conf][USE])",
+            "input": "$(input[$(params_data[make_conf][graphical])][$(params_data[make_conf][runtime])])",
+            "video": "$(video[$(params_data[make_conf][graphical])][$(params_data[make_conf][runtime])])",
+            "alsa": "$(alsa[$(params_data[make_conf][graphical])][$(params_data[make_conf][runtime])])",
+            "pkgdir": "$(pkgdir)"
+          }',
+          classes => default:if_ok("have_json");
 
   classes:
+
+    layman_evaluated::
+
+      "json_ready"
+        expression => "any";
 
     any::
 
@@ -45,38 +134,23 @@ bundle agent make_conf(root, role, multilib)
       "have_layman_conf"
         expression => fileexists("$(root)$(cryptoo:file_names.overlay_conf)");
 
-      "make_conf_$(multilib)"
-        expression => "any";
-
-      "makeopts_$(params_data[make_conf][makeopts])"
-        expression => "any";
-
-      "pkgdir_$(params_data[make_conf][pkgdir])"
-        expression => "any";
-
-      "runtime_$(params_data[make_conf][runtime])"
-        expression => "any";
-
-      "make_conf_$(params_data[make_conf][graphical])"
+      "layman_evaluated"
         expression => "any";
 
     have_cpu2use_app::
 
-      "broken_cpu2use"
-        expression => regextract(".*Traceback.*", "$(cpu_flags)", "broken_cpu2use");
+      "have_cpu2use_regex"
+        expression => regextract('CPU_FLAGS_X86="(.*)"', "$(cpu_flags_output)", "cpu_flags_regex");
 
   files:
 
-    !broken_cpu2use::
+    have_json::
 
       "$(root)$(cryptoo:file_names.pm_config)"
         perms => system,
         create => "true",
-        edit_template => "/$(cryptoo:templates.template[make_conf])";
-
-    broken_cpu2use::
-
-      "$(root)$(cryptoo:file_names.pm_config)"
-        delete => default:tidy;
+        edit_template => "/$(cryptoo:templates.template[make_conf])",
+        template_method => "mustache",
+        template_data => parsejson("$(make_conf_json)");
 
 }

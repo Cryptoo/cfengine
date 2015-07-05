@@ -1,61 +1,24 @@
 PORTDIR_OVERLAY="/usr/cryptoo /usr/site-local/portage"
-[%CFEngine have_layman_conf:: %]
-source /$(cryptoo:file_names.overlay_conf)
-[%CFEngine any:: %]
+{{layman}}
 PORTDIR_OVERLAY="/usr/local/portage ${PORTDIR_OVERLAY}"
 
-[%CFEngine makeopts_host:: %]
-CFLAGS="-O2 -pipe -march=native"
-[%CFEngine makeopts_guest|makeopts_chroot:: %]
-CFLAGS="-O2 -pipe -mtune=$(cryptoo:site.config[make.conf][guest_mtune])"
-[%CFEngine any:: %]
+CFLAGS="{{cflags}}"
 CXXFLAGS="${CFLAGS}"
 CHOST="x86_64-pc-linux-gnu"
 
-[%CFEngine makeopts_host|makeopts_chroot:: %]
-MAKEOPTS="-j8 -l8"
+MAKEOPTS="{{makeopts}}"
 
-[%CFEngine makeopts_host:: %]
-EMERGE_DEFAULT_OPTS="--ask --jobs --load-average 8.0 --keep-going --usepkg --buildpkg --binpkg-respect-use --binpkg-changed-deps=y"
-[%CFEngine makeopts_chroot:: %]
-EMERGE_DEFAULT_OPTS="--jobs --load-average 8.0 --keep-going --usepkg --buildpkg --binpkg-respect-use --with-bdeps=y --binpkg-changed-deps=n"
-[%CFEngine makeopts_guest:: %]
-MAKEOPTS="-j2 -l1.4"
-
-EMERGE_DEFAULT_OPTS="--quiet --jobs --load-average 1.0 --keep-going --usepkgonly --binpkg-respect-use --binpkg-changed-deps=y"
-[%CFEngine any:: %]
+EMERGE_DEFAULT_OPTS="{{emerge}}"
 
 #CPU options
-$(cryptoo:make_conf.cpu_flags)
+CPU_FLAGS_X86="{{cpu}}"
 USE="${CPU_FLAGS_X86}"
 
 #Local options
-USE="${USE} $(cryptoo:site.config[make.conf][USE])"
+USE="${USE} {{use}}"
 
-[%CFEngine make_conf_graphical&runtime_host:: %]
-INPUT_DEVICES="evdev"
-VIDEO_CARDS="$(cryptoo:site.config[make.conf][VIDEO_CARDS])"
-[%CFEngine make_conf_graphical&(!runtime_host):: %]
-INPUT_DEVICES="void"
-VIDEO_CARDS="dummy"
-[%CFEngine make_conf_graphical&runtime_host:: %]
-ALSA_CARDS="$(cryptoo:site.config[make.conf][ALSA_CARDS])"
-[%CFEngine make_conf_graphical&runtime_guest:: %]
-ALSA_CARDS="ac97"
+INPUT_DEVICES="{{input}}"
+VIDEO_CARDS="{{video}}"
+ALSA_CARDS="{{alsa}}"
 
-[%CFEngine pkgdir_master&make_conf_no_multilib:: %]
-PKGDIR="/usr/site-local/packages/host/no_multilib/${ARCH}"
-[%CFEngine pkgdir_master&make_conf_multilib:: %]
-PKGDIR="/usr/site-local/packages/host/multilib/${ARCH}"
-[%CFEngine pkgdir_desktop_host&make_conf_no_multilib:: %]
-PKGDIR="/usr/site-local/packages/desktop-host/no_multilib/${ARCH}"
-[%CFEngine pkgdir_desktop_host&make_conf_multilib:: %]
-PKGDIR="/usr/site-local/packages/desktop-host/multilib/${ARCH}"
-[%CFEngine pkgdir_server_guest&make_conf_no_multilib:: %]
-PKGDIR="/usr/site-local/packages/server/no_multilib/${ARCH}"
-[%CFEngine pkgdir_server_guest&make_conf_multilib:: %]
-PKGDIR="/usr/site-local/packages/server/multilib/${ARCH}"
-[%CFEngine pkgdir_desktop_guest&make_conf_no_multilib:: %]
-PKGDIR="/usr/site-local/packages/desktop/no_multilib/${ARCH}"
-[%CFEngine pkgdir_desktop_guest&make_conf_multilib:: %]
-PKGDIR="/usr/site-local/packages/desktop/multilib/${ARCH}"
+PKGDIR="{{pkgdir}}${ARCH}"
