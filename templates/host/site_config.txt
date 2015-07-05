@@ -42,6 +42,7 @@
               },
     "firewall": {
                 "external_ssh": "22"
-              }
+              },
+    "ddns": "example.com"
 
 }
