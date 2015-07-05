@@ -1,0 +1,32 @@
+#!/bin/bash
+
+GOOD_SUBNETS_24={{good_24}}
+GOOD_SUBNETS_10={{good_10}}
+
+ipset -quiet destroy temp-evil
+ipset create temp-evil hash:net
+ipset -quiet create evil hash:net
+ipset add temp-evil 172.16.0.0/12
+
+for i in {0..255}
+do
+   ipset add temp-evil 192.168.${i}.0/24
+done
+
+for j in ${GOOD_SUBNETS_24[@]}
+do
+   ipset del temp-evil 192.168.${j}.0/24
+done
+
+for k in ( 0 64 128 192 )
+do
+   ipset add temp-evil 10.${k}.0.0/10
+done
+
+for l in ${GOOD_SUBNETS_10[@]}
+do
+   ipset del temp-evil 10.${l}.0.0/10
+done
+
+ipset swap temp-evil evil
+ipset destroy temp-evil

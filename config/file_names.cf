@@ -335,6 +335,9 @@ bundle common file_names
       "template_ini"
         string => "common/ini_mustache.txt",
         meta => { "template" };
+      "template_ipset_evil"
+        string => "common/ipset-evil.txt",
+        meta => { "template" };
       "template_ipset_private"
         string => "common/ipset-private.txt",
         meta => { "template" };

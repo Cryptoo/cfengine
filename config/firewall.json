@@ -1,4 +1,8 @@
 {
+    "tproxy_subnet": {
+                      "i2p": "128",
+                      "tor": "192"
+            },
     "shorewall_conf": {
                       "STARTUP_ENABLED": "Yes",
                       "DISABLE_IPV6": "Yes",

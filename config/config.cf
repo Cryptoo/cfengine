@@ -1641,12 +1641,14 @@ bundle common config
 			"gid[cryptoo]"
 				int => "1000";
 
-      "transparent_proxy_net[tor]"
-        string => "10.192.0.0/10";
       "transparent_proxy_net[i2p]"
-        string => "10.128.0.0/10";
+        string => "10.$(firewall[tproxy_subnet][i2p]).0.0/10";
+      "transparent_proxy_net[tor]"
+        string => "10.$(firewall[tproxy_subnet][tor]).0.0/10";
+      "transparent_proxy_net[i2p]"
+        string => "10.$(firewall[tproxy_subnet][i2p]).0.0/10";
       "transparent_proxy_dns[i2p]"
-        string => "10.128.0.1";
+        string => "10.$(firewall[tproxy_subnet][i2p]).0.1";
 
       "dns[primary]"
         string => "8.8.8.8";
