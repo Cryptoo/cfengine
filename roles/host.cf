@@ -53,6 +53,12 @@ bundle agent host(arch, role)
       "chroot_list"
         slist => getindices("chroot");
 
+    have_desktop_guests::
+
+      "desktop_guest_list"
+        slist => getindices("desktop_guest"),
+        classes => default:if_ok("have_desktop_guest_list");
+
   classes:
 
     any::
@@ -262,6 +268,11 @@ bundle agent host(arch, role)
 
     any::
 
+      "get a list of desktop guests"
+        usebundle => extra_desktop_guests("$(this.role)"),
+        useresult => "desktop_guest",
+        classes => default:if_ok("have_desktop_guests");
+
       "configure OpenRC"
         usebundle => cryptoo:openrc("/");
 
@@ -321,6 +332,11 @@ bundle agent host(arch, role)
       "generate random subnets"
         usebundle => cryptoo:subnet,
         classes => default:if_ok("subnet_config_available");
+
+    have_desktop_guest_list::
+
+      "create inboxes and outboxes for desktop guests"
+        usebundle => extra_guest_box("$(desktop_guest_list)");
 
   commands:
 

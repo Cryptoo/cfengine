@@ -6,6 +6,7 @@ body file control
 
   inputs => {
               "cryptoo/common/common.cf",
+              "cryptoo/util/perms.cf",
               "@(cryptoo:control.desktop_guest_inputs)"
             };
 
@@ -14,6 +15,12 @@ body file control
 bundle agent desktop_guest(root, role, arch, multilib)
 
 {
+
+  files:
+
+    "$(this.root)$(directory_names.fs_cryptoo_home)/."
+        perms => cryptoo,
+        create => "true";
 
   methods:
 

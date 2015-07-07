@@ -109,3 +109,11 @@ body perms znc
       owners  => { "znc" };
       groups  => { "znc" };
 }
+
+body perms cryptoo
+
+{
+      mode  => "0600";
+      owners  => { "cryptoo" };
+      groups  => { "cryptoo" };
+}

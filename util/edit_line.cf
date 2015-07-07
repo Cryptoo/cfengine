@@ -16,7 +16,7 @@ bundle edit_line bashrc
 {
     replace_patterns:
 
-      "(.*PS1=.*)W(.*)"
+      "(.*PS1\+=.*)W(.*)"
         replace_with => cryptoo:PS1_small_w;
 
     insert_lines:

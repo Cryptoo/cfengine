@@ -1,0 +1,73 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/common/shorewall/bridge_child_interfaces.cf",
+              "cryptoo/config/config.cf",
+              "@(cryptoo:control.host_common_inputs)"
+            };
+
+}
+
+bundle agent bridge_extra_children(role, zone)
+
+{
+
+  vars:
+
+    any::
+
+      "firewall"
+        data => mergedata("cryptoo:config.firewall");
+
+      "defined_children"
+        slist => getvalues("firewall[zone][$(zone)][members]");
+
+      "extra_guest_list"
+        slist => getindices("extra_guest_$(this.zone)"),
+        ifvarclass => "have_guests_$(this.zone)",
+        classes => default:if_ok("have_guest_list_$(this.zone)");
+
+      "children"
+        slist => { @(defined_children), @(extra_guest_list) },
+        ifvarclass => "have_extra_guests_$(this.zone)",
+        classes => default:if_ok("have_children_$(this.zone)");
+
+      "children"
+        slist => { @(defined_children) },
+        ifvarclass => "no_extra_guests_$(this.zone)",
+        classes => default:if_ok("have_children_$(this.zone)");
+
+  classes:
+
+    any::
+
+      "have_extra_guests_$(this.zone)"
+        expression => isgreaterthan(length("extra_guest_list"), "0"),
+        ifvarclass => "have_guest_list_$(this.zone)";
+
+      "no_extra_guests_$(this.zone)"
+        not => isgreaterthan(length("extra_guest_list"), "0"),
+        ifvarclass => "have_guest_list_$(this.zone)";
+
+  methods:
+
+    any::
+
+      "get a list of guests for this zone"
+        usebundle => extra_zone_guests("$(this.role)", "$(this.zone)"),
+        useresult => "extra_guest_$(this.zone)",
+        classes => default:if_ok("have_guests_$(this.zone)");
+
+  reports:
+
+    any::
+
+      "$(children)"
+        bundle_return_value_index => "$(children)",
+        ifvarclass => "have_children_$(this.zone)";
+
+}

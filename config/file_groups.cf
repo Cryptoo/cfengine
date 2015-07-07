@@ -793,7 +793,7 @@ bundle common file_groups
                  };
 
       "backup_dir[desktop_guest]"
-        string => "$(backup_dir[guest])";
+        string => "/$(directory_names.fs_cryptoo_home)";
 
       "firewall_zones[desktop_guest]"
         slist => {

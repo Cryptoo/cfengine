@@ -38,7 +38,7 @@ bundle agent fstab_guest(role)
             "source": "/bin",
             "target": "/$(directory_names.fs_site_apps)",
             "type": "9p",
-            "options": "trans=virtio,version=9p2000.L,ro,nodev,nosuid,noatime",
+            "options": "trans=virtio,version=9p2000.L,cache=mmap,ro,nodev,nosuid,noatime",
             "dump": "0",
             "pass": "0"
           }';
@@ -49,7 +49,7 @@ bundle agent fstab_guest(role)
             "source": "/backup",
             "target": "$(backup)",
             "type": "9p",
-            "options": "trans=virtio,version=9p2000.L,rw,nodev,nosuid,noatime",
+            "options": "trans=virtio,version=9p2000.L,cache=mmap,rw,nodev,nosuid,noatime",
             "dump": "0",
             "pass": "0"
           }';
@@ -60,7 +60,7 @@ bundle agent fstab_guest(role)
             "source": "/cryptoo",
             "target": "/$(directory_names.fs_cryptoo)",
             "type": "9p",
-            "options": "trans=virtio,version=9p2000.L,ro,nodev,nosuid,noatime",
+            "options": "trans=virtio,version=9p2000.L,cache=mmap,ro,nodev,nosuid,noatime",
             "dump": "0",
             "pass": "0"
           }';
@@ -71,7 +71,7 @@ bundle agent fstab_guest(role)
             "source": "/distfiles",
             "target": "/$(directory_names.fs_site_srcpkg)",
             "type": "9p",
-            "options": "trans=virtio,version=9p2000.L,rw,noexec,nodev,nosuid,noatime",
+            "options": "trans=virtio,version=9p2000.L,cache=mmap,rw,noexec,nodev,nosuid,noatime",
             "dump": "0",
             "pass": "0"
           }';
@@ -82,7 +82,7 @@ bundle agent fstab_guest(role)
             "source": "/inbox",
             "target": "/$(directory_names.fs_config_cryptoo_incoming)",
             "type": "9p",
-            "options": "trans=virtio,version=9p2000.L,ro,nodev,nosuid,noatime",
+            "options": "trans=virtio,version=9p2000.L,cache=mmap,ro,nodev,nosuid,noatime",
             "dump": "0",
             "pass": "0"
           }';
@@ -93,7 +93,7 @@ bundle agent fstab_guest(role)
             "source": "/layman",
             "target": "/$(directory_names.fs_volatile_overlay)",
             "type": "9p",
-            "options": "trans=virtio,version=9p2000.L,ro,noexec,nodev,nosuid,noatime",
+            "options": "trans=virtio,version=9p2000.L,cache=mmap,ro,noexec,nodev,nosuid,noatime",
             "dump": "0",
             "pass": "0"
           }';
@@ -104,7 +104,7 @@ bundle agent fstab_guest(role)
             "source": "/outbox",
             "target": "/$(directory_names.fs_config_cryptoo_outgoing)",
             "type": "9p",
-            "options": "trans=virtio,version=9p2000.L,rw,nodev,nosuid,noatime",
+            "options": "trans=virtio,version=9p2000.L,cache=mmap,rw,nodev,nosuid,noatime",
             "dump": "0",
             "pass": "0"
           }';
@@ -115,7 +115,7 @@ bundle agent fstab_guest(role)
             "source": "/packages",
             "target": "/$(directory_names.fs_site_binpkg)",
             "type": "9p",
-            "options": "trans=virtio,version=9p2000.L,rw,noexec,nodev,nosuid,noatime",
+            "options": "trans=virtio,version=9p2000.L,cache=mmap,rw,noexec,nodev,nosuid,noatime",
             "dump": "0",
             "pass": "0"
           }';
@@ -126,7 +126,7 @@ bundle agent fstab_guest(role)
             "source": "/portage",
             "target": "/$(directory_names.fs_pm)",
             "type": "9p",
-            "options": "trans=virtio,version=9p2000.L,ro,noexec,nodev,nosuid,noatime",
+            "options": "trans=virtio,version=9p2000.L,cache=mmap,ro,noexec,nodev,nosuid,noatime",
             "dump": "0",
             "pass": "0"
           }';
@@ -137,7 +137,7 @@ bundle agent fstab_guest(role)
             "source": "/portage-local",
             "target": "/$(directory_names.fs_site_pm)",
             "type": "9p",
-            "options": "trans=virtio,version=9p2000.L,ro,noexec,nodev,nosuid,noatime",
+            "options": "trans=virtio,version=9p2000.L,cache=mmap,ro,noexec,nodev,nosuid,noatime",
             "dump": "0",
             "pass": "0"
           }';
@@ -148,7 +148,7 @@ bundle agent fstab_guest(role)
             "source": "/src",
             "target": "/$(directory_names.fs_site_sources)",
             "type": "9p",
-            "options": "trans=virtio,version=9p2000.L,ro,noexec,nodev,nosuid,noatime",
+            "options": "trans=virtio,version=9p2000.L,cache=mmap,ro,noexec,nodev,nosuid,noatime",
             "dump": "0",
             "pass": "0"
           }';
@@ -159,7 +159,7 @@ bundle agent fstab_guest(role)
             "source": "/storage",
             "target": "/$(directory_names.fs_mount_shared)",
             "type": "9p",
-            "options": "trans=virtio,version=9p2000.L,rw,noexec,nodev,nosuid,noatime",
+            "options": "trans=virtio,version=9p2000.L,cache=mmap,rw,noexec,nodev,nosuid,noatime",
             "dump": "0",
             "pass": "0"
           }';

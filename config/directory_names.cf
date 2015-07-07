@@ -60,6 +60,7 @@ bundle common directory_names
       "fs_config_tor" string => "$(fs_config_base)/tor";
       "fs_config_unbound" string => "$(fs_config_base)/unbound";
       "fs_home" string => "home";
+      "fs_cryptoo_home" string => "$(fs_home)/cryptoo";
       "fs_mount_base" string => "mnt";
       "fs_mount_backup" string => "$(fs_mount_base)/backup";
       "fs_mount_cryptoo" string => "$(fs_mount_base)/cryptoo";

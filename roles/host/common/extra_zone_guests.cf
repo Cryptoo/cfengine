@@ -1,0 +1,54 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/site.cf"
+            };
+
+}
+
+bundle agent extra_zone_guests(host, zone)
+
+{
+
+  vars:
+
+    any::
+
+      "extra_guest_data"
+        data => mergedata("cryptoo:site.config[extra_guests]");
+
+      "site_extra_guests"
+        slist => getindices("extra_guest_data");
+
+  classes:
+
+    any::
+
+      "have_site_extra_guests"
+        expression => isgreaterthan(length("site_extra_guests"), "0");
+
+    have_site_extra_guests::
+
+      "host_$(site_extra_guests)"
+        expression => strcmp("$(extra_guest_data[$(site_extra_guests)][host])", "$(this.host)");
+
+      "zone_guest_$(site_extra_guests)"
+        expression => strcmp("$(extra_guest_data[$(site_extra_guests)][location])", "$(this.zone)");
+
+      "host_zone_guest_$(site_extra_guests)"
+        expression => "any",
+        ifvarclass => "host_$(site_extra_guests)&zone_guest_$(site_extra_guests)";
+
+  reports:
+
+    have_site_extra_guests::
+
+      "$(extra_guest_data[$(site_extra_guests)][name])"
+        bundle_return_value_index => "$(site_extra_guests)",
+        ifvarclass => "host_zone_guest_$(site_extra_guests)";
+
+}

@@ -6,12 +6,13 @@ body file control
 
   inputs => {
               "cryptoo/common/shorewall/bridge_child_interfaces.cf",
+              "cryptoo/common/shorewall/bridge_extra_children.cf",
               "cryptoo/config/config.cf"
             };
 
 }
 
-bundle agent bridge_children(zone)
+bundle agent bridge_children(role, zone)
 
 {
 
@@ -22,9 +23,6 @@ bundle agent bridge_children(zone)
       "firewall"
         data => mergedata("cryptoo:config.firewall");
 
-      "children"
-        slist => getvalues("firewall[zone][$(zone)][members]");
-
       "zone_name"
         string => "$(firewall[zone][$(zone)][name])";
 
@@ -34,28 +32,42 @@ bundle agent bridge_children(zone)
       "options"
         string => "$(firewall[interface_options][member])";
 
-    have_child_interfaces::
+      "children"
+        slist => getindices("children_$(this.zone)"),
+        ifvarclass => "scanned_children_$(this.zone)",
+        classes => default:if_ok("have_children_$(this.zone)");
 
       "bridge_children"
-        slist => maplist('{ "zone_full": "$(prefix)$(this):$(zone_name)", "zone": "$(prefix)$(this)", "type": "bport", "interface": "$(child_interfaces[$(this)])", "interface_options": "$(options)" }', @(children) );
+        slist => maplist('{ "zone_full": "$(prefix)$(this):$(zone_name)", "zone": "$(prefix)$(this)", "type": "bport", "interface": "$(child_interfaces[$(this)])", "interface_options": "$(options)" }', @(children) ),
+        ifvarclass => "have_child_interfaces_$(this.zone)",
+        classes => default:if_ok("have_bridge_children_$(this.zone)");
 
       "json"
-        string => join(", ", "bridge_children");
+        string => join(", ", "bridge_children"),
+        ifvarclass => "have_bridge_children_$(this.zone)",
+        classes => default:if_ok("have_json_$(this.zone)");
 
   methods:
 
     any::
 
+      "get a list of children for this zone"
+        usebundle => bridge_extra_children("$(this.role)", "$(this.zone)"),
+        useresult => "children_$(this.zone)",
+        classes => default:if_ok("scanned_children_$(this.zone)");
+
       "get the interface names for children of this bridge"
         usebundle => bridge_child_interfaces("$(zone)", "$(children)"),
         useresult => "child_interfaces",
-        classes => default:if_ok("have_child_interfaces");
+        ifvarclass => "have_children_$(this.zone)",
+        classes => default:if_ok("have_child_interfaces_$(this.zone)");
 
   reports:
 
-    have_child_interfaces::
+    any::
 
       "$(json)"
-        bundle_return_value_index => "$(zone)_json";
+        bundle_return_value_index => "$(zone)_json",
+        ifvarclass => "have_json_$(this.zone)";
 
 }

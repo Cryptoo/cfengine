@@ -5,11 +5,13 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
+              "cryptoo/common/shorewall/extra_lan_rule.cf",
               "cryptoo/config/config.cf",
               "cryptoo/config/file_names.cf",
               "cryptoo/config/templates.cf",
               "cryptoo/util/classes.cf",
-              "cryptoo/util/perms.cf"
+              "cryptoo/util/perms.cf",
+              "@(cryptoo:control.host_common_inputs)"
             };
 
 }
@@ -31,6 +33,30 @@ bundle agent shorewall_rules_master(root)
 
       "subnet_config"
         data => readjson("/$(file_names.subnet_config)", 1M);
+
+    !have_guests_lan::
+
+      "extra_rules_json_lan"
+        string => "";
+
+    have_guests_lan::
+
+      "extra_lan_guest_list"
+        slist => getindices("extra_guest_lan"),
+        classes => default:if_ok("have_guest_list_lan");
+
+    have_extra_guest_json_lan::
+
+      "extra_lan_json_list"
+        slist => getvalues("extra_guest_json_lan"),
+        classes => default:if_ok("have_guest_json_list_lan");
+
+    have_extra_lan_guests::
+
+      "extra_rules_json_lan"
+        string => join(", ", "extra_lan_json_list");
+
+    lan_guests_ready::
 
       "rules_json_host"
         string => '
@@ -465,12 +491,8 @@ bundle agent shorewall_rules_master(root)
                }
           }
         ';
-      "rules_json_lan"
-        string => '
-          {
-            "lan":
-                 [
-                   {
+      "defined_rules_json_lan"
+        string => '{
                      "action": "ACCEPT",
                      "source": "l0",
                      "destination": "l$(defined_numbers[firewall_internal])"
@@ -529,7 +551,17 @@ bundle agent shorewall_rules_master(root)
                      "action": "ACCEPT",
                      "source": "l$(defined_numbers[vpn_server])",
                      "destination": "l$(defined_numbers[firewall_internal])"
-                   }
+                   }';
+
+      "combined_rules_json_lan"
+        string => "$(defined_rules_json_lan), $(extra_rules_json_lan)";
+
+      "rules_json_lan"
+        string => '
+          {
+            "lan":
+                 [
+                   $(combined_rules_json_lan)
                  ]
                }
           }
@@ -556,9 +588,19 @@ bundle agent shorewall_rules_master(root)
       "rules_data_lan"
         data => parsejson("$(rules_json_lan)");
 
+  classes:
+
+    have_guest_json_list_lan::
+
+      "have_extra_lan_guests"
+        expression => isgreaterthan(length("extra_lan_json_list"), "0");
+
+      "lan_guests_ready"
+        expression => "any";
+
   files:
 
-    any::
+    have_extra_guest_json_lan::
 
       "$(root)$(file_names.shorewall_rules)"
         perms => system,
@@ -567,5 +609,21 @@ bundle agent shorewall_rules_master(root)
         template_method => "mustache",
         template_data => mergedata("rules_data_host", "rules_data_wan", "rules_data_ispdmz", "rules_data_tor", "rules_data_i2p", "rules_data_vpndmz", "rules_data_lan"),
         classes => shorewall;
+
+  methods:
+
+    any::
+
+      "get a list of guests for lan zone"
+        usebundle => extra_zone_guests("master", "lan_bridge"),
+        useresult => "extra_guest_lan",
+        classes => default:if_ok("have_guests_lan");
+
+    have_guest_list_lan::
+
+      "get json for guests for lan zone"
+        usebundle => shorewall_extra_lan_rule("$(extra_lan_guest_list)"),
+        useresult => "extra_guest_json_lan",
+        classes => default:if_ok("have_extra_guest_json_lan");
 
 }

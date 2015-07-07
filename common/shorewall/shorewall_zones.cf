@@ -137,7 +137,7 @@ bundle agent shorewall_zones(root, role)
         handle => "have_bridges";
 
       "get list of children for bridge zones"
-        usebundle => bridge_children("$(bridge_zones_ipv4)"),
+        usebundle => bridge_children("$(this.role)", "$(bridge_zones_ipv4)"),
         useresult => "bridge_zone_child",
         depends_on => { "have_bridges" },
         classes => default:if_ok("bridge_children_done");
