@@ -137,6 +137,17 @@ bundle agent cryptoo_bootstrap
       "multilib"
         string => "no_multilib";
 
+    default:bootstrap_irc_client::
+
+      "role"
+        string => "irc_client";
+
+      "type"
+        string => "desktop";
+
+      "multilib"
+        string => "no_multilib";
+
     default:bootstrap_mail_client::
 
       "role"
@@ -217,6 +228,11 @@ bundle agent cryptoo_bootstrap
         expression => "any";
 
     default:bootstrap_vpn_server::
+
+      "bootstrap_guest"
+        expression => "any";
+
+    default:bootstrap_irc_client::
 
       "bootstrap_guest"
         expression => "any";

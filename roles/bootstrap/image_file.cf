@@ -65,7 +65,7 @@ bundle agent image_file(role, type, multilib)
         handle => "image_ready";
 
       "install and configure apps"
-        usebundle => install_apps("$(this.role)"),
+        usebundle => install_apps("$(this.role)", "$(this.type)", "$(this.multilib)"),
         depends_on => { "image_ready" },
         handle => "apps_installed";
 

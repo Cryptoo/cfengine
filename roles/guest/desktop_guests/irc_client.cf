@@ -1,0 +1,24 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+}
+
+bundle agent irc_client(root)
+
+{
+
+  meta:
+
+    "tags" slist => { "cryptoo_role" };
+
+  methods:
+
+    any::
+
+      "configure system as an irc client guest"
+        usebundle => desktop_guest("$(this.root)", "irc_client", "x86_64", "no_multilib");
+
+}

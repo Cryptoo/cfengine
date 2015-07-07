@@ -7,6 +7,7 @@ body file control
   inputs => {
               "cryptoo/config/config.cf",
               "cryptoo/config/file_groups.cf",
+              "cryptoo/config/machine.cf",
               "@(cryptoo:control.systemd_proto_inputs)"
             };
 
@@ -41,8 +42,12 @@ bundle agent networkd(root, role)
       "interface[$(interface_list)][params]"
         string => storejson("$(this.role)_config[interfaces][$(interface_list)][params]");
 
+# FIXME
+#      "role_number"
+#        string => "$(config.defined_numbers[$(this.role)])";
+
       "role_number"
-        string => "$(config.defined_numbers[$(this.role)])";
+        string => "$(machine.machine_number)";
 
   methods:
 

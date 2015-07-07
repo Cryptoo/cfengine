@@ -530,7 +530,7 @@ bundle common file_groups
                        {
                          "zone": "lan",
                          "gateway": "firewall_internal",
-                         "ipforward": "false"
+                         "ipforward": "no"
                        }
                    }
                }
@@ -664,7 +664,8 @@ bundle common file_groups
 
       "use[guest]"
         slist => {
-                    "@(use[common])"
+                    "@(use[common])",
+                    "guest"
                  };
 
       "profile[guest]"
@@ -819,7 +820,7 @@ bundle common file_groups
 ################################################################################
 
       "make_profile[chroot_desktop]"
-        string => "$(make_profile[desktop_guest])";
+        string => "$(make_profile[desktop_guest])/chroot";
 
       "pm_env[chroot_desktop]"
         slist => {
@@ -993,7 +994,38 @@ bundle common file_groups
         string => "$(firewall[desktop_guest])";
 
       "network[irc_client]"
-        string => "$(network[desktop_guest])";
+        string => '
+          {
+            "devices":
+               {
+                 "bridge":
+                   [
+                     "none"
+                   ],
+                 "veth":
+                   [
+                     "none"
+                   ],
+                 "tap":
+                   [
+                     "none"
+                   ]
+               },
+             "interfaces":
+               {
+                 "eth0":
+                   {
+                     "type": "gateway",
+                     "params":
+                       {
+                         "zone": "lan",
+                         "gateway": "firewall_internal",
+                         "ipforward": "no"
+                       }
+                   }
+               }
+          }
+        ';
 
       "dns_type[irc_client]"
         string => "$(dns_type[desktop_guest])";
@@ -1742,7 +1774,7 @@ bundle common file_groups
                        {
                          "zone": "ispdmz",
                          "gateway": "firewall_external",
-                         "ipforward": "false"
+                         "ipforward": "no"
                        }
                    },
                  "eth1":
@@ -1751,7 +1783,7 @@ bundle common file_groups
                      "params":
                        {
                          "zone": "tor",
-                         "ipforward": "ipv4",
+                         "ipforward": "no",
                          "routes":
                            {
                              "eep": "firewall_internal",
@@ -1885,7 +1917,7 @@ bundle common file_groups
                        {
                          "zone": "ispdmz",
                          "gateway": "firewall_external",
-                         "ipforward": "false"
+                         "ipforward": "no"
                        }
                    },
                  "eth1":
@@ -1894,7 +1926,7 @@ bundle common file_groups
                      "params":
                        {
                          "zone": "i2p",
-                         "ipforward": "ipv4",
+                         "ipforward": "no",
                          "routes":
                            {
                              "eep": "firewall_internal",
@@ -2026,7 +2058,7 @@ bundle common file_groups
                        {
                          "zone": "ispdmz",
                          "gateway": "firewall_external",
-                         "ipforward": "false"
+                         "ipforward": "no"
                        }
                    },
                  "eth1":
@@ -2035,7 +2067,7 @@ bundle common file_groups
                      "params":
                        {
                          "zone": "vpndmz",
-                         "ipforward": "ipv4",
+                         "ipforward": "no",
                          "routes":
                            {
                              "i2p": "firewall_internal",
@@ -2332,7 +2364,7 @@ bundle common file_groups
                        {
                          "zone": "vpndmz",
                          "gateway": "vpn_primary",
-                         "ipforward": "ipv4",
+                         "ipforward": "no",
                          "routes":
                            {
                              "onion": "firewall_internal",
@@ -2465,7 +2497,7 @@ bundle common file_groups
                        {
                          "zone": "vpndmz",
                          "gateway": "vpn_primary",
-                         "ipforward": "ipv4",
+                         "ipforward": "no",
                          "routes":
                            {
                              "onion": "firewall_internal",
@@ -2762,7 +2794,7 @@ bundle common file_groups
                        {
                          "zone": "vpndmz",
                          "gateway": "vpn_secondary",
-                         "ipforward": "ipv4",
+                         "ipforward": "no",
                          "routes":
                            {
                              "onion": "firewall_internal",
@@ -3127,7 +3159,7 @@ bundle common file_groups
                      "params":
                        {
                          "zone": "lan",
-                         "ipforward": "false",
+                         "ipforward": "no",
                          "routes":
                            {
                              "onion": "firewall_internal",
@@ -3145,7 +3177,7 @@ bundle common file_groups
                        {
                          "zone": "ispdmz",
                          "gateway": "firewall_external",
-                         "ipforward": "false"
+                         "ipforward": "no"
                        }
                    }
                }

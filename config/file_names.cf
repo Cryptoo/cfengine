@@ -208,6 +208,8 @@ bundle common file_names
         string => "$(directory_names.fs_config_units)/ipset.service";
       "shorewall_service"
         string => "$(directory_names.fs_config_units)/shorewall.service";
+      "xpra_service"
+        string => "$(directory_names.fs_config_units)/xpra@.service";
       "console_autologin"
         string => "$(directory_names.fs_config_units)/getty@tty1.service.d/autologin.conf";
       "serial_autologin"

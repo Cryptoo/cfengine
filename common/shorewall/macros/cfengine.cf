@@ -34,6 +34,7 @@ bundle agent shorewall_macro_cfengine(root, port_info)
           "vpn_secondary",
           "irc_bouncer",
           "firewall_internal",
+          "irc_client",
           "master"
         };
 

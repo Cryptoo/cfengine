@@ -38,6 +38,9 @@ bundle common config
     "services"
       data => readjson("$(sys.inputdir)/cryptoo/config/services.json", 1M);
 
+    "xpra_service"
+      data => readjson("$(sys.inputdir)/cryptoo/config/json/xpra_service.json", 1M);
+
     "server_guests"
        slist => {
                    "firewall_external",

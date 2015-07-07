@@ -6,6 +6,10 @@ body file control
 
   inputs => {
               "cryptoo/common/common.cf",
+              "cryptoo/config/config.cf",
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/templates.cf",
               "cryptoo/util/perms.cf",
               "@(cryptoo:control.desktop_guest_inputs)"
             };
@@ -18,9 +22,18 @@ bundle agent desktop_guest(root, role, arch, multilib)
 
   files:
 
-    "$(this.root)$(directory_names.fs_cryptoo_home)/."
+    any::
+
+      "$(this.root)$(directory_names.fs_cryptoo_home)/."
         perms => cryptoo,
         create => "true";
+
+      "$(this.root)$(file_names.xpra_service)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => mergedata("cryptoo:config.xpra_service");
 
   methods:
 
