@@ -31,6 +31,16 @@ bundle agent bootstrap_guest(role, type, multilib)
       "definition"
         string => "/$(directory_names.fs_config_qemu)/$(this.role).xml";
 
+      "guest_name"
+        slist => classesmatching("default:cryptoo_name_.*");
+
+  classes:
+
+    any::
+
+      "have_guest_name"
+        expression => isgreaterthan(length("guest_name", "0"));
+
   files:
 
     image_created::
@@ -45,7 +55,7 @@ bundle agent bootstrap_guest(role, type, multilib)
 
   methods:
 
-    any::
+    !any::
 
       "create image file"
         usebundle => image_file($(this.role), $(this.type), $(this.multilib)),
