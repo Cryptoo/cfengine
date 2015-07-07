@@ -435,6 +435,7 @@ bundle common role
               },
             "libvirt":
               {
+                "name": "dynamic",
                 "ram": "16776192",
                 "cpu": "1",
                 "kernel": "/$(directory_names.fs_libvirt_images)/guest-kernel-x86_64"
@@ -454,6 +455,7 @@ bundle common role
               },
             "libvirt":
               {
+                "name": "dynamic",
                 "ram": "16776192",
                 "cpu": "1",
                 "kernel": "/$(directory_names.fs_libvirt_images)/guest-kernel-x86_64"
@@ -473,6 +475,7 @@ bundle common role
               },
             "libvirt":
               {
+                "name": "dynamic",
                 "ram": "16776192",
                 "cpu": "1",
                 "kernel": "/$(directory_names.fs_libvirt_images)/guest-kernel-x86_64"

@@ -25,25 +25,54 @@ bundle agent bootstrap_guest(role, type, multilib)
       "params"
         string => "$(role.params[$(this.role)])";
 
-      "params_data"
-        data => parsejson("$(this.params)");
-
       "definition"
         string => "/$(directory_names.fs_config_qemu)/$(this.role).xml";
 
       "guest_name"
-        slist => classesmatching("default:cryptoo_name_.*");
+        slist => classesmatching("cryptoo_name_.*");
+
+    defined_name::
+
+      "fixed_json"
+        string => "$(params_data)";
+
+      "params_data"
+        data => parsejson("$(fixed_json)"),
+        classes => default:if_ok("have_json");
+
+    named_guest&have_guest_name::
+
+      "name"
+        string => "$(extracted_name[1])";
+
+      "fixed_json"
+        string => "$(extracted_json[1])$(this.name)$(extracted_json[3])";
+
+      "params_data"
+        data => parsejson("$(fixed_json)"),
+        classes => default:if_ok("have_json");
 
   classes:
 
     any::
 
+      "named_guest"
+        expression => isgreaterthan(length("guest_name"), "0");
+
+      "defined_name"
+        not => isgreaterthan(length("guest_name"), "0");
+
+    named_guest::
+
       "have_guest_name"
-        expression => isgreaterthan(length("guest_name", "0"));
+        expression => regextract("cryptoo_name_(.*)", nth("guest_name", "0"), "extracted_name");
+
+      "guest_name_found"
+        expression => regextract('(?s)(.*"name": ")(.*?)(".*)', "$(this.params)", "extracted_json");
 
   files:
 
-    image_created::
+    image_created&have_json::
 
       "$(this.definition)"
         perms => qemu,
@@ -55,7 +84,7 @@ bundle agent bootstrap_guest(role, type, multilib)
 
   methods:
 
-    !any::
+    any::
 
       "create image file"
         usebundle => image_file($(this.role), $(this.type), $(this.multilib)),
