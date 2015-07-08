@@ -46,12 +46,6 @@ bundle agent portage(root, role, arch, multilib)
       "portage_$(multilib)"
         expression => "any";
 
-      "bootstrap_systemd"
-        not => fileexists("$(root)$(file_names.systemd_app)");
-
-      "have_systemd"
-        expression => fileexists("$(root)$(file_names.systemd_app)");
-
       "defined_role"
         not => strcmp("$(this.role)", "undefined");
 
@@ -99,6 +93,10 @@ bundle agent portage(root, role, arch, multilib)
         link_from => cryptoo_package_use("$(file_groups.use[$(role)])"),
         comment => "Link all files in /etc/portage/package.use";
 
+      "$(root)$(directory_names.fs_config_pm_use)/$(file_groups.unuse[$(role)])"
+        delete => default:tidy,
+        comment => "Unlink unneeded files in /etc/portage/package.use";
+
       "$(root)$(directory_names.fs_config_pm_profile)/$(file_groups.profile[$(role)])"
         move_obstructions => "true",
         link_from => cryptoo_portage_profile("$(file_groups.profile[$(role)])"),
@@ -131,28 +129,6 @@ bundle agent portage(root, role, arch, multilib)
         edit_template => "/$(templates.template[value])",
         template_method => "mustache",
         template_data => parsejson($(this.role_json));
-
-    bootstrap_systemd::
-
-      "$(root)$(directory_names.fs_config_pm_use)/$(file_groups.unuse_udev[$(role)])"
-        delete => default:tidy,
-        comment => "Unlink systemd-related files in /etc/portage/package.use";
-
-      "$(root)$(directory_names.fs_config_pm_use)/$(file_groups.use_udev[$(role)])"
-        move_obstructions => "true",
-        link_from => cryptoo_package_use("$(file_groups.use_udev[$(role)])"),
-        comment => "Link udev-related files in /etc/portage/package.use";
-
-    have_systemd::
-
-      "$(root)$(directory_names.fs_config_pm_use)/$(file_groups.unuse_systemd[$(role)])"
-        delete => default:tidy,
-        comment => "Unlink udev-related files in /etc/portage/package.use";
-
-      "$(root)$(directory_names.fs_config_pm_use)/$(file_groups.use_systemd[$(role)])"
-        move_obstructions => "true",
-        link_from => cryptoo_package_use("$(file_groups.use_systemd[$(role)])"),
-        comment => "Link systemd-related files in /etc/portage/package.use";
 
   methods:
 

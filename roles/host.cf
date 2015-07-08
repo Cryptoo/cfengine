@@ -273,9 +273,6 @@ bundle agent host(arch, role)
         useresult => "desktop_guest",
         classes => default:if_ok("have_desktop_guests");
 
-      "configure OpenRC"
-        usebundle => cryptoo:openrc("/");
-
       "manage chroot guests"
         usebundle => cryptoo:cryptoo_filesystem("/$(cryptoo:directory_names.fs_volatile_images)/$(chroot[$(chroot_list)][class])/$(chroot[$(chroot_list)][arch])/$(chroot[$(chroot_list)][multilib])/","chroot_$(chroot[$(chroot_list)][class])_$(chroot[$(chroot_list)][multilib])","$(chroot[$(chroot_list)][arch])","$(chroot[$(chroot_list)][multilib])");
 

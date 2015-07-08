@@ -1,0 +1,24 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+}
+
+bundle agent im(root)
+
+{
+
+  meta:
+
+    "tags" slist => { "cryptoo_role" };
+
+  methods:
+
+    any::
+
+      "configure system as an instant messaging client guest"
+        usebundle => desktop_guest("$(this.root)", "im", "x86_64", "multilib");
+
+}

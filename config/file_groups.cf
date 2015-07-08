@@ -61,31 +61,15 @@ bundle common file_groups
                     "virtualization"
                  };
 
+      "unuse[common]"
+        slist => {
+                    "systemd_bootstrap",
+                    "udev"
+                 };
+
       "profile[common]"
         slist => {
                     "package.provided"
-                 };
-
-      "use_udev[common]"
-        slist => {
-                    "systemd_bootstrap",
-                    "udev"
-                 };
-
-      "use_systemd[common]"
-        slist => {
-                    "systemd"
-                 };
-
-      "unuse_udev[common]"
-        slist => {
-                    "systemd"
-                 };
-
-      "unuse_systemd[common]"
-        slist => {
-                    "systemd_bootstrap",
-                    "udev"
                  };
 
       "systemd_enabled[common]"
@@ -191,29 +175,14 @@ bundle common file_groups
                     "@(use[common])"
                  };
 
+      "unuse[undefined]"
+        slist => {
+                    "@(unuse[common])"
+                 };
+
       "profile[undefined]"
         slist => {
                     "@(profile[common])"
-                 };
-
-      "use_udev[undefined]"
-        slist => {
-                    "@(use_udev[common])"
-                 };
-
-      "use_systemd[undefined]"
-        slist => {
-                    "@(use_systemd[common])"
-                 };
-
-      "unuse_udev[undefined]"
-        slist => {
-                    "@(unuse_udev[common])"
-                 };
-
-      "unuse_systemd[undefined]"
-        slist => {
-                    "@(unuse_systemd[common])"
                  };
 
       "systemd_enabled[undefined]"
@@ -281,30 +250,15 @@ bundle common file_groups
                     "host"
                  };
 
+      "unuse[host]"
+        slist => {
+                    "@(unuse[common])",
+                    "gpm.service"
+                 };
+
       "profile[host]"
         slist => {
                     "@(profile[common])"
-                 };
-
-      "use_udev[host]"
-        slist => {
-                    "@(use_udev[common])"
-                 };
-
-      "use_systemd[host]"
-        slist => {
-                    "@(use_systemd[common])"
-                 };
-
-      "unuse_udev[host]"
-        slist => {
-                    "@(unuse_udev[common])"
-                 };
-
-      "unuse_systemd[host]"
-        slist => {
-                    "@(unuse_systemd[common])",
-                    "gpm.service"
                  };
 
       "systemd_enabled[host]"
@@ -372,29 +326,14 @@ bundle common file_groups
                     "master"
                  };
 
+      "unuse[master]"
+        slist => {
+                    "@(unuse[host])"
+                 };
+
       "profile[master]"
         slist => {
                     "@(profile[host])"
-                 };
-
-      "use_udev[master]"
-        slist => {
-                    "@(use_udev[host])"
-                 };
-
-      "use_systemd[master]"
-        slist => {
-                    "@(use_systemd[host])"
-                 };
-
-      "unuse_udev[master]"
-        slist => {
-                    "@(unuse_udev[host])"
-                 };
-
-      "unuse_systemd[master]"
-        slist => {
-                    "@(unuse_systemd[host])"
                  };
 
       "systemd_enabled[master]"
@@ -578,29 +517,14 @@ bundle common file_groups
                     "desktop_host"
                  };
 
+      "unuse[desktop_host]"
+        slist => {
+                    "@(unuse[host])"
+                 };
+
       "profile[desktop_host]"
         slist => {
                     "@(profile[host])"
-                 };
-
-      "use_udev[desktop_host]"
-        slist => {
-                    "@(use_udev[host])"
-                 };
-
-      "use_systemd[desktop_host]"
-        slist => {
-                    "@(use_systemd[host])"
-                 };
-
-      "unuse_udev[desktop_host]"
-        slist => {
-                    "@(unuse_udev[host])"
-                 };
-
-      "unuse_systemd[desktop_host]"
-        slist => {
-                    "@(unuse_systemd[host])"
                  };
 
       "systemd_enabled[desktop_host]"
@@ -668,29 +592,14 @@ bundle common file_groups
                     "guest"
                  };
 
+      "unuse[guest]"
+        slist => {
+                    "@(unuse[common])"
+                 };
+
       "profile[guest]"
         slist => {
                     "@(profile[common])"
-                 };
-
-      "use_udev[guest]"
-        slist => {
-                    "@(use_udev[common])"
-                 };
-
-      "use_systemd[guest]"
-        slist => {
-                    "@(use_systemd[common])"
-                 };
-
-      "unuse_udev[guest]"
-        slist => {
-                    "@(unuse_udev[common])"
-                 };
-
-      "unuse_systemd[guest]"
-        slist => {
-                    "@(unuse_systemd[common])"
                  };
 
       "systemd_enabled[guest]"
@@ -764,29 +673,14 @@ bundle common file_groups
                     "X"
                  };
 
+      "unuse[desktop_guest]"
+        slist => {
+                    "@(unuse[guest])"
+                 };
+
       "profile[desktop_guest]"
         slist => {
                     "@(profile[guest])"
-                 };
-
-      "use_udev[desktop_guest]"
-        slist => {
-                    "@(use_udev[guest])"
-                 };
-
-      "use_systemd[desktop_guest]"
-        slist => {
-                    "@(use_systemd[guest])"
-                 };
-
-      "unuse_udev[desktop_guest]"
-        slist => {
-                    "@(unuse_udev[guest])"
-                 };
-
-      "unuse_systemd[desktop_guest]"
-        slist => {
-                    "@(unuse_systemd[guest])"
                  };
 
       "systemd_enabled[desktop_guest]"
@@ -858,29 +752,14 @@ bundle common file_groups
                     "mail_client"
                  };
 
+      "unuse[chroot_desktop_no_multilib]"
+        slist => {
+                    "@(unuse[desktop_guest])"
+                 };
+
       "profile[chroot_desktop_no_multilib]"
         slist => {
                     "@(profile[desktop_guest])"
-                 };
-
-      "use_udev[chroot_desktop_no_multilib]"
-        slist => {
-                    "@(use_udev[desktop_guest])"
-                 };
-
-      "use_systemd[chroot_desktop_no_multilib]"
-        slist => {
-                    "@(use_systemd[desktop_guest])"
-                 };
-
-      "unuse_udev[chroot_desktop_no_multilib]"
-        slist => {
-                    "@(unuse_udev[desktop_guest])"
-                 };
-
-      "unuse_systemd[chroot_desktop_no_multilib]"
-        slist => {
-                    "@(unuse_systemd[desktop_guest])"
                  };
 
       "systemd_enabled[chroot_desktop_no_multilib]"
@@ -948,29 +827,14 @@ bundle common file_groups
                     "irc_client"
                  };
 
+      "unuse[irc_client]"
+        slist => {
+                    "@(unuse[desktop_guest])"
+                 };
+
       "profile[irc_client]"
         slist => {
                     "@(profile[desktop_guest])"
-                 };
-
-      "use_udev[irc_client]"
-        slist => {
-                    "@(use_udev[desktop_guest])"
-                 };
-
-      "use_systemd[irc_client]"
-        slist => {
-                    "@(use_systemd[desktop_guest])"
-                 };
-
-      "unuse_udev[irc_client]"
-        slist => {
-                    "@(unuse_udev[desktop_guest])"
-                 };
-
-      "unuse_systemd[irc_client]"
-        slist => {
-                    "@(unuse_systemd[desktop_guest])"
                  };
 
       "systemd_enabled[irc_client]"
@@ -1070,29 +934,14 @@ bundle common file_groups
                     "mail_client"
                  };
 
+      "unuse[mail_client]"
+        slist => {
+                    "@(unuse[desktop_guest])"
+                 };
+
       "profile[mail_client]"
         slist => {
                     "@(profile[desktop_guest])"
-                 };
-
-      "use_udev[mail_client]"
-        slist => {
-                    "@(use_udev[desktop_guest])"
-                 };
-
-      "use_systemd[mail_client]"
-        slist => {
-                    "@(use_systemd[desktop_guest])"
-                 };
-
-      "unuse_udev[mail_client]"
-        slist => {
-                    "@(unuse_udev[desktop_guest])"
-                 };
-
-      "unuse_systemd[mail_client]"
-        slist => {
-                    "@(unuse_systemd[desktop_guest])"
                  };
 
       "systemd_enabled[mail_client]"
@@ -1161,29 +1010,14 @@ bundle common file_groups
                     "browsers"
                  };
 
+      "unuse[web]"
+        slist => {
+                    "@(unuse[desktop_guest])"
+                 };
+
       "profile[web]"
         slist => {
                     "@(profile[desktop_guest])"
-                 };
-
-      "use_udev[web]"
-        slist => {
-                    "@(use_udev[desktop_guest])"
-                 };
-
-      "use_systemd[web]"
-        slist => {
-                    "@(use_systemd[desktop_guest])"
-                 };
-
-      "unuse_udev[web]"
-        slist => {
-                    "@(unuse_udev[desktop_guest])"
-                 };
-
-      "unuse_systemd[web]"
-        slist => {
-                    "@(unuse_systemd[desktop_guest])"
                  };
 
       "systemd_enabled[web]"
@@ -1253,29 +1087,14 @@ bundle common file_groups
                     "multilib"
                  };
 
+      "unuse[chroot_desktop_multilib]"
+        slist => {
+                    "@(unuse[desktop_guest])"
+                 };
+
       "profile[chroot_desktop_multilib]"
         slist => {
                     "@(profile[desktop_guest])"
-                 };
-
-      "use_udev[chroot_desktop_multilib]"
-        slist => {
-                    "@(use_udev[desktop_guest])"
-                 };
-
-      "use_systemd[chroot_desktop_multilib]"
-        slist => {
-                    "@(use_systemd[desktop_guest])"
-                 };
-
-      "unuse_udev[chroot_desktop_multilib]"
-        slist => {
-                    "@(unuse_udev[desktop_guest])"
-                 };
-
-      "unuse_systemd[chroot_desktop_multilib]"
-        slist => {
-                    "@(unuse_systemd[desktop_guest])"
                  };
 
       "systemd_enabled[chroot_desktop_multilib]"
@@ -1345,29 +1164,14 @@ bundle common file_groups
                     "multilib"
                  };
 
+      "unuse[im]"
+        slist => {
+                    "@(unuse[desktop_guest])"
+                 };
+
       "profile[im]"
         slist => {
                     "@(profile[desktop_guest])"
-                 };
-
-      "use_udev[im]"
-        slist => {
-                    "@(use_udev[desktop_guest])"
-                 };
-
-      "use_systemd[im]"
-        slist => {
-                    "@(use_systemd[desktop_guest])"
-                 };
-
-      "unuse_udev[im]"
-        slist => {
-                    "@(unuse_udev[desktop_guest])"
-                 };
-
-      "unuse_systemd[im]"
-        slist => {
-                    "@(unuse_systemd[desktop_guest])"
                  };
 
       "systemd_enabled[im]"
@@ -1434,29 +1238,14 @@ bundle common file_groups
                     "@(use[guest])"
                  };
 
+      "unuse[server_guest]"
+        slist => {
+                    "@(unuse[guest])"
+                 };
+
       "profile[server_guest]"
         slist => {
                     "@(profile[guest])"
-                 };
-
-      "use_udev[server_guest]"
-        slist => {
-                    "@(use_udev[guest])"
-                 };
-
-      "use_systemd[server_guest]"
-        slist => {
-                    "@(use_systemd[guest])"
-                 };
-
-      "unuse_udev[server_guest]"
-        slist => {
-                    "@(unuse_udev[guest])"
-                 };
-
-      "unuse_systemd[server_guest]"
-        slist => {
-                    "@(unuse_systemd[guest])"
                  };
 
       "systemd_enabled[server_guest]"
@@ -1514,7 +1303,7 @@ bundle common file_groups
                     "freenet",
                     "i2p",
                     "java",
-                    "mail",
+                    "mail_server",
                     "namecoin",
                     "router",
                     "samba",
@@ -1545,7 +1334,7 @@ bundle common file_groups
                     "freenet",
                     "i2p",
                     "java",
-                    "mail",
+                    "mail_server",
                     "router",
                     "samba_server",
                     "tor",
@@ -1553,29 +1342,14 @@ bundle common file_groups
                     "znc"
                  };
 
+      "unuse[chroot_server_no_multilib]"
+        slist => {
+                    "@(unuse[server_guest])"
+                 };
+
       "profile[chroot_server_no_multilib]"
         slist => {
                     "@(profile[server_guest])"
-                 };
-
-      "use_udev[chroot_server_no_multilib]"
-        slist => {
-                    "@(use_udev[server_guest])"
-                 };
-
-      "use_systemd[chroot_server_no_multilib]"
-        slist => {
-                    "@(use_systemd[server_guest])"
-                 };
-
-      "unuse_udev[chroot_server_no_multilib]"
-        slist => {
-                    "@(unuse_udev[server_guest])"
-                 };
-
-      "unuse_systemd[chroot_server_no_multilib]"
-        slist => {
-                    "@(unuse_systemd[server_guest])"
                  };
 
       "systemd_enabled[chroot_server_no_multilib]"
@@ -1644,29 +1418,14 @@ bundle common file_groups
                     "router"
                  };
 
+      "unuse[firewall_external]"
+        slist => {
+                    "@(unuse[server_guest])"
+                 };
+
       "profile[firewall_external]"
         slist => {
                     "@(profile[server_guest])"
-                 };
-
-      "use_udev[firewall_external]"
-        slist => {
-                    "@(use_udev[server_guest])"
-                 };
-
-      "use_systemd[firewall_external]"
-        slist => {
-                    "@(use_systemd[server_guest])"
-                 };
-
-      "unuse_udev[firewall_external]"
-        slist => {
-                    "@(unuse_udev[server_guest])"
-                 };
-
-      "unuse_systemd[firewall_external]"
-        slist => {
-                    "@(unuse_systemd[server_guest])"
                  };
 
       "systemd_enabled[firewall_external]"
@@ -1793,29 +1552,14 @@ bundle common file_groups
                     "tor"
                  };
 
+      "unuse[tor]"
+        slist => {
+                    "@(unuse[server_guest])"
+                 };
+
       "profile[tor]"
         slist => {
                     "@(profile[server_guest])"
-                 };
-
-      "use_udev[tor]"
-        slist => {
-                    "@(use_udev[server_guest])"
-                 };
-
-      "use_systemd[tor]"
-        slist => {
-                    "@(use_systemd[server_guest])"
-                 };
-
-      "unuse_udev[tor]"
-        slist => {
-                    "@(unuse_udev[server_guest])"
-                 };
-
-      "unuse_systemd[tor]"
-        slist => {
-                    "@(unuse_systemd[server_guest])"
                  };
 
       "systemd_enabled[tor]"
@@ -1935,29 +1679,14 @@ bundle common file_groups
                     "java"
                  };
 
+      "unuse[i2p]"
+        slist => {
+                    "@(unuse[server_guest])"
+                 };
+
       "profile[i2p]"
         slist => {
                     "@(profile[server_guest])"
-                 };
-
-      "use_udev[i2p]"
-        slist => {
-                    "@(use_udev[server_guest])"
-                 };
-
-      "use_systemd[i2p]"
-        slist => {
-                    "@(use_systemd[server_guest])"
-                 };
-
-      "unuse_udev[i2p]"
-        slist => {
-                    "@(unuse_udev[server_guest])"
-                 };
-
-      "unuse_systemd[i2p]"
-        slist => {
-                    "@(unuse_systemd[server_guest])"
                  };
 
       "systemd_enabled[i2p]"
@@ -2078,29 +1807,14 @@ bundle common file_groups
                     "java"
                  };
 
+      "unuse[freenet]"
+        slist => {
+                    "@(unuse[server_guest])"
+                 };
+
       "profile[freenet]"
         slist => {
                     "@(profile[server_guest])"
-                 };
-
-      "use_udev[freenet]"
-        slist => {
-                    "@(use_udev[server_guest])"
-                 };
-
-      "use_systemd[freenet]"
-        slist => {
-                    "@(use_systemd[server_guest])"
-                 };
-
-      "unuse_udev[freenet]"
-        slist => {
-                    "@(unuse_udev[server_guest])"
-                 };
-
-      "unuse_systemd[freenet]"
-        slist => {
-                    "@(unuse_systemd[server_guest])"
                  };
 
       "systemd_enabled[freenet]"
@@ -2218,29 +1932,14 @@ bundle common file_groups
                     "router"
                  };
 
+      "unuse[vpn_primary]"
+        slist => {
+                    "@(unuse[server_guest])"
+                 };
+
       "profile[vpn_primary]"
         slist => {
                     "@(profile[server_guest])"
-                 };
-
-      "use_udev[vpn_primary]"
-        slist => {
-                    "@(use_udev[server_guest])"
-                 };
-
-      "use_systemd[vpn_primary]"
-        slist => {
-                    "@(use_systemd[server_guest])"
-                 };
-
-      "unuse_udev[vpn_primary]"
-        slist => {
-                    "@(unuse_udev[server_guest])"
-                 };
-
-      "unuse_systemd[vpn_primary]"
-        slist => {
-                    "@(unuse_systemd[server_guest])"
                  };
 
       "systemd_enabled[vpn_primary]"
@@ -2384,29 +2083,14 @@ bundle common file_groups
                     "dns"
                  };
 
+      "unuse[dns]"
+        slist => {
+                    "@(unuse[server_guest])"
+                 };
+
       "profile[dns]"
         slist => {
                     "@(profile[server_guest])"
-                 };
-
-      "use_udev[dns]"
-        slist => {
-                    "@(use_udev[server_guest])"
-                 };
-
-      "use_systemd[dns]"
-        slist => {
-                    "@(use_systemd[server_guest])"
-                 };
-
-      "unuse_udev[dns]"
-        slist => {
-                    "@(unuse_udev[server_guest])"
-                 };
-
-      "unuse_systemd[dns]"
-        slist => {
-                    "@(unuse_systemd[server_guest])"
                  };
 
       "systemd_enabled[dns]"
@@ -2515,29 +2199,14 @@ bundle common file_groups
                     "mail_server"
                  };
 
+      "unuse[mail_server]"
+        slist => {
+                    "@(unuse[server_guest])"
+                 };
+
       "profile[mail_server]"
         slist => {
                     "@(profile[server_guest])"
-                 };
-
-      "use_udev[mail_server]"
-        slist => {
-                    "@(use_udev[server_guest])"
-                 };
-
-      "use_systemd[mail_server]"
-        slist => {
-                    "@(use_systemd[server_guest])"
-                 };
-
-      "unuse_udev[mail_server]"
-        slist => {
-                    "@(unuse_udev[server_guest])"
-                 };
-
-      "unuse_systemd[mail_server]"
-        slist => {
-                    "@(unuse_systemd[server_guest])"
                  };
 
       "systemd_enabled[mail_server]"
@@ -2648,29 +2317,14 @@ bundle common file_groups
                     "router"
                  };
 
+      "unuse[vpn_secondary]"
+        slist => {
+                    "@(unuse[server_guest])"
+                 };
+
       "profile[vpn_secondary]"
         slist => {
                     "@(profile[server_guest])"
-                 };
-
-      "use_udev[vpn_secondary]"
-        slist => {
-                    "@(use_udev[server_guest])"
-                 };
-
-      "use_systemd[vpn_secondary]"
-        slist => {
-                    "@(use_systemd[server_guest])"
-                 };
-
-      "unuse_udev[vpn_secondary]"
-        slist => {
-                    "@(unuse_udev[server_guest])"
-                 };
-
-      "unuse_systemd[vpn_secondary]"
-        slist => {
-                    "@(unuse_systemd[server_guest])"
                  };
 
       "systemd_enabled[vpn_secondary]"
@@ -2814,29 +2468,14 @@ bundle common file_groups
                     "znc"
                  };
 
+      "unuse[irc_bouncer]"
+        slist => {
+                    "@(unuse[server_guest])"
+                 };
+
       "profile[irc_bouncer]"
         slist => {
                     "@(profile[server_guest])"
-                 };
-
-      "use_udev[irc_bouncer]"
-        slist => {
-                    "@(use_udev[server_guest])"
-                 };
-
-      "use_systemd[irc_bouncer]"
-        slist => {
-                    "@(use_systemd[server_guest])"
-                 };
-
-      "unuse_udev[irc_bouncer]"
-        slist => {
-                    "@(unuse_udev[server_guest])"
-                 };
-
-      "unuse_systemd[irc_bouncer]"
-        slist => {
-                    "@(unuse_systemd[server_guest])"
                  };
 
       "systemd_enabled[irc_bouncer]"
@@ -2943,29 +2582,14 @@ bundle common file_groups
                     "@(use[server_guest])"
                  };
 
+      "unuse[firewall_internal]"
+        slist => {
+                    "@(unuse[server_guest])"
+                 };
+
       "profile[firewall_internal]"
         slist => {
                     "@(profile[server_guest])"
-                 };
-
-      "use_udev[firewall_internal]"
-        slist => {
-                    "@(use_udev[server_guest])"
-                 };
-
-      "use_systemd[firewall_internal]"
-        slist => {
-                    "@(use_systemd[server_guest])"
-                 };
-
-      "unuse_udev[firewall_internal]"
-        slist => {
-                    "@(unuse_udev[server_guest])"
-                 };
-
-      "unuse_systemd[firewall_internal]"
-        slist => {
-                    "@(unuse_systemd[server_guest])"
                  };
 
       "systemd_enabled[firewall_internal]"
@@ -3112,29 +2736,14 @@ bundle common file_groups
                     "vpn"
                  };
 
+      "unuse[vpn_server]"
+        slist => {
+                    "@(unuse[server_guest])"
+                 };
+
       "profile[vpn_server]"
         slist => {
                     "@(profile[server_guest])"
-                 };
-
-      "use_udev[vpn_server]"
-        slist => {
-                    "@(use_udev[server_guest])"
-                 };
-
-      "use_systemd[vpn_server]"
-        slist => {
-                    "@(use_systemd[server_guest])"
-                 };
-
-      "unuse_udev[vpn_server]"
-        slist => {
-                    "@(unuse_udev[server_guest])"
-                 };
-
-      "unuse_systemd[vpn_server]"
-        slist => {
-                    "@(unuse_systemd[server_guest])"
                  };
 
       "systemd_enabled[vpn_server]"
