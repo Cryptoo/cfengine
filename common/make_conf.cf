@@ -89,14 +89,14 @@ bundle agent make_conf(root, role, multilib)
         string => "";
 
       "cpu_flags"
-        string => "";
+        string => "mmx mmxext sse sse2";
 
     have_layman_conf::
 
       "layman"
         string => "source /$(file_names.overlay_conf)";
 
-    have_cpu2use_regex::
+    have_cpu2use_regex&(make_conf_master|make_conf_desktop_host)::
 
       "cpu_flags"
         string => "$(cpu_flags_regex[1])";
@@ -135,6 +135,9 @@ bundle agent make_conf(root, role, multilib)
         expression => fileexists("$(root)$(cryptoo:file_names.overlay_conf)");
 
       "layman_evaluated"
+        expression => "any";
+
+      "make_conf_$(this.role)"
         expression => "any";
 
     have_cpu2use_app::

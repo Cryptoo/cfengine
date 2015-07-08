@@ -34,7 +34,7 @@ bundle agent portage(root, role, arch, multilib)
     portage_multilib::
 
       "portage_role"
-        string => concat("@", "$(role)", "_multilib");
+        string => concat("@", "$(role)");
 
       "role_json"
         string => '{ "value": "$(this.portage_role)" }';

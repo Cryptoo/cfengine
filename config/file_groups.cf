@@ -741,6 +741,7 @@ bundle common file_groups
         slist => {
                     "@(keywords[guest])",
                     "desktop",
+                    "gstreamer",
                     "X"
                  };
 
@@ -816,40 +817,40 @@ bundle common file_groups
         string => "$(dns_type[guest])";
 
 ################################################################################
-#                              chroot_desktop
+#                              chroot_desktop_no_multilib
 ################################################################################
 
-      "make_profile[chroot_desktop]"
+      "make_profile[chroot_desktop_no_multilib]"
         string => "$(make_profile[desktop_guest])/chroot";
 
-      "pm_env[chroot_desktop]"
+      "pm_env[chroot_desktop_no_multilib]"
         slist => {
                     "@(pm_env[desktop_guest])"
                  };
 
-      "pm_environment[chroot_desktop]"
+      "pm_environment[chroot_desktop_no_multilib]"
         slist => {
                     "@(pm_environment[desktop_guest])"
                  };
 
-      "keywords[chroot_desktop]"
+      "keywords[chroot_desktop_no_multilib]"
         slist => {
                     "@(keywords[desktop_guest])",
                     "browsers",
                     "mail_client"
                  };
 
-      "mask[chroot_desktop]"
+      "mask[chroot_desktop_no_multilib]"
         slist => {
                     "@(mask[desktop_guest])"
                  };
 
-      "unmask[chroot_desktop]"
+      "unmask[chroot_desktop_no_multilib]"
         slist => {
                     "@(unmask[desktop_guest])"
                  };
 
-      "use[chroot_desktop]"
+      "use[chroot_desktop_no_multilib]"
         slist => {
                     "@(use[desktop_guest])",
                     "browsers",
@@ -857,56 +858,56 @@ bundle common file_groups
                     "mail_client"
                  };
 
-      "profile[chroot_desktop]"
+      "profile[chroot_desktop_no_multilib]"
         slist => {
                     "@(profile[desktop_guest])"
                  };
 
-      "use_udev[chroot_desktop]"
+      "use_udev[chroot_desktop_no_multilib]"
         slist => {
                     "@(use_udev[desktop_guest])"
                  };
 
-      "use_systemd[chroot_desktop]"
+      "use_systemd[chroot_desktop_no_multilib]"
         slist => {
                     "@(use_systemd[desktop_guest])"
                  };
 
-      "unuse_udev[chroot_desktop]"
+      "unuse_udev[chroot_desktop_no_multilib]"
         slist => {
                     "@(unuse_udev[desktop_guest])"
                  };
 
-      "unuse_systemd[chroot_desktop]"
+      "unuse_systemd[chroot_desktop_no_multilib]"
         slist => {
                     "@(unuse_systemd[desktop_guest])"
                  };
 
-      "systemd_enabled[chroot_desktop]"
+      "systemd_enabled[chroot_desktop_no_multilib]"
         slist => {
                     "@(systemd_enabled[desktop_guest])"
                  };
 
-      "backup_dir[chroot_desktop]"
+      "backup_dir[chroot_desktop_no_multilib]"
         string => "$(backup_dir[desktop_guest])";
 
-      "firewall_zones[chroot_desktop]"
+      "firewall_zones[chroot_desktop_no_multilib]"
         slist => {
                     "@(firewall_zones[desktop_guest])"
                  };
 
-      "firewall_bridges[chroot_desktop]"
+      "firewall_bridges[chroot_desktop_no_multilib]"
         slist => {
                     "@(firewall_bridges[desktop_guest])"
                  };
 
-      "firewall[chroot_desktop]"
+      "firewall[chroot_desktop_no_multilib]"
         string => "$(firewall[desktop_guest])";
 
-      "network[chroot_desktop]"
+      "network[chroot_desktop_no_multilib]"
         string => "$(network[desktop_guest])";
 
-      "dns_type[chroot_desktop]"
+      "dns_type[chroot_desktop_no_multilib]"
         string => "$(dns_type[desktop_guest])";
 
 ################################################################################
@@ -1213,6 +1214,98 @@ bundle common file_groups
         string => "$(dns_type[desktop_guest])";
 
 ################################################################################
+#                              chroot_desktop_multilib
+################################################################################
+
+      "make_profile[chroot_desktop_multilib]"
+        string => "$(make_profile[desktop_guest])/chroot";
+
+      "pm_env[chroot_desktop_multilib]"
+        slist => {
+                    "@(pm_env[desktop_guest])"
+                 };
+
+      "pm_environment[chroot_desktop_multilib]"
+        slist => {
+                    "@(pm_environment[desktop_guest])"
+                 };
+
+      "keywords[chroot_desktop_multilib]"
+        slist => {
+                    "@(keywords[desktop_guest])",
+                    "im"
+                 };
+
+      "mask[chroot_desktop_multilib]"
+        slist => {
+                    "@(mask[desktop_guest])"
+                 };
+
+      "unmask[chroot_desktop_multilib]"
+        slist => {
+                    "@(unmask[desktop_guest])"
+                 };
+
+      "use[chroot_desktop_multilib]"
+        slist => {
+                    "@(use[desktop_guest])",
+                    "im",
+                    "multilib"
+                 };
+
+      "profile[chroot_desktop_multilib]"
+        slist => {
+                    "@(profile[desktop_guest])"
+                 };
+
+      "use_udev[chroot_desktop_multilib]"
+        slist => {
+                    "@(use_udev[desktop_guest])"
+                 };
+
+      "use_systemd[chroot_desktop_multilib]"
+        slist => {
+                    "@(use_systemd[desktop_guest])"
+                 };
+
+      "unuse_udev[chroot_desktop_multilib]"
+        slist => {
+                    "@(unuse_udev[desktop_guest])"
+                 };
+
+      "unuse_systemd[chroot_desktop_multilib]"
+        slist => {
+                    "@(unuse_systemd[desktop_guest])"
+                 };
+
+      "systemd_enabled[chroot_desktop_multilib]"
+        slist => {
+                    "@(systemd_enabled[desktop_guest])"
+                 };
+
+      "backup_dir[chroot_desktop_multilib]"
+        string => "$(backup_dir[desktop_guest])";
+
+      "firewall_zones[chroot_desktop_multilib]"
+        slist => {
+                    "@(firewall_zones[desktop_guest])"
+                 };
+
+      "firewall_bridges[chroot_desktop_multilib]"
+        slist => {
+                    "@(firewall_bridges[desktop_guest])"
+                 };
+
+      "firewall[chroot_desktop_multilib]"
+        string => "$(firewall[desktop_guest])";
+
+      "network[chroot_desktop_multilib]"
+        string => "$(network[desktop_guest])";
+
+      "dns_type[chroot_desktop_multilib]"
+        string => "$(dns_type[desktop_guest])";
+
+################################################################################
 #                                      im
 ################################################################################
 
@@ -1248,7 +1341,8 @@ bundle common file_groups
       "use[im]"
         slist => {
                     "@(use[desktop_guest])",
-                    "im"
+                    "im",
+                    "multilib"
                  };
 
       "profile[im]"
@@ -1393,23 +1487,23 @@ bundle common file_groups
         string => "$(dns_type[guest])";
 
 ################################################################################
-#                              chroot_server
+#                              chroot_server_no_multilib
 ################################################################################
 
-      "make_profile[chroot_server]"
+      "make_profile[chroot_server_no_multilib]"
         string => "cryptoo/chroot";
 
-      "pm_env[chroot_server]"
+      "pm_env[chroot_server_no_multilib]"
         slist => {
                     "@(pm_env[server_guest])"
                  };
 
-      "pm_environment[chroot_server]"
+      "pm_environment[chroot_server_no_multilib]"
         slist => {
                     "@(pm_environment[server_guest])"
                  };
 
-      "keywords[chroot_server]"
+      "keywords[chroot_server_no_multilib]"
         slist => {
                     "@(keywords[server_guest])",
                     "bitcoin",
@@ -1429,18 +1523,18 @@ bundle common file_groups
                     "znc"
                  };
 
-      "mask[chroot_server]"
+      "mask[chroot_server_no_multilib]"
         slist => {
                     "@(mask[server_guest])"
                  };
 
-      "unmask[chroot_server]"
+      "unmask[chroot_server_no_multilib]"
         slist => {
                     "@(unmask[server_guest])",
                     "java"
                  };
 
-      "use[chroot_server]"
+      "use[chroot_server_no_multilib]"
         slist => {
                     "@(use[server_guest])",
                     "bitcoin",
@@ -1459,56 +1553,56 @@ bundle common file_groups
                     "znc"
                  };
 
-      "profile[chroot_server]"
+      "profile[chroot_server_no_multilib]"
         slist => {
                     "@(profile[server_guest])"
                  };
 
-      "use_udev[chroot_server]"
+      "use_udev[chroot_server_no_multilib]"
         slist => {
                     "@(use_udev[server_guest])"
                  };
 
-      "use_systemd[chroot_server]"
+      "use_systemd[chroot_server_no_multilib]"
         slist => {
                     "@(use_systemd[server_guest])"
                  };
 
-      "unuse_udev[chroot_server]"
+      "unuse_udev[chroot_server_no_multilib]"
         slist => {
                     "@(unuse_udev[server_guest])"
                  };
 
-      "unuse_systemd[chroot_server]"
+      "unuse_systemd[chroot_server_no_multilib]"
         slist => {
                     "@(unuse_systemd[server_guest])"
                  };
 
-      "systemd_enabled[chroot_server]"
+      "systemd_enabled[chroot_server_no_multilib]"
         slist => {
                     "@(systemd_enabled[server_guest])"
                  };
 
-      "backup_dir[chroot_server]"
+      "backup_dir[chroot_server_no_multilib]"
         string => "$(backup_dir[server_guest])";
 
-      "firewall_zones[chroot_server]"
+      "firewall_zones[chroot_server_no_multilib]"
         slist => {
                     "@(firewall_zones[server_guest])"
                  };
 
-      "firewall_bridges[chroot_server]"
+      "firewall_bridges[chroot_server_no_multilib]"
         slist => {
                     "@(firewall_bridges[server_guest])"
                  };
 
-      "firewall[chroot_server]"
+      "firewall[chroot_server_no_multilib]"
         string => "$(firewall[server_guest])";
 
-      "network[chroot_server]"
+      "network[chroot_server_no_multilib]"
         string => "$(network[server_guest])";
 
-      "dns_type[chroot_server]"
+      "dns_type[chroot_server_no_multilib]"
         string => "$(dns_type[server_guest])";
 
 ################################################################################

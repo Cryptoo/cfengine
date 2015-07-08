@@ -70,7 +70,7 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
       "have_localegen_app"
         expression => fileexists("$(root)$(file_names.localegen_app)");
 
-    local_role_chroot_desktop|local_role_chroot_server::
+    local_role_chroot_desktop_no_multilib|local_role_chroot_desktop_multilib|local_role_chroot_server_no_multilib::
 
       "chroot"
         expression => "any";

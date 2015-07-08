@@ -49,7 +49,7 @@ bundle common role
           }
         ';
 
-      "params[chroot_server]"
+      "params[chroot_server_no_multilib]"
         string => '
           {
             "make_conf":
@@ -62,7 +62,7 @@ bundle common role
           }
         ';
 
-      "params[chroot_desktop]"
+      "params[chroot_desktop_no_multilib]"
         string => '
           {
             "make_conf":
