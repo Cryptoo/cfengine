@@ -87,7 +87,7 @@ bundle agent bootstrap_guest(role, type, multilib)
     any::
 
       "create image file"
-        usebundle => image_file($(this.role), $(this.type), $(this.multilib)),
+        usebundle => image_file($(this.role), $(this.name), $(this.type), $(this.multilib)),
         classes => default:if_ok("image_created");
 
   commands:

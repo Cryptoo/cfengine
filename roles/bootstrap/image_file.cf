@@ -15,7 +15,7 @@ body file control
 
 }
 
-bundle agent image_file(role, type, multilib)
+bundle agent image_file(role, name, type, multilib)
 
 {
 
@@ -56,7 +56,7 @@ bundle agent image_file(role, type, multilib)
     any::
 
       "create and mount image file"
-        usebundle => prepare_image("$(this.role)", "$(this.multilib)"),
+        usebundle => prepare_image("$(this.name)", "$(this.multilib)"),
         handle => "image_created";
 
       "set users and groups"

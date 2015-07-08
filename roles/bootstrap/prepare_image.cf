@@ -14,7 +14,7 @@ body file control
 
 }
 
-bundle agent prepare_image(role, multilib)
+bundle agent prepare_image(name, multilib)
 
 {
 
@@ -23,10 +23,7 @@ bundle agent prepare_image(role, multilib)
     any::
 
       "image_file"
-        string => "/$(directory_names.fs_libvirt_images)/$(this.role).img";
-
-      "role_set"
-        string => concat("@", "$(this.role)");
+        string => "/$(directory_names.fs_libvirt_images)/$(this.name).img";
 
       "image_size_mb"
         string => "4096";
