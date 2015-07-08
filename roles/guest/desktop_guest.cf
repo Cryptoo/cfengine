@@ -20,6 +20,54 @@ bundle agent desktop_guest(root, role, arch, multilib)
 
 {
 
+  vars:
+
+    any::
+
+      "xpra_conf[clipboard]"
+        string => "yes";
+      "xpra_conf[notifications]"
+        string => "yes";
+      "xpra_conf[tray]"
+        string => "yes";
+      "xpra_conf[system-tray]"
+        string => "yes";
+      "xpra_conf[speaker]"
+        string => "on";
+      "xpra_conf[microphone]"
+        string => "off";
+      "xpra_conf[encodings]"
+        string => "all";
+      "xpra_conf[video-encoders]"
+        string => "all";
+      "xpra_conf[sound-source]"
+        string => "pulse";
+      "xpra_conf[speaker-codec]"
+        string => "mp3";
+      "xpra_conf[microphone-codec]"
+        string => "mp3";
+      "xpra_conf[keyboard-sync]"
+        string => "no";
+      "xpra_conf[exit-with-children]"
+        string => "yes";
+      "xpra_conf[start-new-commands]"
+        string => "yes";
+      "xpra_conf[mdns]"
+        string => "no";
+      "xpra_conf[dbus-proxy]"
+        string => "yes";
+      "xpra_conf[input-method]"
+        string => "none";
+      "xpra_conf[pulseaudio]"
+        string => "yes";
+
+  classes:
+
+    any::
+
+      "have_xpra_config"
+        expression => fileexists("$(this.root)$(file_names.xpra_config)");
+
   files:
 
     any::
@@ -28,12 +76,22 @@ bundle agent desktop_guest(root, role, arch, multilib)
         perms => cryptoo,
         create => "true";
 
+      "$(this.root)$(directory_names.fs_config_xpra)/."
+        perms => system,
+        create => "true";
+
       "$(this.root)$(file_names.xpra_service)"
         perms => system,
         create => "true",
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
         template_data => mergedata("cryptoo:config.xpra_service");
+
+    have_xpra_config::
+
+      "$(this.root)$(file_names.xpra_config)"
+        create => "false",
+        edit_line => default:set_line_based("cryptoo:desktop_guest.xpra_conf", " = ", "\s*=\s*", ".*", "\s*#\s*");
 
   methods:
 

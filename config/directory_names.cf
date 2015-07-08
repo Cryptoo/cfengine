@@ -59,6 +59,7 @@ bundle common directory_names
       "fs_config_units_multi_user" string => "$(fs_config_units)/multi-user.target.wants";
       "fs_config_tor" string => "$(fs_config_base)/tor";
       "fs_config_unbound" string => "$(fs_config_base)/unbound";
+      "fs_config_xpra" string => "$(fs_config_base)/xpra";
       "fs_home" string => "home";
       "fs_cryptoo_home" string => "$(fs_home)/cryptoo";
       "fs_mount_base" string => "mnt";
