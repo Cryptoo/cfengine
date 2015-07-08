@@ -41,7 +41,7 @@ bundle agent shorewall_rules_irc_client(root)
                      "action": "guest"
                    },
                    {
-                     "action": "SSH(ACCEPT)"
+                     "action": "SSH(ACCEPT)",
                      "source": "lan",
                      "destination": "fw",
                    },

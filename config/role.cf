@@ -483,4 +483,24 @@ bundle common role
           }
         ';
 
+      "params[im]"
+        string => '
+          {
+            "make_conf":
+              {
+                "makeopts": "guest",
+                "pkgdir": "desktop_guest",
+                "runtime": "guest",
+                "graphical": "headless"
+              },
+            "libvirt":
+              {
+                "name": "dynamic",
+                "ram": "16776192",
+                "cpu": "1",
+                "kernel": "/$(directory_names.fs_libvirt_images)/guest-kernel-x86_64-multilib"
+              }
+          }
+        ';
+
 }

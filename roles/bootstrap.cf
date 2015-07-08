@@ -170,6 +170,17 @@ bundle agent cryptoo_bootstrap
       "multilib"
         string => "no_multilib";
 
+    default:bootstrap_im::
+
+      "role"
+        string => "im";
+
+      "type"
+        string => "desktop";
+
+      "multilib"
+        string => "multilib";
+
   classes:
 
     default:bootstrap_master::
@@ -243,6 +254,11 @@ bundle agent cryptoo_bootstrap
         expression => "any";
 
     default:bootstrap_web::
+
+      "bootstrap_guest"
+        expression => "any";
+
+    default:bootstrap_im::
 
       "bootstrap_guest"
         expression => "any";
