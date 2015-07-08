@@ -32,6 +32,12 @@ bundle agent image_file(role, name, type, multilib)
       "firstrun_json"
         string => '{ "master": "192.168.$(subnet_config[lan]).$(defined_numbers[master])" }';
 
+      "chroot_location"
+        string => "/$(directory_names.fs_volatile_images)/$(this.type)/x86_64/$(this.multilib)/";
+
+      "mount_location"
+        string => "$(this.chroot_location)$(directory_names.fs_mount_temp)";
+
   classes:
 
     any::
@@ -43,7 +49,7 @@ bundle agent image_file(role, name, type, multilib)
 
     image_configured::
 
-      "/$(directory_names.fs_mount_cryptoo)/$(file_names.firstrun)"
+      "/$(this.mount_location)/$(file_names.firstrun)"
         perms => system_exec,
         create => "true",
         edit_template => "/$(templates.template[firstrun])",
@@ -56,21 +62,21 @@ bundle agent image_file(role, name, type, multilib)
     any::
 
       "create and mount image file"
-        usebundle => prepare_image("$(this.name)", "$(this.multilib)"),
+        usebundle => prepare_image("$(this.name)", "$(this.multilib)", "$(this.mount_location)"),
         handle => "image_created";
 
       "set users and groups"
-        usebundle => cryptoo_filesystem("/$(directory_names.fs_mount_cryptoo)/","undefined","x86_64","$(this.multilib)"),
+        usebundle => cryptoo_filesystem("/$(this.mount_location)/","undefined","x86_64","$(this.multilib)"),
         depends_on => { "image_created" },
         handle => "image_ready";
 
       "install and configure apps"
-        usebundle => install_apps("$(this.role)", "$(this.type)", "$(this.multilib)"),
+        usebundle => install_apps("$(this.role)", "$(this.type)", "$(this.multilib)", "$(this.mount_location)"),
         depends_on => { "image_ready" },
         handle => "apps_installed";
 
       "finalize configuration"
-        usebundle => cryptoo_filesystem("/$(directory_names.fs_mount_cryptoo)/","undefined","x86_64","$(this.multilib)"),
+        usebundle => cryptoo_filesystem("/$(this.mount_location)/","undefined","x86_64","$(this.multilib)"),
         depends_on => { "apps_installed" },
         classes => default:if_ok("image_configured");
 
@@ -79,17 +85,17 @@ bundle agent image_file(role, name, type, multilib)
     filesystem_ready::
 
       "/$(file_names.dd_app)"
-        args => "if=/dev/urandom of=/$(directory_names.fs_mount_cryptoo)/$(file_names.random_seed) bs=512 count=1",
+        args => "if=/dev/urandom of=/$(this.mount_location)/$(file_names.random_seed) bs=512 count=1",
         contain => silent,
         handle => "random_seed_created";
 
       "/$(file_names.rsync_app)"
-        args => "-aX /$(sys.inputdir)/ /$(directory_names.fs_mount_cryptoo)/$(sys.inputdir)",
+        args => "-aX /$(sys.inputdir)/ /$(this.mount_location)/$(sys.inputdir)",
         depends_on => { "random_seed_created" },
         handle => "cfengine_installed";
 
       "/$(file_names.umount_app)"
-        args => "-l /$(directory_names.fs_mount_cryptoo)",
+        args => "-l /$(this.mount_location)",
         depends_on => { "cfengine_installed" },
         handle => "image_fs_unmounted";
 

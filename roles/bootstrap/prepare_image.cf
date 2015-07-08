@@ -14,7 +14,7 @@ body file control
 
 }
 
-bundle agent prepare_image(name, multilib)
+bundle agent prepare_image(name, multilib, mount_location)
 
 {
 
@@ -61,18 +61,18 @@ bundle agent prepare_image(name, multilib)
         handle => "image_fs_created";
 
       "/$(file_names.mount_app)"
-        args => "-o $(site.config[guest_fs][options]) /dev/loop0 /$(directory_names.fs_mount_cryptoo)",
+        args => "-o $(site.config[guest_fs][options]) /dev/loop0 /$(this.mount_location)",
         depends_on => { "image_fs_created" },
         contain => silent,
         handle => "image_fs_mounted";
 
       "/$(file_names.tar_app)"
-        args => "-xjpf $(best.stage3_amd64_$(this.multilib)) -C /$(directory_names.fs_mount_cryptoo)",
+        args => "-xjpf $(best.stage3_amd64_$(this.multilib)) -C /$(this.mount_location)",
         depends_on => { "image_fs_mounted" },
         handle => "skeleton_extracted";
 
       "/$(file_names.rm_app)"
-        args => "-r /$(directory_names.fs_mount_cryptoo)/$(directory_names.fs_config_pm)",
+        args => "-r /$(this.mount_location)/$(directory_names.fs_config_pm)",
         depends_on => { "skeleton_extracted" },
         classes => default:if_ok("image_prepared");
 

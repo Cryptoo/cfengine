@@ -14,7 +14,7 @@ body file control
 
 }
 
-bundle agent install_apps(role, type, multilib)
+bundle agent install_apps(role, type, multilib, mount_location)
 
 {
 
@@ -33,7 +33,7 @@ bundle agent install_apps(role, type, multilib)
     apps_installed::
 
       "configure system"
-        usebundle => $(role_bundle)("/$(directory_names.fs_mount_cryptoo)/"),
+        usebundle => $(role_bundle)("/$(this.mount_location)/"),
         classes => default:if_ok("image_configured");
 
   commands:
@@ -41,17 +41,17 @@ bundle agent install_apps(role, type, multilib)
     basic_system_emerged::
 
       "/$(file_names.emerge_app)"
-        args => "--config-root=/$(directory_names.fs_volatile_images)/$(this.type)/x86_64/$(this.multilib)/ --root=/$(directory_names.fs_mount_cryptoo) --ask n --root-deps @guest",
+        args => "--config-root=/$(directory_names.fs_volatile_images)/$(this.type)/x86_64/$(this.multilib)/ --root=/$(this.mount_location) --ask n --root-deps @guest",
         contain => silent,
         classes => always_success;
 
       "/$(file_names.emerge_app)"
-        args => "--config-root=/$(directory_names.fs_volatile_images)/$(this.type)/x86_64/$(this.multilib)/ --root=/$(directory_names.fs_mount_cryptoo) --ask n --root-deps $(this.role_set)",
+        args => "--config-root=/$(directory_names.fs_volatile_images)/$(this.type)/x86_64/$(this.multilib)/ --root=/$(this.mount_location) --ask n --root-deps $(this.role_set)",
         contain => silent,
         classes => always_success;
 
       "/$(file_names.emerge_app)"
-        args => "--config-root=/$(directory_names.fs_volatile_images)/$(this.type)/x86_64/$(this.multilib)/ --root=/$(directory_names.fs_mount_cryptoo) --ask n --root-deps -u $(this.role_set)",
+        args => "--config-root=/$(directory_names.fs_volatile_images)/$(this.type)/x86_64/$(this.multilib)/ --root=/$(this.mount_location) --ask n --root-deps -u $(this.role_set)",
         contain => silent;
 
       "/$(file_names.etcupdate_app)"
@@ -62,12 +62,12 @@ bundle agent install_apps(role, type, multilib)
     any::
 
       "/$(file_names.emerge_app)"
-        args => "--config-root=/$(directory_names.fs_volatile_images)/$(this.type)/x86_64/$(this.multilib)/ --root=/$(directory_names.fs_mount_cryptoo) --ask n --root-deps --emptytree @system",
+        args => "--config-root=/$(directory_names.fs_volatile_images)/$(this.type)/x86_64/$(this.multilib)/ --root=/$(this.mount_location) --ask n --root-deps --emptytree @system",
         contain => silent,
         classes => always_success;
 
       "/$(file_names.emerge_app)"
-        args => "--config-root=/$(directory_names.fs_volatile_images)/$(this.type)/x86_64/$(this.multilib)/ --root=/$(directory_names.fs_mount_cryptoo) --ask n --root-deps -uD --reinstall changed-use @system",
+        args => "--config-root=/$(directory_names.fs_volatile_images)/$(this.type)/x86_64/$(this.multilib)/ --root=/$(this.mount_location) --ask n --root-deps -uD --reinstall changed-use @system",
         contain => silent,
         classes => default:if_ok("basic_system_emerged");
 
