@@ -28,6 +28,9 @@ bundle agent install_apps(role, type, multilib, mount_location)
       "role_bundle"
         slist => bundlesmatching(".*:$(this.role)", "cryptoo_role");
 
+      "emerge_app"
+        string => "/$(directory_names.fs_cryptoo_apps)/emerge_$(this.type)_$(this.multilib)";
+
   methods:
 
     apps_installed::
@@ -40,18 +43,18 @@ bundle agent install_apps(role, type, multilib, mount_location)
 
     basic_system_emerged::
 
-      "/$(file_names.emerge_app)"
-        args => "--config-root=/$(directory_names.fs_volatile_images)/$(this.type)/x86_64/$(this.multilib)/ --root=/$(this.mount_location) --ask n --root-deps @guest",
+      "$(this.emerge_app)"
+        args => "--config-root=/ --root=/$(directory_names.fs_mount_temp) --ask n --root-deps @guest",
         contain => silent,
         classes => always_success;
 
-      "/$(file_names.emerge_app)"
-        args => "--config-root=/$(directory_names.fs_volatile_images)/$(this.type)/x86_64/$(this.multilib)/ --root=/$(this.mount_location) --ask n --root-deps $(this.role_set)",
+      "$(this.emerge_app)"
+        args => "--config-root=/ --root=/$(directory_names.fs_mount_temp) --ask n --root-deps $(this.role_set)",
         contain => silent,
         classes => always_success;
 
-      "/$(file_names.emerge_app)"
-        args => "--config-root=/$(directory_names.fs_volatile_images)/$(this.type)/x86_64/$(this.multilib)/ --root=/$(this.mount_location) --ask n --root-deps -u $(this.role_set)",
+      "$(this.emerge_app)"
+        args => "--config-root=/ --root=/$(directory_names.fs_mount_temp) --ask n --root-deps -u $(this.role_set)",
         contain => silent;
 
       "/$(file_names.etcupdate_app)"
@@ -61,13 +64,13 @@ bundle agent install_apps(role, type, multilib, mount_location)
 
     any::
 
-      "/$(file_names.emerge_app)"
-        args => "--config-root=/$(directory_names.fs_volatile_images)/$(this.type)/x86_64/$(this.multilib)/ --root=/$(this.mount_location) --ask n --root-deps --emptytree @system",
+      "$(this.emerge_app)"
+        args => "--config-root=/ --root=/$(directory_names.fs_mount_temp) --ask n --root-deps --emptytree @system",
         contain => silent,
         classes => always_success;
 
-      "/$(file_names.emerge_app)"
-        args => "--config-root=/$(directory_names.fs_volatile_images)/$(this.type)/x86_64/$(this.multilib)/ --root=/$(this.mount_location) --ask n --root-deps -uD --reinstall changed-use @system",
+      "$(this.emerge_app)"
+        args => "--config-root=/ --root=/$(directory_names.fs_mount_temp) --ask n --root-deps -uD --reinstall changed-use @system",
         contain => silent,
         classes => default:if_ok("basic_system_emerged");
 
