@@ -109,6 +109,11 @@ bundle agent hosts(root)
                   "alias": ""
                 },
                 {
+                  "fqdn": "$(network.machine_names[25][name]).ispdmz",
+                  "ip": "192.168.$(subnet_config[ispdmz]).25",
+                  "alias": ""
+                },
+                {
                   "fqdn": "$(network.machine_names[11][name]).vpndmz",
                   "ip": "192.168.$(subnet_config[vpndmz]).11",
                   "alias": "vpn_primary"
@@ -152,6 +157,11 @@ bundle agent hosts(root)
                   "fqdn": "$(network.machine_names[22][name]).vpndmz",
                   "ip": "192.168.$(subnet_config[vpndmz]).22",
                   "alias": "irc_bouncer"
+                },
+                {
+                  "fqdn": "$(network.machine_names[25][name]).vpndmz",
+                  "ip": "192.168.$(subnet_config[vpndmz]).25",
+                  "alias": "bitcoin"
                 },
                 {
                   "fqdn": "$(network.machine_names[12][name]).tornet",

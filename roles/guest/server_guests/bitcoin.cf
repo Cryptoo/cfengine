@@ -1,0 +1,32 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+}
+
+bundle agent bitcoin(root)
+
+{
+
+  meta:
+
+    "tags" slist => { "cryptoo_role" };
+
+  files:
+
+    any::
+
+      "$(this.root)$(directory_names.fs_bitcoin_base)/."
+        perms => bitcoin,
+        create => "true";
+
+  methods:
+
+    any::
+
+      "configure system as a bitcoind guest"
+        usebundle => server_guest("$(this.root)", "bitcoin", "x86_64", "no_multilib");
+
+}

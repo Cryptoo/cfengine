@@ -117,3 +117,11 @@ body perms cryptoo
       owners  => { "cryptoo" };
       groups  => { "cryptoo" };
 }
+
+body perms bitcoin
+
+{
+      mode  => "0664";
+      owners  => { "bitcoin" };
+      groups  => { "bitcoin" };
+}

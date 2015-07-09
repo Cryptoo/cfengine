@@ -137,11 +137,12 @@ bundle common directory_names
       "fs_volatile_local_templates" string => "$(fs_volatile_cf_inputs)/cryptoo/local/templates";
       "fs_volatile_images" string => "$(fs_volatile_base)/image";
       "fs_volatile_library" string => "$(fs_volatile_base)/lib";
+      "fs_bitcoin_base" string => "$(fs_volatile_library)/bitcoin";
+      "fs_volatile_overlay" string => "$(fs_volatile_library)/layman";
+      "fs_bitcoin_overlay" string => "$(fs_volatile_overlay)/bitcoin";
       "fs_volatile_libvirt" string => "$(fs_volatile_library)/libvirt";
       "fs_libvirt_images" string => "$(fs_volatile_libvirt)/images";
       "fs_volatile_pm" string => "$(fs_volatile_library)/$(pm)";
-      "fs_volatile_overlay" string => "$(fs_volatile_library)/layman";
-      "fs_bitcoin_overlay" string => "$(fs_volatile_overlay)/bitcoin";
       "fs_volatile_systemd" string => "$(fs_volatile_library)/systemd";
       "fs_volatile_znc" string => "$(fs_volatile_library)/znc";
       "fs_znc_config" string => "$(fs_volatile_znc)/configs";

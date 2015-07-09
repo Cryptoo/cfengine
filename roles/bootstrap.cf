@@ -16,6 +16,17 @@ bundle agent cryptoo_bootstrap
 
   vars:
 
+    default:bootstrap_bitcoin::
+
+      "role"
+        string => "bitcoin";
+
+      "type"
+        string => "server";
+
+      "multilib"
+        string => "no_multilib";
+
     default:bootstrap_dns::
 
       "role"
@@ -186,6 +197,11 @@ bundle agent cryptoo_bootstrap
     default:bootstrap_master::
 
       "bootstrap_master"
+        expression => "any";
+
+    default:bootstrap_bitcoin::
+
+      "bootstrap_guest"
         expression => "any";
 
     default:bootstrap_dns::

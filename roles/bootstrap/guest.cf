@@ -33,6 +33,9 @@ bundle agent bootstrap_guest(role, type, multilib)
 
     defined_name::
 
+      "name"
+        string => "$(this.role)";
+
       "fixed_json"
         string => "$(params_data)";
 

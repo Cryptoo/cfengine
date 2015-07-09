@@ -1923,6 +1923,130 @@ bundle common file_groups
         string => "external";
 
 ################################################################################
+#                             bitcoin
+################################################################################
+
+      "make_profile[bitcoin]"
+        string => "$(make_profile[server_guest])";
+
+      "pm_env[bitcoin]"
+        slist => {
+                    "@(pm_env[server_guest])"
+                 };
+
+      "pm_environment[bitcoin]"
+        slist => {
+                    "@(pm_environment[server_guest])"
+                 };
+
+      "keywords[bitcoin]"
+        slist => {
+                    "@(keywords[server_guest])",
+                    "bitcoin"
+                 };
+
+      "mask[bitcoin]"
+        slist => {
+                    "@(mask[server_guest])"
+                 };
+
+      "unmask[bitcoin]"
+        slist => {
+                    "@(unmask[server_guest])"
+                 };
+
+      "use[bitcoin]"
+        slist => {
+                    "@(use[server_guest])",
+                    "bitcoin"
+                 };
+
+      "unuse[bitcoin]"
+        slist => {
+                    "@(unuse[server_guest])"
+                 };
+
+      "profile[bitcoin]"
+        slist => {
+                    "@(profile[server_guest])"
+                 };
+
+      "systemd_enabled[bitcoin]"
+        slist => {
+                    "@(systemd_enabled[server_guest])"
+                 };
+
+      "backup_dir[bitcoin]"
+        string => "/$(directory_names.fs_bitcoin_base)";
+
+      "firewall_zones[bitcoin]"
+        slist => {
+                    "@(firewall_zones[server_guest])"
+                 };
+
+      "firewall_bridges[bitcoin]"
+        slist => {
+                    "@(firewall_bridges[server_guest])"
+                 };
+
+      "firewall[bitcoin]"
+        string => "$(firewall[server_guest])";
+
+      "network[bitcoin]"
+        string => '
+          {
+            "devices":
+               {
+                 "bridge":
+                   [
+                     "none"
+                   ],
+                 "veth":
+                   [
+                     "none"
+                   ],
+                 "tap":
+                   [
+                     "none"
+                   ]
+               },
+             "interfaces":
+               {
+                 "eth0":
+                   {
+                     "type": "gateway",
+                     "params":
+                       {
+                         "zone": "ispdmz",
+                         "gateway": "firewall_external",
+                         "ipforward": "no"
+                       }
+                   },
+                 "eth1":
+                   {
+                     "type": "simple",
+                     "params":
+                       {
+                         "zone": "vpndmz",
+                         "ipforward": "no",
+                         "routes":
+                           {
+                             "i2p": "firewall_internal",
+                             "eep": "firewall_internal",
+                             "tor": "firewall_internal",
+                             "onion": "firewall_internal",
+                             "lan": "firewall_internal"
+                           }
+                       }
+                   }
+               }
+          }
+        ';
+
+      "dns_type[bitcoin]"
+        string => "external";
+
+################################################################################
 #                             vpn_primary
 ################################################################################
 

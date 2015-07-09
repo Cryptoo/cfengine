@@ -28,6 +28,7 @@ bundle agent shorewall_macro_cfengine(root, port_info)
           "tor",
           "i2p",
           "freenet",
+          "bitcoin",
           "vpn_primary",
           "dns",
           "mail_server",
