@@ -1196,7 +1196,38 @@ bundle common file_groups
         string => "$(firewall[desktop_guest])";
 
       "network[im]"
-        string => "$(network[desktop_guest])";
+        string => '
+          {
+            "devices":
+               {
+                 "bridge":
+                   [
+                     "none"
+                   ],
+                 "veth":
+                   [
+                     "none"
+                   ],
+                 "tap":
+                   [
+                     "none"
+                   ]
+               },
+             "interfaces":
+               {
+                 "eth0":
+                   {
+                     "type": "gateway",
+                     "params":
+                       {
+                         "zone": "lan",
+                         "gateway": "firewall_internal",
+                         "ipforward": "no"
+                       }
+                   }
+               }
+          }
+        ';
 
       "dns_type[im]"
         string => "$(dns_type[desktop_guest])";
