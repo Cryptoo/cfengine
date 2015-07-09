@@ -15,20 +15,20 @@ body file control
 
 }
 
-bundle agent shorewall_macro_tor(root, port_info)
+bundle agent shorewall_macro_bitcoin_out(root, port_info)
 
 {
 
   meta:
 
-    "tags" slist => { "shorewall_macro", "bitcoin", "firewall_internal", "im", "master" };
+    "tags" slist => { "shorewall_macro", "firewall_external", "bitcoin", "master" };
 
   vars:
 
     any::
 
       "macro_name"
-        string => "tor";
+        string => "bitcoin_out";
 
       "defined_numbers"
         data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
@@ -48,16 +48,8 @@ bundle agent shorewall_macro_tor(root, port_info)
                      "source": "-",
                      "destination": "-",
                      "protocol": "tcp",
-                     "destination_port": "$(config.services[tor][socks_port])",
-                     "source_port": ""
-                   },
-                   {
-                     "action": "PARAM",
-                     "source": "-",
-                     "destination": "-",
-                     "protocol": "tcp",
-                     "destination_port": "$(config.services[tor][http_port])",
-                     "source_port": ""
+                     "destination_port": "-",
+                     "source_port": "$(config.services[bitcoin][external_port])"
                    }
                  ]
                }

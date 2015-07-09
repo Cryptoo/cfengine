@@ -1,0 +1,95 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/config.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/templates.cf",
+              "cryptoo/util/classes.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
+bundle agent shorewall_rules_bitcoin(root)
+
+{
+
+  meta:
+
+    "tags" slist => { "shorewall_rules", "bitcoin" };
+
+  vars:
+
+    any::
+
+      "defined_numbers"
+        data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
+
+      "subnet_config"
+        data => readjson("/$(file_names.subnet_config)", 1M);
+
+      "rules_json"
+        string => '
+          {
+            "new":
+              [
+                {
+                  "action": "guest"
+                },
+                {
+                  "action": "bitcoin_out(ACCEPT)",
+                  "source": "fw:192.168.$(subnet_config[ispdmz]).$(defined_numbers[bitcoin])",
+                  "destination": "net",
+                  "protocol": "-",
+                  "destination_port": "-",
+                  "source_port": "-",
+                  "original_destination": "-",
+                  "rate": "-",
+                  "user": "bitcoin:bitcoin"
+                },
+                {
+                  "action": "tor(ACCEPT)",
+                  "source": "fw:192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin])",
+                  "destination": "tor:192.168.$(subnet_config[tor]).$(defined_numbers[tor])",
+                  "protocol": "-",
+                  "destination_port": "-",
+                  "source_port": "-",
+                  "original_destination": "-",
+                  "rate": "-",
+                  "user": "bitcoin:bitcoin"
+                },
+                {
+                  "action": "bitcoin(ACCEPT)",
+                  "source": "net",
+                  "destination": "fw:192.168.$(subnet_config[ispdmz]).$(defined_numbers[bitcoin])"
+                },
+                {
+                  "action": "bitcoin_rpc(ACCEPT)",
+                  "source": "lan",
+                  "destination": "fw:192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin])"
+                },
+                {
+                  "action": "bitcoin(ACCEPT)",
+                  "source": "tor:192.168.$(subnet_config[tor]).$(defined_numbers[tor])",
+                  "destination": "fw:192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin])"
+                }
+              ]
+          }';
+
+  files:
+
+    any::
+
+      "$(root)$(file_names.shorewall_rules)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[shorewall_rules])",
+        template_method => "mustache",
+        template_data => parsejson("$(rules_json)"),
+        classes => shorewall;
+
+}

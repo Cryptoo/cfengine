@@ -31,5 +31,10 @@
       {
           "znc_port": "6667",
           "irc_ports": "6667:7000"
+      },
+    "bitcoin":
+      {
+          "external_port": "8333",
+          "rpc_port": "8332"
       }
 }

@@ -1,0 +1,83 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/config.cf",
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/templates.cf",
+              "cryptoo/util/classes.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
+bundle agent shorewall_macro_vdmz_bitcoin(root, port_info)
+
+{
+
+  meta:
+
+    "tags" slist => { "shorewall_macro", "master" };
+
+  vars:
+
+    any::
+
+      "macro_name"
+        string => "vdmz_bitcoin";
+
+      "defined_numbers"
+        data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
+
+      "subnet_config"
+        data => readjson("/$(file_names.subnet_config)", 1M);
+
+      "macro_json"
+        string => '
+          {
+            "name": "$(this.macro_name)",
+            "default": "ACCEPT",
+            "rules":
+                 [
+                   {
+                     "action": "SSH(PARAM)",
+                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])",
+                     "destination": "u$(defined_numbers[bitcoin]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin])"
+                   },
+                   {
+                     "action": "cfengine(PARAM)",
+                     "source": "u$(defined_numbers[bitcoin]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin])",
+                     "destination": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])"
+                   },
+                   {
+                     "action": "tor(PARAM)",
+                     "source": "u$(defined_numbers[bitcoin]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin])",
+                     "destination": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[tor]).$(defined_numbers[tor])"
+                   },
+                   {
+                     "action": "bitcoin_rpc(PARAM)",
+                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).0/24",
+                     "destination": "u$(defined_numbers[bitcoin]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin])"
+                   }
+                 ]
+               }
+          }
+        ';
+
+  files:
+
+    any::
+
+      "$(root)$(directory_names.fs_config_shorewall)/macro.$(this.macro_name)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[shorewall_macro])",
+        template_method => "mustache",
+        template_data => parsejson("$(macro_json)"),
+        classes => shorewall;
+
+}

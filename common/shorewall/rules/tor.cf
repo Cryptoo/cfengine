@@ -38,12 +38,7 @@ bundle agent shorewall_rules_tor(root)
             "new":
                  [
                    {
-                     "action": "guest",
-                     "source": "",
-                     "destination": "",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "action": "guest"
                    },
                    {
                      "action": "ACCEPT",
@@ -58,36 +53,33 @@ bundle agent shorewall_rules_tor(root)
 
                    },
                    {
-                     "action": "tor",
-                     "source": "tor",
-                     "destination": "",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "action": "bitcoin(ACCEPT)",
+                     "source": "fw:192.168.$(subnet_config[ispdmz]).$(defined_numbers[tor])",
+                     "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin])",
+                     "protocol": "-",
+                     "destination_port": "-",
+                     "source_port": "-",
+                     "original_destination": "-",
+                     "rate": "-",
+                     "user": "tor:tor"
+
                    },
                    {
                      "action": "tor",
-                     "source": "vdmz",
-                     "destination": "",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "source": "tor"
                    },
                    {
                      "action": "tor",
-                     "source": "lan",
-                     "destination": "",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "source": "vdmz"
+                   },
+                   {
+                     "action": "tor",
+                     "source": "lan"
                    },
                    {
                      "action": "DNS(ACCEPT)",
                      "source": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])",
-                     "destination": "fw",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "destination": "fw"
                    }
                  ]
                }
