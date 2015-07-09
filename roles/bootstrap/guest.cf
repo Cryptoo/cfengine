@@ -37,7 +37,7 @@ bundle agent bootstrap_guest(role, type, multilib)
         string => "$(this.role)";
 
       "fixed_json"
-        string => "$(params_data)";
+        string => "$(params)";
 
       "params_data"
         data => parsejson("$(fixed_json)"),
@@ -102,18 +102,18 @@ bundle agent bootstrap_guest(role, type, multilib)
         handle => "guest_defined";
 
       "/$(file_names.virsh_app)"
-        args => "autostart $(this.role)",
+        args => "autostart $(this.name)",
         depends_on => { "guest_defined" },
         handle => "guest_enabled";
 
       "/$(file_names.virsh_app)"
-        args => "start $(this.role)",
+        args => "start $(this.name)",
         depends_on => { "guest_enabled" };
 
   reports:
 
     any::
 
-      "Creating a $(this.role) guest";
+      "Creating a $(this.role) guest named $(this.name)";
 
 }
