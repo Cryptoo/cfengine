@@ -629,11 +629,17 @@ bundle agent shorewall_rules_master(root)
         data => parsejson("$(rules_json_vpndmz)");
 
       "rules_data_lan"
-        data => parsejson("$(rules_json_lan)");
+        data => parsejson("$(rules_json_lan)"),
+        classes => default:if_ok("have_rules_data");
 
   classes:
 
-    have_guest_json_list_lan::
+    have_guest_list_lan::
+
+      "no_extra_lan_guests"
+        not => isgreaterthan(length("extra_lan_guest_list"), "0");
+
+    have_guest_json_list_lan|no_extra_lan_guests::
 
       "have_extra_lan_guests"
         expression => isgreaterthan(length("extra_lan_json_list"), "0");
@@ -643,7 +649,7 @@ bundle agent shorewall_rules_master(root)
 
   files:
 
-    have_extra_guest_json_lan::
+    have_rules_data::
 
       "$(root)$(file_names.shorewall_rules)"
         perms => system,
