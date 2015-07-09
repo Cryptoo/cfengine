@@ -52,9 +52,25 @@ bundle agent shorewall_rules_im(root)
                      "user": "cryptoo:cryptoo"
                    },
                    {
+                     "action": "ACCEPT",
+                     "source": "fw",
+                     "destination": "onion",
+                     "protocol": "-",
+                     "destination_port": "-",
+                     "source_port": "-",
+                     "original_destination": "-",
+                     "rate": "-",
+                     "user": "cryptoo:cryptoo"
+                   },
+                   {
                      "action": "SSH(ACCEPT)",
                      "source": "lan",
                      "destination": "fw"
+                   },
+                   {
+                     "action": "tor(ACCEPT)",
+                     "source": "fw",
+                     "destination": "tor:192.168.$(subnet_config[tor]).$(defined_numbers[tor])"
                    },
                    {
                      "action": "IRC(ACCEPT)",

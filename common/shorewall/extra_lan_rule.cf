@@ -58,9 +58,19 @@ bundle agent shorewall_extra_lan_rule(guest_number)
                      "destination": "l$(defined_numbers[firewall_internal]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[irc_bouncer])"
                    },
                    {
+                     "action": "tor(ACCEPT)",
+                     "source": "l$(this.guest_number):192.168.$(subnet_config[lan]).$(this.guest_number)",
+                     "destination": "l$(defined_numbers[firewall_internal]):192.168.$(subnet_config[tor]).$(defined_numbers[tor])"
+                   },
+                   {
                      "action": "ACCEPT",
                      "source": "l$(this.guest_number):192.168.$(subnet_config[lan]).$(this.guest_number)",
                      "destination": "l$(defined_numbers[firewall_internal]):!+private"
+                   },
+                   {
+                     "action": "ACCEPT",
+                     "source": "l$(this.guest_number):192.168.$(subnet_config[lan]).$(this.guest_number)",
+                     "destination": "l$(defined_numbers[firewall_internal]):$(config.transparent_proxy_net[tor])"
                    }';
 
     extra_lan_role_set::
