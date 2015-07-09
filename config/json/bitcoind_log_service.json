@@ -1,0 +1,27 @@
+{
+  "sections":
+     [
+       { "section": "Unit",
+         "values":
+           [
+             { "LHS": "Description", "RHS": "Workaround for bitcoind's lack of syslog support" },
+             { "LHS": "Before", "RHS": "bitcoind.service" }
+           ]
+       },
+       { "section": "Service",
+         "values":
+           [
+             { "LHS": "Type", "RHS": "simple" },
+             { "LHS": "Restart", "RHS": "always" },
+             { "LHS": "User", "RHS": "bitcoin" },
+             { "LHS": "ExecStart", "RHS": "/usr/bin/tail -n0 -F /var/lib/bitcoin/.bitcoin/debug.log" }
+           ]
+       },
+       { "section": "Install",
+         "values":
+           [
+             { "LHS": "WantedBy", "RHS": "multi-user.target" }
+           ]
+       }
+     ]
+}

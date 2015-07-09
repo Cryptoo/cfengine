@@ -41,6 +41,9 @@ bundle common config
     "xpra_service"
       data => readjson("$(sys.inputdir)/cryptoo/config/json/xpra_service.json", 1M);
 
+    "bitcoind_log_service"
+      data => readjson("$(sys.inputdir)/cryptoo/config/json/bitcoind_log_service.json", 1M);
+
     "server_guests"
        slist => {
                    "firewall_external",

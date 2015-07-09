@@ -198,8 +198,10 @@ bundle common file_names
         string => "$(directory_names.fs_config_ssh)/sshd_config";
       "ssh_config"
         string => "$(directory_names.fs_config_ssh)/ssh_config";
-      "cf_execd_service"
-        string => "$(directory_names.fs_config_units)/cf-execd.service";
+      "xpra_service"
+        string => "$(directory_names.fs_config_units)/xpra@.service";
+      "bitcoind_log_service"
+        string => "$(directory_names.fs_config_units)/bitcoind_log.service";
       "cf_monitord_service"
         string => "$(directory_names.fs_config_units)/cf-monitord.service";
       "cf_serverd_service"

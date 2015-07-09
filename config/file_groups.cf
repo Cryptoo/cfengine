@@ -1973,7 +1973,9 @@ bundle common file_groups
 
       "systemd_enabled[bitcoin]"
         slist => {
-                    "@(systemd_enabled[server_guest])"
+                    "@(systemd_enabled[server_guest])",
+                    "bitcoind",
+                    "bitcoind_log"
                  };
 
       "backup_dir[bitcoin]"
