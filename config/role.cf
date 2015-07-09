@@ -217,9 +217,9 @@ bundle common role
             "libvirt":
               {
                 "name": "bitcoin",
-                "ram": "16776192",
-                "cpu": "1",
-                "kernel": "/$(directory_names.fs_libvirt_images)/guest-kernel-x86_64",
+                "ram": "2621440",
+                "cpu": "4",
+                "kernel": "/$(directory_names.fs_libvirt_images)/guest-kernel-x86_64_smp",
                 "interfaces":
                    [
                      {
