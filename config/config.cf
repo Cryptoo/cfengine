@@ -104,7 +104,7 @@ bundle common config
 
       "kconfig[64BIT]"
         string => "64BIT",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[KERNEL_XZ]"
         string => "KERNEL_XZ",
@@ -112,55 +112,55 @@ bundle common config
 
       "kconfig[SYSVIPC]"
         string => "SYSVIPC",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[SWAP]"
         string => "SWAP",
-        meta => { "disabled", "guest", "guest_multilib" };
+        meta => { "disabled", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[FHANDLE]"
         string => "FHANDLE",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[AUDIT]"
         string => "AUDIT",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[AUDITSYSCALL]"
         string => "AUDITSYSCALL",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[HIGH_RES_TIMERS]"
         string => "HIGH_RES_TIMERS",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NO_HZ_IDLE]"
         string => "NO_HZ_IDLE",
-        meta => { "disabled", "host", "guest", "guest_multilib" };
+        meta => { "disabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[UTS_NS]"
         string => "UTS_NS",
-        meta => { "disabled", "host", "guest", "guest_multilib" };
+        meta => { "disabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IPC_NS]"
         string => "IPC_NS",
-        meta => { "disabled", "host", "guest", "guest_multilib" };
+        meta => { "disabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[PID_NS]"
         string => "PID_NS",
-        meta => { "disabled", "host", "guest", "guest_multilib" };
+        meta => { "disabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IKCONFIG]"
         string => "IKCONFIG",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IKCONFIG_PROC]"
         string => "IKCONFIG_PROC",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[SCHED_AUTOGROUP]"
         string => "SCHED_AUTOGROUP",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[BLK_DEV_INITRD]"
         string => "BLK_DEV_INITRD",
@@ -168,55 +168,55 @@ bundle common config
 
       "kconfig[EMBEDDED]"
         string => "EMBEDDED",
-        meta => { "disabled", "host", "guest", "guest_multilib" };
+        meta => { "disabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[EXPERT]"
         string => "EXPERT",
-        meta => { "disabled", "host", "guest", "guest_multilib" };
+        meta => { "disabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[CC_STACKPROTECTOR_REGULAR]"
         string => "CC_STACKPROTECTOR_REGULAR",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[JUMP_LABEL]"
         string => "JUMP_LABEL",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[MODULES]"
         string => "MODULES",
-        meta => { "disabled", "host", "guest", "guest_multilib" };
+        meta => { "disabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[BLK_DEV_BSG]"
         string => "BLK_DEV_BSG",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IOSCHED_DEADLINE]"
         string => "IOSCHED_DEADLINE",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IOSCHED_CFQ]"
         string => "IOSCHED_CFQ",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[SMP]"
         string => "SMP",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest_smp" };
 
       "kconfig[HYPERVISOR_GUEST]"
         string => "HYPERVISOR_GUEST",
-        meta => { "enabled", "guest", "guest_multilib" };
+        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[PARAVIRT]"
         string => "PARAVIRT",
-        meta => { "enabled", "guest", "guest_multilib" };
+        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[KVM_GUEST]"
         string => "KVM_GUEST",
-        meta => { "enabled", "guest", "guest_multilib" };
+        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[PARAVIRT_TIME_ACCOUNTING]"
         string => "PARAVIRT_TIME_ACCOUNTING",
-        meta => { "enabled", "guest", "guest_multilib" };
+        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NO_GENERIC_CPU]"
         string => "GENERIC_CPU",
@@ -224,7 +224,7 @@ bundle common config
 
       "kconfig[GENERIC_CPU]"
         string => "GENERIC_CPU",
-        meta => { "enabled", "guest", "guest_multilib" };
+        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[MCORE2]"
         string => "MCORE2",
@@ -240,15 +240,15 @@ bundle common config
 
       "kconfig[X86_MCE]"
         string => "X86_MCE",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[X86_MCE_INTEL]"
         string => "X86_MCE_INTEL",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[X86_MCE_AMD]"
         string => "X86_MCE_AMD",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NUMA]"
         string => "NUMA",
@@ -268,99 +268,99 @@ bundle common config
 
       "kconfig[KSM]"
         string => "KSM",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[MEMORY_FAILURE]"
         string => "MEMORY_FAILURE",
-        meta => { "enabled", "host" , "guest"};
+        meta => { "enabled", "host" , "guest", "guest_smp"};
 
       "kconfig[TRANSPARENT_HUGEPAGE]"
         string => "TRANSPARENT_HUGEPAGE",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[SECCOMP]"
         string => "SECCOMP",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[CMDLINE_BOOL]"
         string => "CMDLINE_BOOL",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[PM]"
         string => "PM",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[ACPI]"
         string => "ACPI",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[ACPI_AC]"
         string => "ACPI_AC",
-        meta => { "disabled", "host", "guest", "guest_multilib" };
+        meta => { "disabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[ACPI_BATTERY]"
         string => "ACPI_BATTERY",
-        meta => { "disabled", "host", "guest", "guest_multilib" };
+        meta => { "disabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[CPU_FREQ]"
         string => "CPU_FREQ",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[CPU_FREQ_STAT]"
         string => "CPU_FREQ_STAT",
-        meta => { "disabled", "host", "guest", "guest_multilib" };
+        meta => { "disabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[CPU_FREQ_GOV_ONDEMAND]"
         string => "CPU_FREQ_GOV_ONDEMAND",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[CPU_FREQ_DEFAULT_GOV_PERFORMANCE]"
         string => "CPU_FREQ_DEFAULT_GOV_PERFORMANCE",
-        meta => { "disabled", "host", "guest", "guest_multilib" };
+        meta => { "disabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[CPU_FREQ_DEFAULT_GOV_ONDEMAND]"
         string => "CPU_FREQ_DEFAULT_GOV_ONDEMAND",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[X86_INTEL_PSTATE]"
         string => "X86_INTEL_PSTATE",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[X86_ACPI_CPUFREQ]"
         string => "X86_ACPI_CPUFREQ",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[X86_POWERNOW_K8]"
         string => "X86_POWERNOW_K8",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[INTEL_IDLE]"
         string => "INTEL_IDLE",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[I7300_IDLE]"
         string => "I7300_IDLE",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[PCI]"
         string => "PCI",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[PCIEPORTBUS]"
         string => "PCIEPORTBUS",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[HT_IRQ]"
         string => "HT_IRQ",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[BINFMT_ELF]"
         string => "BINFMT_ELF",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[BINFMT_SCRIPT]"
         string => "BINFMT_SCRIPT",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IA32_EMULATION]"
         string => "IA32_EMULATION",
@@ -368,603 +368,603 @@ bundle common config
 
       "kconfig[NET]"
         string => "NET",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[PACKET]"
         string => "PACKET",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[PACKET_DIAG]"
         string => "PACKET_DIAG",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[UNIX]"
         string => "UNIX",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[UNIX_DIAG]"
         string => "UNIX_DIAG",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[INET]"
         string => "INET",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[INET_DIAG]"
         string => "INET_DIAG",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[INET_UDP_DIAG]"
         string => "INET_UDP_DIAG",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IPV6]"
         string => "IPV6",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER]"
         string => "NETFILTER",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[BRIDGE_NETFILTER]"
         string => "BRIDGE_NETFILTER",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NF_CONNTRACK_PROCFS]"
         string => "NF_CONNTRACK_PROCFS",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NF_CONNTRACK]"
         string => "NF_CONNTRACK",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NF_CONNTRACK_PROC_COMPAT]"
         string => "NF_CONNTRACK_PROC_COMPAT",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NF_CT_PROTO_UDPLITE]"
         string => "NF_CT_PROTO_UDPLITE",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NF_CONNTRACK_IRC]"
         string => "NF_CONNTRACK_IRC",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NF_CONNTRACK_SIP]"
         string => "NF_CONNTRACK_SIP",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NF_CT_NETLINK]"
         string => "NF_CT_NETLINK",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_NETLINK_QUEUE_CT]"
         string => "NETFILTER_NETLINK_QUEUE_CT",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_SET]"
         string => "NETFILTER_XT_SET",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_TARGET_NETMAP]"
         string => "NETFILTER_XT_TARGET_NETMAP",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_TARGET_AUDIT]"
         string => "NETFILTER_XT_TARGET_AUDIT",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_TARGET_CHECKSUM]"
         string => "NETFILTER_XT_TARGET_CHECKSUM",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_TARGET_CLASSIFY]"
         string => "NETFILTER_XT_TARGET_CLASSIFY",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_TARGET_CONNMARK]"
         string => "NETFILTER_XT_TARGET_CONNMARK",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_TARGET_DSCP]"
         string => "NETFILTER_XT_TARGET_DSCP",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_TARGET_HMARK]"
         string => "NETFILTER_XT_TARGET_HMARK",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_TARGET_IDLETIMER]"
         string => "NETFILTER_XT_TARGET_IDLETIMER",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_TARGET_LOG]"
         string => "NETFILTER_XT_TARGET_LOG",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_TARGET_NFLOG]"
         string => "NETFILTER_XT_TARGET_NFLOG",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_TARGET_NFQUEUE]"
         string => "NETFILTER_XT_TARGET_NFQUEUE",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_TARGET_NOTRACK]"
         string => "NETFILTER_XT_TARGET_NOTRACK",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_TARGET_REDIRECT]"
         string => "NETFILTER_XT_TARGET_REDIRECT",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_TARGET_TEE]"
         string => "NETFILTER_XT_TARGET_TEE",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_TARGET_TPROXY]"
         string => "NETFILTER_XT_TARGET_TPROXY",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_TARGET_TRACE]"
         string => "NETFILTER_XT_TARGET_TRACE",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_TARGET_TCPMSS]"
         string => "NETFILTER_XT_TARGET_TCPMSS",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_TARGET_TCPOPTSTRIP]"
         string => "NETFILTER_XT_TARGET_TCPOPTSTRIP",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_ADDRTYPE]"
         string => "NETFILTER_XT_MATCH_ADDRTYPE",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_BPF]"
         string => "NETFILTER_XT_MATCH_BPF",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_CLUSTER]"
         string => "NETFILTER_XT_MATCH_CLUSTER",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_COMMENT]"
         string => "NETFILTER_XT_MATCH_COMMENT",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_CONNBYTES]"
         string => "NETFILTER_XT_MATCH_CONNBYTES",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_CONNLABEL]"
         string => "NETFILTER_XT_MATCH_CONNLABEL",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_CONNLIMIT]"
         string => "NETFILTER_XT_MATCH_CONNLIMIT",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_CONNMARK]"
         string => "NETFILTER_XT_MATCH_CONNMARK",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_CONNTRACK]"
         string => "NETFILTER_XT_MATCH_CONNTRACK",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_CPU]"
         string => "NETFILTER_XT_MATCH_CPU",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_DCCP]"
         string => "NETFILTER_XT_MATCH_DCCP",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_DEVGROUP]"
         string => "NETFILTER_XT_MATCH_DEVGROUP",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_DSCP]"
         string => "NETFILTER_XT_MATCH_DSCP",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_ECN]"
         string => "NETFILTER_XT_MATCH_ECN",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_ESP]"
         string => "NETFILTER_XT_MATCH_ESP",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_HASHLIMIT]"
         string => "NETFILTER_XT_MATCH_HASHLIMIT",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_HELPER]"
         string => "NETFILTER_XT_MATCH_HELPER",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_HL]"
         string => "NETFILTER_XT_MATCH_HL",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_IPCOMP]"
         string => "NETFILTER_XT_MATCH_IPCOMP",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_IPRANGE]"
         string => "NETFILTER_XT_MATCH_IPRANGE",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_L2TP]"
         string => "NETFILTER_XT_MATCH_L2TP",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_LENGTH]"
         string => "NETFILTER_XT_MATCH_LENGTH",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_LIMIT]"
         string => "NETFILTER_XT_MATCH_LIMIT",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_MAC]"
         string => "NETFILTER_XT_MATCH_MAC",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_MARK]"
         string => "NETFILTER_XT_MATCH_MARK",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_MULTIPORT]"
         string => "NETFILTER_XT_MATCH_MULTIPORT",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_NFACCT]"
         string => "NETFILTER_XT_MATCH_NFACCT",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_OSF]"
         string => "NETFILTER_XT_MATCH_OSF",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_OWNER]"
         string => "NETFILTER_XT_MATCH_OWNER",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_POLICY]"
         string => "NETFILTER_XT_MATCH_POLICY",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_PHYSDEV]"
         string => "NETFILTER_XT_MATCH_PHYSDEV",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_PKTTYPE]"
         string => "NETFILTER_XT_MATCH_PKTTYPE",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_QUOTA]"
         string => "NETFILTER_XT_MATCH_QUOTA",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_RATEEST]"
         string => "NETFILTER_XT_MATCH_RATEEST",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_REALM]"
         string => "NETFILTER_XT_MATCH_REALM",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_RECENT]"
         string => "NETFILTER_XT_MATCH_RECENT",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_SCTP]"
         string => "NETFILTER_XT_MATCH_SCTP",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_SOCKET]"
         string => "NETFILTER_XT_MATCH_SOCKET",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_STATE]"
         string => "NETFILTER_XT_MATCH_STATE",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_STATISTIC]"
         string => "NETFILTER_XT_MATCH_STATISTIC",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_STRING]"
         string => "NETFILTER_XT_MATCH_STRING",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_TCPMSS]"
         string => "NETFILTER_XT_MATCH_TCPMSS",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_TIME]"
         string => "NETFILTER_XT_MATCH_TIME",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETFILTER_XT_MATCH_U32]"
         string => "NETFILTER_XT_MATCH_U32",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_SET]"
         string => "IP_SET",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_SET_BITMAP_IP]"
         string => "IP_SET_BITMAP_IP",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_SET_BITMAP_IPMAC]"
         string => "IP_SET_BITMAP_IPMAC",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_SET_BITMAP_PORT]"
         string => "IP_SET_BITMAP_PORT",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_SET_HASH_IP]"
         string => "IP_SET_HASH_IP",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_SET_HASH_IPMARK]"
         string => "IP_SET_HASH_IPMARK",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_SET_HASH_IPPORT]"
         string => "IP_SET_HASH_IPPORT",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_SET_HASH_IPPORTIP]"
         string => "IP_SET_HASH_IPPORTIP",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_SET_HASH_IPPORTNET]"
         string => "IP_SET_HASH_IPPORTNET",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_SET_HASH_MAC]"
         string => "IP_SET_HASH_MAC",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_SET_HASH_NETPORTNET]"
         string => "IP_SET_HASH_NETPORTNET",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_SET_HASH_NET]"
         string => "IP_SET_HASH_NET",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_SET_HASH_NETNET]"
         string => "IP_SET_HASH_NETNET",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_SET_HASH_NETPORT]"
         string => "IP_SET_HASH_NETPORT",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_SET_HASH_NETIFACE]"
         string => "IP_SET_HASH_NETIFACE",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_SET_LIST_SET]"
         string => "IP_SET_LIST_SET",
-        meta => { "enabled", "host" , "guest"};
+        meta => { "enabled", "host" , "guest", "guest_smp"};
 
       "kconfig[NF_CONNTRACK_IPV4]"
         string => "NF_CONNTRACK_IPV4",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NF_LOG_ARP]"
         string => "NF_LOG_ARP",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_NF_IPTABLES]"
         string => "IP_NF_IPTABLES",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_NF_MATCH_AH]"
         string => "IP_NF_MATCH_AH",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_NF_MATCH_ECN]"
         string => "IP_NF_MATCH_ECN",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_NF_MATCH_RPFILTER]"
         string => "IP_NF_MATCH_RPFILTER",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_NF_MATCH_TTL]"
         string => "IP_NF_MATCH_TTL",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_NF_FILTER]"
         string => "IP_NF_FILTER",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_NF_TARGET_REJECT]"
         string => "IP_NF_TARGET_REJECT",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_NF_TARGET_SYNPROXY]"
         string => "IP_NF_TARGET_SYNPROXY",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_NF_NAT]"
         string => "IP_NF_NAT",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_NF_TARGET_MASQUERADE]"
         string => "IP_NF_TARGET_MASQUERADE",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_NF_MANGLE]"
         string => "IP_NF_MANGLE",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_NF_TARGET_CLUSTERIP]"
         string => "IP_NF_TARGET_CLUSTERIP",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_NF_TARGET_ECN]"
         string => "IP_NF_TARGET_ECN",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_NF_TARGET_TTL]"
         string => "IP_NF_TARGET_TTL",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_NF_RAW]"
         string => "IP_NF_RAW",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_NF_ARPTABLES]"
         string => "IP_NF_ARPTABLES",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_NF_ARPFILTER]"
         string => "IP_NF_ARPFILTER",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[IP_NF_ARP_MANGLE]"
         string => "IP_NF_ARP_MANGLE",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[BRIDGE_NF_EBTABLES]"
         string => "BRIDGE_NF_EBTABLES",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[BRIDGE_EBT_BROUTE]"
         string => "BRIDGE_EBT_BROUTE",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[BRIDGE_EBT_T_FILTER]"
         string => "BRIDGE_EBT_T_FILTER",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[BRIDGE_EBT_T_NAT]"
         string => "BRIDGE_EBT_T_NAT",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[BRIDGE_EBT_802_3]"
         string => "BRIDGE_EBT_802_3",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[BRIDGE_EBT_AMONG]"
         string => "BRIDGE_EBT_AMONG",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[BRIDGE_EBT_ARP]"
         string => "BRIDGE_EBT_ARP",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[BRIDGE_EBT_IP]"
         string => "BRIDGE_EBT_IP",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[BRIDGE_EBT_LIMIT]"
         string => "BRIDGE_EBT_LIMIT",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[BRIDGE_EBT_MARK]"
         string => "BRIDGE_EBT_MARK",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[BRIDGE_EBT_PKTTYPE]"
         string => "BRIDGE_EBT_PKTTYPE",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[BRIDGE_EBT_STP]"
         string => "BRIDGE_EBT_STP",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[BRIDGE_EBT_VLAN]"
         string => "BRIDGE_EBT_VLAN",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[BRIDGE_EBT_ARPREPLY]"
         string => "BRIDGE_EBT_ARPREPLY",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[BRIDGE_EBT_DNAT]"
         string => "BRIDGE_EBT_DNAT",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[BRIDGE_EBT_MARK_T]"
         string => "BRIDGE_EBT_MARK_T",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[BRIDGE_EBT_REDIRECT]"
         string => "BRIDGE_EBT_REDIRECT",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[BRIDGE_EBT_SNAT]"
         string => "BRIDGE_EBT_SNAT",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[BRIDGE_EBT_LOG]"
         string => "BRIDGE_EBT_LOG",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[BRIDGE_EBT_NFLOG]"
         string => "BRIDGE_EBT_NFLOG",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[BRIDGE]"
         string => "BRIDGE",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[BRIDGE_IGMP_SNOOPING]"
         string => "BRIDGE_IGMP_SNOOPING",
-        meta => { "disabled", "host", "guest", "guest_multilib" };
+        meta => { "disabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NET_SCHED]"
         string => "NET_SCHED",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NET_SCH_FQ_CODEL]"
         string => "NET_SCH_FQ_CODEL",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETLINK_MMAP]"
         string => "NETLINK_MMAP",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETLINK_DIAG]"
         string => "NETLINK_DIAG",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[WIRELESS]"
         string => "WIRELESS",
-        meta => { "disabled", "host", "guest", "guest_multilib" };
+        meta => { "disabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NET_9P]"
         string => "NET_9P",
-        meta => { "enabled", "guest", "guest_multilib" };
+        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NET_9P_VIRTIO]"
         string => "NET_9P_VIRTIO",
-        meta => { "enabled", "guest", "guest_multilib" };
+        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[UEVENT_HELPER]"
         string => "UEVENT_HELPER",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[DEVTMPFS]"
         string => "DEVTMPFS",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[FW_LOADER_USER_HELPER_FALLBACK]"
         string => "FW_LOADER_USER_HELPER_FALLBACK",
-        meta => { "disabled", "host", "guest", "guest_multilib" };
+        meta => { "disabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[BLK_DEV_LOOP]"
         string => "BLK_DEV_LOOP",
@@ -972,7 +972,7 @@ bundle common config
 
       "kconfig[VIRTIO_BLK]"
         string => "VIRTIO_BLK",
-        meta => { "enabled", "guest", "guest_multilib" };
+        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[SCSI-ON]"
         string => "SCSI",
@@ -980,7 +980,7 @@ bundle common config
 
       "kconfig[SCSI-OFF]"
         string => "SCSI",
-        meta => { "disabled", "guest", "guest_multilib" };
+        meta => { "disabled", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[SCSI_MQ_DEFAULT]"
         string => "SCSI_MQ_DEFAULT",
@@ -1108,31 +1108,31 @@ bundle common config
 
       "kconfig[NETDEVICES]"
         string => "NETDEVICES",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[MACVLAN]"
         string => "MACVLAN",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[MACVTAP]"
         string => "MACVTAP",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[TUN]"
         string => "TUN",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[VETH]"
         string => "VETH",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[VIRTIO_NET]"
         string => "VIRTIO_NET",
-        meta => { "enabled", "guest", "guest_multilib" };
+        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NLMON]"
         string => "NLMON",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[ETHERNET-ON]"
         string => "ETHERNET",
@@ -1140,15 +1140,15 @@ bundle common config
 
       "kconfig[ETHERNET-OFF]"
         string => "ETHERNET",
-        meta => { "disabled", "guest", "guest_multilib" };
+        meta => { "disabled", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[WLAN]"
         string => "WLAN",
-        meta => { "disabled", "host", "guest", "guest_multilib" };
+        meta => { "disabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[INPUT_MOUSEDEV]"
         string => "INPUT_MOUSEDEV",
-        meta => { "disabled", "guest", "guest_multilib" };
+        meta => { "disabled", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[INPUT_EVDEV]"
         string => "INPUT_EVDEV",
@@ -1156,55 +1156,55 @@ bundle common config
 
       "kconfig[INPUT_KEYBOARD]"
         string => "INPUT_KEYBOARD",
-        meta => { "disabled", "guest", "guest_multilib" };
+        meta => { "disabled", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[INPUT_MOUSE]"
         string => "INPUT_MOUSE",
-        meta => { "disabled", "guest", "guest_multilib" };
+        meta => { "disabled", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[DEVPTS_MULTIPLE_INSTANCES]"
         string => "DEVPTS_MULTIPLE_INSTANCES",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[SERIAL_8250]"
         string => "SERIAL_8250",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[SERIAL_8250_DEPRECATED_OPTIONS]"
         string => "SERIAL_8250_DEPRECATED_OPTIONS",
-        meta => { "disabled", "host", "guest", "guest_multilib" };
+        meta => { "disabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[SERIAL_8250_CONSOLE]"
         string => "SERIAL_8250_CONSOLE",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[VIRTIO_CONSOLE]"
         string => "VIRTIO_CONSOLE",
-        meta => { "enabled", "guest", "guest_multilib" };
+        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[HW_RANDOM]"
         string => "HW_RANDOM",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[HW_RANDOM_TIMERIOMEM]"
         string => "HW_RANDOM_TIMERIOMEM",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[HW_RANDOM_INTEL]"
         string => "HW_RANDOM_INTEL",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[HW_RANDOM_AMD]"
         string => "HW_RANDOM_AMD",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[HW_RANDOM_VIA]"
         string => "HW_RANDOM_VIA",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[HW_RANDOM_VIRTIO]"
         string => "HW_RANDOM_VIRTIO",
-        meta => { "disabled", "guest", "guest_multilib" };
+        meta => { "disabled", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[HPET]"
         string => "HPET",
@@ -1312,23 +1312,23 @@ bundle common config
 
       "kconfig[RTC_CLASS]"
         string => "RTC_CLASS",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[VIRTIO_PCI]"
         string => "VIRTIO_PCI",
-        meta => { "enabled", "guest", "guest_multilib" };
+        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[VIRTIO_BALLOON]"
         string => "VIRTIO_BALLOON",
-        meta => { "enabled", "guest", "guest_multilib" };
+        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[VIRTIO_MMIO]"
         string => "VIRTIO_MMIO",
-        meta => { "enabled", "guest", "guest_multilib" };
+        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[VIRTIO_MMIO_CMDLINE_DEVICES]"
         string => "VIRTIO_MMIO_CMDLINE_DEVICES",
-        meta => { "enabled", "guest", "guest_multilib" };
+        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[DMI_SYSFS]"
         string => "DMI_SYSFS",
@@ -1336,27 +1336,27 @@ bundle common config
 
       "kconfig[EXT4_FS]"
         string => "EXT4_FS",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[EXT4_USE_FOR_EXT23]"
         string => "EXT4_USE_FOR_EXT23",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[DNOTIFY]"
         string => "DNOTIFY",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[INOTIFY_USER]"
         string => "INOTIFY_USER",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[FANOTIFY]"
         string => "FANOTIFY",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[AUTOFS4_FS]"
         string => "AUTOFS4_FS",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[ISO9660_FS]"
         string => "ISO9660_FS",
@@ -1396,39 +1396,39 @@ bundle common config
 
       "kconfig[TMPFS]"
         string => "TMPFS",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[TMPFS_POSIX_ACL]"
         string => "TMPFS_POSIX_ACL",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[TMPFS_XATTR]"
         string => "TMPFS_XATTR",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NETWORK_FILESYSTEMS]"
         string => "NETWORK_FILESYSTEMS",
-        meta => { "enabled", "guest", "guest_multilib" };
+        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[9P_FS]"
         string => "9P_FS",
-        meta => { "enabled", "guest", "guest_multilib" };
+        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[PRINTK_TIME]"
         string => "PRINTK_TIME",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[MAGIC_SYSRQ]"
         string => "MAGIC_SYSRQ",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[DEBUG_KERNEL]"
         string => "DEBUG_KERNEL",
-        meta => { "disabled", "host", "guest", "guest_multilib" };
+        meta => { "disabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[STRICT_DEVMEM]"
         string => "STRICT_DEVMEM",
-        meta => { "enabled", "host", "guest", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[CRYPTO_RMD128]"
         string => "CRYPTO_RMD128",
@@ -1525,11 +1525,17 @@ bundle common config
       "kconfig_string_guest[CONFIG_DEFAULT_HOSTNAME]"
         string => "\"qemu-guest\"";
 
+      "kconfig_string_guest_smp[CONFIG_CMDLINE]"
+        string => "$(kconfig_string_guest[CONFIG_CMDLINE])";
+
+      "kconfig_string_guest_smp[CONFIG_DEFAULT_HOSTNAME]"
+        string => "$(kconfig_string_guest[CONFIG_DEFAULT_HOSTNAME])";
+
       "kconfig_string_guest_multilib[CONFIG_CMDLINE]"
-        string => "\"root=/dev/vda net.ifnames=0 console=ttyS0,115200n8 init=/usr/lib64/systemd/systemd\"";
+        string => "$(kconfig_string_guest[CONFIG_CMDLINE])";
 
       "kconfig_string_guest_multilib[CONFIG_DEFAULT_HOSTNAME]"
-        string => "\"qemu-guest\"";
+        string => "$(kconfig_string_guest[CONFIG_DEFAULT_HOSTNAME])";
 
       "grub[GRUB_CMDLINE_LINUX]" 
         string => "rd.auto";
