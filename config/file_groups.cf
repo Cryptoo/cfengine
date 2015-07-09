@@ -1052,7 +1052,7 @@ bundle common file_groups
 ################################################################################
 
       "make_profile[chroot_desktop_multilib]"
-        string => "$(make_profile[desktop_guest])/chroot";
+        string => "$(make_profile[desktop_guest])/multilib/chroot";
 
       "pm_env[chroot_desktop_multilib]"
         slist => {
@@ -1083,8 +1083,7 @@ bundle common file_groups
       "use[chroot_desktop_multilib]"
         slist => {
                     "@(use[desktop_guest])",
-                    "im",
-                    "multilib"
+                    "im"
                  };
 
       "unuse[chroot_desktop_multilib]"
@@ -1129,7 +1128,7 @@ bundle common file_groups
 ################################################################################
 
       "make_profile[im]"
-        string => "$(make_profile[desktop_guest])";
+        string => "$(make_profile[desktop_guest])/multilib";
 
       "pm_env[im]"
         slist => {
@@ -1160,8 +1159,7 @@ bundle common file_groups
       "use[im]"
         slist => {
                     "@(use[desktop_guest])",
-                    "im",
-                    "multilib"
+                    "im"
                  };
 
       "unuse[im]"
