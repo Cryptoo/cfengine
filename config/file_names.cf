@@ -76,6 +76,8 @@ bundle common file_names
         string => "$(directory_names.fs_config_bash)/bashrc";
       "system_bash_logout"
         string => "$(directory_names.fs_config_bash)/bash_logout";
+      "bitcoin_conf"
+        string => "$(directory_names.fs_config_bitcoin)/bitcoin.conf";
       "dmcrypt_conf"
         string => "$(directory_names.fs_config_openrc_env)/dmcrypt";
       "hostname_openrc"
@@ -94,6 +96,8 @@ bundle common file_names
         string => "$(directory_names.fs_config_cryptoo_incoming)/master_ssh_key";
       "port_info_incoming"
         string => "$(directory_names.fs_config_cryptoo_incoming)/port_info.json";
+      "bitcoin_rpc_outgoing"
+        string => "$(directory_names.fs_config_cryptoo_outgoing)/bitcoin_rpc.json";
       "port_info_outgoing"
         string => "$(directory_names.fs_config_cryptoo_outgoing)/port_info.json";
       "port_info_firewall_external"
@@ -398,6 +402,9 @@ bundle common file_names
         meta => { "template" };
       "template_value"
         string => "common/value_mustache.txt",
+        meta => { "template" };
+      "template_bitcoin_conf"
+        string => "guest/bitcoin_mustache.txt",
         meta => { "template" };
       "template_dnsmasq"
         string => "guest/dnsmasq_mustache.txt",

@@ -20,6 +20,7 @@ bundle common directory_names
       "fs_dev_base" string => "dev";
       "fs_config_base" string => "etc";
       "fs_config_bash" string => "$(fs_config_base)/bash";
+      "fs_config_bitcoin" string => "$(fs_config_base)/bitcoin";
       "fs_config_openrc_env" string => "$(fs_config_base)/conf.d";
       "fs_config_cryptoo_root" string => "$(fs_config_base)/cryptoo";
       "fs_config_cryptoo_incoming" string => "$(fs_config_cryptoo_root)/inbox";
