@@ -11,6 +11,7 @@ body file control
               "cryptoo/config/network.cf",
               "cryptoo/config/site.cf",
               "cryptoo/config/templates.cf",
+              "cryptoo/util/link_from.cf",
               "cryptoo/util/perms.cf"
             };
 
@@ -34,15 +35,40 @@ bundle agent bitcoin(root)
       "subnet_config"
         data => readjson("/$(file_names.subnet_config)", 1M);
 
+    have_hidden_service::
+
+      "hidden_service_data"
+        data => readjson("/$(file_names.hidden_service_incoming)", 1M),
+        classes => default:if_ok("have_hidden_service_data");
+
+    !hidden_service_evaluated::
+
+      "externalip"
+        string => '"externalip":
+              [
+                { "name": "$(site.config[ddns]):$(config.services[bitcoin][external_port])" }
+              ]';
+
+    have_bitcoin_hs::
+
+      "externalip"
+        string => '"externalip":
+              [
+                { "name": "$(site.config[ddns]):$(config.services[bitcoin][external_port])" },
+                { "name": "$(hidden_service_data[bitcoin]):$(config.services[bitcoin][external_port])" }
+              ]',
+        classes => default:if_ok("have_onion_externalip");
+
     !have_rpc_password::
 
       "random_rpc_password"
         string => canonify(readfile("/proc/sys/kernel/random/uuid", "0"));
 
       "rpc_json"
-        string => '{ "rpc_password": "$(this.random_rpc_password)" }';
+        string => '{ "rpc_password": "$(this.random_rpc_password)" }',
+        classes => default:if_ok("have_rpc_json");
 
-    have_rpc_password::
+    have_rpc_password&(have_onion_externalip|(hidden_service_data_evaluated&!have_bitcoin_hs)|(hidden_service_evaluated&!have_hidden_service))::
 
       "rpc_data"
         data => readjson("$(this.root)$(file_names.bitcoin_rpc_outgoing)", 1M);
@@ -59,18 +85,33 @@ bundle agent bitcoin(root)
                 { "bind": "192.168.$(subnet_config[ispdmz]).$(defined_numbers[bitcoin]):$(config.services[bitcoin][external_port])" },
                 { "bind": "192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin]):$(config.services[bitcoin][external_port])" }
               ],
-            "externalip":
-              [
-                { "name": "$(site.config[ddns]):$(config.services[bitcoin][external_port])" }
-              ]
-          }';
+            $(this.externalip)
+          }',
+          classes => default:if_ok("have_bitcoin_conf");
 
   classes:
 
     any::
 
+      "bootstrap"
+        not => strcmp("$(this.root)", "/");
+
       "have_rpc_password"
         expression => fileexists("$(this.root)$(file_names.bitcoin_rpc_outgoing)");
+
+      "have_hidden_service"
+        expression => fileexists("$(this.root)$(file_names.hidden_service_incoming)");
+
+      "hidden_service_evaluated"
+        expression => "any";
+
+    have_hidden_service_data::
+
+      "have_bitcoin_hs"
+        expression => isvariable("hidden_service_data[bitcoin]");
+
+      "hidden_service_data_evaluated"
+        expression => "any";
 
   files:
 
@@ -87,14 +128,26 @@ bundle agent bitcoin(root)
         template_method => "mustache",
         template_data => mergedata("cryptoo:config.bitcoind_log_service");
 
-    have_rpc_password::
+    !bootstrap::
+
+      "$(this.root)$(directory_names.fs_bitcoin_home)/."
+        perms => bitcoin,
+        create => "true";
+
+      "$(this.root)$(directory_names.bitcoin_conf_link)"
+        perms => system,
+        move_obstructions => "true",
+        link_from => bitcoin_conf;
+
+    have_bitcoin_conf::
 
       "$(this.root)$(file_names.bitcoin_conf)"
         perms => system,
         create => "true",
         edit_template => "/$(templates.template[bitcoin_conf])",
         template_method => "mustache",
-        template_data => parsejson($(this.bitcoin_conf));
+        template_data => parsejson($(this.bitcoin_conf)),
+          classes => default:if_repaired("restart_bitcoin");
 
   methods:
 
@@ -103,9 +156,16 @@ bundle agent bitcoin(root)
       "configure system as a bitcoind guest"
         usebundle => server_guest("$(this.root)", "bitcoin", "x86_64", "no_multilib");
 
-    !have_rpc_password::
+    !have_rpc_password&have_rpc_json::
 
       "generate random rpc password"
         usebundle => default:file_make("$(this.root)$(file_names.bitcoin_rpc_outgoing)", "$(this.rpc_json)");
+
+  commands:
+
+    restart_bitcoin&(!bootstrap)::
+
+      "/$(file_names.systemd_app)"
+        args => "restart bitcoind";
 
 }

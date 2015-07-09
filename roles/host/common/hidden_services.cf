@@ -1,0 +1,58 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/file_names.cf"
+            };
+
+}
+
+bundle agent hidden_services
+
+{
+
+  vars:
+
+    have_hidden_services::
+
+      "hidden_service_data"
+        data => readjson("/$(file_names.hidden_service_tor)", 1M),
+        classes => default:if_ok("have_hidden_service_data");
+
+  classes:
+
+    any::
+
+      "have_hidden_services"
+        expression => fileexists("/$(file_names.hidden_service_tor)");
+
+      "have_bitcoin_file"
+        expression => fileexists("/$(file_names.hidden_service_bitcoin)");
+
+    have_hidden_service_data::
+
+      "have_bitcoin"
+        expression => isvariable("hidden_service_data[bitcoin]");
+
+      "hidden_service_data_evaluated"
+        expression => "any";
+
+  files:
+
+    have_bitcoin_file::
+
+      "/$(file_names.hidden_service_bitcoin)"
+        perms => root_qemu,
+        create => "false";
+
+  methods:
+
+    have_bitcoin::
+
+      "place Bitcoin hidden service in inbox"
+        usebundle => default:file_make("/$(file_names.hidden_service_bitcoin)", '{ "bitcoin": "$(hidden_service_data[bitcoin])" }');
+
+}

@@ -18,3 +18,8 @@ TransPort {{trans_port}}
 TransListenAddress {{internal}}
 DNSPort {{dns_port}}
 DNSListenAddress {{internal}}
+
+{{#hidden_service}}
+HiddenServiceDir {{dir}}
+HiddenServicePort {{port}}
+{{/hidden_service}}

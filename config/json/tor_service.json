@@ -1,0 +1,28 @@
+{
+  "sections":
+     [
+       { "section": "Unit",
+         "values":
+           [
+             { "LHS": "Description", "RHS": "The Onion Router" }
+           ]
+       },
+       { "section": "Service",
+         "values":
+           [
+             { "LHS": "ExecStartPre", "RHS": "/usr/bin/tor --verify-config -f /etc/tor/torrc" },
+             { "LHS": "ExecStart", "RHS": "/usr/bin/tor --RunAsDaemon 0 -f /etc/tor/torrc" },
+             { "LHS": "ExecReload", "RHS": "/bin/kill -HUP $MAINPID" },
+             { "LHS": "KillSignal", "RHS": "SIGINT" },
+             { "LHS": "TimeoutStopSec", "RHS": "32" },
+             { "LHS": "LimitNOFILE", "RHS": "30000" }
+           ]
+       },
+       { "section": "Install",
+         "values":
+           [
+             { "LHS": "WantedBy", "RHS": "multi-user.target" }
+           ]
+       }
+     ]
+}

@@ -125,3 +125,19 @@ body perms bitcoin
       owners  => { "bitcoin" };
       groups  => { "bitcoin" };
 }
+
+body perms bitcoin_private
+
+{
+      mode  => "0600";
+      owners  => { "bitcoin" };
+      groups  => { "bitcoin" };
+}
+
+body perms tor
+
+{
+      mode  => "0600";
+      owners  => { "tor" };
+      groups  => { "tor" };
+}

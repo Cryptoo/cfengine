@@ -139,12 +139,16 @@ bundle common directory_names
       "fs_volatile_images" string => "$(fs_volatile_base)/image";
       "fs_volatile_library" string => "$(fs_volatile_base)/lib";
       "fs_bitcoin_base" string => "$(fs_volatile_library)/bitcoin";
+      "fs_bitcoin_home" string => "$(fs_bitcoin_base)/.bitcoin";
       "fs_volatile_overlay" string => "$(fs_volatile_library)/layman";
       "fs_bitcoin_overlay" string => "$(fs_volatile_overlay)/bitcoin";
       "fs_volatile_libvirt" string => "$(fs_volatile_library)/libvirt";
       "fs_libvirt_images" string => "$(fs_volatile_libvirt)/images";
       "fs_volatile_pm" string => "$(fs_volatile_library)/$(pm)";
       "fs_volatile_systemd" string => "$(fs_volatile_library)/systemd";
+      "fs_volatile_tor" string => "$(fs_volatile_library)/tor";
+      "fs_hidden_services" string => "$(fs_volatile_tor)/hs";
+      "fs_bitcoin_hs" string => "$(fs_hidden_services)/bitcoin";
       "fs_volatile_znc" string => "$(fs_volatile_library)/znc";
       "fs_znc_config" string => "$(fs_volatile_znc)/configs";
       "fs_volatile_temp" string => "$(fs_volatile_base)/tmp";

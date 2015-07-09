@@ -94,12 +94,20 @@ bundle common file_names
         string => "$(directory_names.fs_config_cryptoo_incoming)/subnet_config.json";
       "master_ssh_key"
         string => "$(directory_names.fs_config_cryptoo_incoming)/master_ssh_key";
+      "hidden_service_incoming"
+        string => "$(directory_names.fs_config_cryptoo_incoming)/hidden_service.json";
       "port_info_incoming"
         string => "$(directory_names.fs_config_cryptoo_incoming)/port_info.json";
       "bitcoin_rpc_outgoing"
         string => "$(directory_names.fs_config_cryptoo_outgoing)/bitcoin_rpc.json";
+      "hidden_service_outgoing"
+        string => "$(directory_names.fs_config_cryptoo_outgoing)/hidden_service.json";
       "port_info_outgoing"
         string => "$(directory_names.fs_config_cryptoo_outgoing)/port_info.json";
+      "hidden_service_bitcoin"
+        string => "$(directory_names.fs_config_guest_inboxes)/bitcoin/hidden_service.json";
+      "hidden_service_tor"
+        string => "$(directory_names.fs_config_guest_outboxes)/tor/hidden_service.json";
       "port_info_firewall_external"
         string => "$(directory_names.fs_config_guest_inboxes)/firewall_external/port_info.json";
       "port_info_freenet"
@@ -198,6 +206,8 @@ bundle common file_names
         string => "$(directory_names.fs_config_ssh)/sshd_config";
       "ssh_config"
         string => "$(directory_names.fs_config_ssh)/ssh_config";
+      "tor_service"
+        string => "$(directory_names.fs_config_units)/tor.service";
       "xpra_service"
         string => "$(directory_names.fs_config_units)/xpra@.service";
       "bitcoind_log_service"
@@ -453,12 +463,16 @@ bundle common file_names
       "template_subnets"
         string => "host/subnets.txt",
         meta => { "template" };
+      "bitcoin_conf_link"
+        string => "$(directory_names.fs_bitcoin_home)/bitcoin.conf";
       "overlay_conf"
         string => "$(directory_names.fs_volatile_overlay)/make.conf";
       "bitcoin_overlay"
         string => "$(directory_names.fs_bitcoin_overlay)/profiles/repo_name";
       "random_seed"
         string => "$(directory_names.fs_volatile_systemd)/random-seed";
+      "bitcoin_hs"
+        string => "$(directory_names.fs_bitcoin_hs)/hostname";
       "znc_ssl"
         string => "$(directory_names.fs_volatile_znc)/znc.pem";
       "znc_config"

@@ -40,6 +40,13 @@ bundle agent tor(root)
                 { "subnet": "192.168.$(network.subnet_config[tor]).0/24" },
                 { "subnet": "192.168.$(network.subnet_config[vpndmz]).0/24" },
                 { "subnet": "192.168.$(network.subnet_config[lan]).0/24" }
+              ],
+            "hidden_service":
+              [
+                {
+                  "dir": "/$(directory_names.fs_bitcoin_hs)",
+                  "port": "$(config.services[bitcoin][external_port]) 192.168.$(network.subnet_config[vpndmz]).$(config.defined_numbers[bitcoin]):$(config.services[bitcoin][external_port])"
+                }
               ]
           }
         ';
@@ -54,6 +61,31 @@ bundle agent tor(root)
           }
         ';
 
+    have_bitcoin_hs_hostname_file::
+
+      "bitcoin_hs_hostname"
+        string => readfile("/$(file_names.bitcoin_hs)", "0"),
+        classes => default:if_ok("have_bitcoin_hs_hostname");
+
+    have_bitcoin_hs_hostname::
+
+      "hs_hostname"
+        string => '
+          {
+            "bitcoin": "$(this.bitcoin_hs_hostname)"
+          }',
+        classes => default:if_ok("have_hs_json");
+
+  classes:
+
+    !bootstrap::
+
+      "have_bitcoin_hs_hostname_file"
+        expression => fileexists("/$(file_names.bitcoin_hs)");
+
+      "have_hs_hostnames"
+        expression => fileexists("/$(file_names.hidden_service_outgoing)");
+
   files:
 
     any::
@@ -62,8 +94,12 @@ bundle agent tor(root)
         perms => system,
         create => "true";
 
-      "$(this.root)$(directory_names.fs_config_polipo)/."
+      "$(this.root)$(directory_names.fs_config_tor)/."
         perms => system,
+        create => "true";
+
+      "$(this.root)$(directory_names.fs_volatile_tor)/."
+        perms => tor,
         create => "true";
 
       "$(this.root)$(file_names.torrc)"
@@ -71,7 +107,16 @@ bundle agent tor(root)
         create => "true",
         edit_template => "/$(templates.template[torrc])",
         template_method => "mustache",
-        template_data => parsejson($(this.torrc));
+        template_data => parsejson($(this.torrc)),
+        classes => default:if_repaired("reload_tor");
+
+      "$(this.root)$(file_names.tor_service)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => mergedata("cryptoo:config.tor_service"),
+        classes => default:if_repaired("daemon_reload");
 
       "$(this.root)$(file_names.polipo_config)"
         perms => system,
@@ -80,11 +125,45 @@ bundle agent tor(root)
         template_method => "mustache",
         template_data => parsejson($(this.polipo));
 
+    !bootstrap::
+
+      "$(this.root)$(directory_names.fs_hidden_services)/."
+        perms => tor,
+        create => "true";
+
+      "$(this.root)$(directory_names.fs_bitcoin_hs)/."
+        perms => tor,
+        create => "true";
+
+    have_hs_hostnames::
+
+      "/$(file_names.hidden_service_outgoing)"
+        perms => root,
+        create => "false";
+
   methods:
 
     any::
 
       "configure system as a Tor node"
         usebundle => server_guest("$(this.root)", "tor", "x86_64", "no_multilib");
+
+    have_hs_json::
+
+      "generate random rpc password"
+        usebundle => default:file_make("/$(file_names.hidden_service_outgoing)", "$(this.hs_hostname)");
+
+  commands:
+
+    daemon_reload&(!bootstrap)::
+
+      "/$(file_names.systemd_app)"
+        args => "daemon-reload",
+        classes => default:if_repaired("reload_tor");
+
+    reload_tor&(!bootstrap)::
+
+      "/$(file_names.systemd_app)"
+        args => "restart tor";
 
 }

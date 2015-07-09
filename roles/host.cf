@@ -285,6 +285,9 @@ bundle agent host(arch, role)
       "transfer port info between guest boxes"
         usebundle => port_info;
 
+      "transfer hidden service hostnames between guest boxes"
+        usebundle => hidden_services;
+
       "configure /etc/fstab"
         usebundle => fstab("/", "host", "$(this.role)"),
         classes => default:if_repaired("fstab_repaired");

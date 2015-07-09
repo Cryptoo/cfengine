@@ -138,3 +138,11 @@ body link_from systemd(service)
      when_no_source => "force";
      source => "/$(directory_names.fs_standard_units)/$(service)";
 }
+
+body link_from bitcoin_conf
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "/$(file_names.bitcoin_conf)";
+}
