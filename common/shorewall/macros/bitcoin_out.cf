@@ -50,6 +50,12 @@ bundle agent shorewall_macro_bitcoin_out(root, port_info)
                      "protocol": "tcp",
                      "destination_port": "-",
                      "source_port": "$(config.services[bitcoin][external_port])"
+                   },
+                   {
+                     "action": "PARAM",
+                     "source": "-",
+                     "destination": "-",
+                     "protocol": "tcp"
                    }
                  ]
                }
