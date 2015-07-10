@@ -10,6 +10,7 @@ body file control
               "cryptoo/config/directory_names.cf",
               "cryptoo/config/file_names.cf",
               "cryptoo/config/templates.cf",
+              "cryptoo/util/classes.cf",
               "cryptoo/util/perms.cf",
               "@(cryptoo:control.desktop_guest_inputs)"
             };
@@ -61,6 +62,15 @@ bundle agent desktop_guest(root, role, arch, multilib)
       "xpra_conf[pulseaudio]"
         string => "yes";
 
+      "important_directories"
+        slist =>
+          {
+            ".cache",
+            ".config/pulse",
+            ".dbus/session-bus",
+            ".xpra"
+          };
+
   classes:
 
     any::
@@ -73,6 +83,10 @@ bundle agent desktop_guest(root, role, arch, multilib)
     any::
 
       "$(this.root)$(directory_names.fs_cryptoo_home)/."
+        perms => cryptoo,
+        create => "true";
+
+      "$(this.root)$(directory_names.fs_cryptoo_home)/$(important_directories)/."
         perms => cryptoo,
         create => "true";
 
@@ -102,5 +116,14 @@ bundle agent desktop_guest(root, role, arch, multilib)
 
       "manage guest files"
         usebundle => common_guest("$(root)", "desktop", "$(role)", "$(arch)");
+
+  commands:
+
+    any::
+
+      "/$(file_names.chown_app)"
+        args => "-R cryptoo:cryptoo /$(directory_names.fs_cryptoo_home)",
+        classes => always_success,
+        contain => silent_chroot($(root));
 
 }
