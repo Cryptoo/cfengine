@@ -509,7 +509,7 @@ bundle agent shorewall_rules_master(root)
           }
         ';
 
-      "rules_json_vpndmz"
+      "defined_rules_json_vpndmz"
         string => '{
                      "action": "vdmz_vpn_primary(ACCEPT)"
                    },
