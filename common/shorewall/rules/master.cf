@@ -6,6 +6,7 @@ body file control
 
   inputs => {
               "cryptoo/common/shorewall/extra_lan_rule.cf",
+              "cryptoo/common/shorewall/extra_vpndmz_rule.cf",
               "cryptoo/config/config.cf",
               "cryptoo/config/file_names.cf",
               "cryptoo/config/templates.cf",
@@ -39,11 +40,22 @@ bundle agent shorewall_rules_master(root)
       "extra_rules_json_lan"
         string => "";
 
+    !have_guests_vpndmz::
+
+      "extra_rules_json_vpndmz"
+        string => "";
+
     have_guests_lan::
 
       "extra_lan_guest_list"
         slist => getindices("extra_guest_lan"),
         classes => default:if_ok("have_guest_list_lan");
+
+    have_guests_vpndmz::
+
+      "extra_vpndmz_guest_list"
+        slist => getindices("extra_guest_vpndmz"),
+        classes => default:if_ok("have_guest_list_vpndmz");
 
     have_extra_guest_json_lan::
 
@@ -51,12 +63,23 @@ bundle agent shorewall_rules_master(root)
         slist => getvalues("extra_guest_json_lan"),
         classes => default:if_ok("have_guest_json_list_lan");
 
+    have_extra_guest_json_vpndmz::
+
+      "extra_vpndmz_json_list"
+        slist => getvalues("extra_guest_json_vpndmz"),
+        classes => default:if_ok("have_guest_json_list_vpndmz");
+
     have_extra_lan_guests::
 
       "extra_rules_json_lan"
         string => join(", ", "extra_lan_json_list");
 
-    lan_guests_ready::
+    have_extra_vpndmz_guests::
+
+      "extra_rules_json_vpndmz"
+        string => join(", ", "extra_vpndmz_json_list");
+
+    vpndmz_guests_ready&lan_guests_ready::
 
       "rules_json_host"
         string => '
@@ -485,12 +508,9 @@ bundle agent shorewall_rules_master(root)
                }
           }
         ';
+
       "rules_json_vpndmz"
-        string => '
-          {
-            "vpndmz":
-                 [
-                   {
+        string => '{
                      "action": "vdmz_vpn_primary(ACCEPT)"
                    },
                    {
@@ -519,7 +539,17 @@ bundle agent shorewall_rules_master(root)
                    },
                    {
                      "action": "vdmz_bitcoin(ACCEPT)"
-                   }
+                   }';
+
+      "combined_rules_json_vpndmz"
+        string => "$(defined_rules_json_vpndmz), $(extra_rules_json_vpndmz)";
+
+      "rules_json_vpndmz"
+        string => '
+          {
+            "vpndmz":
+                 [
+                   $(combined_rules_json_vpndmz)
                  ]
                }
           }
@@ -639,12 +669,25 @@ bundle agent shorewall_rules_master(root)
       "no_extra_lan_guests"
         not => isgreaterthan(length("extra_lan_guest_list"), "0");
 
+    have_guest_list_vpndmz::
+
+      "no_extra_vpndmz_guests"
+        not => isgreaterthan(length("extra_vpndmz_guest_list"), "0");
+
     have_guest_json_list_lan|no_extra_lan_guests::
 
       "have_extra_lan_guests"
         expression => isgreaterthan(length("extra_lan_json_list"), "0");
 
       "lan_guests_ready"
+        expression => "any";
+
+    have_guest_json_list_vpndmz|no_extra_vpndmz_guests::
+
+      "have_extra_vpndmz_guests"
+        expression => isgreaterthan(length("extra_vpndmz_json_list"), "0");
+
+      "vpndmz_guests_ready"
         expression => "any";
 
   files:
@@ -668,11 +711,23 @@ bundle agent shorewall_rules_master(root)
         useresult => "extra_guest_lan",
         classes => default:if_ok("have_guests_lan");
 
+      "get a list of guests for vpndmz zone"
+        usebundle => extra_zone_guests("master", "vpndmz_bridge"),
+        useresult => "extra_guest_vpndmz",
+        classes => default:if_ok("have_guests_vpndmz");
+
     have_guest_list_lan::
 
       "get json for guests for lan zone"
         usebundle => shorewall_extra_lan_rule("$(extra_lan_guest_list)"),
         useresult => "extra_guest_json_lan",
         classes => default:if_ok("have_extra_guest_json_lan");
+
+    have_guest_list_vpndmz::
+
+      "get json for guests for vpndmz zone"
+        usebundle => shorewall_extra_vpndmz_rule("$(extra_vpndmz_guest_list)"),
+        useresult => "extra_guest_json_vpndmz",
+        classes => default:if_ok("have_extra_guest_json_vpndmz");
 
 }

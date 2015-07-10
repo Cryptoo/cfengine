@@ -1,0 +1,89 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/config.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/site.cf",
+              "cryptoo/config/templates.cf",
+              "cryptoo/util/classes.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
+bundle agent shorewall_extra_vpndmz_rule(guest_number)
+
+{
+
+  vars:
+
+    any::
+
+      "defined_numbers"
+        data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
+
+      "subnet_config"
+        data => readjson("/$(file_names.subnet_config)", 1M);
+
+      "extra_guest_data"
+        data => mergedata("cryptoo:site.config[extra_guests]");
+
+      "guest_role"
+        string => "$(extra_guest_data[$(this.guest_number)][type])";
+
+    !extra_vpndmz_role_set::
+
+      "extra_vpndmz_role"
+        string => "";
+
+    extra_vpndmz_role_set::
+
+      "guest_json"
+        string => '{
+                     "action": "SSH(ACCEPT)",
+                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])",
+                     "destination": "u$(this.guest_number):192.168.$(subnet_config[vpndmz]).$(this.guest_number)"
+                   },
+                   {
+                     "action": "SSH(ACCEPT)",
+                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).0/24",
+                     "destination": "u$(this.guest_number):192.168.$(subnet_config[vpndmz]).$(this.guest_number)"
+                   },
+                   {
+                     "action": "NTP(ACCEPT)",
+                     "source": "u$(this.guest_number):192.168.$(subnet_config[vpndmz]).$(this.guest_number)",
+                     "destination": "u$(defined_numbers[vpn_primary]):!+private"
+                   },
+                   {
+                     "action": "cfengine(ACCEPT)",
+                     "source": "u$(this.guest_number):192.168.$(subnet_config[vpndmz]).$(this.guest_number)",
+                     "destination": "u$(defined_numbers[firewall_nternal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])"
+                   },
+                   {
+                     "action": "DNS(ACCEPT)",
+                     "source": "u$(this.guest_number):192.168.$(subnet_config[vpndmz]).$(this.guest_number)",
+                     "destination": "u$(defined_numbers[dns]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])"
+                   }$(extra_vpndmz_role)',
+        classes => default:if_ok("have_basic_guest_json");
+  classes:
+
+    any::
+
+      "extra_vpndmz_role_$(guest_role)"
+        expression => "any";
+
+      "extra_vpndmz_role_set"
+        expression => "any";
+
+  reports:
+
+    have_basic_guest_json::
+
+      "$(guest_json)"
+        bundle_return_value_index => "$(this.guest_number)";
+
+}
