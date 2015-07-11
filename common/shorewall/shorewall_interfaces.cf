@@ -17,7 +17,7 @@ bundle agent shorewall_interfaces(interface, type)
       "firewall"
         data => mergedata("cryptoo:config.firewall");
 
-        "options"
+      "options"
         string => "$(firewall[interface_options][normal])";
 
 classes:
@@ -27,16 +27,44 @@ classes:
       "type_$(this.type)"
         expression => "any";
 
+      "interface_$(this.interface)"
+        expression => "any";
+
     type_gateway|type_simple|type_dhcp|type_virtual::
 
       "relevant"
         expression => "any";
 
-  reports:
+    type_tun::
 
+      "special_case"
+        expression => "any";
+
+    special_case&interface_openvpn_tun_udp::
+
+      "vpn_tun_udp"
+        expression => "any";
+
+    special_case&interface_openvpn_tun_tcp::
+
+      "vpn_tun_tcp"
+        expression => "any";
+
+  reports:
+  
     relevant::
 
       '{ "zone_full": "#", "zone": "-", "type": "-", "interface": "$(this.interface)", "interface_options": "$(options)" }'
+        bundle_return_value_index => "$(interface)";
+
+    vpn_tun_udp::
+
+      '{ "zone_full": "#", "zone": "vpntu", "type": "ipv4", "interface": "$(this.interface)", "interface_options": "$(options)" }'
+        bundle_return_value_index => "$(interface)";
+
+    vpn_tun_tcp::
+
+      '{ "zone_full": "#", "zone": "vpntt", "type": "ipv4", "interface": "$(this.interface)", "interface_options": "$(options)" }'
         bundle_return_value_index => "$(interface)";
 
 }

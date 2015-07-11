@@ -1,0 +1,64 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/templates.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
+bundle agent netdev_tun(root, name, user, group)
+
+{
+
+  vars:
+
+    any::
+
+      "netdev_$(this.name)"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "NetDev",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "$(this.name)" },
+                       { "LHS": "Kind", "RHS": "tun" }
+                     ]
+                 },
+                 { "section": "Tun",
+                   "values":
+                     [
+                       { "LHS": "User", "RHS": "$(this.user)" },
+                       { "LHS": "Group", "RHS": "$(this.group)" },
+                     ]
+                 }
+               ]
+          }
+        ';
+
+  classes:
+
+    any::
+
+      "skip"
+        expression => strcmp("$(this.name)", "none");
+
+  files:
+
+    !skip::
+
+      "$(this.root)$(directory_names.fs_config_network)/$(this.name).netdev"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => parsejson("$(netdev_$(this.name))");
+
+}

@@ -33,6 +33,9 @@ bundle agent networkd(root, role)
       "tap_list"
         slist => getvalues("$(this.role)_config[devices][tap]");
 
+      "tun_list"
+        slist => getvalues("$(this.role)_config[devices][tun]");
+
       "interface_list"
         slist => getindices("$(this.role)_config[interfaces]");
 
@@ -61,6 +64,9 @@ bundle agent networkd(root, role)
 
       "manage .netdev files for tap devices"
         usebundle => netdev_tap("$(this.root)", "$(tap_list)", "openvpn", "openvpn");
+
+      "manage .netdev files for tun devices"
+        usebundle => netdev_tun("$(this.root)", "$(tun_list)", "openvpn", "openvpn");
 
       "manage .network files"
         usebundle => network_file("$(this.root)", "$(interface_list)", "$(this.role_number)", "$(interface[$(interface_list)][type])", "$(interface[$(interface_list)][params])");

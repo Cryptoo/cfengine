@@ -1,6 +1,8 @@
 {
   "net": "net",
   "vpn": "vpn",
+  "vpntt": "vpntt",
+  "vpntu": "vpntu",
   "ispdmz": "idmz",
   "vpndmz": "vdmz",
   "tor": "tor",

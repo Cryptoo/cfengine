@@ -75,6 +75,76 @@ bundle agent network_file(root, name, number, type, params)
           ',
         classes => default:if_ok("network_json_ready");
 
+    type_tun::
+
+      "file_name_$(this.name)"
+        string => "$(this.root)$(directory_names.fs_config_network)/$(this.name).network";
+
+      "device_$(this.name)"
+        string => "$(network_params_$(this.name)[device])";
+
+      "forward_$(this.name)"
+        string => "$(network_params_$(this.name)[ipforward])";
+
+      "network_$(this.name)"
+        string => '
+            {
+              "sections":
+                 [
+                   { "section": "Match",
+                     "values":
+                       [
+                         { "LHS": "Name", "RHS": "$(device_$(this.name))" }
+                       ]
+                   },
+                   { "section": "Network",
+                     "values":
+                       [
+                         { "LHS": "DHCP", "RHS": "false" },
+                         { "LHS": "IPForward", "RHS": "$(forward_$(this.name))" },
+                         { "LHS": "LinkLocalAddressing", "RHS": "No"}
+                       ]
+                   }
+                 ]
+            }
+          ',
+        classes => default:if_ok("network_json_ready");
+
+    type_tap::
+
+      "bridge_$(this.name)"
+        string => "$(network_params_$(this.name)[bridge])";
+
+      "file_name_$(this.name)"
+        string => "$(this.root)$(directory_names.fs_config_network)/$(this.name).network";
+
+      "device_$(this.name)"
+        string => "$(network_params_$(this.name)[device])";
+
+      "network_$(this.name)"
+        string => '
+            {
+              "sections":
+                 [
+                   { "section": "Match",
+                     "values":
+                       [
+                         { "LHS": "Name", "RHS": "$(device_$(this.name))" }
+                       ]
+                   },
+                   { "section": "Network",
+                     "values":
+                       [
+                         { "LHS": "DHCP", "RHS": "false" },
+                         { "LHS": "Bridge", "RHS": "$(bridge_$(this.name))" },
+                         { "LHS": "LinkLocalAddressing", "RHS": "No"}
+                       ]
+                   }
+                 ]
+            }
+          ',
+        classes => default:if_ok("network_json_ready");
+
     type_bridge_member::
 
       "bridge_$(this.name)"

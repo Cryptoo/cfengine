@@ -82,22 +82,6 @@ bundle agent shorewall_rules_vpn_server(root)
                      "source_port": ""
                    },
                    {
-                     "action": "ACCEPT",
-                     "source": "l0",
-                     "destination": "l3",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
-                   },
-                   {
-                     "action": "ACCEPT",
-                     "source": "l0",
-                     "destination": "l4",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
-                   },
-                   {
                      "action": "SSH(ACCEPT)",
                      "source": "l0",
                      "destination": "l13",
@@ -116,22 +100,6 @@ bundle agent shorewall_rules_vpn_server(root)
                    {
                      "action": "ACCEPT",
                      "source": "l2",
-                     "destination": "l0",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
-                   },
-                   {
-                     "action": "ACCEPT",
-                     "source": "l3",
-                     "destination": "l0",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
-                   },
-                   {
-                     "action": "ACCEPT",
-                     "source": "l4",
                      "destination": "l0",
                      "protocol": "",
                      "destination_port": "",

@@ -130,6 +130,10 @@ bundle common file_groups
                  "tap":
                    [
                      "none"
+                   ],
+                 "tun":
+                   [
+                     "none"
                    ]
                }
           }
@@ -382,6 +386,10 @@ bundle common file_groups
                      "lantap"
                    ],
                  "tap":
+                   [
+                     "none"
+                   ],
+                 "tun":
                    [
                      "none"
                    ]
@@ -874,6 +882,10 @@ bundle common file_groups
                  "tap":
                    [
                      "none"
+                   ],
+                 "tun":
+                   [
+                     "none"
                    ]
                },
              "interfaces":
@@ -1209,6 +1221,10 @@ bundle common file_groups
                  "tap":
                    [
                      "none"
+                   ],
+                 "tun":
+                   [
+                     "none"
                    ]
                },
              "interfaces":
@@ -1504,6 +1520,10 @@ bundle common file_groups
                  "tap":
                    [
                      "none"
+                   ],
+                 "tun":
+                   [
+                     "none"
                    ]
                },
              "interfaces":
@@ -1628,6 +1648,10 @@ bundle common file_groups
                      "none"
                    ],
                  "tap":
+                   [
+                     "none"
+                   ],
+                 "tun":
                    [
                      "none"
                    ]
@@ -1758,6 +1782,10 @@ bundle common file_groups
                  "tap":
                    [
                      "none"
+                   ],
+                 "tun":
+                   [
+                     "none"
                    ]
                },
              "interfaces":
@@ -1884,6 +1912,10 @@ bundle common file_groups
                  "tap":
                    [
                      "none"
+                   ],
+                 "tun":
+                   [
+                     "none"
                    ]
                },
              "interfaces":
@@ -2008,6 +2040,10 @@ bundle common file_groups
                      "none"
                    ],
                  "tap":
+                   [
+                     "none"
+                   ],
+                 "tun":
                    [
                      "none"
                    ]
@@ -2148,6 +2184,10 @@ bundle common file_groups
                  "tap":
                    [
                      "none"
+                   ],
+                 "tun":
+                   [
+                     "none"
                    ]
                },
              "interfaces":
@@ -2286,6 +2326,10 @@ bundle common file_groups
                  "tap":
                    [
                      "none"
+                   ],
+                 "tun":
+                   [
+                     "none"
                    ]
                },
              "interfaces":
@@ -2402,6 +2446,10 @@ bundle common file_groups
                      "none"
                    ],
                  "tap":
+                   [
+                     "none"
+                   ],
+                 "tun":
                    [
                      "none"
                    ]
@@ -2531,6 +2579,10 @@ bundle common file_groups
                      "none"
                    ],
                  "tap":
+                   [
+                     "none"
+                   ],
+                 "tun":
                    [
                      "none"
                    ]
@@ -2671,6 +2723,10 @@ bundle common file_groups
                  "tap":
                    [
                      "none"
+                   ],
+                 "tun":
+                   [
+                     "none"
                    ]
                },
              "interfaces":
@@ -2796,6 +2852,10 @@ bundle common file_groups
                  "tap":
                    [
                      "none"
+                   ],
+                 "tun":
+                   [
+                     "none"
                    ]
                },
              "interfaces":
@@ -2911,7 +2971,9 @@ bundle common file_groups
 
       "firewall_zones[vpn_server]"
         slist => {
-                    "@(firewall_zones[server_guest])"
+                    "@(firewall_zones[server_guest])",
+                    "vpntt",
+                    "vpntu"
                  };
 
       "firewall_bridges[vpn_server]"
@@ -2942,48 +3004,55 @@ bundle common file_groups
                    ],
                  "veth":
                    [
-                     "none"
+                     "lantap"
                    ],
                  "tap":
                    [
                      "openvpn1",
-                     "openvpn2",
+                     "openvpn2"
+                   ],
+                 "tun":
+                   [
                      "openvpn3",
                      "openvpn4"
                    ]
                },
              "interfaces":
                {
-                 "openvpn_bridge_udp":
+                 "openvpn_tap_udp":
                    {
-                     "type": "no_address",
+                     "type": "tap",
                      "params":
                        {
-                         "device": "openvpn1"
+                         "device": "openvpn_tap_udp",
+                         "bridge": "lan"
                        }
                    },
-                 "openvpn_bridge_tcp":
+                 "openvpn_tap_tcp":
                    {
-                     "type": "no_address",
+                     "type": "tap",
                      "params":
                        {
-                         "device": "openvpn2"
+                         "device": "openvpn_tap_tcp",
+                         "bridge": "lan"
                        }
                    },
-                 "openvpn_route_udp":
+                 "openvpn_tun_udp":
                    {
-                     "type": "no_address",
+                     "type": "tun",
                      "params":
                        {
-                         "device": "openvpn3"
+                         "device": "openvpn_tun_udp",
+                         "ipforward": "ipv4"
                        }
                    },
-                 "openvpn_route_tcp":
+                 "openvpn_tun_tcp":
                    {
-                     "type": "no_address",
+                     "type": "tun",
                      "params":
                        {
-                         "device": "openvpn4"
+                         "device": "openvpn_tun_tcp",
+                         "ipforward": "ipv4"
                        }
                    },
                  "lan_bridge":
