@@ -18,3 +18,5 @@ bind={{bind}}
 {{#externalip}}
 externalip={{name}}
 {{/externalip}}
+
+printtoconsole=1

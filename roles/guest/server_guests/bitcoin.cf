@@ -121,13 +121,6 @@ bundle agent bitcoin(root)
         perms => bitcoin,
         create => "true";
 
-      "$(this.root)$(file_names.bitcoind_log_service)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[ini])",
-        template_method => "mustache",
-        template_data => mergedata("cryptoo:config.bitcoind_log_service");
-
     !bootstrap::
 
       "/$(directory_names.fs_bitcoin_home)/."
@@ -135,7 +128,6 @@ bundle agent bitcoin(root)
         create => "true";
 
       "/$(file_names.bitcoin_conf_link)"
-        perms => system,
         move_obstructions => "true",
         link_from => bitcoin_conf;
 
