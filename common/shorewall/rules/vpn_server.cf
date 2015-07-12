@@ -48,7 +48,7 @@ bundle agent shorewall_rules_vpn_server(root)
                    {
                      "action": "vpn_server_out(ACCEPT)",
                      "source": "fw:192.168.$(subnet_config[ispdmz]).$(defined_numbers[vpn_server])",
-                     "destination": "net",
+                     "destination": "idmz:192.168.$(subnet_config[ispdmz]).$(defined_numbers[firewall_external])",
                      "protocol": "-",
                      "destination_port": "-",
                      "source_port": "-",
@@ -59,7 +59,7 @@ bundle agent shorewall_rules_vpn_server(root)
                    },
                    {
                      "action": "vpn_server",
-                     "source": "net",
+                     "source": "idmz:192.168.$(subnet_config[ispdmz]).$(defined_numbers[firewall_external])",
                      "destination": "fw:192.168.$(subnet_config[ispdmz]).$(defined_numbers[vpn_server])",
                      "protocol": "",
                      "destination_port": "",

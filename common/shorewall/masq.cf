@@ -52,6 +52,20 @@ bundle agent shorewall_masq(root, role)
                   "address": "192.168.$(subnet_config[ispdmz]).$(defined_numbers[firewall_external])",
                   "protocol": "tcp",
                   "port": "22"
+                },
+                {
+                  "interface": "eth1",
+                  "source": "-",
+                  "address": "192.168.$(subnet_config[ispdmz]).$(defined_numbers[firewall_external])",
+                  "protocol": "tcp",
+                  "port": "1194:1195"
+                },
+                {
+                  "interface": "eth1",
+                  "source": "-",
+                  "address": "192.168.$(subnet_config[ispdmz]).$(defined_numbers[firewall_external])",
+                  "protocol": "udp",
+                  "port": "1194:1195"
                 }
               ]
           }';

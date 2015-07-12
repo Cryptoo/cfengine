@@ -3082,11 +3082,12 @@ bundle common file_groups
                    },
                  "lantap":
                    {
-                     "type": "simple",
+                     "type": "gateway",
                      "params":
                        {
                          "zone": "lan",
-                         "ipforward": "no",
+                         "gateway": "firewall_internal",
+                         "ipforward": "ipv4",
                          "routes":
                            {
                              "onion": "firewall_internal",
@@ -3099,11 +3100,10 @@ bundle common file_groups
                    },
                  "eth0":
                    {
-                     "type": "gateway",
+                     "type": "simple",
                      "params":
                        {
                          "zone": "ispdmz",
-                         "gateway": "firewall_external",
                          "ipforward": "no"
                        }
                    }
