@@ -1990,7 +1990,8 @@ bundle common file_groups
       "use[bitcoin]"
         slist => {
                     "@(use[server_guest])",
-                    "bitcoin"
+                    "bitcoin",
+                    "bitcoin_wallet"
                  };
 
       "unuse[bitcoin]"
