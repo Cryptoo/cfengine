@@ -118,6 +118,20 @@ bundle agent shorewall_masq(root, role)
               ]
           }';
 
+    masq_vpn_server::
+
+      "masq_json"
+        string => '
+          {
+            "masq":
+              [
+                {
+                  "interface": "lantap",
+                  "source": "192.168.$(subnet_config[lan]).0/24"
+                }
+              ]
+          }';
+
   classes:
 
     second::
@@ -125,7 +139,7 @@ bundle agent shorewall_masq(root, role)
       "json_ready"
         expression => "any";
 
-    masq_firewall_external|masq_vpn_primary|masq_vpn_secondary::
+    masq_firewall_external|masq_vpn_primary|masq_vpn_secondary|masq_vpn_server::
 
       "have_masq"
         expression => "any";

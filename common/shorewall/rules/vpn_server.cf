@@ -112,6 +112,36 @@ bundle agent shorewall_rules_vpn_server(root)
                      "protocol": "",
                      "destination_port": "",
                      "source_port": ""
+                   },
+                   {
+                     "action": "ACCEPT",
+                     "source": "vpntu",
+                     "destination": "net"
+                   },
+                   {
+                     "action": "ACCEPT",
+                     "source": "vpntu",
+                     "destination": "lan"
+                   },
+                   {
+                     "action": "ACCEPT",
+                     "source": "vpntu",
+                     "destination": "vdmz"
+                   },
+                   {
+                     "action": "ACCEPT",
+                     "source": "vpntt",
+                     "destination": "net"
+                   },
+                   {
+                     "action": "ACCEPT",
+                     "source": "vpntt",
+                     "destination": "lan"
+                   },
+                   {
+                     "action": "ACCEPT",
+                     "source": "vpntt",
+                     "destination": "vdmz"
                    }
                  ],
                }
