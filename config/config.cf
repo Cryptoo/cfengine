@@ -838,6 +838,86 @@ bundle common config
         string => "IP_NF_ARP_MANGLE",
         meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
+      "kconfig[NF_CONNTRACK_IPV6]"
+        string => "NF_CONNTRACK_IPV6",
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[NF_REJECT_IPV6]"
+        string => "NF_REJECT_IPV6",
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[NF_NAT_IPV6]"
+        string => "NF_NAT_IPV6",
+        meta => { "diabled", "host", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[IP6_NF_IPTABLES]"
+        string => "IP6_NF_IPTABLES",
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[IP6_NF_MATCH_AH]"
+        string => "IP6_NF_MATCH_AH",
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[IP6_NF_MATCH_EUI64]"
+        string => "IP6_NF_MATCH_EUI64",
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[IP6_NF_MATCH_FRAG]"
+        string => "IP6_NF_MATCH_FRAG",
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[IP6_NF_MATCH_OPTS]"
+        string => "IP6_NF_MATCH_OPTS",
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[IP6_NF_MATCH_HL]"
+        string => "IP6_NF_MATCH_HL",
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[IP6_NF_MATCH_IPV6HEADER]"
+        string => "IP6_NF_MATCH_IPV6HEADER",
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[IP6_NF_MATCH_IPV6HEADER]"
+        string => "IP6_NF_MATCH_IPV6HEADER",
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[IP6_NF_MATCH_MH]"
+        string => "IP6_NF_MATCH_MH",
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[IP6_NF_MATCH_RPFILTER]"
+        string => "IP6_NF_MATCH_RPFILTER",
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[IP6_NF_MATCH_RT]"
+        string => "IP6_NF_MATCH_RT",
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[IP6_NF_FILTER]"
+        string => "IP6_NF_FILTER",
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[IP6_NF_TARGET_REJECT]"
+        string => "IP6_NF_TARGET_REJECT",
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[IP6_NF_TARGET_SYNPROXY]"
+        string => "IP6_NF_TARGET_SYNPROXY",
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[IP6_NF_MANGLE]"
+        string => "IP6_NF_MANGLE",
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[IP6_NF_RAW]"
+        string => "IP6_NF_RAW",
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[IP6_NF_NAT]"
+        string => "IP6_NF_NAT",
+        meta => { "disabled", "host", "guest", "guest_smp", "guest_multilib" };
+
       "kconfig[BRIDGE_NF_EBTABLES]"
         string => "BRIDGE_NF_EBTABLES",
         meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
@@ -868,6 +948,10 @@ bundle common config
 
       "kconfig[BRIDGE_EBT_IP]"
         string => "BRIDGE_EBT_IP",
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[BRIDGE_EBT_IP6]"
+        string => "BRIDGE_EBT_IP6",
         meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[BRIDGE_EBT_LIMIT]"
