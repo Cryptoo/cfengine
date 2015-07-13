@@ -210,8 +210,6 @@ bundle common file_names
         string => "$(directory_names.fs_config_units)/tor.service";
       "xpra_service"
         string => "$(directory_names.fs_config_units)/xpra@.service";
-      "bitcoind_log_service"
-        string => "$(directory_names.fs_config_units)/bitcoind_log.service";
       "cf_execd_service"
         string => "$(directory_names.fs_config_units)/cf-execd.service";
       "cf_monitord_service"

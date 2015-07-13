@@ -62,6 +62,14 @@ bundle agent shorewall_rules_vpn_primary(root)
                      "source_port": ""
                    },
                    {
+                     "action": "vpn_client",
+                     "source": "fw",
+                     "destination": "vpn",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   },
+                   {
                      "action": "cfengine(ACCEPT)",
                      "source": "idmz:192.168.$(subnet_config[ispdmz]).$(defined_numbers[firewall_external])",
                      "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
