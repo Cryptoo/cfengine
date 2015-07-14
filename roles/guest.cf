@@ -22,6 +22,32 @@ bundle agent common_guest(root, type, role, arch)
 
 {
 
+  vars:
+
+    !ssh_keys_scanned::
+
+      "master_ssh_key"
+        string => "";
+
+      "extra_ssh_keys"
+        string => "";
+
+    have_master_ssh_key::
+
+      "master_ssh_key"
+        string => readfile("/$(file_names.master_ssh_key)", "0"),
+        classes => default:if_ok("master_ssh_key_read");
+
+      "extra_ssh_keys"
+        string => readfile("/$(file_names.extra_ssh_keys)", "0"),
+        classes => default:if_ok("extra_ssh_keys_read");
+
+    ssh_ready::
+
+      "authorized_keys"
+        string => "$(master_ssh_key)$(const.endl)$(extra_ssh_keys)",
+        classes => default:if_ok("have_authorized_keys");
+
   classes:
 
     any::
@@ -38,6 +64,17 @@ bundle agent common_guest(root, type, role, arch)
       "have_master_ssh_key"
         expression => fileexists("/$(file_names.master_ssh_key)");
 
+      "have_extra_ssh_keys"
+        expression => fileexists("/$(file_names.extra_ssh_keys)");
+
+      "ssh_keys_scanned"
+        expression => "any";
+
+    (master_ssh_key_read|(!have_master_ssh_key))&(extra_ssh_keys_read|(!have_extra_ssh_keys))::
+
+      "ssh_ready"
+        expression => "any";
+
   files:
 
     any::
@@ -53,12 +90,9 @@ bundle agent common_guest(root, type, role, arch)
         edit_template => "/$(templates.template[serial_autologin])",
         classes => default:if_repaired("daemon_reload");
 
-    have_master_ssh_key::
-
       "$(root)$(file_names.authorized_keys)"
         perms => root,
-        move_obstructions => "true",
-        copy_from => default:local_cp("/$(cryptoo:file_names.master_ssh_key)");
+        create => "true";
 
     !bootstrap::
       "$(root)$(directory_groups.guest_system_private)/."
@@ -87,6 +121,13 @@ bundle agent common_guest(root, type, role, arch)
 
       "activate all mountpoints"
         usebundle => mount_all;
+
+  methods:
+
+    have_authorized_keys::
+
+      "generate authorized_keys"
+        usebundle => default:file_make("$(this.root)$(file_names.authorized_keys)", "$(this.authorized_keys)");
 
   commands:
 

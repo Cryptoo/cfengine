@@ -92,6 +92,8 @@ bundle common file_names
         string => "$(directory_names.fs_config_cryptoo_incoming)/site_config.json";
       "subnet_config"
         string => "$(directory_names.fs_config_cryptoo_incoming)/subnet_config.json";
+      "extra_ssh_keys"
+        string => "$(directory_names.fs_config_cryptoo_incoming)/extra_ssh_keys";
       "master_ssh_key"
         string => "$(directory_names.fs_config_cryptoo_incoming)/master_ssh_key";
       "hidden_service_incoming"
