@@ -192,6 +192,17 @@ bundle agent cryptoo_bootstrap
       "multilib"
         string => "multilib";
 
+    default:bootstrap_undefined::
+
+      "role"
+        string => "undefined";
+
+      "type"
+        string => "server";
+
+      "multilib"
+        string => "no_multilib";
+
   classes:
 
     default:bootstrap_master::
@@ -275,6 +286,11 @@ bundle agent cryptoo_bootstrap
         expression => "any";
 
     default:bootstrap_im::
+
+      "bootstrap_guest"
+        expression => "any";
+
+    default:bootstrap_undefined::
 
       "bootstrap_guest"
         expression => "any";
