@@ -539,6 +539,9 @@ bundle agent shorewall_rules_master(root)
                    },
                    {
                      "action": "vdmz_bitcoin(ACCEPT)"
+                   },
+                   {
+                     "action": "vdmz_gitlab(ACCEPT)"
                    }';
 
       "combined_rules_json_vpndmz"

@@ -203,6 +203,17 @@ bundle agent cryptoo_bootstrap
       "multilib"
         string => "no_multilib";
 
+    default:bootstrap_gitlab::
+
+      "role"
+        string => "gitlab";
+
+      "type"
+        string => "server";
+
+      "multilib"
+        string => "no_multilib";
+
   classes:
 
     default:bootstrap_master::
@@ -291,6 +302,11 @@ bundle agent cryptoo_bootstrap
         expression => "any";
 
     default:bootstrap_undefined::
+
+      "bootstrap_guest"
+        expression => "any";
+
+    default:bootstrap_gitlab::
 
       "bootstrap_guest"
         expression => "any";

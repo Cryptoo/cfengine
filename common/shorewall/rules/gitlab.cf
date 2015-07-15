@@ -1,0 +1,63 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/config.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/templates.cf",
+              "cryptoo/util/classes.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
+bundle agent shorewall_rules_gitlab(root)
+
+{
+
+  meta:
+
+    "tags" slist => { "shorewall_rules", "gitlab" };
+
+  vars:
+
+    any::
+
+      "defined_numbers"
+        data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
+
+      "subnet_config"
+        data => readjson("/$(file_names.subnet_config)", 1M);
+
+      "rules_json"
+        string => '
+          {
+            "new":
+                 [
+                   {
+                     "action": "guest",
+                     "source": "",
+                     "destination": "",
+                     "protocol": "",
+                     "destination_port": "",
+                     "source_port": ""
+                   }
+                 ]
+          }';
+
+  files:
+
+    any::
+
+      "$(root)$(file_names.shorewall_rules)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[shorewall_rules])",
+        template_method => "mustache",
+        template_data => parsejson("$(rules_json)"),
+        classes => shorewall;
+
+}

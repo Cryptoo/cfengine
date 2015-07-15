@@ -15,30 +15,20 @@ body file control
 
 }
 
-bundle agent shorewall_macro_guest(root, port_info)
+bundle agent shorewall_macro_vdmz_gitlab(root, port_info)
 
 {
 
   meta:
 
-    "tags" slist =>
-      {
-        "shorewall_macro",
-        "mail_server",
-        "irc_bouncer",
-        "firewall_internal",
-        "vpn_server",
-        "irc_client",
-        "im",
-        "gitlab"
-      };
+    "tags" slist => { "shorewall_macro", "master" };
 
   vars:
 
     any::
 
       "macro_name"
-        string => "guest";
+        string => "vdmz_gitlab";
 
       "defined_numbers"
         data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
@@ -54,38 +44,26 @@ bundle agent shorewall_macro_guest(root, port_info)
             "rules":
                  [
                    {
-                     "action": "DNS(PARAM)",
-                     "source": "fw",
-                     "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "action": "SSH(PARAM)",
+                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])",
+                     "destination": "u$(defined_numbers[gitlab]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[gitlab])"
                    },
                    {
                      "action": "NTP(PARAM)",
-                     "source": "fw",
-                     "destination": "net",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "source": "u$(defined_numbers[gitlab]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[gitlab])",
+                     "destination": "u$(defined_numbers[vpn_primary]):!+private"
                    },
                    {
-                     "action": "SSH(PARAM)",
-                     "source": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
-                     "destination": "fw",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "action": "DNS(PARAM)",
+                     "source": "u$(defined_numbers[gitlab]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[gitlab])",
+                     "destination": "u$(defined_numbers[dns]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])"
                    },
                    {
                      "action": "cfengine(PARAM)",
-                     "source": "fw",
-                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "source": "u$(defined_numbers[gitlab]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[gitlab])",
+                     "destination": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])"
                    }
-                 ],
+                 ]
                }
           }
         ';

@@ -18,5 +18,6 @@
     "bittorrent": "23",
     "file_server": "24",
     "bitcoin": "25",
-    "bitcoin_testnet": "26"
+    "bitcoin_testnet": "26",
+    "gitlab": "49"
 }

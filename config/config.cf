@@ -65,7 +65,8 @@ bundle common config
                    "bitcoin",
                    "namecoin",
                    "bittorrent",
-                   "samba"
+                   "samba",
+                   "gitlab"
                  };
 
       "enabled_services"
