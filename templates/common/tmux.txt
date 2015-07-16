@@ -1,0 +1,38 @@
+set -g utf8
+set -g default-terminal "screen-256color"
+set -g history-limit 10000
+set -g prefix C-a
+set -g status-utf8 on
+set -g status-interval 5
+set -g status-justify centre
+set -g status-bg "#d6d6d6"
+set -g status-fg "#4d4d4c"
+set -g pane-active-border-bg default
+set -g pane-active-border-fg "#8e908c"
+set -g pane-border-bg default
+set -g pane-border-fg "#d6d6d6"
+set -g clock-mode-colour "#3e999f"
+set -g clock-mode-style 24
+set -g message-bg "#3e999f"
+set -g message-fg "#ffffff"
+set -g message-command-bg "#3e999f"
+set -g message-command-fg "#ffffff"
+set -g mode-bg "#3e999f"
+set -g mode-fg "#ffffff"
+set -g set-titles on
+set -g set-titles-string '#I:#T'
+
+set-option -g status on
+set-option -g status-position top
+set-option -g allow-rename off
+
+set-window-option -g utf8 on
+setw -g window-status-activity-fg "#3e999f"
+setw -g window-status-activity-bg "#4d4d4c"
+setw -g window-status-current-bg "#8e908c"
+setw -g window-status-current-fg "#d6d6d6"
+
+set -g prefix C-b
+bind-key -n C-a send-prefix
+
+bind r source-file ~/.tmux.conf \; display "Reloaded!"

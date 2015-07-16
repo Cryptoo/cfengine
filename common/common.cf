@@ -151,6 +151,18 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
         create => "true",
         edit_template => "/$(templates.template[ipset_private])";
 
+      "$(root)$(file_names.tmux_conf)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[tmux])";
+
+      "$(this.root)$(file_names.tmux_service)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => mergedata("cryptoo:config.tmux_service");
+
     have_locale_gen::
 
       "$(root)$(file_names.locale)"

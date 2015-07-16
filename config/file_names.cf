@@ -72,6 +72,8 @@ bundle common file_names
         string => "$(directory_names.fs_config_base)/resolv.dnsmasq.conf";
       "shadow"
         string => "$(directory_names.fs_config_base)/shadow";
+      "tmux_conf"
+        string => "$(directory_names.fs_config_base)/tmux.conf";
       "system_bashrc"
         string => "$(directory_names.fs_config_bash)/bashrc";
       "system_bash_logout"
@@ -162,6 +164,8 @@ bundle common file_names
         string => "$(directory_names.fs_config_ssh)/sshd_config";
       "ssh_config"
         string => "$(directory_names.fs_config_ssh)/ssh_config";
+      "tmux_service"
+        string => "$(directory_names.fs_config_units)/tmux@.service";
       "tor_service"
         string => "$(directory_names.fs_config_units)/tor.service";
       "xpra_service"
@@ -204,6 +208,8 @@ bundle common file_names
         string => "$(directory_names.fs_i2p_user)/router.config";
       "proc_mounts"
         string => "proc/self/mounts";
+      "root_tmux"
+        string => "$(directory_names.fs_admin_base)/.tmux.conf";
       "authorized_keys"
         string => "$(directory_names.fs_admin_ssh)/authorized_keys";
       "default_key"
@@ -366,6 +372,9 @@ bundle common file_names
       "template_shorewall_zone"
         string => "common/shorewall_zone_mustache.txt",
         meta => { "template" };
+      "template_tmux"
+        string => "common/tmux.txt",
+        meta => { "template" };
       "template_value"
         string => "common/value_mustache.txt",
         meta => { "template" };
@@ -383,6 +392,9 @@ bundle common file_names
         meta => { "template" };
       "template_polipo"
         string => "guest/polipo_mustache.txt",
+        meta => { "template" };
+      "template_tmux_guest"
+        string => "guest/tmux.txt",
         meta => { "template" };
       "template_torrc"
         string => "guest/torrc_mustache.txt",

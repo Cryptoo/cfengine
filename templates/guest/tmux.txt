@@ -1,0 +1,4 @@
+new-session -c /root -s admin -n Top /usr/bin/top
+new-window -dk -t 1 -c /root -n Log "/usr/bin/journalctl -n1000 -afb"
+new-window -dk -t 2 -c /root -n Shell "/bin/bash --login"
+select-window -t 1

@@ -4,17 +4,17 @@
        { "section": "Unit",
          "values":
            [
-             { "LHS": "Description", "RHS": "Workaround for bitcoind's lack of syslog support" },
-             { "LHS": "Before", "RHS": "bitcoind.service" }
+             { "LHS": "Description", "RHS": "Start tmux in detached session" }
            ]
        },
        { "section": "Service",
          "values":
            [
-             { "LHS": "Type", "RHS": "simple" },
+             { "LHS": "Type", "RHS": "forking" },
              { "LHS": "Restart", "RHS": "always" },
-             { "LHS": "User", "RHS": "bitcoin" },
-             { "LHS": "ExecStart", "RHS": "/usr/bin/tail -n0 -F /var/lib/bitcoin/.bitcoin/debug.log" }
+             { "LHS": "User", "RHS": "%I" },
+             { "LHS": "ExecStart", "RHS": "/usr/bin/tmux new-session -s %u -d" },
+             { "LHS": "ExecStop", "RHS": "/usr/bin/tmux kill-session -t %u" }
            ]
        },
        { "section": "Install",
