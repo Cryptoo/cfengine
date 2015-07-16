@@ -130,6 +130,16 @@ bundle agent shorewall_rules_vpn_server(root)
                    },
                    {
                      "action": "ACCEPT",
+                     "source": "vpntu",
+                     "destination": "onion"
+                   },
+                   {
+                     "action": "ACCEPT",
+                     "source": "vpntu",
+                     "destination": "eep"
+                   },
+                   {
+                     "action": "ACCEPT",
                      "source": "vpntt",
                      "destination": "net"
                    },
@@ -142,6 +152,16 @@ bundle agent shorewall_rules_vpn_server(root)
                      "action": "ACCEPT",
                      "source": "vpntt",
                      "destination": "vdmz"
+                   },
+                   {
+                     "action": "ACCEPT",
+                     "source": "vpntt",
+                     "destination": "onion"
+                   },
+                   {
+                     "action": "ACCEPT",
+                     "source": "vpntt",
+                     "destination": "eep"
                    }
                  ],
                }
