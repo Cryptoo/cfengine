@@ -2139,7 +2139,7 @@ bundle common file_groups
       "systemd_enabled[vpn_primary]"
         slist => {
                     "@(systemd_enabled[server_guest])",
-                    "openvpn@primary.service"
+                    "openvpn-client@primary.service"
                  };
 
       "backup_dir[vpn_primary]"
@@ -2536,7 +2536,7 @@ bundle common file_groups
       "systemd_enabled[vpn_secondary]"
         slist => {
                     "@(systemd_enabled[server_guest])",
-                    "openvpn@secondary.service"
+                    "openvpn-client@secondary.service"
                  };
 
       "backup_dir[vpn_secondary]"
@@ -3084,7 +3084,11 @@ bundle common file_groups
 
       "systemd_enabled[vpn_server]"
         slist => {
-                    "@(systemd_enabled[server_guest])"
+                    "@(systemd_enabled[server_guest])",
+                    "openvpn-server@tun-tcp",
+                    "openvpn-server@tun-udp",
+                    "openvpn-server@tap-tcp",
+                    "openvpn-server@tap-udp"
                  };
 
       "backup_dir[vpn_server]"
