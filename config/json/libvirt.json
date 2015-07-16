@@ -1,0 +1,9 @@
+{
+    "libvirt_guests": {
+                      "ON_BOOT": "ignore",
+                      "START_DELAY": "0",
+                      "ON_SHUTDOWN": "shutdown",
+                      "PARALLEL_SHUTDOWN": "100",
+                      "SHUTDOWN_TIMEOUT": "90"
+            }
+}

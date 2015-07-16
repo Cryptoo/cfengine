@@ -47,6 +47,9 @@ bundle common config
     "bitcoind_log_service"
       data => readjson("$(sys.inputdir)/cryptoo/config/json/bitcoind_log_service.json", 1M);
 
+    "libvirt"
+      data => readjson("$(sys.inputdir)/cryptoo/config/json/libvirt.json", 1M);
+
     "server_guests"
        slist => {
                    "firewall_external",
@@ -69,38 +72,12 @@ bundle common config
                    "gitlab"
                  };
 
-      "enabled_services"
-        slist => {
-                   "acpid",
-                   "dmcrypt",
-                   "lvm",
-                   "lvmetad",
-                   "mdraid",
-                   "consolefont",
-                   "dbus",
-                   "gpm",
-                   "libvirtd",
-                   "metalog",
-                   "ntpd",
-                   "numlock",
-                   "rngd",
-                   "sshd",
-                   "virtlockd",
-                   "kmod",
-                 };
-
       "core_systemd"
         slist => {
                    "acpid.service",
                    "sshd.service",
                    "systemd-networkd.service",
                    "vixie-cron.service",
-                 };
-
-      "disabled_services"
-        slist => {
-                   "kmod",
-                   "modules",
                  };
 
       "kconfig[64BIT]"

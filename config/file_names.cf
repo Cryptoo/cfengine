@@ -126,6 +126,8 @@ bundle common file_names
         string => "$(directory_names.fs_config_gcc_environment)/.NATIVE";
       "env_gcc_x86_64"
         string => "$(directory_names.fs_config_gcc_environment)/config-x86_64-pc-linux-gnu";
+      "libvirt_guests_conf"
+        string => "$(directory_names.fs_config_libvirt)/libvirt-guests.conf";
       "firstrun"
         string => "$(directory_names.fs_config_local_scripts)/firstrun.start";
       "ipset_private"
