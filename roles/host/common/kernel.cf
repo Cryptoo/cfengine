@@ -142,6 +142,13 @@ bundle agent kconfig(target, arch)
         classes => default:if_repaired("$(this.target)_kconfig_changed"),
         comment => "set kconfig strings";
 
+  guest_smp&have_target_kconfig::
+
+      "$(kconfig_file)"
+        edit_line => default:set_line_based("cryptoo:config.kconfig_string_guest_smp", "=", "\s*=\s*", ".*", "\s*#\s*"),
+        classes => default:if_repaired("$(this.target)_kconfig_changed"),
+        comment => "set kconfig strings";
+
   guest_multilib&have_target_kconfig::
 
       "$(kconfig_file)"
