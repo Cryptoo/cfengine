@@ -78,10 +78,6 @@ bundle common file_names
         string => "$(directory_names.fs_config_bash)/bash_logout";
       "bitcoin_conf"
         string => "$(directory_names.fs_config_bitcoin)/bitcoin.conf";
-      "dmcrypt_conf"
-        string => "$(directory_names.fs_config_openrc_env)/dmcrypt";
-      "hostname_openrc"
-        string => "$(directory_names.fs_config_openrc_env)/hostname";
       "cryptoo_hostname"
         string => "$(directory_names.fs_config_cryptoo_incoming)/hostname";
       "machine_names"
@@ -144,50 +140,6 @@ bundle common file_names
         string => "$(directory_names.fs_config_pm_upstream)/parent";
       "privoxy_config"
         string => "$(directory_names.fs_config_privoxy)/config";
-      "openrc_acpid"
-        string => "$(directory_names.fs_config_run_boot)/acpid";
-      "openrc_devicemapper"
-        string => "$(directory_names.fs_config_run_boot)/device-mapper";
-      "openrc_dmcrypt"
-        string => "$(directory_names.fs_config_run_boot)/dmcrypt";
-      "openrc_lvm"
-        string => "$(directory_names.fs_config_run_boot)/lvm";
-      "openrc_lvmetad"
-        string => "$(directory_names.fs_config_run_boot)/lvmetad";
-      "openrc_mdraid"
-        string => "$(directory_names.fs_config_run_boot)/mdraid";
-      "openrc_modules"
-        string => "$(directory_names.fs_config_run_boot)/modules";
-      "openrc_cf_execd"
-        string => "$(directory_names.fs_config_run_default)/cf-execd";
-      "openrc_cf_monitord"
-        string => "$(directory_names.fs_config_run_default)/cf-monitord";
-      "openrc_cf_serverd"
-        string => "$(directory_names.fs_config_run_default)/cf-serverd";
-      "openrc_consolefont"
-        string => "$(directory_names.fs_config_run_default)/consolefont";
-      "openrc_dbus"
-        string => "$(directory_names.fs_config_run_default)/dbus";
-      "openrc_gpm"
-        string => "$(directory_names.fs_config_run_default)/gpm";
-      "openrc_libvirtd"
-        string => "$(directory_names.fs_config_run_default)/libvirtd";
-      "openrc_metalog"
-        string => "$(directory_names.fs_config_run_default)/metalog";
-      "openrc_ntpd"
-        string => "$(directory_names.fs_config_run_default)/ntpd";
-      "openrc_numlock"
-        string => "$(directory_names.fs_config_run_default)/numlock";
-      "openrc_rngd"
-        string => "$(directory_names.fs_config_run_default)/rngd";
-      "openrc_sshd"
-        string => "$(directory_names.fs_config_run_default)/sshd";
-      "openrc_virtlockd"
-        string => "$(directory_names.fs_config_run_default)/virtlockd";
-      "openrc_vixiecron"
-        string => "$(directory_names.fs_config_run_default)/vixie-cron";
-      "openrc_kmod"
-        string => "$(directory_names.fs_config_run_sysinit)/kmod-static-nodes";
       "mount_info"
         string => "/proc/self/mountstats";
       "shorewall_config"
@@ -256,8 +208,6 @@ bundle common file_names
         string => "$(directory_names.fs_admin_ssh)/id_ed25519";
       "default_key_public"
         string => "$(directory_names.fs_admin_ssh)/id_ed25519.pub";
-      "openrc_softlevel"
-        string => "$(directory_names.fs_runtime_base)/openrc/softlevel";
       "blkid_app"
         string => "$(directory_names.fs_admin_apps)/blkid";
       "losetup_app"

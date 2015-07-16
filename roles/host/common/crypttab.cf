@@ -32,9 +32,4 @@ bundle agent crypttab
         create => "true",
         edit_template => "/$(cryptoo:templates.template[crypttab])";
 
-      "/$(cryptoo:file_names.dmcrypt_conf)"
-        perms => cryptoo:root,
-        create => "true",
-        edit_template => "/$(cryptoo:templates.template[dmcrypt])";
-
 }
