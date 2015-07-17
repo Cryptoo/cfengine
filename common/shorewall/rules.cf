@@ -38,6 +38,16 @@ bundle agent shorewall_rules(root, role)
       "relevant_rules"
         slist => intersection(shorewall_rules, role_rules);
 
+  classes:
+
+    any::
+
+      "have_relevant_macros"
+        expression => isgreaterthan(length("relevant_macros"), "0");
+
+      "have_relevant_rules"
+        expression => isgreaterthan(length("relevant_rules"), "0");
+
   methods:
 
     any::
@@ -50,9 +60,11 @@ bundle agent shorewall_rules(root, role)
     have_port_info::
 
       "configure shorewall macros"
-        usebundle => $(relevant_macros)("$(this.root)", "$(port_info[port_info])");
+        usebundle => $(relevant_macros)("$(this.root)", "$(port_info[port_info])"),
+        ifvarclass => "have_relevant_macros";
 
       "configure /etc/shorewall/rules"
-        usebundle => $(relevant_rules)("$(this.root)");
+        usebundle => $(relevant_rules)("$(this.root)"),
+        ifvarclass => "have_relevant_rules";
 
 }
