@@ -21,9 +21,16 @@ bundle agent local
       "bundles"
         slist => bundlesmatching("local:.*", "cryptoo_auto");
 
-  methods:
+  classes:
 
     any::
+
+      "have_local_bundles"
+        expression => isgreaterthan(length("bundles"), "0");
+
+  methods:
+
+    have_local_bundles::
 
       "run local bundles"
         usebundle => $(bundles);
