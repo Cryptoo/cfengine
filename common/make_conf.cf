@@ -28,9 +28,9 @@ bundle agent make_conf(root, role, multilib)
         data => parsejson("$(this.params)");
 
       "cflags[host]"
-        string => "-O2 -pipe -march=native";
+        string => "-O2 -pipe -ggdb -march=native";
       "cflags[guest]"
-        string => "-O2 -pipe -mtune=$(site.config[make.conf][guest_mtune])";
+        string => "-O2 -pipe -ggdb -mtune=$(site.config[make.conf][guest_mtune])";
       "cflags[chroot]"
         string => "$(this.cflags[guest])";
 
