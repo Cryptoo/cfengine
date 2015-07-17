@@ -19,7 +19,7 @@ bundle common best
     any::
 
       "native_gcc_profiles"
-        slist => findfiles("/$(directory_names.fs_config_gcc_environment)/$(arch)-pc-linux-gnu-*");
+        slist => findfiles("/$(directory_names.fs_config_gcc_environment)/x86_64-pc-linux-gnu-*");
 
       "native_gcc_profiles_sorted"
         slist => sort("native_gcc_profiles", "lex");
