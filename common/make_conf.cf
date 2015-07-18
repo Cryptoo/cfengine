@@ -46,7 +46,7 @@ bundle agent make_conf(root, role, multilib)
       "emerge[guest]"
         string => "--quiet --jobs --load-average 1.0 --keep-going --usepkgonly --binpkg-respect-use --binpkg-changed-deps=n";
       "emerge[chroot]"
-        string => "--jobs --load-average 8.0 --keep-going --usepkg --buildpkg --binpkg-respect-use --with-bdeps=y --binpkg-changed-deps=n";
+        string => "--jobs --load-average 8.0 --keep-going --usepkg=n --buildpkg";
 
       "input[headless][guest]"
         string => "void";
