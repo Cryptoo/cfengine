@@ -44,7 +44,7 @@ bundle agent make_conf(root, role, multilib)
       "emerge[host]"
         string => "--ask --jobs --load-average 8.0 --keep-going --usepkg --buildpkg --binpkg-respect-use --binpkg-changed-deps=y";
       "emerge[guest]"
-        string => "--quiet --jobs --load-average 1.0 --keep-going --usepkgonly --binpkg-respect-use --binpkg-changed-deps=y";
+        string => "--quiet --jobs --load-average 1.0 --keep-going --usepkgonly --binpkg-respect-use --binpkg-changed-deps=n";
       "emerge[chroot]"
         string => "--jobs --load-average 8.0 --keep-going --usepkg --buildpkg --binpkg-respect-use --with-bdeps=y --binpkg-changed-deps=n";
 
