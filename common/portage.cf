@@ -63,41 +63,41 @@ bundle agent portage(root, role, arch, multilib)
         create => "true",
         comment => "Manage Portage-related open directories";
 
-      "$(root)$(directory_names.fs_config_pm_env)/$(file_groups.pm_env[$(role)]).conf"
+      "$(root)$(directory_names.config_pm_env)/$(file_groups.pm_env[$(role)]).conf"
         move_obstructions => "true",
         link_from => cryptoo_portage_env("$(file_groups.pm_env[$(role)]).conf"),
         comment => "Link all files in /etc/portage/env";
 
-      "$(root)$(directory_names.fs_config_pm_environments)/$(file_groups.pm_environment[$(role)])"
+      "$(root)$(directory_names.config_pm_environments)/$(file_groups.pm_environment[$(role)])"
         move_obstructions => "true",
         link_from => cryptoo_package_env("$(file_groups.pm_environment[$(role)])"),
         comment => "Link all files in /etc/portage/package.env";
 
-      "$(root)$(directory_names.fs_config_pm_keywords)/$(file_groups.keywords[$(role)])"
+      "$(root)$(directory_names.config_pm_keywords)/$(file_groups.keywords[$(role)])"
         move_obstructions => "true",
         link_from => cryptoo_package_keyword("$(file_groups.keywords[$(role)])"),
         comment => "Link all files in /etc/portage/package.keywords";
 
-      "$(root)$(directory_names.fs_config_pm_mask)/$(file_groups.mask[$(role)])"
+      "$(root)$(directory_names.config_pm_mask)/$(file_groups.mask[$(role)])"
         move_obstructions => "true",
         link_from => cryptoo_package_mask("$(file_groups.mask[$(role)])"),
         comment => "Link all files in /etc/portage/package.mask";
 
-      "$(root)$(directory_names.fs_config_pm_unmask)/$(file_groups.unmask[$(role)])"
+      "$(root)$(directory_names.config_pm_unmask)/$(file_groups.unmask[$(role)])"
         move_obstructions => "true",
         link_from => cryptoo_package_unmask("$(file_groups.unmask[$(role)])"),
         comment => "Link all files in /etc/portage/package.unmask";
 
-      "$(root)$(directory_names.fs_config_pm_use)/$(file_groups.use[$(role)])"
+      "$(root)$(directory_names.config_pm_use)/$(file_groups.use[$(role)])"
         move_obstructions => "true",
         link_from => cryptoo_package_use("$(file_groups.use[$(role)])"),
         comment => "Link all files in /etc/portage/package.use";
 
-      "$(root)$(directory_names.fs_config_pm_use)/$(file_groups.unuse[$(role)])"
+      "$(root)$(directory_names.config_pm_use)/$(file_groups.unuse[$(role)])"
         delete => default:tidy,
         comment => "Unlink unneeded files in /etc/portage/package.use";
 
-      "$(root)$(directory_names.fs_config_pm_profile)/$(file_groups.profile[$(role)])"
+      "$(root)$(directory_names.config_pm_profile)/$(file_groups.profile[$(role)])"
         move_obstructions => "true",
         link_from => cryptoo_portage_profile("$(file_groups.profile[$(role)])"),
         comment => "Link all files in /etc/portage/profile";

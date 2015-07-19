@@ -54,7 +54,7 @@ bundle agent netdev_tun(root, name, user, group)
 
     !skip::
 
-      "$(this.root)$(directory_names.fs_config_network)/$(this.name).netdev"
+      "$(this.root)$(directory_names.config_network)/$(this.name).netdev"
         perms => system,
         create => "true",
         edit_template => "/$(templates.template[ini])",

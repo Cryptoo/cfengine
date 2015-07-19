@@ -19,7 +19,7 @@ bundle common best
     any::
 
       "native_gcc_profiles"
-        slist => findfiles("/$(directory_names.fs_config_gcc_environment)/x86_64-pc-linux-gnu-*");
+        slist => findfiles("/$(directory_names.config_gcc_environment)/x86_64-pc-linux-gnu-*");
 
       "native_gcc_profiles_sorted"
         slist => sort("native_gcc_profiles", "lex");
@@ -31,7 +31,7 @@ bundle common best
         string => nth("native_gcc_profiles_sorted_reverse", 0);
 
       "stage3_amd64_multilib_candidates"
-        slist => findfiles("/$(directory_names.fs_storage_pm_install)/stage3-amd64-2*.tar.bz2");
+        slist => findfiles("/$(directory_names.storage_pm_install)/stage3-amd64-2*.tar.bz2");
 
       "stage3_amd64_multilib_sorted"
         slist => sort("stage3_amd64_multilib_candidates", "lex");
@@ -43,7 +43,7 @@ bundle common best
         string => nth("stage3_amd64_multilib_sorted_reverse", 0);
 
       "stage3_amd64_no_multilib_candidates"
-        slist => findfiles("/$(directory_names.fs_storage_pm_install)/stage3-amd64-nomultilib-2*.tar.bz2");
+        slist => findfiles("/$(directory_names.storage_pm_install)/stage3-amd64-nomultilib-2*.tar.bz2");
 
       "stage3_amd64_no_multilib_sorted"
         slist => sort("stage3_amd64_no_multilib_candidates", "lex");

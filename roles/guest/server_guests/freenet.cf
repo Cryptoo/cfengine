@@ -94,7 +94,7 @@ bundle agent freenet(root)
 
     any::
 
-      "$(this.root)$(directory_names.fs_freenet_base)/."
+      "$(this.root)$(directory_names.freenet_base)/."
         perms => freenet,
         create => "true";
 

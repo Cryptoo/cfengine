@@ -70,7 +70,7 @@ bundle agent master(root)
 
     any::
 
-      "$(this.root)$(directory_names.fs_storage_backup)/$(config.server_guests)/."
+      "$(this.root)$(directory_names.storage_backup)/$(config.server_guests)/."
         perms => qemu,
         create => "true";
 

@@ -19,275 +19,275 @@ bundle common file_names
     any::
 
       "chmod_app"
-        string => "$(directory_names.fs_apps_base)/chmod";
+        string => "$(directory_names.apps_base)/chmod";
       "chown_app"
-        string => "$(directory_names.fs_apps_base)/chown";
+        string => "$(directory_names.apps_base)/chown";
       "dd_app"
-        string => "$(directory_names.fs_apps_base)/dd";
+        string => "$(directory_names.apps_base)/dd";
       "lsblk_app"
-        string => "$(directory_names.fs_apps_base)/lsblk";
+        string => "$(directory_names.apps_base)/lsblk";
       "mount_app"
-        string => "$(directory_names.fs_apps_base)/mount";
+        string => "$(directory_names.apps_base)/mount";
       "move_app"
-        string => "$(directory_names.fs_apps_base)/mv";
+        string => "$(directory_names.apps_base)/mv";
       "rm_app"
-        string => "$(directory_names.fs_apps_base)/rm";
+        string => "$(directory_names.apps_base)/rm";
       "setfattr_app"
-        string => "$(directory_names.fs_apps_base)/setfattr";
+        string => "$(directory_names.apps_base)/setfattr";
       "tar_app"
-        string => "$(directory_names.fs_apps_base)/tar";
+        string => "$(directory_names.apps_base)/tar";
       "umount_app"
-        string => "$(directory_names.fs_apps_base)/umount";
+        string => "$(directory_names.apps_base)/umount";
       "dracut_image"
-        string => "$(directory_names.fs_boot_base)/dracut.initramfs.cpio";
+        string => "$(directory_names.boot_base)/dracut.initramfs.cpio";
       "dmcrypt_key"
-        string => "$(directory_names.fs_boot_base)/master.key";
+        string => "$(directory_names.boot_base)/master.key";
       "null"
-        string => "$(directory_names.fs_dev_base)/null";
+        string => "$(directory_names.dev_base)/null";
       "crypttab"
-        string => "$(directory_names.fs_config_base)/crypttab";
+        string => "$(directory_names.config_base)/crypttab";
       "dnsmasq_conf"
-        string => "$(directory_names.fs_config_base)/dnsmasq.conf";
+        string => "$(directory_names.config_base)/dnsmasq.conf";
       "fstab"
-        string => "$(directory_names.fs_config_base)/fstab";
+        string => "$(directory_names.config_base)/fstab";
       "group"
-        string => "$(directory_names.fs_config_base)/group";
+        string => "$(directory_names.config_base)/group";
       "hosts"
-        string => "$(directory_names.fs_config_base)/hosts";
+        string => "$(directory_names.config_base)/hosts";
       "hostname_systemd"
-        string => "$(directory_names.fs_config_base)/hostname";
+        string => "$(directory_names.config_base)/hostname";
       "locale"
-        string => "$(directory_names.fs_config_base)/locale.gen";
+        string => "$(directory_names.config_base)/locale.gen";
       "localtime"
-        string => "$(directory_names.fs_config_base)/localtime";
+        string => "$(directory_names.config_base)/localtime";
       "mtab"
-        string => "$(directory_names.fs_config_base)/mtab";
+        string => "$(directory_names.config_base)/mtab";
       "networks"
-        string => "$(directory_names.fs_config_base)/networks";
+        string => "$(directory_names.config_base)/networks";
       "passwd"
-        string => "$(directory_names.fs_config_base)/passwd";
+        string => "$(directory_names.config_base)/passwd";
       "dns_config"
-        string => "$(directory_names.fs_config_base)/resolv.conf";
+        string => "$(directory_names.config_base)/resolv.conf";
       "dns_config_dnsmasq"
-        string => "$(directory_names.fs_config_base)/resolv.dnsmasq.conf";
+        string => "$(directory_names.config_base)/resolv.dnsmasq.conf";
       "shadow"
-        string => "$(directory_names.fs_config_base)/shadow";
+        string => "$(directory_names.config_base)/shadow";
       "tmux_conf"
-        string => "$(directory_names.fs_config_base)/tmux.conf";
+        string => "$(directory_names.config_base)/tmux.conf";
       "system_bashrc"
-        string => "$(directory_names.fs_config_bash)/bashrc";
+        string => "$(directory_names.config_bash)/bashrc";
       "system_bash_logout"
-        string => "$(directory_names.fs_config_bash)/bash_logout";
+        string => "$(directory_names.config_bash)/bash_logout";
       "bitcoin_conf"
-        string => "$(directory_names.fs_config_bitcoin)/bitcoin.conf";
+        string => "$(directory_names.config_bitcoin)/bitcoin.conf";
       "cryptoo_hostname"
-        string => "$(directory_names.fs_config_cryptoo_incoming)/hostname";
+        string => "$(directory_names.config_cryptoo_incoming)/hostname";
       "machine_names"
-        string => "$(directory_names.fs_config_cryptoo_incoming)/machine_names.json";
+        string => "$(directory_names.config_cryptoo_incoming)/machine_names.json";
       "cryptoo_role"
-        string => "$(directory_names.fs_config_cryptoo_incoming)/role";
+        string => "$(directory_names.config_cryptoo_incoming)/role";
       "site_config"
-        string => "$(directory_names.fs_config_cryptoo_incoming)/site_config.json";
+        string => "$(directory_names.config_cryptoo_incoming)/site_config.json";
       "subnet_config"
-        string => "$(directory_names.fs_config_cryptoo_incoming)/subnet_config.json";
+        string => "$(directory_names.config_cryptoo_incoming)/subnet_config.json";
       "extra_ssh_keys"
-        string => "$(directory_names.fs_config_cryptoo_incoming)/extra_ssh_keys";
+        string => "$(directory_names.config_cryptoo_incoming)/extra_ssh_keys";
       "master_ssh_key"
-        string => "$(directory_names.fs_config_cryptoo_incoming)/master_ssh_key";
+        string => "$(directory_names.config_cryptoo_incoming)/master_ssh_key";
       "hidden_service_incoming"
-        string => "$(directory_names.fs_config_cryptoo_incoming)/hidden_service.json";
+        string => "$(directory_names.config_cryptoo_incoming)/hidden_service.json";
       "port_info_incoming"
-        string => "$(directory_names.fs_config_cryptoo_incoming)/port_info.json";
+        string => "$(directory_names.config_cryptoo_incoming)/port_info.json";
       "bitcoin_rpc_outgoing"
-        string => "$(directory_names.fs_config_cryptoo_outgoing)/bitcoin_rpc.json";
+        string => "$(directory_names.config_cryptoo_outgoing)/bitcoin_rpc.json";
       "hidden_service_outgoing"
-        string => "$(directory_names.fs_config_cryptoo_outgoing)/hidden_service.json";
+        string => "$(directory_names.config_cryptoo_outgoing)/hidden_service.json";
       "port_info_outgoing"
-        string => "$(directory_names.fs_config_cryptoo_outgoing)/port_info.json";
+        string => "$(directory_names.config_cryptoo_outgoing)/port_info.json";
       "hidden_service_bitcoin"
-        string => "$(directory_names.fs_config_guest_inboxes)/bitcoin/hidden_service.json";
+        string => "$(directory_names.config_guest_inboxes)/bitcoin/hidden_service.json";
       "hidden_service_tor"
-        string => "$(directory_names.fs_config_guest_outboxes)/tor/hidden_service.json";
+        string => "$(directory_names.config_guest_outboxes)/tor/hidden_service.json";
       "port_info_firewall_external"
-        string => "$(directory_names.fs_config_guest_inboxes)/firewall_external/port_info.json";
+        string => "$(directory_names.config_guest_inboxes)/firewall_external/port_info.json";
       "port_info_freenet"
-        string => "$(directory_names.fs_config_guest_outboxes)/freenet/port_info.json";
+        string => "$(directory_names.config_guest_outboxes)/freenet/port_info.json";
       "port_info_i2p"
-        string => "$(directory_names.fs_config_guest_outboxes)/i2p/port_info.json";
+        string => "$(directory_names.config_guest_outboxes)/i2p/port_info.json";
       "grub_defaults"
-        string => "$(directory_names.fs_config_default)/grub";
+        string => "$(directory_names.config_default)/grub";
       "dracut_conf"
-        string => "$(directory_names.fs_config_dracut)/cryptoo.conf";
+        string => "$(directory_names.config_dracut)/cryptoo.conf";
       "env_cryptoo"
-        string => "$(directory_names.fs_config_environment)/00cryptoo";
+        string => "$(directory_names.config_environment)/00cryptoo";
       "env_locale"
-        string => "$(directory_names.fs_config_environment)/02locale";
+        string => "$(directory_names.config_environment)/02locale";
       "env_kernel"
-        string => "$(directory_names.fs_config_environment)/99kernel";
+        string => "$(directory_names.config_environment)/99kernel";
       "env_gcc_native"
-        string => "$(directory_names.fs_config_gcc_environment)/.NATIVE";
+        string => "$(directory_names.config_gcc_environment)/.NATIVE";
       "env_gcc_x86_64"
-        string => "$(directory_names.fs_config_gcc_environment)/config-x86_64-pc-linux-gnu";
+        string => "$(directory_names.config_gcc_environment)/config-x86_64-pc-linux-gnu";
       "libvirt_guests_conf"
-        string => "$(directory_names.fs_config_libvirt)/libvirt-guests.conf";
+        string => "$(directory_names.config_libvirt)/libvirt-guests.conf";
       "firstrun"
-        string => "$(directory_names.fs_config_local_scripts)/firstrun.start";
+        string => "$(directory_names.config_local_scripts)/firstrun.start";
       "ipset_private"
-        string => "$(directory_names.fs_config_local_scripts)/ipset-private.start";
+        string => "$(directory_names.config_local_scripts)/ipset-private.start";
       "polipo_config"
-        string => "$(directory_names.fs_config_polipo)/tor";
+        string => "$(directory_names.config_polipo)/tor";
       "pm_config"
-        string => "$(directory_names.fs_config_pm)/make.conf";
+        string => "$(directory_names.config_pm)/make.conf";
       "pm_profile"
-        string => "$(directory_names.fs_config_pm)/make.profile";
+        string => "$(directory_names.config_pm)/make.profile";
       "pm_profile_upstream"
-        string => "$(directory_names.fs_config_pm_upstream)/parent";
+        string => "$(directory_names.config_pm_upstream)/parent";
       "privoxy_config"
-        string => "$(directory_names.fs_config_privoxy)/config";
+        string => "$(directory_names.config_privoxy)/config";
       "mount_info"
         string => "/proc/self/mountstats";
       "shorewall_config"
-        string => "$(directory_names.fs_config_shorewall)/shorewall.conf";
+        string => "$(directory_names.config_shorewall)/shorewall.conf";
       "shorewall_hosts"
-        string => "$(directory_names.fs_config_shorewall)/hosts";
+        string => "$(directory_names.config_shorewall)/hosts";
       "shorewall_interfaces"
-        string => "$(directory_names.fs_config_shorewall)/interfaces";
+        string => "$(directory_names.config_shorewall)/interfaces";
       "shorewall_masq"
-        string => "$(directory_names.fs_config_shorewall)/masq";
+        string => "$(directory_names.config_shorewall)/masq";
       "shorewall_policy"
-        string => "$(directory_names.fs_config_shorewall)/policy";
+        string => "$(directory_names.config_shorewall)/policy";
       "shorewall_rules"
-        string => "$(directory_names.fs_config_shorewall)/rules";
+        string => "$(directory_names.config_shorewall)/rules";
       "shorewall_zones"
-        string => "$(directory_names.fs_config_shorewall)/zones";
+        string => "$(directory_names.config_shorewall)/zones";
       "sshd_config"
-        string => "$(directory_names.fs_config_ssh)/sshd_config";
+        string => "$(directory_names.config_ssh)/sshd_config";
       "ssh_config"
-        string => "$(directory_names.fs_config_ssh)/ssh_config";
+        string => "$(directory_names.config_ssh)/ssh_config";
       "tmux_service"
-        string => "$(directory_names.fs_config_units)/tmux@.service";
+        string => "$(directory_names.config_units)/tmux@.service";
       "tor_service"
-        string => "$(directory_names.fs_config_units)/tor.service";
+        string => "$(directory_names.config_units)/tor.service";
       "xpra_service"
-        string => "$(directory_names.fs_config_units)/xpra@.service";
+        string => "$(directory_names.config_units)/xpra@.service";
       "cf_execd_service"
-        string => "$(directory_names.fs_config_units)/cf-execd.service";
+        string => "$(directory_names.config_units)/cf-execd.service";
       "cf_monitord_service"
-        string => "$(directory_names.fs_config_units)/cf-monitord.service";
+        string => "$(directory_names.config_units)/cf-monitord.service";
       "cf_serverd_service"
-        string => "$(directory_names.fs_config_units)/cf-serverd.service";
+        string => "$(directory_names.config_units)/cf-serverd.service";
       "freenet_service"
-        string => "$(directory_names.fs_config_units)/freenet.service";
+        string => "$(directory_names.config_units)/freenet.service";
       "i2p_service"
-        string => "$(directory_names.fs_config_units)/i2p.service";
+        string => "$(directory_names.config_units)/i2p.service";
       "ipset_service"
-        string => "$(directory_names.fs_config_units)/ipset.service";
+        string => "$(directory_names.config_units)/ipset.service";
       "shorewall_service"
-        string => "$(directory_names.fs_config_units)/shorewall.service";
+        string => "$(directory_names.config_units)/shorewall.service";
       "xpra_service"
-        string => "$(directory_names.fs_config_units)/xpra@.service";
+        string => "$(directory_names.config_units)/xpra@.service";
       "console_autologin"
-        string => "$(directory_names.fs_config_units)/getty@tty1.service.d/autologin.conf";
+        string => "$(directory_names.config_units)/getty@tty1.service.d/autologin.conf";
       "serial_autologin"
-        string => "$(directory_names.fs_config_units)/serial-getty@ttyS0.service.d/autologin.conf";
+        string => "$(directory_names.config_units)/serial-getty@ttyS0.service.d/autologin.conf";
       "znc_datadir"
-        string => "$(directory_names.fs_config_units)/znc.service.d/datadir.conf";
+        string => "$(directory_names.config_units)/znc.service.d/datadir.conf";
       "torrc"
-        string => "$(directory_names.fs_config_tor)/torrc";
+        string => "$(directory_names.config_tor)/torrc";
       "unbound_config"
-        string => "$(directory_names.fs_config_unbound)/unbound.conf";
+        string => "$(directory_names.config_unbound)/unbound.conf";
       "xpra_config"
-        string => "$(directory_names.fs_config_xpra)/xpra.conf";
+        string => "$(directory_names.config_xpra)/xpra.conf";
       "freenet_config"
-        string => "$(directory_names.fs_freenet_base)/freenet.ini";
+        string => "$(directory_names.freenet_base)/freenet.ini";
       "i2p_config"
-        string => "$(directory_names.fs_i2p_base)/clients.config";
+        string => "$(directory_names.i2p_base)/clients.config";
       "i2ptunnel_config"
-        string => "$(directory_names.fs_i2p_base)/i2ptunnel.config";
+        string => "$(directory_names.i2p_base)/i2ptunnel.config";
       "i2p_router_config"
-        string => "$(directory_names.fs_i2p_user)/router.config";
+        string => "$(directory_names.i2p_user)/router.config";
       "proc_mounts"
         string => "proc/self/mounts";
       "root_tmux"
-        string => "$(directory_names.fs_admin_base)/.tmux.conf";
+        string => "$(directory_names.admin_base)/.tmux.conf";
       "authorized_keys"
-        string => "$(directory_names.fs_admin_ssh)/authorized_keys";
+        string => "$(directory_names.admin_ssh)/authorized_keys";
       "default_key"
-        string => "$(directory_names.fs_admin_ssh)/id_ed25519";
+        string => "$(directory_names.admin_ssh)/id_ed25519";
       "default_key_public"
-        string => "$(directory_names.fs_admin_ssh)/id_ed25519.pub";
+        string => "$(directory_names.admin_ssh)/id_ed25519.pub";
       "blkid_app"
-        string => "$(directory_names.fs_admin_apps)/blkid";
+        string => "$(directory_names.admin_apps)/blkid";
       "losetup_app"
-        string => "$(directory_names.fs_admin_apps)/losetup";
+        string => "$(directory_names.admin_apps)/losetup";
       "mkfs_app"
-        string => "$(directory_names.fs_admin_apps)/mkfs";
+        string => "$(directory_names.admin_apps)/mkfs";
       "rc_app"
-        string => "$(directory_names.fs_admin_apps)/rc";
+        string => "$(directory_names.admin_apps)/rc";
       "storage_pm_site_meta"
-        string => "$(directory_names.fs_storage_pm_site_meta)/layout.conf";
+        string => "$(directory_names.storage_pm_site_meta)/layout.conf";
       "storage_pm_site_repo"
-        string => "$(directory_names.fs_storage_pm_site_profile)/repo_name";
+        string => "$(directory_names.storage_pm_site_profile)/repo_name";
       "kernel_makefile"
-        string => "$(directory_names.fs_storage_kernel)/Makefile";
+        string => "$(directory_names.storage_kernel)/Makefile";
       "chroot_app"
-        string => "$(directory_names.fs_standard_apps)/chroot";
+        string => "$(directory_names.standard_apps)/chroot";
       "cpu2use_app"
-        string => "$(directory_names.fs_standard_apps)/cpuinfo2cpuflags-x86";
+        string => "$(directory_names.standard_apps)/cpuinfo2cpuflags-x86";
       "dracut_app"
-        string => "$(directory_names.fs_standard_apps)/dracut";
+        string => "$(directory_names.standard_apps)/dracut";
       "emerge_app"
-        string => "$(directory_names.fs_standard_apps)/emerge";
+        string => "$(directory_names.standard_apps)/emerge";
       "find_app"
-        string => "$(directory_names.fs_standard_apps)/find";
+        string => "$(directory_names.standard_apps)/find";
       "gcc_config_app"
-        string => "$(directory_names.fs_standard_apps)/gcc-config";
+        string => "$(directory_names.standard_apps)/gcc-config";
       "git_app"
-        string => "$(directory_names.fs_standard_apps)/git";
+        string => "$(directory_names.standard_apps)/git";
       "layman_app"
-        string => "$(directory_names.fs_standard_apps)/layman";
+        string => "$(directory_names.standard_apps)/layman";
       "rsync_app"
-        string => "$(directory_names.fs_standard_apps)/rsync";
+        string => "$(directory_names.standard_apps)/rsync";
       "ssh_app"
-        string => "$(directory_names.fs_standard_apps)/ssh";
+        string => "$(directory_names.standard_apps)/ssh";
       "ssh_keygen_app"
-        string => "$(directory_names.fs_standard_apps)/ssh-keygen";
+        string => "$(directory_names.standard_apps)/ssh-keygen";
       "systemd_app"
-        string => "$(directory_names.fs_standard_apps)/systemctl";
+        string => "$(directory_names.standard_apps)/systemctl";
       "virsh_app"
-        string => "$(directory_names.fs_standard_apps)/virsh";
+        string => "$(directory_names.standard_apps)/virsh";
       "znc_app"
-        string => "$(directory_names.fs_standard_apps)/znc";
+        string => "$(directory_names.standard_apps)/znc";
       "cryptoo_perms_app"
-        string => "$(directory_names.fs_cryptoo_apps)/cryptoo_perms";
+        string => "$(directory_names.cryptoo_apps)/cryptoo_perms";
       "distfiles_perms_app"
-        string => "$(directory_names.fs_cryptoo_apps)/distfiles_perms";
+        string => "$(directory_names.cryptoo_apps)/distfiles_perms";
       "pkgdir_perms_app"
-        string => "$(directory_names.fs_cryptoo_apps)/pkgdir_perms";
+        string => "$(directory_names.cryptoo_apps)/pkgdir_perms";
       "cryptoo_profile"
-        string => "$(directory_names.fs_cryptoo_profiles)/repo_name";
+        string => "$(directory_names.cryptoo_profiles)/repo_name";
       "pm_machine_meta"
-        string => "$(directory_names.fs_machine_pm_meta)/layout.conf";
+        string => "$(directory_names.machine_pm_meta)/layout.conf";
       "pm_machine_repo"
-        string => "$(directory_names.fs_machine_pm_profile)/repo_name";
+        string => "$(directory_names.machine_pm_profile)/repo_name";
       "envupdate_app"
-        string => "$(directory_names.fs_standard_admin_apps)/env-update";
+        string => "$(directory_names.standard_admin_apps)/env-update";
       "etcupdate_app"
-        string => "$(directory_names.fs_standard_admin_apps)/etc-update";
+        string => "$(directory_names.standard_admin_apps)/etc-update";
       "groupadd_app"
-        string => "$(directory_names.fs_standard_admin_apps)/groupadd";
+        string => "$(directory_names.standard_admin_apps)/groupadd";
       "groupmems_app"
-        string => "$(directory_names.fs_standard_admin_apps)/groupmems";
+        string => "$(directory_names.standard_admin_apps)/groupmems";
       "useradd_app"
-        string => "$(directory_names.fs_standard_admin_apps)/useradd";
+        string => "$(directory_names.standard_admin_apps)/useradd";
       "libvirtd_app"
-        string => "$(directory_names.fs_standard_admin_apps)/libvirtd";
+        string => "$(directory_names.standard_admin_apps)/libvirtd";
       "localegen_app"
-        string => "$(directory_names.fs_standard_admin_apps)/locale-gen";
+        string => "$(directory_names.standard_admin_apps)/locale-gen";
       "shorewall_app"
-        string => "$(directory_names.fs_standard_admin_apps)/shorewall";
+        string => "$(directory_names.standard_admin_apps)/shorewall";
       "sshd_app"
-        string => "$(directory_names.fs_standard_admin_apps)/sshd";
+        string => "$(directory_names.standard_admin_apps)/sshd";
       "template_cf_execd"
         string => "common/cf-execd_service.txt",
         meta => { "template" };
@@ -430,20 +430,20 @@ bundle common file_names
         string => "host/subnets.txt",
         meta => { "template" };
       "bitcoin_conf_link"
-        string => "$(directory_names.fs_bitcoin_home)/bitcoin.conf";
+        string => "$(directory_names.bitcoin_home)/bitcoin.conf";
       "overlay_conf"
-        string => "$(directory_names.fs_volatile_overlay)/make.conf";
+        string => "$(directory_names.volatile_overlay)/make.conf";
       "bitcoin_overlay"
-        string => "$(directory_names.fs_bitcoin_overlay)/profiles/repo_name";
+        string => "$(directory_names.bitcoin_overlay)/profiles/repo_name";
       "random_seed"
-        string => "$(directory_names.fs_volatile_systemd)/random-seed";
+        string => "$(directory_names.volatile_systemd)/random-seed";
       "bitcoin_hs"
-        string => "$(directory_names.fs_bitcoin_hs)/hostname";
+        string => "$(directory_names.bitcoin_hs)/hostname";
       "znc_ssl"
-        string => "$(directory_names.fs_volatile_znc)/znc.pem";
+        string => "$(directory_names.volatile_znc)/znc.pem";
       "znc_config"
-        string => "$(directory_names.fs_znc_config)/znc.conf";
+        string => "$(directory_names.znc_config)/znc.conf";
       "pm_installed_sets"
-        string => "$(directory_names.fs_volatile_pm)/world_sets";
+        string => "$(directory_names.volatile_pm)/world_sets";
 
 }

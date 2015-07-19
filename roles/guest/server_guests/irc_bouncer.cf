@@ -47,7 +47,7 @@ bundle agent irc_bouncer(root)
                    "values":
                      [
                        { "LHS": "ExecStart", "RHS": "" },
-                       { "LHS": "ExecStart", "RHS": "/usr/bin/znc -f -d /$(directory_names.fs_volatile_znc)" }
+                       { "LHS": "ExecStart", "RHS": "/usr/bin/znc -f -d /$(directory_names.volatile_znc)" }
                      ]
                  }
                ]
@@ -78,7 +78,7 @@ classes:
 
     any::
 
-      "$(this.root)$(directory_names.fs_volatile_znc)/."
+      "$(this.root)$(directory_names.volatile_znc)/."
         perms => znc,
         create => "true";
 
@@ -92,7 +92,7 @@ classes:
 
     !bootstrap::
 
-      "$(this.root)$(directory_names.fs_znc_config)/."
+      "$(this.root)$(directory_names.znc_config)/."
         perms => znc,
         create => "true";
 
@@ -122,7 +122,7 @@ classes:
     need_znc_ssl&have_znc_app::
 
       "/$(file_names.znc_app)"
-        args => "--system-wide-config-as znc --makepem -d /$(directory_names.fs_volatile_znc)",
+        args => "--system-wide-config-as znc --makepem -d /$(directory_names.volatile_znc)",
         contain => silent;
 
 }

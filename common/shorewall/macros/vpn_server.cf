@@ -76,7 +76,7 @@ bundle agent shorewall_macro_vpn_server(root, port_info)
 
     any::
 
-      "$(root)$(directory_names.fs_config_shorewall)/macro.$(this.macro_name)"
+      "$(root)$(directory_names.config_shorewall)/macro.$(this.macro_name)"
         perms => system,
         create => "true",
         edit_template => "/$(templates.template[shorewall_macro])",

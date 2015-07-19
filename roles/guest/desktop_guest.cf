@@ -82,15 +82,15 @@ bundle agent desktop_guest(root, role, arch, multilib)
 
     any::
 
-      "$(this.root)$(directory_names.fs_cryptoo_home)/."
+      "$(this.root)$(directory_names.cryptoo_home)/."
         perms => cryptoo,
         create => "true";
 
-      "$(this.root)$(directory_names.fs_cryptoo_home)/$(important_directories)/."
+      "$(this.root)$(directory_names.cryptoo_home)/$(important_directories)/."
         perms => cryptoo,
         create => "true";
 
-      "$(this.root)$(directory_names.fs_config_xpra)/."
+      "$(this.root)$(directory_names.config_xpra)/."
         perms => system,
         create => "true";
 
@@ -122,7 +122,7 @@ bundle agent desktop_guest(root, role, arch, multilib)
     any::
 
       "/$(file_names.chown_app)"
-        args => "-R cryptoo:cryptoo /$(directory_names.fs_cryptoo_home)",
+        args => "-R cryptoo:cryptoo /$(directory_names.cryptoo_home)",
         classes => always_success,
         contain => silent_chroot($(root));
 

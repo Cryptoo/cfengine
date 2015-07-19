@@ -23,7 +23,7 @@ bundle agent prepare_image(name, multilib, mount_location)
     any::
 
       "image_file"
-        string => "/$(directory_names.fs_libvirt_images)/$(this.name).img";
+        string => "/$(directory_names.libvirt_images)/$(this.name).img";
 
       "image_size_mb"
         string => "4096";
@@ -72,7 +72,7 @@ bundle agent prepare_image(name, multilib, mount_location)
         handle => "skeleton_extracted";
 
       "/$(file_names.rm_app)"
-        args => "-r /$(this.mount_location)/$(directory_names.fs_config_pm)",
+        args => "-r /$(this.mount_location)/$(directory_names.config_pm)",
         depends_on => { "skeleton_extracted" },
         classes => default:if_ok("image_prepared");
 

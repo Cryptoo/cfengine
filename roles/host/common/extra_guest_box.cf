@@ -47,44 +47,44 @@ bundle agent extra_guest_box(guest_number)
 
     any::
 
-      "/$(directory_names.fs_storage_backup)/$(this.guest_name)/."
+      "/$(directory_names.storage_backup)/$(this.guest_name)/."
         perms => qemu,
         create => "true";
 
-      "/$(directory_names.fs_config_guest_inboxes)/$(this.guest_name)/."
+      "/$(directory_names.config_guest_inboxes)/$(this.guest_name)/."
         perms => root_qemu,
         create => "true";
 
-      "/$(directory_names.fs_config_guest_inboxes)/$(this.guest_name)/site_config.json"
+      "/$(directory_names.config_guest_inboxes)/$(this.guest_name)/site_config.json"
         perms => root_qemu,
         move_obstructions => "true",
         copy_from => default:local_cp("/$(cryptoo:file_names.site_config)");
 
-      "/$(directory_names.fs_config_guest_inboxes)/$(this.guest_name)/machine_names.json"
+      "/$(directory_names.config_guest_inboxes)/$(this.guest_name)/machine_names.json"
         perms => root_qemu,
         move_obstructions => "true",
         copy_from => default:local_cp("/$(cryptoo:file_names.machine_names)");
 
-      "/$(directory_names.fs_config_guest_inboxes)/$(this.guest_name)/subnet_config.json"
+      "/$(directory_names.config_guest_inboxes)/$(this.guest_name)/subnet_config.json"
         perms => root_qemu,
         move_obstructions => "true",
         copy_from => default:local_cp("/$(cryptoo:file_names.subnet_config)");
 
-      "/$(directory_names.fs_config_guest_inboxes)/$(this.guest_name)/master_ssh_key"
+      "/$(directory_names.config_guest_inboxes)/$(this.guest_name)/master_ssh_key"
         perms => root_qemu,
         move_obstructions => "true",
         copy_from => default:local_cp("/$(cryptoo:file_names.default_key_public)");
 
-      "/$(directory_names.fs_config_guest_outboxes)/$(this.guest_name)/."
+      "/$(directory_names.config_guest_outboxes)/$(this.guest_name)/."
         perms => root_qemu,
         create => "true";
 
-      "/$(directory_names.fs_config_guest_inboxes)/$(this.guest_name)/role"
+      "/$(directory_names.config_guest_inboxes)/$(this.guest_name)/role"
         perms => root_qemu,
         create => "false",
         ifvarclass => "role_ok_$(this.guest_number)";
 
-      "/$(directory_names.fs_config_guest_inboxes)/$(this.guest_name)/hostname"
+      "/$(directory_names.config_guest_inboxes)/$(this.guest_name)/hostname"
         perms => root_qemu,
         create => "false",
         ifvarclass => "hostname_ok_$(this.guest_number)";
@@ -94,23 +94,23 @@ bundle agent extra_guest_box(guest_number)
     any::
 
       "set role"
-        usebundle => default:file_make("/$(directory_names.fs_config_guest_inboxes)/$(this.guest_name)/role", "$(this.guest_role)"),
+        usebundle => default:file_make("/$(directory_names.config_guest_inboxes)/$(this.guest_name)/role", "$(this.guest_role)"),
         classes => default:if_ok("role_ok_$(this.guest_number)");
 
       "set hostname"
-        usebundle => default:file_make("/$(directory_names.fs_config_guest_inboxes)/$(this.guest_name)/hostname", "$(this.guest_hostname)"),
+        usebundle => default:file_make("/$(directory_names.config_guest_inboxes)/$(this.guest_name)/hostname", "$(this.guest_hostname)"),
         classes => default:if_ok("hostname_ok_$(this.guest_number)");
 
     have_setfattr_app::
 
       "set virtfs uid on guest inbox"
-        usebundle => setfattr("user.virtfs.uid", "$(config.virtfs[uid_gid][0])", "/$(directory_names.fs_config_guest_inboxes)", "$(this.guest_name)");
+        usebundle => setfattr("user.virtfs.uid", "$(config.virtfs[uid_gid][0])", "/$(directory_names.config_guest_inboxes)", "$(this.guest_name)");
 
       "set virtfs gid on guest inbox"
-        usebundle => setfattr("user.virtfs.gid", "$(config.virtfs[uid_gid][0])", "/$(directory_names.fs_config_guest_inboxes)", "$(this.guest_name)");
+        usebundle => setfattr("user.virtfs.gid", "$(config.virtfs[uid_gid][0])", "/$(directory_names.config_guest_inboxes)", "$(this.guest_name)");
 
       "set virtfs permissions on guest inbox"
-        usebundle => setfattr("user.virtfs.mode", "$(config.virtfs[mode][dir][0700])", "/$(directory_names.fs_config_guest_inboxes)", "$(this.guest_name)");
+        usebundle => setfattr("user.virtfs.mode", "$(config.virtfs[mode][dir][0700])", "/$(directory_names.config_guest_inboxes)", "$(this.guest_name)");
 
   commands:
 

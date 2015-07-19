@@ -32,7 +32,7 @@ bundle agent fstab(root, type, role)
         slist => getindices("chroot");
 
       "chroot_path[$(chroot_list)]"
-        string => "/$(directory_names.fs_volatile_images)/$(chroot[$(chroot_list)][class])/$(chroot[$(chroot_list)][arch])/$(chroot[$(chroot_list)][multilib])/";
+        string => "/$(directory_names.volatile_images)/$(chroot[$(chroot_list)][class])/$(chroot[$(chroot_list)][arch])/$(chroot[$(chroot_list)][multilib])/";
 
       "chroot_path_list"
         slist => getvalues("chroot_path");

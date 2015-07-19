@@ -21,8 +21,8 @@ bundle agent fstab_chroot(path)
       "fstab_json[101_$(this.path)]"
         string => '
           {
-            "source": "/$(directory_names.fs_volatile_overlay)",
-            "target": "$(this.path)$(directory_names.fs_volatile_overlay)",
+            "source": "/$(directory_names.volatile_overlay)",
+            "target": "$(this.path)$(directory_names.volatile_overlay)",
             "type": "none",
             "options": "bind",
             "dump": "0",
@@ -32,8 +32,8 @@ bundle agent fstab_chroot(path)
       "fstab_json[102_$(this.path)]"
         string => '
           {
-            "source": "/$(directory_names.fs_cryptoo)",
-            "target": "$(this.path)$(directory_names.fs_cryptoo)",
+            "source": "/$(directory_names.cryptoo)",
+            "target": "$(this.path)$(directory_names.cryptoo)",
             "type": "none",
             "options": "bind",
             "dump": "0",
@@ -43,8 +43,8 @@ bundle agent fstab_chroot(path)
       "fstab_json[103_$(this.path)]"
         string => '
           {
-            "source": "/$(directory_names.fs_pm)",
-            "target": "$(this.path)$(directory_names.fs_pm)",
+            "source": "/$(directory_names.pm)",
+            "target": "$(this.path)$(directory_names.pm)",
             "type": "none",
             "options": "bind",
             "dump": "0",
@@ -54,8 +54,8 @@ bundle agent fstab_chroot(path)
       "fstab_json[104_$(this.path)]"
         string => '
           {
-            "source": "/$(directory_names.fs_site_pm)",
-            "target": "$(this.path)$(directory_names.fs_site_pm)",
+            "source": "/$(directory_names.site_pm)",
+            "target": "$(this.path)$(directory_names.site_pm)",
             "type": "none",
             "options": "bind",
             "dump": "0",
@@ -65,8 +65,8 @@ bundle agent fstab_chroot(path)
       "fstab_json[105_$(this.path)]"
         string => '
           {
-            "source": "/$(directory_names.fs_site_sources)",
-            "target": "$(this.path)$(directory_names.fs_site_sources)",
+            "source": "/$(directory_names.site_sources)",
+            "target": "$(this.path)$(directory_names.site_sources)",
             "type": "none",
             "options": "bind",
             "dump": "0",
@@ -76,8 +76,8 @@ bundle agent fstab_chroot(path)
       "fstab_json[106_$(this.path)]"
         string => '
           {
-            "source": "/$(directory_names.fs_dev_base)",
-            "target": "$(this.path)$(directory_names.fs_dev_base)",
+            "source": "/$(directory_names.dev_base)",
+            "target": "$(this.path)$(directory_names.dev_base)",
             "type": "none",
             "options": "bind",
             "dump": "0",
@@ -87,8 +87,8 @@ bundle agent fstab_chroot(path)
       "fstab_json[107_$(this.path)]"
         string => '
           {
-            "source": "/$(directory_names.fs_proc_base)",
-            "target": "$(this.path)$(directory_names.fs_proc_base)",
+            "source": "/$(directory_names.proc_base)",
+            "target": "$(this.path)$(directory_names.proc_base)",
             "type": "none",
             "options": "bind",
             "dump": "0",
@@ -98,8 +98,8 @@ bundle agent fstab_chroot(path)
       "fstab_json[108_$(this.path)]"
         string => '
           {
-            "source": "/$(directory_names.fs_sys_base)",
-            "target": "$(this.path)$(directory_names.fs_sys_base)",
+            "source": "/$(directory_names.sys_base)",
+            "target": "$(this.path)$(directory_names.sys_base)",
             "type": "none",
             "options": "bind",
             "dump": "0",
@@ -109,8 +109,8 @@ bundle agent fstab_chroot(path)
       "fstab_json[109_$(this.path)]"
         string => '
           {
-            "source": "/$(directory_names.fs_site_apps)",
-            "target": "$(this.path)$(directory_names.fs_site_apps)",
+            "source": "/$(directory_names.site_apps)",
+            "target": "$(this.path)$(directory_names.site_apps)",
             "type": "none",
             "options": "bind",
             "dump": "0",
@@ -120,8 +120,8 @@ bundle agent fstab_chroot(path)
       "fstab_json[110_$(this.path)]"
         string => '
           {
-            "source": "/$(directory_names.fs_site_srcpkg) ",
-            "target": "$(this.path)$(directory_names.fs_site_srcpkg) ",
+            "source": "/$(directory_names.site_srcpkg) ",
+            "target": "$(this.path)$(directory_names.site_srcpkg) ",
             "type": "none",
             "options": "bind",
             "dump": "0",
@@ -131,8 +131,8 @@ bundle agent fstab_chroot(path)
       "fstab_json[111_$(this.path)]"
         string => '
           {
-            "source": "/$(directory_names.fs_site_binpkg)",
-            "target": "$(this.path)$(directory_names.fs_site_binpkg)",
+            "source": "/$(directory_names.site_binpkg)",
+            "target": "$(this.path)$(directory_names.site_binpkg)",
             "type": "none",
             "options": "bind",
             "dump": "0",
@@ -143,7 +143,7 @@ bundle agent fstab_chroot(path)
         string => '
           {
             "source": "none",
-            "target": "$(this.path)$(directory_names.fs_temp_base)",
+            "target": "$(this.path)$(directory_names.temp_base)",
             "type": "tmpfs",
             "options": "size=1G,nosuid,nodev",
             "dump": "0",

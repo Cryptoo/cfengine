@@ -31,8 +31,8 @@ bundle common templates
         slist => getvalues("template_name");
 
       "template[$(template_names)]"
-        string => ifelse("local_template_$(template_names)", "$(cryptoo:directory_names.fs_volatile_local_templates)/$(cryptoo:file_names.template_$(template_names))",
-                         "!local_template_$(template_names)", "$(cryptoo:directory_names.fs_volatile_cf_templates)/$(cryptoo:file_names.template_$(template_names))",
+        string => ifelse("local_template_$(template_names)", "$(cryptoo:directory_names.volatile_local_templates)/$(cryptoo:file_names.template_$(template_names))",
+                         "!local_template_$(template_names)", "$(cryptoo:directory_names.volatile_cf_templates)/$(cryptoo:file_names.template_$(template_names))",
                          "missing");
 
   classes:
@@ -40,7 +40,7 @@ bundle common templates
     any::
 
       "local_template_$(template_names)"
-        expression => fileexists("/$(cryptoo:directory_names.fs_volatile_local_templates)/$(cryptoo:file_names.template_$(template_names))");
+        expression => fileexists("/$(cryptoo:directory_names.volatile_local_templates)/$(cryptoo:file_names.template_$(template_names))");
 
       "template_list"
         expression => regextract("cryptoo:file_names\.template_(.*)", "$(template_vars)", "template_var[$(template_vars)]");

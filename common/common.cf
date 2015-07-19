@@ -104,17 +104,17 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
         create => "true",
         handle => "$(root)$(directory_groups.common_open)";
 
-      "$(root)$(directory_names.fs_mount_shared)/."
+      "$(root)$(directory_names.mount_shared)/."
         depends_on => { "users_ok" },
         perms => guest,
         create => "true",
-        handle => "$(root)$(directory_names.fs_mount_shared)";
+        handle => "$(root)$(directory_names.mount_shared)";
 
       "$(root)$(file_names.mtab)"
         move_obstructions => "true",
         link_from => proc_mounts;
 
-      "$(root)$(directory_names.fs_standard_kernel)"
+      "$(root)$(directory_names.standard_kernel)"
         move_obstructions => "true",
         link_from => kernel_dir;
 

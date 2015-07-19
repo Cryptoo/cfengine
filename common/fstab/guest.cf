@@ -36,7 +36,7 @@ bundle agent fstab_guest(role)
         string => '
           {
             "source": "/bin",
-            "target": "/$(directory_names.fs_site_apps)",
+            "target": "/$(directory_names.site_apps)",
             "type": "9p",
             "options": "trans=virtio,version=9p2000.L,ro,nodev,nosuid,noatime",
             "dump": "0",
@@ -58,7 +58,7 @@ bundle agent fstab_guest(role)
         string => '
           {
             "source": "/cryptoo",
-            "target": "/$(directory_names.fs_cryptoo)",
+            "target": "/$(directory_names.cryptoo)",
             "type": "9p",
             "options": "trans=virtio,version=9p2000.L,ro,nodev,nosuid,noatime",
             "dump": "0",
@@ -69,7 +69,7 @@ bundle agent fstab_guest(role)
         string => '
           {
             "source": "/distfiles",
-            "target": "/$(directory_names.fs_site_srcpkg)",
+            "target": "/$(directory_names.site_srcpkg)",
             "type": "9p",
             "options": "trans=virtio,version=9p2000.L,rw,noexec,nodev,nosuid,noatime",
             "dump": "0",
@@ -80,7 +80,7 @@ bundle agent fstab_guest(role)
         string => '
           {
             "source": "/inbox",
-            "target": "/$(directory_names.fs_config_cryptoo_incoming)",
+            "target": "/$(directory_names.config_cryptoo_incoming)",
             "type": "9p",
             "options": "trans=virtio,version=9p2000.L,ro,nodev,nosuid,noatime",
             "dump": "0",
@@ -91,7 +91,7 @@ bundle agent fstab_guest(role)
         string => '
           {
             "source": "/layman",
-            "target": "/$(directory_names.fs_volatile_overlay)",
+            "target": "/$(directory_names.volatile_overlay)",
             "type": "9p",
             "options": "trans=virtio,version=9p2000.L,ro,noexec,nodev,nosuid,noatime",
             "dump": "0",
@@ -102,7 +102,7 @@ bundle agent fstab_guest(role)
         string => '
           {
             "source": "/outbox",
-            "target": "/$(directory_names.fs_config_cryptoo_outgoing)",
+            "target": "/$(directory_names.config_cryptoo_outgoing)",
             "type": "9p",
             "options": "trans=virtio,version=9p2000.L,rw,nodev,nosuid,noatime",
             "dump": "0",
@@ -113,7 +113,7 @@ bundle agent fstab_guest(role)
         string => '
           {
             "source": "/packages",
-            "target": "/$(directory_names.fs_site_binpkg)",
+            "target": "/$(directory_names.site_binpkg)",
             "type": "9p",
             "options": "trans=virtio,version=9p2000.L,rw,noexec,nodev,nosuid,noatime",
             "dump": "0",
@@ -124,7 +124,7 @@ bundle agent fstab_guest(role)
         string => '
           {
             "source": "/portage",
-            "target": "/$(directory_names.fs_pm)",
+            "target": "/$(directory_names.pm)",
             "type": "9p",
             "options": "trans=virtio,version=9p2000.L,ro,noexec,nodev,nosuid,noatime",
             "dump": "0",
@@ -135,7 +135,7 @@ bundle agent fstab_guest(role)
         string => '
           {
             "source": "/portage-local",
-            "target": "/$(directory_names.fs_site_pm)",
+            "target": "/$(directory_names.site_pm)",
             "type": "9p",
             "options": "trans=virtio,version=9p2000.L,ro,noexec,nodev,nosuid,noatime",
             "dump": "0",
@@ -146,7 +146,7 @@ bundle agent fstab_guest(role)
         string => '
           {
             "source": "/src",
-            "target": "/$(directory_names.fs_site_sources)",
+            "target": "/$(directory_names.site_sources)",
             "type": "9p",
             "options": "trans=virtio,version=9p2000.L,ro,noexec,nodev,nosuid,noatime",
             "dump": "0",
@@ -157,7 +157,7 @@ bundle agent fstab_guest(role)
         string => '
           {
             "source": "/storage",
-            "target": "/$(directory_names.fs_mount_shared)",
+            "target": "/$(directory_names.mount_shared)",
             "type": "9p",
             "options": "trans=virtio,version=9p2000.L,rw,noexec,nodev,nosuid,noatime",
             "dump": "0",

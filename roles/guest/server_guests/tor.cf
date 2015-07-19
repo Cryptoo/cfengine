@@ -44,7 +44,7 @@ bundle agent tor(root)
             "hidden_service":
               [
                 {
-                  "dir": "/$(directory_names.fs_bitcoin_hs)",
+                  "dir": "/$(directory_names.bitcoin_hs)",
                   "port": "$(config.services[bitcoin][external_port]) 192.168.$(network.subnet_config[vpndmz]).$(config.defined_numbers[bitcoin]):$(config.services[bitcoin][external_port])"
                 }
               ]
@@ -90,15 +90,15 @@ bundle agent tor(root)
 
     any::
 
-      "$(this.root)$(directory_names.fs_config_tor)/."
+      "$(this.root)$(directory_names.config_tor)/."
         perms => system,
         create => "true";
 
-      "$(this.root)$(directory_names.fs_config_tor)/."
+      "$(this.root)$(directory_names.config_tor)/."
         perms => system,
         create => "true";
 
-      "$(this.root)$(directory_names.fs_volatile_tor)/."
+      "$(this.root)$(directory_names.volatile_tor)/."
         perms => tor,
         create => "true";
 
@@ -127,11 +127,11 @@ bundle agent tor(root)
 
     !bootstrap::
 
-      "$(this.root)$(directory_names.fs_hidden_services)/."
+      "$(this.root)$(directory_names.hidden_services)/."
         perms => tor,
         create => "true";
 
-      "$(this.root)$(directory_names.fs_bitcoin_hs)/."
+      "$(this.root)$(directory_names.bitcoin_hs)/."
         perms => tor,
         create => "true";
 

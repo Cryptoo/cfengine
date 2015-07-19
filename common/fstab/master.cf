@@ -21,7 +21,7 @@ bundle agent fstab_master
       string => '
         {
           "source": "LABEL=$(machine.hostname)-boot",
-          "target": "/$(directory_names.fs_boot_base)",
+          "target": "/$(directory_names.boot_base)",
           "type": "$(site.config[boot_fs][filesystem])",
           "options": "$(site.config[boot_fs][options])",
           "dump": "0",
@@ -54,7 +54,7 @@ bundle agent fstab_master
       string => '
         {
           "source": "/dev/mapper/$(machine.hostname)-storage",
-          "target": "/$(directory_names.fs_storage_base)",
+          "target": "/$(directory_names.storage_base)",
           "type": "$(site.config[host_fs][filesystem])",
           "options": "$(site.config[host_fs][options])",
           "dump": "0",
@@ -64,7 +64,7 @@ bundle agent fstab_master
     "fstab_json[005]"
       string => '
         {
-          "source": "/$(directory_names.fs_storage_apps)",
+          "source": "/$(directory_names.storage_apps)",
           "target": "/usr/site-local/bin",
           "type": "none",
           "options": "bind",
@@ -75,8 +75,8 @@ bundle agent fstab_master
     "fstab_json[006]"
       string => '
         {
-          "source": "/$(directory_names.fs_storage_cryptoo)",
-          "target": "/$(directory_names.fs_cryptoo)",
+          "source": "/$(directory_names.storage_cryptoo)",
+          "target": "/$(directory_names.cryptoo)",
           "type": "none",
           "options": "bind",
           "dump": "0",
@@ -86,8 +86,8 @@ bundle agent fstab_master
     "fstab_json[007]"
       string => '
         {
-          "source": "/$(directory_names.fs_storage_home)",
-          "target": "/$(directory_names.fs_home)",
+          "source": "/$(directory_names.storage_home)",
+          "target": "/$(directory_names.home)",
           "type": "none",
           "options": "bind",
           "dump": "0",
@@ -97,8 +97,8 @@ bundle agent fstab_master
     "fstab_json[008]"
       string => '
         {
-          "source": "/$(directory_names.fs_storage_srcpkg)",
-          "target": "/$(directory_names.fs_site_srcpkg)",
+          "source": "/$(directory_names.storage_srcpkg)",
+          "target": "/$(directory_names.site_srcpkg)",
           "type": "none",
           "options": "bind",
           "dump": "0",
@@ -108,8 +108,8 @@ bundle agent fstab_master
     "fstab_json[009]"
       string => '
         {
-          "source": "/$(directory_names.fs_storage_overlay)",
-          "target": "/$(directory_names.fs_volatile_overlay)",
+          "source": "/$(directory_names.storage_overlay)",
+          "target": "/$(directory_names.volatile_overlay)",
           "type": "none",
           "options": "bind",
           "dump": "0",
@@ -119,8 +119,8 @@ bundle agent fstab_master
     "fstab_json[010]"
       string => '
         {
-          "source": "/$(directory_names.fs_storage_binpkg)",
-          "target": "/$(directory_names.fs_site_binpkg)",
+          "source": "/$(directory_names.storage_binpkg)",
+          "target": "/$(directory_names.site_binpkg)",
           "type": "none",
           "options": "bind",
           "dump": "0",
@@ -130,8 +130,8 @@ bundle agent fstab_master
     "fstab_json[011]"
       string => '
         {
-          "source": "/$(directory_names.fs_storage_pm)",
-          "target": "/$(directory_names.fs_pm)",
+          "source": "/$(directory_names.storage_pm)",
+          "target": "/$(directory_names.pm)",
           "type": "none",
           "options": "bind",
           "dump": "0",
@@ -141,8 +141,8 @@ bundle agent fstab_master
     "fstab_json[012]"
       string => '
         {
-          "source": "/$(directory_names.fs_storage_pm_site)",
-          "target": "/$(directory_names.fs_site_pm)",
+          "source": "/$(directory_names.storage_pm_site)",
+          "target": "/$(directory_names.site_pm)",
           "type": "none",
           "options": "bind",
           "dump": "0",
@@ -152,8 +152,8 @@ bundle agent fstab_master
     "fstab_json[013]"
       string => '
         {
-          "source": "/$(directory_names.fs_storage_shared) ",
-          "target": "/$(directory_names.fs_mount_shared)",
+          "source": "/$(directory_names.storage_shared) ",
+          "target": "/$(directory_names.mount_shared)",
           "type": "none",
           "options": "bind",
           "dump": "0",
@@ -163,8 +163,8 @@ bundle agent fstab_master
     "fstab_json[014]"
       string => '
         {
-          "source": "/$(directory_names.fs_storage_sources)",
-          "target": "/$(directory_names.fs_site_sources)",
+          "source": "/$(directory_names.storage_sources)",
+          "target": "/$(directory_names.site_sources)",
           "type": "none",
           "options": "bind",
           "dump": "0",
@@ -175,7 +175,7 @@ bundle agent fstab_master
       string => '
         {
           "source": "/",
-          "target": "/$(directory_names.fs_mount_root)",
+          "target": "/$(directory_names.mount_root)",
           "type": "none",
           "options": "bind",
           "dump": "0",
@@ -186,7 +186,7 @@ bundle agent fstab_master
       string => '
         {
           "source": "system-tmp",
-          "target": "/$(directory_names.fs_temp_base)",
+          "target": "/$(directory_names.temp_base)",
           "type": "tmpfs",
           "options": "size=1G",
           "dump": "0",

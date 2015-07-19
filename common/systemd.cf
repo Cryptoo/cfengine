@@ -83,7 +83,7 @@ bundle agent systemd(root, role)
         edit_template => "/$(templates.template[shorewall_service])",
         classes => default:if_repaired("daemon_reload");
 
-      "$(root)$(directory_names.fs_config_units_multi_user)/$(config.core_systemd)"
+      "$(root)$(directory_names.config_units_multi_user)/$(config.core_systemd)"
         move_obstructions => "true",
         link_from => systemd("$(config.core_systemd)");
 

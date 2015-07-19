@@ -47,7 +47,7 @@ bundle agent network_file(root, name, number, type, params)
     type_no_address::
 
       "file_name_$(this.name)"
-        string => "$(this.root)$(directory_names.fs_config_network)/$(this.name).network";
+        string => "$(this.root)$(directory_names.config_network)/$(this.name).network";
 
       "device_$(this.name)"
         string => "$(network_params_$(this.name)[device])";
@@ -78,7 +78,7 @@ bundle agent network_file(root, name, number, type, params)
     type_tun::
 
       "file_name_$(this.name)"
-        string => "$(this.root)$(directory_names.fs_config_network)/$(this.name).network";
+        string => "$(this.root)$(directory_names.config_network)/$(this.name).network";
 
       "device_$(this.name)"
         string => "$(network_params_$(this.name)[device])";
@@ -116,7 +116,7 @@ bundle agent network_file(root, name, number, type, params)
         string => "$(network_params_$(this.name)[bridge])";
 
       "file_name_$(this.name)"
-        string => "$(this.root)$(directory_names.fs_config_network)/$(this.name).network";
+        string => "$(this.root)$(directory_names.config_network)/$(this.name).network";
 
       "device_$(this.name)"
         string => "$(network_params_$(this.name)[device])";
@@ -151,7 +151,7 @@ bundle agent network_file(root, name, number, type, params)
         string => "$(network_params_$(this.name)[bridge])";
 
       "file_name_$(this.name)"
-        string => "$(this.root)$(directory_names.fs_config_network)/$(bridge_$(this.name))$(this.number).network";
+        string => "$(this.root)$(directory_names.config_network)/$(bridge_$(this.name))$(this.number).network";
 
       "network_$(this.name)"
         string => '
@@ -186,7 +186,7 @@ bundle agent network_file(root, name, number, type, params)
         string => "$(network_params_$(this.name)[device])";
 
       "file_name_$(this.name)"
-        string => "$(this.root)$(directory_names.fs_config_network)/$(bridge_$(this.name))_physical.network";
+        string => "$(this.root)$(directory_names.config_network)/$(bridge_$(this.name))_physical.network";
 
       "network_$(this.name)"
         string => '
@@ -224,7 +224,7 @@ bundle agent network_file(root, name, number, type, params)
         string => "$(network_params_$(this.name)[ipforward])";
 
       "file_name_$(this.name)"
-        string => "$(this.root)$(directory_names.fs_config_network)/$(zone_$(this.name)).network";
+        string => "$(this.root)$(directory_names.config_network)/$(zone_$(this.name)).network";
 
       "network_$(this.name)"
         string => '
@@ -261,7 +261,7 @@ bundle agent network_file(root, name, number, type, params)
         string => "$(network_params_$(this.name)[ipforward])";
 
       "file_name_$(this.name)"
-        string => "$(this.root)$(directory_names.fs_config_network)/$(zone_$(this.name)).network";
+        string => "$(this.root)$(directory_names.config_network)/$(zone_$(this.name)).network";
 
       "network_$(this.name)"
         string => '
@@ -294,7 +294,7 @@ bundle agent network_file(root, name, number, type, params)
         string => "$(network_params_$(this.name)[zone])";
 
       "file_name_$(this.name)"
-        string => "$(this.root)$(directory_names.fs_config_network)/$(zone_$(this.name)).network";
+        string => "$(this.root)$(directory_names.config_network)/$(zone_$(this.name)).network";
 
       "forward_$(this.name)"
         string => "$(network_params_$(this.name)[ipforward])";

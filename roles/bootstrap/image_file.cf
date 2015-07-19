@@ -33,10 +33,10 @@ bundle agent image_file(role, name, type, multilib)
         string => '{ "master": "192.168.$(subnet_config[lan]).$(defined_numbers[master])" }';
 
       "chroot_location"
-        string => "/$(directory_names.fs_volatile_images)/$(this.type)/x86_64/$(this.multilib)/";
+        string => "/$(directory_names.volatile_images)/$(this.type)/x86_64/$(this.multilib)/";
 
       "mount_location"
-        string => "$(this.chroot_location)$(directory_names.fs_mount_temp)";
+        string => "$(this.chroot_location)$(directory_names.mount_temp)";
 
   classes:
 

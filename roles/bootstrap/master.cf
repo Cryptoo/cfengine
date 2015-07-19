@@ -31,11 +31,11 @@ bundle agent bootstrap_master
         string => '{ "value": "master" }';
 
       "portage_cleanup_command"
-        string => "/$(file_names.find_app) /$(directory_names.fs_mount_root)/$(directory_names.fs_pm) -mindepth 1 -maxdepth 1 -name * -exec /$(file_names.move_app) {} /$(directory_names.fs_storage_pm) ;",
+        string => "/$(file_names.find_app) /$(directory_names.mount_root)/$(directory_names.pm) -mindepth 1 -maxdepth 1 -name * -exec /$(file_names.move_app) {} /$(directory_names.storage_pm) ;",
         comment => "this command moves /mnt/root/usr/portage/* /usr/portage/. It's needed because /usr/portage is populated before it's mounted in the proper location";
 
       "distfiles_cleanup_command"
-        string => "/$(file_names.find_app) /$(directory_names.fs_storage_pm)/distfiles -mindepth 1 -maxdepth 1 -name * -exec /$(file_names.move_app) {} /$(directory_names.fs_storage_srcpkg) ;",
+        string => "/$(file_names.find_app) /$(directory_names.storage_pm)/distfiles -mindepth 1 -maxdepth 1 -name * -exec /$(file_names.move_app) {} /$(directory_names.storage_srcpkg) ;",
         comment => "this command moves the contents of /usr/portage/distfiles to /usr/site-local/distfiles.";
 
   classes:
@@ -43,7 +43,7 @@ bundle agent bootstrap_master
     any::
 
       "srv_mounted"
-        expression => regline("device /dev/mapper/$(machine.hostname)-storage mounted on /$(directory_names.fs_storage_base).*", "$(file_names.mount_info)"),
+        expression => regline("device /dev/mapper/$(machine.hostname)-storage mounted on /$(directory_names.storage_base).*", "$(file_names.mount_info)"),
         comment => "backing LV is mounted for /srv";
 
     srv_started&(!srv_failed)::
@@ -72,11 +72,11 @@ bundle agent bootstrap_master
         perms => root,
         create => "true";
 
-      "/$(directory_names.fs_mount_shared)/."
+      "/$(directory_names.mount_shared)/."
         perms => system,
         create => "true";
 
-      "/$(directory_names.fs_storage_base)/."
+      "/$(directory_names.storage_base)/."
         perms => system,
         create => "true",
         classes => srv,
@@ -109,7 +109,7 @@ bundle agent bootstrap_master
         classes => srv_ready,
         comment => "create Portage-owned writables directories under /srv";
 
-      "/$(directory_names.fs_storage_shared)/."
+      "/$(directory_names.storage_shared)/."
         depends_on => { "users_ok" },
         perms => system,
         create => "true",

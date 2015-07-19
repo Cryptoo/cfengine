@@ -29,7 +29,7 @@ bundle agent gcc(root, arch)
         expression => fileexists("$(root)$(file_names.env_gcc_$(arch))");
 
       "native_gcc_profile_best"
-        expression => regextract("(/$(directory_names.fs_config_gcc_environment)/)(.*)", "$(best.native_gcc_profile)", "native_gcc_profile_best");
+        expression => regextract("(/$(directory_names.config_gcc_environment)/)(.*)", "$(best.native_gcc_profile)", "native_gcc_profile_best");
 
   files:
 

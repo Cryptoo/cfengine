@@ -87,7 +87,7 @@ bundle common file_groups
                  };
 
       "backup_dir[common]"
-        string => "/$(directory_names.fs_mount_backup)";
+        string => "/$(directory_names.mount_backup)";
 
       "firewall_zones[common]"
         slist => {
@@ -698,7 +698,7 @@ bundle common file_groups
                  };
 
       "backup_dir[desktop_guest]"
-        string => "/$(directory_names.fs_cryptoo_home)";
+        string => "/$(directory_names.cryptoo_home)";
 
       "firewall_zones[desktop_guest]"
         slist => {
@@ -1754,7 +1754,7 @@ bundle common file_groups
                  };
 
       "backup_dir[i2p]"
-        string => "/$(directory_names.fs_i2p_base)";
+        string => "/$(directory_names.i2p_base)";
 
       "firewall_zones[i2p]"
         slist => {
@@ -1884,7 +1884,7 @@ bundle common file_groups
                  };
 
       "backup_dir[freenet]"
-        string => "/$(directory_names.fs_freenet_base)";
+        string => "/$(directory_names.freenet_base)";
 
       "firewall_zones[freenet]"
         slist => {
@@ -2015,7 +2015,7 @@ bundle common file_groups
                  };
 
       "backup_dir[bitcoin]"
-        string => "/$(directory_names.fs_bitcoin_base)";
+        string => "/$(directory_names.bitcoin_base)";
 
       "firewall_zones[bitcoin]"
         slist => {
@@ -2696,7 +2696,7 @@ bundle common file_groups
                  };
 
       "backup_dir[irc_bouncer]"
-        string => "/$(directory_names.fs_volatile_znc)";
+        string => "/$(directory_names.volatile_znc)";
 
       "firewall_zones[irc_bouncer]"
         slist => {

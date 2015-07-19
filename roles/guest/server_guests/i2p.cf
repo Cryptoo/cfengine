@@ -162,19 +162,19 @@ bundle agent i2p(root)
 
     any::
 
-      "$(this.root)$(directory_names.fs_config_unbound)/."
+      "$(this.root)$(directory_names.config_unbound)/."
         perms => system,
         create => "true";
 
-      "$(this.root)$(directory_names.fs_config_privoxy)/."
+      "$(this.root)$(directory_names.config_privoxy)/."
         perms => system,
         create => "true";
 
-      "$(this.root)$(directory_names.fs_i2p_base)/."
+      "$(this.root)$(directory_names.i2p_base)/."
         perms => i2p,
         create => "true";
 
-      "$(this.root)$(directory_names.fs_i2p_user)/."
+      "$(this.root)$(directory_names.i2p_user)/."
         perms => i2p,
         create => "true";
 

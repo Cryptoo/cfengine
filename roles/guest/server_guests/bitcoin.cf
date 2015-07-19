@@ -117,13 +117,13 @@ bundle agent bitcoin(root)
 
     any::
 
-      "$(this.root)$(directory_names.fs_bitcoin_base)/."
+      "$(this.root)$(directory_names.bitcoin_base)/."
         perms => bitcoin,
         create => "true";
 
     !bootstrap::
 
-      "/$(directory_names.fs_bitcoin_home)/."
+      "/$(directory_names.bitcoin_home)/."
         perms => bitcoin,
         create => "true";
 

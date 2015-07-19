@@ -50,10 +50,10 @@ bundle agent kconfig(target, arch)
         slist => getindices(kconfig_target_disabled_array);
 
       "kconfig_file"
-        string => "/$(cryptoo:directory_names.fs_volatile_kernel)/$(this.target)/$(arch)/.config";
+        string => "/$(cryptoo:directory_names.volatile_kernel)/$(this.target)/$(arch)/.config";
 
       "kernel_clone_command"
-        string => "/$(file_names.git_app) clone $(config.git_repositories[kernel]) /$(directory_names.fs_storage_kernel)";
+        string => "/$(file_names.git_app) clone $(config.git_repositories[kernel]) /$(directory_names.storage_kernel)";
 
   classes:
 
