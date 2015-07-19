@@ -5,6 +5,7 @@
     "users":  {
                    "1": "freenet",
                    "2": "i2p",
-                   "3": "qemu"
+                   "3": "qemu",
+                   "4": "cryptoo"
                 }
 }
