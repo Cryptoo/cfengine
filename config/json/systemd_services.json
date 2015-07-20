@@ -1,0 +1,101 @@
+{
+    "console_autologin":
+      {
+        "sections":
+           [
+             {
+               "section": "Service",
+               "values":
+                 [
+                   { "LHS": "Type", "RHS": "simple" },
+                   { "LHS": "ExecStart", "RHS": "" },
+                   { "LHS": "ExecStart", "RHS": "-/sbin/agetty --autologin root --noclear %I 38400 linux" }
+                 ]
+             }
+           ]
+      },
+    "tmux":
+      {
+        "sections":
+           [
+             { "section": "Unit",
+               "values":
+                 [
+                   { "LHS": "Description", "RHS": "Start tmux in detached session" }
+                 ]
+             },
+             { "section": "Service",
+               "values":
+                 [
+                   { "LHS": "Type", "RHS": "forking" },
+                   { "LHS": "Restart", "RHS": "always" },
+                   { "LHS": "User", "RHS": "%I" },
+                   { "LHS": "ExecStart", "RHS": "/usr/bin/tmux new-session -s %u -d" },
+                   { "LHS": "ExecStop", "RHS": "/usr/bin/tmux kill-session -t %u" }
+                 ]
+             },
+             { "section": "Install",
+               "values":
+                 [
+                   { "LHS": "WantedBy", "RHS": "multi-user.target" }
+                 ]
+             }
+           ]
+      },
+    "tor":
+      {
+        "sections":
+           [
+             { "section": "Unit",
+               "values":
+                 [
+                   { "LHS": "Description", "RHS": "The Onion Router" }
+                 ]
+             },
+             { "section": "Service",
+               "values":
+                 [
+                   { "LHS": "ExecStartPre", "RHS": "/usr/bin/tor --verify-config -f /etc/tor/torrc" },
+                   { "LHS": "ExecStart", "RHS": "/usr/bin/tor --RunAsDaemon 0 -f /etc/tor/torrc" },
+                   { "LHS": "ExecReload", "RHS": "/bin/kill -HUP $MAINPID" },
+                   { "LHS": "KillSignal", "RHS": "SIGINT" },
+                   { "LHS": "TimeoutStopSec", "RHS": "32" },
+                   { "LHS": "LimitNOFILE", "RHS": "30000" }
+                 ]
+             },
+             { "section": "Install",
+               "values":
+                 [
+                   { "LHS": "WantedBy", "RHS": "multi-user.target" }
+                 ]
+             }
+           ]
+      },
+    "xpra":
+      {
+        "sections":
+           [
+             { "section": "Unit",
+               "values":
+                 [
+                   { "LHS": "Description", "RHS": "Load xpra session" }
+                 ]
+             },
+             { "section": "Service",
+               "values":
+                 [
+                   { "LHS": "Type", "RHS": "simple" },
+                   { "LHS": "Restart", "RHS": "always" },
+                   { "LHS": "User", "RHS": "cryptoo" },
+                   { "LHS": "ExecStart", "RHS": "/usr/bin/xpra --no-daemon --exit-with-children --start-child=/home/cryptoo/.xsession-%I start :%I" }
+                 ]
+             },
+             { "section": "Install",
+               "values":
+                 [
+                   { "LHS": "WantedBy", "RHS": "multi-user.target" }
+                 ]
+             }
+           ]
+      }
+}

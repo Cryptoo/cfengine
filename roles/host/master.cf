@@ -23,30 +23,6 @@ bundle agent master(root)
 
     "tags" slist => { "cryptoo_role" };
 
-  vars:
-
-    any::
-
-      "console_autologin"
-# This doesn't work for some reason. Maybe Mustache understands json constructs that storejson/parsejson doesn't?
-#        string => storejson("config.systemd[console_autologin]");
-        string => '
-          {
-            "sections":
-               [
-                 { "section": "Service",
-                   "values":
-                     [
-                       { "LHS": "Type", "RHS": "simple" },
-                       { "LHS": "ExecStart", "RHS": "" },
-                       { "LHS": "ExecStart", "RHS": "-/sbin/agetty --autologin root --noclear %I 38400 linux" }
-                     ]
-                 }
-               ]
-          }
-        ';
-
-
   classes:
 
     any::
@@ -83,7 +59,7 @@ bundle agent master(root)
         create => "true",
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
-        template_data => parsejson($(this.console_autologin)),
+        template_data => mergedata("cryptoo:config.systemd_services[console_autologin]"),
         classes => default:if_repaired("daemon_reload");
 
     need_master_ssh_key&have_default_key::
@@ -115,11 +91,5 @@ bundle agent master(root)
       "$(this.root)$(file_names.ssh_keygen_app)"
       args => "-t ed25519 -P \"\" -f /$(file_names.default_key)",
       comment => "Change the passphrase with ssh-keygen -p";
-
-  reports:
-
-    bootstrap::
-
-      "Bootstrapping master in $(this.root)";
 
 }

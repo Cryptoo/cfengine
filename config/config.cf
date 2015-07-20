@@ -29,26 +29,17 @@ bundle common config
     "ssh"
       data => readjson("$(sys.inputdir)/cryptoo/config/ssh.json", 1M);
 
-    "systemd"
-      data => readjson("$(sys.inputdir)/cryptoo/config/systemd.json", 1M);
-
     "users"
       data => readjson("$(sys.inputdir)/cryptoo/config/users.json", 1M);
 
     "services"
       data => readjson("$(sys.inputdir)/cryptoo/config/services.json", 1M);
 
-    "tor_service"
-      data => readjson("$(sys.inputdir)/cryptoo/config/json/tor_service.json", 1M);
-
-    "xpra_service"
-      data => readjson("$(sys.inputdir)/cryptoo/config/json/xpra_service.json", 1M);
+    "systemd_services"
+      data => readjson("$(sys.inputdir)/cryptoo/config/json/systemd_services.json", 1M);
 
     "libvirt"
       data => readjson("$(sys.inputdir)/cryptoo/config/json/libvirt.json", 1M);
-
-    "tmux_service"
-      data => readjson("$(sys.inputdir)/cryptoo/config/json/tmux_service.json", 1M);
 
     "server_guests"
        slist => {

@@ -99,7 +99,7 @@ bundle agent desktop_guest(root, role, arch, multilib)
         create => "true",
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
-        template_data => mergedata("cryptoo:config.xpra_service");
+        template_data => mergedata("cryptoo:config.systemd_services[xpra]");
 
     have_xpra_config::
 
