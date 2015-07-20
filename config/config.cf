@@ -17,9 +17,6 @@ bundle common config
     "extra_groups"
       data => readjson("$(sys.inputdir)/cryptoo/config/groups.json", 1M);
 
-    "firewall"
-      data => readjson("$(sys.inputdir)/cryptoo/config/firewall.json", 1M);
-
     "git_repositories"
       data => readjson("$(sys.inputdir)/cryptoo/config/git_repositories.json", 1M);
 
@@ -34,6 +31,9 @@ bundle common config
 
     "defined_numbers"
       data => readjson("$(sys.inputdir)/cryptoo/config/json/defined_numbers.json", 1M);
+
+    "firewall"
+      data => readjson("$(sys.inputdir)/cryptoo/config/json/firewall.json", 1M);
 
     "libvirt"
       data => readjson("$(sys.inputdir)/cryptoo/config/json/libvirt.json", 1M);
