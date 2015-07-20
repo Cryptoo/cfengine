@@ -39,14 +39,6 @@ bundle agent host(arch, role)
       "layman_cache"
         string => nth("layman_cache_list", 0);
 
-      "portage_cleanup_command"
-        string => "/$(cryptoo:file_names.find_app) /$(cryptoo:directory_names.mount_root)/$(cryptoo:directory_names.standard_pm) -mindepth 1 -maxdepth 1 -name * -exec /$(cryptoo:file_names.move_app) {} /$(cryptoo:directory_names.storage_pm) ;",
-        comment => "this command moves /mnt/root/usr/portage/* /usr/portage/. It's needed for bootstrapping, because /usr/portage is populated before it's mounted in the proper location";
-
-      "distfiles_cleanup_command"
-        string => "/$(cryptoo:file_names.find_app) /$(cryptoo:directory_names.storage_pm)/distfiles -mindepth 1 -maxdepth 1 -name * -exec /$(cryptoo:file_names.move_app) {} /$(cryptoo:directory_names.storage_srcpkg) ;",
-        comment => "this command moves the contents of /usr/portage/distfiles to /usr/site-local/distfiles. Also needed for bootstrapping";
-
       "chroot"
         data => mergedata("cryptoo:site.config[chroot_guest]");
 
@@ -297,7 +289,7 @@ bundle agent host(arch, role)
         usebundle => fstab("/", "host", "$(this.role)"),
         classes => default:if_repaired("fstab_repaired");
 
-    (all_mounted)|(all_ready)::
+    srv_mounted::
 
       "manage common files"
         usebundle => cryptoo:cryptoo_filesystem("/","$(this.role)", "$(arch)", "no_multilib");
@@ -317,18 +309,6 @@ bundle agent host(arch, role)
       "configure multilib guest kernel"
         usebundle => cryptoo:kconfig("guest_multilib", "$(arch)"),
         classes => default:if_ok("kernel_ok");
-
-    srv_created::
-
-      "mount storage device"
-        usebundle => cryptoo:mount_types("ext4"),
-        classes => default:if_ok("srv_mounted");
-
-    srv_ready&srv_created::
-
-      "ensure all mounts are active"
-        usebundle => cryptoo:mount_all,
-        classes => default:if_ok("all_mounted");
 
     fstab_repaired::
 
@@ -353,7 +333,7 @@ bundle agent host(arch, role)
 
       "/$(cryptoo:file_names.envupdate_app)";
 
-    need_cryptoo&(all_mounted|all_ready)::
+    need_cryptoo&srv_mounted::
 
       "/$(file_names.git_app) clone -b dev $(config.git_repositories[overlay]) /$(directory_names.storage_cryptoo)";
 
@@ -369,13 +349,7 @@ bundle agent host(arch, role)
 
       "/$(cryptoo:file_names.layman_app) -a bitcoin";
 
-    all_mounted::
-
-      "$(portage_cleanup_command)";
-
-      "$(distfiles_cleanup_command)";
-
-    (all_mounted|all_ready)&have_cryptoo::
+    srv_mounted&have_cryptoo::
 
       "/$(cryptoo:file_names.distfiles_perms_app)";
 
