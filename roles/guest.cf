@@ -9,9 +9,11 @@ body file control
               "cryptoo/common/mounts.cf",
               "cryptoo/common/systemd.cf",
               "cryptoo/config/directory_groups.cf",
+              "cryptoo/config/directory_names.cf",
               "cryptoo/config/file_names.cf",
               "cryptoo/config/templates.cf",
               "cryptoo/util/contain.cf",
+              "cryptoo/util/link_from.cf",
               "cryptoo/util/perms.cf",
               "@(cryptoo:control.guest_inputs)"
             };
@@ -98,6 +100,14 @@ bundle agent common_guest(root, type, role, arch)
         perms => system,
         create => "true",
         edit_template => "/$(templates.template[tmux_guest])";
+
+      "$(root)$(directory_names.debug_symbols)/."
+        move_obstructions => "true",
+        link_from => debug_symbols;
+
+      "$(root)$(directory_names.debug_sources)/."
+        move_obstructions => "true",
+        link_from => debug_sources;
 
     !bootstrap::
       "$(root)$(directory_groups.guest_system_private)/."

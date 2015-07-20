@@ -51,6 +51,10 @@ bundle agent extra_guest_box(guest_number)
         perms => qemu,
         create => "true";
 
+      "/$(directory_names.storage_temp)/$(this.guest_name)/."
+        perms => qemu,
+        create => "true";
+
       "/$(directory_names.config_guest_inboxes)/$(this.guest_name)/."
         perms => root_qemu,
         create => "true";

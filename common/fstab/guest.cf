@@ -124,7 +124,7 @@ bundle agent fstab_guest(role)
         string => '
           {
             "source": "/portage",
-            "target": "/$(directory_names.pm)",
+            "target": "/$(directory_names.standard_pm)",
             "type": "9p",
             "options": "trans=virtio,version=9p2000.L,ro",
             "dump": "0",
@@ -160,6 +160,39 @@ bundle agent fstab_guest(role)
             "target": "/$(directory_names.mount_shared)",
             "type": "9p",
             "options": "trans=virtio,version=9p2000.L,rw,cache=mmap,noexec",
+            "dump": "0",
+            "pass": "0"
+          }';
+
+      "fstab_json[014]"
+        string => '
+          {
+            "source": "/temp",
+            "target": "/$(directory_names.volatile_temp)",
+            "type": "9p",
+            "options": "trans=virtio,version=9p2000.L,rw,cache=mmap,nofail",
+            "dump": "0",
+            "pass": "0"
+          }';
+
+      "fstab_json[015]"
+        string => '
+          {
+            "source": "portage-tmp",
+            "target": "/$(directory_names.volatile_portage)",
+            "type": "tmpfs",
+            "options": "size=1G,nofail",
+            "dump": "0",
+            "pass": "0"
+          }';
+
+      "fstab_json[016]"
+        string => '
+          {
+            "source": "/",
+            "target": "/$(directory_names.mount_root)",
+            "type": "none",
+            "options": "bind",
             "dump": "0",
             "pass": "0"
           }';

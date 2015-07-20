@@ -43,8 +43,8 @@ bundle agent fstab_chroot(path)
       "fstab_json[103_$(this.path)]"
         string => '
           {
-            "source": "/$(directory_names.pm)",
-            "target": "$(this.path)$(directory_names.pm)",
+            "source": "/$(directory_names.standard_pm)",
+            "target": "$(this.path)$(directory_names.standard_pm)",
             "type": "none",
             "options": "bind",
             "dump": "0",
@@ -142,10 +142,21 @@ bundle agent fstab_chroot(path)
       "fstab_json[112_$(this.path)]"
         string => '
           {
-            "source": "none",
+            "source": "system-tmp",
             "target": "$(this.path)$(directory_names.temp_base)",
             "type": "tmpfs",
-            "options": "size=1G,nosuid,nodev",
+            "options": "size=1G",
+            "dump": "0",
+            "pass": "0"
+          }';
+
+      "fstab_json[113_$(this.path)]"
+        string => '
+          {
+            "source": "portage-tmp",
+            "target": "$(this.path)$(directory_names.volatile_portage)",
+            "type": "tmpfs",
+            "options": "size=10G",
             "dump": "0",
             "pass": "0"
           }';

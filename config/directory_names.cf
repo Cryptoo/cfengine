@@ -95,6 +95,7 @@ bundle common directory_names
       "storage_sources" string => "$(storage_site)/src";
       "storage_kernel" string => "$(storage_sources)/linux";
       "storage_qemu" string => "$(storage_base)/qemu";
+      "storage_temp" string => "$(storage_nfs)/tmp";
       "sys_base" string => "sys";
       "temp_base" string => "tmp";
       "standard_base" string => "usr";
@@ -111,12 +112,14 @@ bundle common directory_names
       "cryptoo_pm_patches" string => "$(cryptoo_pm)/patches";
       "cryptoo_pm_profile" string => "$(cryptoo_pm)/profile";
       "cryptoo_profiles" string => "$(cryptoo)/profiles";
+      "debug_symbols" string => "$(standard_base)/lib/debug";
       "standard_units" string => "$(standard_base)/lib64/systemd/system";
       "machine_base" string => "$(standard_base)/local";
       "machine_pm" string => "$(machine_base)/$(pm)";
       "machine_pm_meta" string => "$(machine_pm)/metadata";
       "machine_pm_profile" string => "$(machine_pm)/profiles";
-      "pm" string => "$(standard_base)/$(pm)";
+      "machine_pm_tmpdir" string => "$(machine_base)/$(pm)-tmp";
+      "standard_pm" string => "$(standard_base)/$(pm)";
       "standard_admin_apps" string => "$(standard_base)/sbin";
       "standard_share" string => "$(standard_base)/share";
       "standard_timezones" string => "$(standard_share)/zoneinfo";
@@ -128,6 +131,7 @@ bundle common directory_names
       "site_sources" string => "$(site_base)/src";
       "site_kernel" string => "$(site_sources)/linux";
       "standard_sources" string => "$(standard_base)/src";
+      "debug_sources" string => "$(standard_sources)/debug";
       "standard_kernel" string => "/$(standard_sources)/linux";
       "volatile_base" string => "var";
       "volatile_cfengine" string => "$(volatile_base)/cfengine";
@@ -150,6 +154,10 @@ bundle common directory_names
       "volatile_znc" string => "$(volatile_library)/znc";
       "znc_config" string => "$(volatile_znc)/configs";
       "volatile_temp" string => "$(volatile_base)/tmp";
+      "volatile_debug" string => "$(volatile_temp)/debug";
+      "volatile_debug_symbols" string => "$(volatile_debug)/symbols";
+      "volatile_debug_source" string => "$(volatile_debug)/src";
       "volatile_kernel" string => "$(volatile_temp)/kernel";
+      "volatile_portage" string => "$(volatile_temp)/portage";
 
 }

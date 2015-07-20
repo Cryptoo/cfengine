@@ -31,7 +31,7 @@ bundle agent bootstrap_master
         string => '{ "value": "master" }';
 
       "portage_cleanup_command"
-        string => "/$(file_names.find_app) /$(directory_names.mount_root)/$(directory_names.pm) -mindepth 1 -maxdepth 1 -name * -exec /$(file_names.move_app) {} /$(directory_names.storage_pm) ;",
+        string => "/$(file_names.find_app) /$(directory_names.mount_root)/$(directory_names.standard_pm) -mindepth 1 -maxdepth 1 -name * -exec /$(file_names.move_app) {} /$(directory_names.storage_pm) ;",
         comment => "this command moves /mnt/root/usr/portage/* /usr/portage/. It's needed because /usr/portage is populated before it's mounted in the proper location";
 
       "distfiles_cleanup_command"

@@ -99,7 +99,8 @@ bundle common directory_groups
                     $(directory_names.machine_pm),
                     $(directory_names.machine_pm_meta),
                     $(directory_names.machine_pm_profile),
-                    $(directory_names.pm),
+                    $(directory_names.machine_pm_tmpdir),
+                    $(directory_names.standard_pm),
                     $(directory_names.site_pm),
                     $(directory_names.volatile_pm),
                     $(directory_names.volatile_overlay)
@@ -108,7 +109,8 @@ bundle common directory_groups
       "common_pm_open"
         slist => {
                     $(directory_names.site_srcpkg),
-                    $(directory_names.site_binpkg)
+                    $(directory_names.site_binpkg),
+                    $(directory_names.volatile_portage)
                  };
 
       "common_cryptoo_private"
@@ -162,7 +164,8 @@ bundle common directory_groups
                     $(directory_names.config_libvirt),
                     $(directory_names.config_qemu),
                     $(directory_names.libvirt_images),
-                    $(directory_names.storage_backup)
+                    $(directory_names.storage_backup),
+                    $(directory_names.storage_temp)
                  };
 
       "host_root_qemu"
@@ -175,6 +178,9 @@ bundle common directory_groups
       "guest_system"
         slist => {
                     $(directory_names.mount_backup),
+                    $(directory_names.volatile_debug),
+                    $(directory_names.volatile_debug_symbols),
+                    $(directory_names.volatile_debug_source)
                  };
 
       "guest_system_private"

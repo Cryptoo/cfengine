@@ -17,184 +17,197 @@ bundle agent fstab_master
 
   vars:
 
-    "fstab_json[001]"
-      string => '
-        {
-          "source": "LABEL=$(machine.hostname)-boot",
-          "target": "/$(directory_names.boot_base)",
-          "type": "$(site.config[boot_fs][filesystem])",
-          "options": "$(site.config[boot_fs][options])",
-          "dump": "0",
-          "pass": "2"
-        }';
+    any::
 
-    "fstab_json[002]"
-      string => '
-        {
-          "source": "UUID=$(machine.root_uuid)",
-          "target": "/",
-          "type": "$(site.config[host_fs][filesystem])",
-          "options": "$(site.config[host_fs][options])",
-          "dump": "0",
-          "pass": "1"
-        }';
+      "fstab_json[001]"
+        string => '
+          {
+            "source": "LABEL=$(machine.hostname)-boot",
+            "target": "/$(directory_names.boot_base)",
+            "type": "$(site.config[boot_fs][filesystem])",
+            "options": "$(site.config[boot_fs][options])",
+            "dump": "0",
+            "pass": "2"
+          }';
 
-    "fstab_json[003]"
-      string => '
-        {
-          "source": "/dev/mapper/$(machine.hostname)-swap",
-          "target": "none",
-          "type": "swap",
-          "options": "sw",
-          "dump": "0",
-          "pass": "0"
-        }';
+      "fstab_json[002]"
+        string => '
+          {
+            "source": "UUID=$(machine.root_uuid)",
+            "target": "/",
+            "type": "$(site.config[host_fs][filesystem])",
+            "options": "$(site.config[host_fs][options])",
+            "dump": "0",
+            "pass": "1"
+          }';
 
-    "fstab_json[004]"
-      string => '
-        {
-          "source": "/dev/mapper/$(machine.hostname)-storage",
-          "target": "/$(directory_names.storage_base)",
-          "type": "$(site.config[host_fs][filesystem])",
-          "options": "$(site.config[host_fs][options])",
-          "dump": "0",
-          "pass": "2"
-        }';
+      "fstab_json[003]"
+        string => '
+          {
+            "source": "/dev/mapper/$(machine.hostname)-swap",
+            "target": "none",
+            "type": "swap",
+            "options": "sw",
+            "dump": "0",
+            "pass": "0"
+          }';
 
-    "fstab_json[005]"
-      string => '
-        {
-          "source": "/$(directory_names.storage_apps)",
-          "target": "/usr/site-local/bin",
-          "type": "none",
-          "options": "bind",
-          "dump": "0",
-          "pass": "0"
-        }';
+      "fstab_json[004]"
+        string => '
+          {
+            "source": "/dev/mapper/$(machine.hostname)-storage",
+            "target": "/$(directory_names.storage_base)",
+            "type": "$(site.config[host_fs][filesystem])",
+            "options": "$(site.config[host_fs][options])",
+            "dump": "0",
+            "pass": "2"
+          }';
 
-    "fstab_json[006]"
-      string => '
-        {
-          "source": "/$(directory_names.storage_cryptoo)",
-          "target": "/$(directory_names.cryptoo)",
-          "type": "none",
-          "options": "bind",
-          "dump": "0",
-          "pass": "0"
-        }';
+      "fstab_json[005]"
+        string => '
+          {
+            "source": "/$(directory_names.storage_apps)",
+            "target": "/usr/site-local/bin",
+            "type": "none",
+            "options": "bind",
+            "dump": "0",
+            "pass": "0"
+          }';
 
-    "fstab_json[007]"
-      string => '
-        {
-          "source": "/$(directory_names.storage_home)",
-          "target": "/$(directory_names.home)",
-          "type": "none",
-          "options": "bind",
-          "dump": "0",
-          "pass": "0"
-        }';
+      "fstab_json[006]"
+        string => '
+          {
+            "source": "/$(directory_names.storage_cryptoo)",
+            "target": "/$(directory_names.cryptoo)",
+            "type": "none",
+            "options": "bind",
+            "dump": "0",
+            "pass": "0"
+          }';
 
-    "fstab_json[008]"
-      string => '
-        {
-          "source": "/$(directory_names.storage_srcpkg)",
-          "target": "/$(directory_names.site_srcpkg)",
-          "type": "none",
-          "options": "bind",
-          "dump": "0",
-          "pass": "0"
-        }';
+      "fstab_json[007]"
+        string => '
+          {
+            "source": "/$(directory_names.storage_home)",
+            "target": "/$(directory_names.home)",
+            "type": "none",
+            "options": "bind",
+            "dump": "0",
+            "pass": "0"
+          }';
 
-    "fstab_json[009]"
-      string => '
-        {
-          "source": "/$(directory_names.storage_overlay)",
-          "target": "/$(directory_names.volatile_overlay)",
-          "type": "none",
-          "options": "bind",
-          "dump": "0",
-          "pass": "0"
-        }';
+      "fstab_json[008]"
+        string => '
+          {
+            "source": "/$(directory_names.storage_srcpkg)",
+            "target": "/$(directory_names.site_srcpkg)",
+            "type": "none",
+            "options": "bind",
+            "dump": "0",
+            "pass": "0"
+          }';
 
-    "fstab_json[010]"
-      string => '
-        {
-          "source": "/$(directory_names.storage_binpkg)",
-          "target": "/$(directory_names.site_binpkg)",
-          "type": "none",
-          "options": "bind",
-          "dump": "0",
-          "pass": "0"
-        }';
+      "fstab_json[009]"
+        string => '
+          {
+            "source": "/$(directory_names.storage_overlay)",
+            "target": "/$(directory_names.volatile_overlay)",
+            "type": "none",
+            "options": "bind",
+            "dump": "0",
+            "pass": "0"
+          }';
 
-    "fstab_json[011]"
-      string => '
-        {
-          "source": "/$(directory_names.storage_pm)",
-          "target": "/$(directory_names.pm)",
-          "type": "none",
-          "options": "bind",
-          "dump": "0",
-          "pass": "0"
-        }';
+      "fstab_json[010]"
+        string => '
+          {
+            "source": "/$(directory_names.storage_binpkg)",
+            "target": "/$(directory_names.site_binpkg)",
+            "type": "none",
+            "options": "bind",
+            "dump": "0",
+            "pass": "0"
+          }';
 
-    "fstab_json[012]"
-      string => '
-        {
-          "source": "/$(directory_names.storage_pm_site)",
-          "target": "/$(directory_names.site_pm)",
-          "type": "none",
-          "options": "bind",
-          "dump": "0",
-          "pass": "0"
-        }';
+      "fstab_json[011]"
+        string => '
+          {
+            "source": "/$(directory_names.storage_pm)",
+            "target": "/$(directory_names.standard_pm)",
+            "type": "none",
+            "options": "bind",
+            "dump": "0",
+            "pass": "0"
+          }';
 
-    "fstab_json[013]"
-      string => '
-        {
-          "source": "/$(directory_names.storage_shared) ",
-          "target": "/$(directory_names.mount_shared)",
-          "type": "none",
-          "options": "bind",
-          "dump": "0",
-          "pass": "0"
-        }';
+      "fstab_json[012]"
+        string => '
+          {
+            "source": "/$(directory_names.storage_pm_site)",
+            "target": "/$(directory_names.site_pm)",
+            "type": "none",
+            "options": "bind",
+            "dump": "0",
+            "pass": "0"
+          }';
 
-    "fstab_json[014]"
-      string => '
-        {
-          "source": "/$(directory_names.storage_sources)",
-          "target": "/$(directory_names.site_sources)",
-          "type": "none",
-          "options": "bind",
-          "dump": "0",
-          "pass": "0"
-        }';
+      "fstab_json[013]"
+        string => '
+          {
+            "source": "/$(directory_names.storage_shared) ",
+            "target": "/$(directory_names.mount_shared)",
+            "type": "none",
+            "options": "bind",
+            "dump": "0",
+            "pass": "0"
+          }';
 
-    "fstab_json[015]"
-      string => '
-        {
-          "source": "/",
-          "target": "/$(directory_names.mount_root)",
-          "type": "none",
-          "options": "bind",
-          "dump": "0",
-          "pass": "0"
-        }';
+      "fstab_json[014]"
+        string => '
+          {
+            "source": "/$(directory_names.storage_sources)",
+            "target": "/$(directory_names.site_sources)",
+            "type": "none",
+            "options": "bind",
+            "dump": "0",
+            "pass": "0"
+          }';
 
-    "fstab_json[016]"
-      string => '
-        {
-          "source": "system-tmp",
-          "target": "/$(directory_names.temp_base)",
-          "type": "tmpfs",
-          "options": "size=1G",
-          "dump": "0",
-          "pass": "0"
-        }';
+      "fstab_json[015]"
+        string => '
+          {
+            "source": "/",
+            "target": "/$(directory_names.mount_root)",
+            "type": "none",
+            "options": "bind",
+            "dump": "0",
+            "pass": "0"
+          }';
 
-    "fstab_list"
-      slist => getindices("fstab_json");
+      "fstab_json[016]"
+        string => '
+          {
+            "source": "system-tmp",
+            "target": "/$(directory_names.temp_base)",
+            "type": "tmpfs",
+            "options": "size=1G",
+            "dump": "0",
+            "pass": "0"
+          }';
+
+      "fstab_json[017]"
+        string => '
+          {
+            "source": "portage-tmp",
+            "target": "/$(directory_names.volatile_portage)",
+            "type": "tmpfs",
+            "options": "size=10G",
+            "dump": "0",
+            "pass": "0"
+          }';
+
+      "fstab_list"
+        slist => getindices("fstab_json");
 
   reports:
 

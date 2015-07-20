@@ -40,7 +40,7 @@ bundle agent host(arch, role)
         string => nth("layman_cache_list", 0);
 
       "portage_cleanup_command"
-        string => "/$(cryptoo:file_names.find_app) /$(cryptoo:directory_names.mount_root)/$(cryptoo:directory_names.pm) -mindepth 1 -maxdepth 1 -name * -exec /$(cryptoo:file_names.move_app) {} /$(cryptoo:directory_names.storage_pm) ;",
+        string => "/$(cryptoo:file_names.find_app) /$(cryptoo:directory_names.mount_root)/$(cryptoo:directory_names.standard_pm) -mindepth 1 -maxdepth 1 -name * -exec /$(cryptoo:file_names.move_app) {} /$(cryptoo:directory_names.storage_pm) ;",
         comment => "this command moves /mnt/root/usr/portage/* /usr/portage/. It's needed for bootstrapping, because /usr/portage is populated before it's mounted in the proper location";
 
       "distfiles_cleanup_command"

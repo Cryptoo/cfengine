@@ -138,3 +138,19 @@ body link_from bitcoin_conf
      when_no_source => "force";
      source => "/$(file_names.bitcoin_conf)";
 }
+
+body link_from debug_symbols
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "/$(directory_names.volatile_debug_symbols)";
+}
+
+body link_from debug_sources
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "/$(directory_names.volatile_debug_source)";
+}

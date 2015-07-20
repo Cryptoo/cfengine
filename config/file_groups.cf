@@ -652,7 +652,8 @@ bundle common file_groups
 
       "pm_environment[desktop_guest]"
         slist => {
-                    "@(pm_environment[guest])"
+                    "@(pm_environment[guest])",
+                    "desktop_guest"
                  };
 
       "keywords[desktop_guest]"
@@ -733,7 +734,7 @@ bundle common file_groups
 
       "pm_environment[chroot_desktop_no_multilib]"
         slist => {
-                    "@(pm_environment[desktop_guest])"
+                    "@(pm_environment[guest])"
                  };
 
       "keywords[chroot_desktop_no_multilib]"

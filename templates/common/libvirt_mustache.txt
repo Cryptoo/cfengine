@@ -63,6 +63,7 @@
     <filesystem type='mount' accessmode='mapped'>
       <source dir='/srv/nfs/site-local/distfiles'/>
       <target dir='/distfiles'/>
+      <readonly/>
       <alias name='fs5'/>
     </filesystem>
     <filesystem type='mount' accessmode='passthrough'>
@@ -74,6 +75,7 @@
     <filesystem type='mount' accessmode='mapped'>
       <source dir='/srv/nfs/site-local/packages'/>
       <target dir='/packages'/>
+      <readonly/>
       <alias name='fs7'/>
     </filesystem>
     <filesystem type='mount' accessmode='passthrough'>
@@ -98,6 +100,11 @@
       <source dir='/srv/nfs/site-local/storage'/>
       <target dir='/storage'/>
       <alias name='fs11'/>
+    </filesystem>
+    <filesystem type='mount' accessmode='mapped'>
+      <source dir='/srv/nfs/tmp/{{name}}'/>
+      <target dir='/temp'/>
+      <alias name='fs12'/>
     </filesystem>
 {{#interfaces}}
     <interface type='bridge'>

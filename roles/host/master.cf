@@ -74,6 +74,10 @@ bundle agent master(root)
         perms => qemu,
         create => "true";
 
+      "$(this.root)$(directory_names.storage_temp)/$(config.server_guests)/."
+        perms => qemu,
+        create => "true";
+
       "$(this.root)$(file_names.console_autologin)"
         perms => system,
         create => "true",

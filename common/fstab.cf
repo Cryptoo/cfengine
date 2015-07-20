@@ -66,6 +66,7 @@ bundle agent fstab(root, type, role)
                  $(fstab_host[014]),
                  $(fstab_host[015]),
                  $(fstab_host[016]),
+                 $(fstab_host[017]),
                  $(mounts)
               ]
           }',
@@ -90,7 +91,10 @@ bundle agent fstab(root, type, role)
                  $(fstab_guest[010]),
                  $(fstab_guest[011]),
                  $(fstab_guest[012]),
-                 $(fstab_guest[013])
+                 $(fstab_guest[013]),
+                 $(fstab_guest[014]),
+                 $(fstab_guest[015]),
+                 $(fstab_guest[016])
               ]
           }',
         classes => default:if_ok("mounts_ready");
