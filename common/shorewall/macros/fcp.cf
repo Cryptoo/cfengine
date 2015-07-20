@@ -41,7 +41,7 @@ bundle agent shorewall_macro_fcp(root, port_info)
                      "source": "-",
                      "destination": "-",
                      "protocol": "tcp",
-                     "destination_port": "$(config.services[freenet][fproxy_port])",
+                     "destination_port": "$(config.service_info[freenet][fproxy_port])",
                      "source_port": ""
                    }
                  ],

@@ -48,7 +48,7 @@ bundle agent shorewall_macro_bitcoin(root, port_info)
                      "source": "-",
                      "destination": "-",
                      "protocol": "tcp",
-                     "destination_port": "$(config.services[bitcoin][external_port])",
+                     "destination_port": "$(config.service_info[bitcoin][external_port])",
                      "source_port": ""
                    }
                  ]

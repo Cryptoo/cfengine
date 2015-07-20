@@ -48,7 +48,7 @@ bundle agent shorewall_macro_bob(root, port_info)
                      "source": "-",
                      "destination": "-",
                      "protocol": "tcp",
-                     "destination_port": "$(config.services[i2p][sam_port])",
+                     "destination_port": "$(config.service_info[i2p][sam_port])",
                      "source_port": ""
                    }
                  ]

@@ -48,7 +48,7 @@ bundle agent shorewall_macro_bitcoin_rpc(root, port_info)
                      "source": "-",
                      "destination": "-",
                      "protocol": "tcp",
-                     "destination_port": "$(config.services[bitcoin][rpc_port])",
+                     "destination_port": "$(config.service_info[bitcoin][rpc_port])",
                      "source_port": ""
                    }
                  ]

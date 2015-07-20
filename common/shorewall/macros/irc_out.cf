@@ -53,7 +53,7 @@ bundle agent shorewall_macro_irc_out(root, port_info)
                      "source": "-",
                      "destination": "-",
                      "protocol": "tcp",
-                     "destination_port": "$(config.services[irc][irc_ports])"
+                     "destination_port": "$(config.service_info[irc][irc_ports])"
                    }
                  ]
                }

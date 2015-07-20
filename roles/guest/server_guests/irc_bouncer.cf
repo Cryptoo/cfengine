@@ -35,7 +35,7 @@ bundle agent irc_bouncer(root)
           {
             "ssl": "/$(file_names.znc_ssl)",
             "ip": "192.168.$(subnet_config[vpndmz]).$(defined_numbers[irc_bouncer])",
-            "port": "$(config.services[irc][znc_port])"
+            "port": "$(config.service_info[irc][znc_port])"
           }';
 
       "znc_datadir"

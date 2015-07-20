@@ -40,7 +40,7 @@ bundle agent freenet(root)
       "freenet_conf[fproxy.allowedHostsFullAccess]"
         string => "127.0.0.1,0:0:0:0:0:0:0:1,192.168.$(subnet_config[lan]).0/24";
       "freenet_conf[fproxy.port]"
-        string => "$(config.services[freenet][fproxy_port])";
+        string => "$(config.service_info[freenet][fproxy_port])";
       "freenet_conf[fcp.allowedHosts]"
         string => "127.0.0.1,0:0:0:0:0:0:0:1,192.168.$(subnet_config[lan]).0/24";
       "freenet_conf[fcp.bindTo]"
@@ -48,7 +48,7 @@ bundle agent freenet(root)
       "freenet_conf[fcp.allowedHostsFullAccess]"
         string => "127.0.0.1,0:0:0:0:0:0:0:1,192.168.$(subnet_config[lan]).0/24";
       "freenet_conf[fcp.port]"
-        string => "$(config.services[freenet][fcp_port])";
+        string => "$(config.service_info[freenet][fcp_port])";
       "freenet_conf[node.opennet.bindTo]"
         string => "192.168.$(subnet_config[ispdmz]).$(defined_numbers[freenet])";
       "freenet_conf[node.bindTo]"

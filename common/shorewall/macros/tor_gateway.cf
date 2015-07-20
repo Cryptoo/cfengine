@@ -48,7 +48,7 @@ bundle agent shorewall_macro_tor_gateway(root, port_info)
                      "source": "-",
                      "destination": "fw",
                      "protocol": "tcp",
-                     "destination_port": "$(config.services[tor][socks_port])",
+                     "destination_port": "$(config.service_info[tor][socks_port])",
                      "source_port": ""
                    },
                    {
@@ -56,13 +56,13 @@ bundle agent shorewall_macro_tor_gateway(root, port_info)
                      "source": "-",
                      "destination": "fw",
                      "protocol": "tcp",
-                     "destination_port": "$(config.services[tor][http_port])",
+                     "destination_port": "$(config.service_info[tor][http_port])",
                      "source_port": ""
                    },
                    {
                      "action": "REDIRECT",
                      "source": "-",
-                     "destination": "$(config.services[tor][tproxy_port])",
+                     "destination": "$(config.service_info[tor][tproxy_port])",
                      "protocol": "tcp",
                      "destination_port": "-",
                      "source_port": "-",

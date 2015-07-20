@@ -59,7 +59,7 @@ bundle agent shorewall_rules_freenet(root)
                 {
                   "action": "HTTP(REDIRECT)",
                   "source": "lan",
-                  "destination": "$(config.services[freenet][fproxy_port])",
+                  "destination": "$(config.service_info[freenet][fproxy_port])",
                   "protocol": "-",
                   "destination_port": "-",
                   "source_port": "-",

@@ -48,7 +48,7 @@ bundle agent shorewall_macro_tor(root, port_info)
                      "source": "-",
                      "destination": "-",
                      "protocol": "tcp",
-                     "destination_port": "$(config.services[tor][socks_port])",
+                     "destination_port": "$(config.service_info[tor][socks_port])",
                      "source_port": ""
                    },
                    {
@@ -56,7 +56,7 @@ bundle agent shorewall_macro_tor(root, port_info)
                      "source": "-",
                      "destination": "-",
                      "protocol": "tcp",
-                     "destination_port": "$(config.services[tor][http_port])",
+                     "destination_port": "$(config.service_info[tor][http_port])",
                      "source_port": ""
                    }
                  ]

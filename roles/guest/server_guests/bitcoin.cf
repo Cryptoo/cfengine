@@ -46,7 +46,7 @@ bundle agent bitcoin(root)
       "externalip"
         string => '"externalip":
               [
-                { "name": "$(site.config[ddns]):$(config.services[bitcoin][external_port])" }
+                { "name": "$(site.config[ddns]):$(config.service_info[bitcoin][external_port])" }
               ]';
 
     have_bitcoin_hs::
@@ -54,8 +54,8 @@ bundle agent bitcoin(root)
       "externalip"
         string => '"externalip":
               [
-                { "name": "$(site.config[ddns]):$(config.services[bitcoin][external_port])" },
-                { "name": "$(hidden_service_data[bitcoin]):$(config.services[bitcoin][external_port])" }
+                { "name": "$(site.config[ddns]):$(config.service_info[bitcoin][external_port])" },
+                { "name": "$(hidden_service_data[bitcoin]):$(config.service_info[bitcoin][external_port])" }
               ]',
         classes => default:if_ok("have_onion_externalip");
 
@@ -78,12 +78,12 @@ bundle agent bitcoin(root)
           {
             "password": "$(rpc_data[rpc_password])",
             "allow_ip": "192.168.$(subnet_config[lan]).0/24",
-            "rpc_port": "$(config.services[bitcoin][rpc_port])",
-            "onion": "192.168.$(subnet_config[tor]):$(config.services[tor][socks_port])",
+            "rpc_port": "$(config.service_info[bitcoin][rpc_port])",
+            "onion": "192.168.$(subnet_config[tor]):$(config.service_info[tor][socks_port])",
             "listen":
               [
-                { "bind": "192.168.$(subnet_config[ispdmz]).$(defined_numbers[bitcoin]):$(config.services[bitcoin][external_port])" },
-                { "bind": "192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin]):$(config.services[bitcoin][external_port])" }
+                { "bind": "192.168.$(subnet_config[ispdmz]).$(defined_numbers[bitcoin]):$(config.service_info[bitcoin][external_port])" },
+                { "bind": "192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin]):$(config.service_info[bitcoin][external_port])" }
               ],
             $(this.externalip)
           }',
