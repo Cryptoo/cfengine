@@ -21,7 +21,7 @@ bundle agent unix_extra_groups(root, group)
     any::
 
       "extra_groups"
-        data => readjson("$(sys.inputdir)/cryptoo/config/groups.json", 1M);
+        data => mergedata("cryptoo:config.extra_groups");
 
       "user_list"
         slist => getindices("extra_groups[$(this.group)]");

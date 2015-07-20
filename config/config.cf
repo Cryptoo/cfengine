@@ -14,9 +14,6 @@ bundle common config
 
     any::
 
-    "extra_groups"
-      data => readjson("$(sys.inputdir)/cryptoo/config/groups.json", 1M);
-
     "ssh"
       data => readjson("$(sys.inputdir)/cryptoo/config/ssh.json", 1M);
 
@@ -28,6 +25,9 @@ bundle common config
 
     "defined_numbers"
       data => readjson("$(sys.inputdir)/cryptoo/config/json/defined_numbers.json", 1M);
+
+    "extra_groups"
+      data => readjson("$(sys.inputdir)/cryptoo/config/json/groups.json", 1M);
 
     "firewall"
       data => readjson("$(sys.inputdir)/cryptoo/config/json/firewall.json", 1M);
