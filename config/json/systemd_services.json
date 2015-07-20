@@ -1,4 +1,90 @@
 {
+    "cf_execd":
+      {
+        "sections":
+          [
+             { "section": "Unit",
+               "values":
+                 [
+                   { "LHS": "Description", "RHS": "CFEngine Configuration Agent" },
+                   { "LHS": "After", "RHS": "network.target" },
+                   { "LHS": "After", "RHS": "cf-monitord.service" },
+                   { "LHS": "After", "RHS": "cf-serverd.service" }
+                 ]
+             },
+             { "section": "Service",
+               "values":
+                 [
+                   { "LHS": "User", "RHS": "root" },
+                   { "LHS": "Type", "RHS": "simple" },
+                   { "LHS": "ExecStart", "RHS": "/var/cfengine/bin/cf-execd --no-fork" }
+                 ]
+             },
+             { "section": "Install",
+               "values":
+                 [
+                   { "LHS": "WantedBy", "RHS": "multi-user.target" }
+                 ]
+             }
+          ]
+      },
+    "cf_monitord":
+      {
+        "sections":
+          [
+             { "section": "Unit",
+               "values":
+                 [
+                   { "LHS": "Description", "RHS": "CFEngine Status Agent" },
+                   { "LHS": "After", "RHS": "network.target" },
+                   { "LHS": "Before", "RHS": "cf-execd.service" },
+                   { "LHS": "Before", "RHS": "cf-serverd.service" }
+                 ]
+             },
+             { "section": "Service",
+               "values":
+                 [
+                   { "LHS": "User", "RHS": "root" },
+                   { "LHS": "Type", "RHS": "simple" },
+                   { "LHS": "ExecStart", "RHS": "/var/cfengine/bin/cf-monitord --no-fork" }
+                 ]
+             },
+             { "section": "Install",
+               "values":
+                 [
+                   { "LHS": "WantedBy", "RHS": "multi-user.target" }
+                 ]
+             }
+          ]
+      },
+    "cf_monitord":
+      {
+        "sections":
+          [
+             { "section": "Unit",
+               "values":
+                 [
+                   { "LHS": "Description", "RHS": "CFEngine Policy Server" },
+                   { "LHS": "After", "RHS": "network.target" },
+                   { "LHS": "Before", "RHS": "cf-execd.service" }
+                 ]
+             },
+             { "section": "Service",
+               "values":
+                 [
+                   { "LHS": "User", "RHS": "root" },
+                   { "LHS": "Type", "RHS": "simple" },
+                   { "LHS": "ExecStart", "RHS": "/var/cfengine/bin/cf-serverd --no-fork" }
+                 ]
+             },
+             { "section": "Install",
+               "values":
+                 [
+                   { "LHS": "WantedBy", "RHS": "multi-user.target" }
+                 ]
+             }
+          ]
+      },
     "console_autologin":
       {
         "sections":
@@ -13,6 +99,139 @@
                  ]
              }
            ]
+      },
+    "freenet":
+      {
+        "sections":
+          [
+             { "section": "Unit",
+               "values":
+                 [
+                   { "LHS": "Description", "RHS": "Freenet" },
+                   { "LHS": "After", "RHS": "network.target" }
+                 ]
+             },
+             { "section": "Service",
+               "values":
+                 [
+                   { "LHS": "Type", "RHS": "simple" },
+                   { "LHS": "Restart", "RHS": "always" },
+                   { "LHS": "User", "RHS": "freenet" },
+                   { "LHS": "Group", "RHS": "freenet" },
+                   { "LHS": "ExecStart", "RHS": "/opt/freenet/run.sh console" },
+                   { "LHS": "ExecReload", "RHS": "/opt/freenet/run.sh reload" },
+                   { "LHS": "ExecStop", "RHS": "/opt/freenet/run.sh stop" }
+                 ]
+             },
+             { "section": "Install",
+               "values":
+                 [
+                   { "LHS": "WantedBy", "RHS": "multi-user.target" }
+                 ]
+             }
+          ]
+      },
+    "i2p":
+      {
+        "sections":
+          [
+             { "section": "Unit",
+               "values":
+                 [
+                   { "LHS": "Description", "RHS": "Invisible Internet Project" },
+                   { "LHS": "After", "RHS": "network.target" }
+                 ]
+             },
+             { "section": "Service",
+               "values":
+                 [
+                   { "LHS": "Type", "RHS": "simple" },
+                   { "LHS": "Restart", "RHS": "always" },
+                   { "LHS": "User", "RHS": "i2p" },
+                   { "LHS": "Group", "RHS": "i2p" },
+                   { "LHS": "ExecStart", "RHS": "/opt/i2p/i2prouter console" },
+                   { "LHS": "ExecReload", "RHS": "/opt/i2p/i2prouter reload" },
+                   { "LHS": "ExecStop", "RHS": "/opt/i2p/i2prouter stop" }
+                 ]
+             },
+             { "section": "Install",
+               "values":
+                 [
+                   { "LHS": "WantedBy", "RHS": "multi-user.target" }
+                 ]
+             }
+          ]
+      },
+    "ipset":
+      {
+        "sections":
+          [
+             { "section": "Unit",
+               "values":
+                 [
+                   { "LHS": "Description", "RHS": "Save and load ipsets" },
+                   { "LHS": "Before", "RHS": "shorewall.service" }
+                 ]
+             },
+             { "section": "Service",
+               "values":
+                 [
+                   { "LHS": "Type", "RHS": "oneshot" },
+                   { "LHS": "RemainAfterExit", "RHS": "1" },
+                   { "LHS": "ExecStartPre", "RHS": "/bin/mkdir -p /var/lib/ipset/ ; /usr/bin/touch /var/lib/ipset/rules-save ; /bin/chmod 0600 /var/lib/ipset/rules-save ; /usr/sbin/ipset flush ; /usr/sbin/ipset destroy" },
+                   { "LHS": "ExecStart", "RHS": "/usr/sbin/ipset restore -file /var/lib/ipset/rules-save" },
+                   { "LHS": "ExecStop", "RHS": "/usr/sbin/ipset save -file /var/lib/ipset/rules-save" },
+                   { "LHS": "ExecStopPost", "RHS": "/usr/sbin/ipset flush ; /usr/sbin/ipset destroy" }
+                 ]
+             },
+             { "section": "Install",
+               "values":
+                 [
+                   { "LHS": "WantedBy", "RHS": "shorewall.service" }
+                 ]
+             }
+          ]
+      },
+    "serial_autologin":
+      {
+        "sections":
+          [
+             { "section": "Service",
+               "values":
+                 [
+                   { "LHS": "Type", "RHS": "simple" },
+                   { "LHS": "ExecStart", "RHS": "" },
+                   { "LHS": "ExecStart", "RHS": "-/sbin/agetty --autologin root -s %I 115200,38400,9600 vt102" }
+                 ]
+             }
+          ]
+      },
+    "shorewall":
+      {
+        "sections":
+          [
+             { "section": "Unit",
+               "values":
+                 [
+                   { "LHS": "Description", "RHS": "Load firewall" },
+                   { "LHS": "Before", "RHS": "systemd-networkd.service" }
+                 ]
+             },
+             { "section": "Service",
+               "values":
+                 [
+                   { "LHS": "Type", "RHS": "oneshot" },
+                   { "LHS": "RemainAfterExit", "RHS": "1" },
+                   { "LHS": "ExecStart", "RHS": "/usr/sbin/shorewall restart" }
+                 ]
+             },
+             { "section": "Install",
+               "values":
+                 [
+                   { "LHS": "WantedBy", "RHS": "systemd-networkd.service" }
+                 ]
+             }
+          ]
       },
     "tmux":
       {
@@ -49,7 +268,8 @@
              { "section": "Unit",
                "values":
                  [
-                   { "LHS": "Description", "RHS": "The Onion Router" }
+                   { "LHS": "Description", "RHS": "The Onion Router" },
+                   { "LHS": "After", "RHS": "network.target" }
                  ]
              },
              { "section": "Service",

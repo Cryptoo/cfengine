@@ -1,4 +1,0 @@
-[Service]
-Type=simple
-ExecStart=
-ExecStart=-/sbin/agetty --autologin root -s %I 115200,38400,9600 vt102

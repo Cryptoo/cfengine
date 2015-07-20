@@ -288,15 +288,6 @@ bundle common file_names
         string => "$(directory_names.standard_admin_apps)/shorewall";
       "sshd_app"
         string => "$(directory_names.standard_admin_apps)/sshd";
-      "template_cf_execd"
-        string => "common/cf-execd_service.txt",
-        meta => { "template" };
-      "template_cf_monitord"
-        string => "common/cf-monitord_service.txt",
-        meta => { "template" };
-      "template_cf_serverd"
-        string => "common/cf-serverd_service.txt",
-        meta => { "template" };
       "template_env_cryptoo"
         string => "common/env_cryptoo.txt",
         meta => { "template" };
@@ -321,9 +312,6 @@ bundle common file_names
       "template_ipset_private"
         string => "common/ipset-private.txt",
         meta => { "template" };
-      "template_ipset_service"
-        string => "common/ipset_service.txt",
-        meta => { "template" };
       "template_libvirt"
         string => "common/libvirt_mustache.txt",
         meta => { "template" };
@@ -344,9 +332,6 @@ bundle common file_names
         meta => { "template" };
       "template_resolv"
         string => "common/resolv_mustache.txt",
-        meta => { "template" };
-      "template_serial_autologin"
-        string => "common/serial_autologin.txt",
         meta => { "template" };
       "template_shorewall_hosts"
         string => "common/shorewall_hosts_mustache.txt",
@@ -384,12 +369,6 @@ bundle common file_names
       "template_dnsmasq"
         string => "guest/dnsmasq_mustache.txt",
         meta => { "template" };
-      "template_freenet_service"
-        string => "guest/freenet_service.txt",
-        meta => { "template" };
-      "template_i2p_service"
-        string => "guest/i2p_service.txt",
-        meta => { "template" };
       "template_polipo"
         string => "guest/polipo_mustache.txt",
         meta => { "template" };
@@ -416,9 +395,6 @@ bundle common file_names
         meta => { "template" };
       "template_machine_names"
         string => "host/machine_names.txt",
-        meta => { "template" };
-      "template_shorewall_service"
-        string => "common/shorewall_service.txt",
         meta => { "template" };
       "template_site_config"
         string => "host/site_config.txt",

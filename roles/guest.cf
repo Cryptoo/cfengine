@@ -89,7 +89,9 @@ bundle agent common_guest(root, type, role, arch)
       "$(root)$(file_names.serial_autologin)"
         perms => system,
         create => "true",
-        edit_template => "/$(templates.template[serial_autologin])",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => mergedata("cryptoo:config.systemd_services[serial_autologin]"),
         classes => default:if_repaired("daemon_reload");
 
       "$(root)$(file_names.authorized_keys)"
