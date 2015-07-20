@@ -14,9 +14,6 @@ bundle common config
 
     any::
 
-    "ssh"
-      data => readjson("$(sys.inputdir)/cryptoo/config/ssh.json", 1M);
-
     "users"
       data => readjson("$(sys.inputdir)/cryptoo/config/users.json", 1M);
 
@@ -37,6 +34,9 @@ bundle common config
 
     "service_info"
       data => readjson("$(sys.inputdir)/cryptoo/config/json/service_info.json", 1M);
+
+    "ssh"
+      data => readjson("$(sys.inputdir)/cryptoo/config/json/ssh.json", 1M);
 
     "systemd_services"
       data => readjson("$(sys.inputdir)/cryptoo/config/json/systemd_services.json", 1M);
