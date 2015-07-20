@@ -28,7 +28,7 @@ bundle agent shorewall_rules_firewall_external(root)
     any::
 
       "defined_numbers"
-        data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
+        data => mergedata("cryptoo:config.defined_numbers");
 
       "subnet_config"
         data => readjson("/$(file_names.subnet_config)", 1M);

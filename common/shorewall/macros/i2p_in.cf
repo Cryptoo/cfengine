@@ -32,7 +32,7 @@ bundle agent shorewall_macro_i2p_in(root, port_info)
         string => "i2p_in";
 
       "defined_numbers"
-        data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
+        data => mergedata("cryptoo:config.defined_numbers");
 
       "subnet_config"
         data => readjson("/$(file_names.subnet_config)", 1M);

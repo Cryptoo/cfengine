@@ -14,9 +14,6 @@ bundle common config
 
     any::
 
-    "defined_numbers"
-      data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
-
     "extra_groups"
       data => readjson("$(sys.inputdir)/cryptoo/config/groups.json", 1M);
 
@@ -35,11 +32,14 @@ bundle common config
     "services"
       data => readjson("$(sys.inputdir)/cryptoo/config/services.json", 1M);
 
-    "systemd_services"
-      data => readjson("$(sys.inputdir)/cryptoo/config/json/systemd_services.json", 1M);
+    "defined_numbers"
+      data => readjson("$(sys.inputdir)/cryptoo/config/json/defined_numbers.json", 1M);
 
     "libvirt"
       data => readjson("$(sys.inputdir)/cryptoo/config/json/libvirt.json", 1M);
+
+    "systemd_services"
+      data => readjson("$(sys.inputdir)/cryptoo/config/json/systemd_services.json", 1M);
 
     "server_guests"
        slist => {

@@ -19,7 +19,7 @@ bundle common role
     any::
 
       "defined_numbers"
-        data => readjson("$(sys.inputdir)/cryptoo/config/defined_numbers.json", 1M);
+        data => mergedata("cryptoo:config.defined_numbers");
 
       "params[master]"
         string => '
