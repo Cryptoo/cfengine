@@ -32,7 +32,7 @@ bundle agent i2p(root)
         data => mergedata("cryptoo:config.defined_numbers");
 
       "subnet_config"
-        data => readjson("/$(file_names.subnet_config)", 1M);
+        data => mergedata("cryptoo:network.subnet_config");
 
       "i2p_conf[clientApp.0.args]"
         string => "$(config.service_info[i2p][console_port]) ::1,127.0.0.1,192.168.$(subnet_config[i2p]).$(defined_numbers[i2p]) ./webapps/";

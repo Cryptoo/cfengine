@@ -19,7 +19,7 @@ bundle agent networkd_routes(zone, routes)
       data => mergedata("cryptoo:config.defined_numbers");
 
     "subnet_config"
-      data => readjson("/$(file_names.subnet_config)", 1M);
+      data => mergedata("cryptoo:network.subnet_config");
 
     "route_data"
       data => parsejson("$(this.routes)");

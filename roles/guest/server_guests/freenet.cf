@@ -31,7 +31,7 @@ bundle agent freenet(root)
         data => mergedata("cryptoo:config.defined_numbers");
 
       "subnet_config"
-        data => readjson("/$(file_names.subnet_config)", 1M);
+        data => mergedata("cryptoo:network.subnet_config");
 
       "freenet_conf[fproxy.allowedHosts]"
         string => "127.0.0.1,0:0:0:0:0:0:0:1,192.168.$(subnet_config[lan]).0/24";

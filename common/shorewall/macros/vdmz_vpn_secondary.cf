@@ -8,6 +8,7 @@ body file control
               "cryptoo/config/config.cf",
               "cryptoo/config/directory_names.cf",
               "cryptoo/config/file_names.cf",
+              "cryptoo/config/network.cf",
               "cryptoo/config/templates.cf",
               "cryptoo/util/classes.cf",
               "cryptoo/util/perms.cf"
@@ -34,7 +35,7 @@ bundle agent shorewall_macro_vdmz_vpn_secondary(root, port_info)
         data => mergedata("cryptoo:config.defined_numbers");
 
       "subnet_config"
-        data => readjson("/$(file_names.subnet_config)", 1M);
+        data => mergedata("cryptoo:network.subnet_config");
 
       "macro_json"
         string => '

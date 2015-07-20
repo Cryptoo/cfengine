@@ -6,6 +6,7 @@ body file control
 
   inputs => {
               "cryptoo/config/file_names.cf",
+              "cryptoo/config/network.cf",
               "cryptoo/config/templates.cf",
               "cryptoo/util/classes.cf",
               "cryptoo/util/perms.cf"
@@ -25,7 +26,7 @@ bundle agent shorewall_masq(root, role)
         data => mergedata("cryptoo:config.defined_numbers");
 
       "subnet_config"
-        data => readjson("/$(file_names.subnet_config)", 1M);
+        data => mergedata("cryptoo:network.subnet_config");
 
     !have_masq::
 

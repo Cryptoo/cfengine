@@ -7,6 +7,7 @@ body file control
   inputs => {
               "cryptoo/config/config.cf",
               "cryptoo/config/file_names.cf",
+              "cryptoo/config/network.cf",
               "cryptoo/config/site.cf",
               "cryptoo/config/templates.cf",
               "cryptoo/util/classes.cf",
@@ -27,7 +28,7 @@ bundle agent shorewall_extra_lan_rule(guest_number)
         data => mergedata("cryptoo:config.defined_numbers");
 
       "subnet_config"
-        data => readjson("/$(file_names.subnet_config)", 1M);
+        data => mergedata("cryptoo:network.subnet_config");
 
       "extra_guest_data"
         data => mergedata("cryptoo:site.config[extra_guests]");

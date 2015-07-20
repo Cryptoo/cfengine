@@ -7,6 +7,7 @@ body file control
   inputs => {
               "cryptoo/config/directory_names.cf",
               "cryptoo/config/file_names.cf",
+              "cryptoo/config/network.cf",
               "cryptoo/config/templates.cf",
               "cryptoo/util/contain.cf",
               "cryptoo/util/perms.cf",
@@ -27,7 +28,7 @@ bundle agent image_file(role, name, type, multilib)
         data => mergedata("cryptoo:config.defined_numbers");
 
       "subnet_config"
-        data => readjson("/$(file_names.subnet_config)", 1M);
+        data => mergedata("cryptoo:network.subnet_config");
 
       "firstrun_json"
         string => '{ "master": "192.168.$(subnet_config[lan]).$(defined_numbers[master])" }';
