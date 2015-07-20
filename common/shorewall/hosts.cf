@@ -26,7 +26,7 @@ bundle agent shorewall_hosts(root, role)
         data => parsejson("$(file_groups.network[$(this.role)])");
 
       "zone_names"
-        data => readjson("$(sys.inputdir)/cryptoo/config/shorewall_zone_names.json", 1M);
+        data => mergedata("cryptoo:config.firewall[zone_names]");
 
       "interface_list"
         slist => getindices("network_config[interfaces]");

@@ -64,5 +64,19 @@
                       "prefix": "l",
                       "members": [ "0", "1", "2", "13" ]
                      },
+            },
+    "zone_names":
+            {
+              "net": "net",
+              "vpn": "vpn",
+              "vpntt": "vpntt",
+              "vpntu": "vpntu",
+              "ispdmz": "idmz",
+              "vpndmz": "vdmz",
+              "tor": "tor",
+              "i2p": "i2p",
+              "onion": "onion",
+              "eep": "eep",
+              "lan": "lan"
             }
 }
