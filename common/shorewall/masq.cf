@@ -133,6 +133,21 @@ bundle agent shorewall_masq(root, role)
               ]
           }';
 
+    masq_tor::
+
+      "masq_json"
+        string => '
+          {
+            "masq":
+              [
+                {
+                  "interface": "eth1",
+                  "source": "192.168.$(subnet_config[ispdmz]).$(defined_numbers[tor])",
+                  "address": "192.168.$(subnet_config[tor]).$(defined_numbers[tor])"
+                }
+              ]
+          }';
+
   classes:
 
     second::
@@ -140,7 +155,7 @@ bundle agent shorewall_masq(root, role)
       "json_ready"
         expression => "any";
 
-    masq_firewall_external|masq_vpn_primary|masq_vpn_secondary|masq_vpn_server::
+    masq_firewall_external|masq_vpn_primary|masq_vpn_secondary|masq_vpn_server|masq_tor::
 
       "have_masq"
         expression => "any";
