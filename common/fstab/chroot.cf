@@ -79,7 +79,7 @@ bundle agent fstab_chroot(path)
             "source": "/$(directory_names.dev_base)",
             "target": "$(this.path)$(directory_names.dev_base)",
             "type": "none",
-            "options": "bind",
+            "options": "rbind",
             "dump": "0",
             "pass": "0"
           }';
@@ -90,7 +90,7 @@ bundle agent fstab_chroot(path)
             "source": "/$(directory_names.proc_base)",
             "target": "$(this.path)$(directory_names.proc_base)",
             "type": "none",
-            "options": "bind",
+            "options": "rbind",
             "dump": "0",
             "pass": "0"
           }';
@@ -101,7 +101,7 @@ bundle agent fstab_chroot(path)
             "source": "/$(directory_names.sys_base)",
             "target": "$(this.path)$(directory_names.sys_base)",
             "type": "none",
-            "options": "bind",
+            "options": "rbind",
             "dump": "0",
             "pass": "0"
           }';
