@@ -108,8 +108,6 @@ bundle common directory_groups
 
       "common_pm_open"
         slist => {
-                    $(directory_names.site_srcpkg),
-                    $(directory_names.site_binpkg),
                     $(directory_names.volatile_portage)
                  };
 
@@ -156,7 +154,9 @@ bundle common directory_groups
       "host_pm_open"
         slist => {
                     $(directory_names.storage_srcpkg),
-                    $(directory_names.storage_binpkg)
+                    $(directory_names.storage_binpkg),
+                    $(directory_names.site_srcpkg),
+                    $(directory_names.site_binpkg)
                  };
 
       "host_qemu"
