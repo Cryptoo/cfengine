@@ -262,6 +262,8 @@ bundle common file_names
         string => "$(directory_names.cryptoo_apps)/cryptoo_perms";
       "distfiles_perms_app"
         string => "$(directory_names.cryptoo_apps)/distfiles_perms";
+      "easyrsa_init_app"
+        string => "$(directory_names.cryptoo_apps)/easy_rsa_init";
       "pkgdir_perms_app"
         string => "$(directory_names.cryptoo_apps)/pkgdir_perms";
       "cryptoo_profile"
