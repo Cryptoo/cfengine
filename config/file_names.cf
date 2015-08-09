@@ -288,6 +288,8 @@ bundle common file_names
         string => "$(directory_names.standard_admin_apps)/shorewall";
       "sshd_app"
         string => "$(directory_names.standard_admin_apps)/sshd";
+      "easy_rsa_vars"
+        string => "$(directory_names.easy_rsa_base)/vars";
       "template_env_cryptoo"
         string => "common/env_cryptoo.txt",
         meta => { "template" };

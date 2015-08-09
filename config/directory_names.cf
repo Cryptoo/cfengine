@@ -23,6 +23,7 @@ bundle common directory_names
       "config_bitcoin" string => "$(config_base)/bitcoin";
       "config_cryptoo_root" string => "$(config_base)/cryptoo";
       "config_cryptoo_incoming" string => "$(config_cryptoo_root)/inbox";
+      "easy_rsa_keys" string => "$(config_cryptoo_incoming)/easy-rsa";
       "config_cryptoo_outgoing" string => "$(config_cryptoo_root)/outbox";
       "config_cryptoo_guests" string => "$(config_cryptoo_root)/guest";
       "config_guest_inboxes" string => "$(config_cryptoo_guests)/inbox";
@@ -122,6 +123,7 @@ bundle common directory_names
       "standard_pm" string => "$(standard_base)/$(pm)";
       "standard_admin_apps" string => "$(standard_base)/sbin";
       "standard_share" string => "$(standard_base)/share";
+      "easy_rsa_base" string => "$(standard_share)/easy-rsa";
       "standard_timezones" string => "$(standard_share)/zoneinfo";
       "site_base" string => "$(standard_base)/site-local";
       "site_apps" string => "$(site_base)/bin"; 

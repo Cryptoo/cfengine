@@ -1,0 +1,36 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/file_names.cf"
+            };
+
+}
+
+bundle agent easy_rsa
+
+{
+
+  vars:
+
+    any::
+
+      "easy_rsa[export KEY_DIR]"
+        string => "/$(directory_names.easy_rsa_keys)";
+      "easy_rsa[export KEY_SIZE]"
+        string => "4096";
+
+  files:
+
+    any::
+
+      "/$(file_names.easy_rsa_vars)"
+        create => "false",
+        edit_line => default:set_line_based("cryptoo:easy_rsa.easy_rsa", "=", "\s*=\s*", ".*", "\s*#\s*"),
+        classes => default:if_repaired("update_sshd");
+
+}

@@ -10,7 +10,8 @@ body file control
               "cryptoo/config/directory_names.cf",
               "cryptoo/config/templates.cf",
               "cryptoo/util/contain.cf",
-              "cryptoo/util/perms.cf"
+              "cryptoo/util/perms.cf",
+              "@(cryptoo:control.host_common_inputs)"
             };
 
 }
@@ -70,6 +71,11 @@ bundle agent master(root)
 
 
   methods:
+
+    any::
+
+      "set up SSL PKI"
+        usebundle => easy_rsa;
 
     have_master_ssh_key::
 
