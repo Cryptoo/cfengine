@@ -185,8 +185,6 @@ bundle common directory_groups
 
       "guest_system_private"
         slist => {
-                    "$(directory_names.mount_root)/$(directory_names.config_cryptoo_incoming)",
-                    "$(directory_names.mount_root)/$(directory_names.config_cryptoo_outgoing)"
                  };
 
 }
