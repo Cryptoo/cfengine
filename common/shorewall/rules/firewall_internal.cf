@@ -224,6 +224,11 @@ bundle agent shorewall_rules_firewall_internal(root)
                      "action": "fcp(ACCEPT)",
                      "source": "lan:192.168.$(subnet_config[lan]).0/24",
                      "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[freenet])"
+                   },
+                   {
+                     "action": "bitcoin(ACCEPT)",
+                     "source": "tor:192.168.$(subnet_config[tor]).$(defined_numbers[bitcoin])",
+                     "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[tor])"
                    }
                  ],
                }
