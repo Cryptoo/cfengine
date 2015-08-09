@@ -227,8 +227,8 @@ bundle agent shorewall_rules_firewall_internal(root)
                    },
                    {
                      "action": "bitcoin(ACCEPT)",
-                     "source": "tor:192.168.$(subnet_config[tor]).$(defined_numbers[bitcoin])",
-                     "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[tor])"
+                     "source": "tor:192.168.$(subnet_config[tor]).$(defined_numbers[tor])",
+                     "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin])"
                    }
                  ],
                }
