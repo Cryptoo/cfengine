@@ -1376,6 +1376,7 @@ bundle common file_groups
                     "@(use[server_guest])",
                     "bitcoin",
                     "bitcoin_wallet",
+                    "boost",
                     "deluge",
                     "deluge_server",
                     "dns",
@@ -1995,7 +1996,8 @@ bundle common file_groups
         slist => {
                     "@(use[server_guest])",
                     "bitcoin",
-                    "bitcoin_wallet"
+                    "bitcoin_wallet",
+                    "boost"
                  };
 
       "unuse[bitcoin]"
