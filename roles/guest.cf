@@ -83,8 +83,7 @@ bundle agent common_guest(root, type, role, arch)
 
       "$(root)$(directory_groups.guest_system)/."
         perms => system,
-        create => "true",
-        handle => "$(root)$(directory_groups.guest_system)";
+        create => "true";
 
       "$(root)$(file_names.serial_autologin)"
         perms => system,
@@ -114,14 +113,12 @@ bundle agent common_guest(root, type, role, arch)
     !bootstrap::
       "$(root)$(directory_groups.guest_system_private)/."
         perms => root,
-        create => "true",
-        handle => "$(root)$(directory_groups.guest_system_private)";
+        create => "true";
 
     bootstrap::
       "$(root)$(directory_groups.common_cryptoo_private)/."
         perms => root,
-        create => "true",
-        handle => "$(root)$(directory_groups.guest_system_private)";
+        create => "true";
 
   methods:
 
