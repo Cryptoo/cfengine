@@ -98,6 +98,10 @@ bundle common file_names
         string => "$(directory_names.config_cryptoo_incoming)/hidden_service.json";
       "port_info_incoming"
         string => "$(directory_names.config_cryptoo_incoming)/port_info.json";
+      "ca_crt"
+        string => "$(directory_names.easy_rsa_keys)/ca.crt";
+      "ca_key"
+        string => "$(directory_names.easy_rsa_keys)/ca.key";
       "bitcoin_rpc_outgoing"
         string => "$(directory_names.config_cryptoo_outgoing)/bitcoin_rpc.json";
       "hidden_service_outgoing"
@@ -262,6 +266,8 @@ bundle common file_names
         string => "$(directory_names.cryptoo_apps)/cryptoo_perms";
       "distfiles_perms_app"
         string => "$(directory_names.cryptoo_apps)/distfiles_perms";
+      "easyrsa_ca_app"
+        string => "$(directory_names.cryptoo_apps)/easy_rsa_ca";
       "easyrsa_init_app"
         string => "$(directory_names.cryptoo_apps)/easy_rsa_init";
       "pkgdir_perms_app"

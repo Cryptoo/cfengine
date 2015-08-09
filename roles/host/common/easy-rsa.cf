@@ -23,6 +23,8 @@ bundle agent easy_rsa
         string => "/$(directory_names.easy_rsa_keys)";
       "easy_rsa[export KEY_SIZE]"
         string => "4096";
+      "easy_rsa[export KEY_ORG]"
+        string => "$(site.config[ddns])";
 
   classes:
 
@@ -30,6 +32,14 @@ bundle agent easy_rsa
 
       "need_init"
         not => fileexists("/$(directory_names.easy_rsa_keys)");
+
+      "have_init"
+        expression => fileexists("/$(directory_names.easy_rsa_keys)");
+
+    have_init::
+
+      "need_ca_crt"
+        not => fileexists("/$(file_names.ca_crt)");
 
   files:
 
@@ -44,5 +54,9 @@ bundle agent easy_rsa
     need_init::
 
       "/$(file_names.easyrsa_init_app)";
+
+    need_ca_crt::
+
+      "/$(file_names.easyrsa_ca_app)";
 
 }
