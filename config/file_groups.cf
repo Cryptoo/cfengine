@@ -5,7 +5,7 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
-              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/directory_names.cf"
             };
 
 }
@@ -2424,7 +2424,7 @@ bundle common file_groups
                  };
 
       "backup_dir[mail_server]"
-        string => "$(backup_dir[server_guest])";
+        string => "/$(directory_names.mail_spool)";
 
       "firewall_zones[mail_server]"
         slist => {

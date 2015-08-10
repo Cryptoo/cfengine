@@ -69,7 +69,8 @@ bundle common directory_groups
                     $(directory_names.standard_sources),
                     $(directory_names.volatile_base),
                     $(directory_names.volatile_library),
-                    $(directory_names.volatile_systemd)
+                    $(directory_names.volatile_systemd),
+                    $(directory_names.spool)
                  };
 
       "common_system_restricted"

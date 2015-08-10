@@ -155,6 +155,8 @@ bundle common directory_names
       "bitcoin_hs" string => "$(hidden_services)/bitcoin";
       "volatile_znc" string => "$(volatile_library)/znc";
       "znc_config" string => "$(volatile_znc)/configs";
+      "spool" string => "$(volatile_base)/spool";
+      "mail_spool" string => "$(spool)/mail";
       "volatile_temp" string => "$(volatile_base)/tmp";
       "volatile_debug" string => "$(volatile_temp)/debug";
       "volatile_debug_symbols" string => "$(volatile_debug)/symbols";

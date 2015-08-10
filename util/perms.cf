@@ -141,3 +141,11 @@ body perms tor
       owners  => { "tor" };
       groups  => { "tor" };
 }
+
+body perms mail_spool
+
+{
+      mode  => "3775";
+      owners  => { "root" };
+      groups  => { "mail" };
+}
