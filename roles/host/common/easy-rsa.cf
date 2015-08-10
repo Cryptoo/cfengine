@@ -41,6 +41,14 @@ bundle agent easy_rsa
       "need_ca_crt"
         not => fileexists("/$(file_names.ca_crt)");
 
+      "have_ca_crt"
+        expression => fileexists("/$(file_names.ca_crt)");
+
+    have_ca_crt::
+
+      "need_dh"
+        not => fileexists("/$(file_names.dh)");
+
   files:
 
     any::
@@ -58,5 +66,9 @@ bundle agent easy_rsa
     need_ca_crt::
 
       "/$(file_names.easyrsa_ca_app)";
+
+    need_dh::
+
+      "/$(file_names.easyrsa_dh_app)";
 
 }
