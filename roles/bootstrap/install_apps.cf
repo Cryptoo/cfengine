@@ -44,12 +44,12 @@ bundle agent install_apps(role, type, multilib, mount_location)
     basic_system_emerged::
 
       "$(this.emerge_app)"
-        args => "--config-root=/ --root=/$(directory_names.mount_temp) --ask n --root-deps @guest",
+        args => "--config-root=/ --root=/$(directory_names.mount_temp) --ask n --root-deps --usepkgonly @guest",
         contain => silent,
         classes => always_success;
 
       "$(this.emerge_app)"
-        args => "--config-root=/ --root=/$(directory_names.mount_temp) --ask n --root-deps $(this.role_set)",
+        args => "--config-root=/ --root=/$(directory_names.mount_temp) --ask n --root-deps --usepkgonly $(this.role_set)",
         contain => silent,
         classes => always_success;
 
@@ -65,7 +65,12 @@ bundle agent install_apps(role, type, multilib, mount_location)
     any::
 
       "$(this.emerge_app)"
-        args => "--config-root=/ --root=/$(directory_names.mount_temp) --ask n --root-deps --emptytree @system",
+        args => "--config-root=/ --root=/$(directory_names.mount_temp) --ask n -C udev",
+        contain => silent,
+        classes => always_success;
+
+      "$(this.emerge_app)"
+        args => "--config-root=/ --root=/$(directory_names.mount_temp) --ask n --root-deps --emptytree --usepkgonly @system",
         contain => silent,
         classes => always_success;
 
