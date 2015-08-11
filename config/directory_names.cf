@@ -29,6 +29,8 @@ bundle common directory_names
       "config_guest_inboxes" string => "$(config_cryptoo_guests)/inbox";
       "config_guest_outboxes" string => "$(config_cryptoo_guests)/outbox";
       "config_default" string => "$(config_base)/default";
+      "config_dovecot_base" string => "$(config_base)/dovecot";
+      "config_dovecot" string => "$(config_dovecot_base)/conf.d";
       "config_dracut" string => "$(config_base)/dracut.conf.d";
       "config_environment" string => "$(config_base)/env.d";
       "config_gcc_environment" string => "$(config_environment)/gcc";

@@ -14,6 +14,19 @@ bundle agent mail_server(root)
 
     "tags" slist => { "cryptoo_role" };
 
+  vars:
+
+    any::
+
+      "mail[mail_location]"
+        string => "maildir:/var/spool/mail/%u";
+
+      "imap[mail_max_userip_connections]"
+        string => "64";
+
+      "ssl[ssl_cipher_list]"
+        string => "DEFAULT:!EXPORT:!LOW:!MEDIUM:!MD5";
+
   files:
 
     any::
@@ -21,6 +34,26 @@ bundle agent mail_server(root)
       "$(this.root)$(directory_names.mail_spool)/."
         perms => mail_spool,
         create => "true";
+
+      "$(this.root)$(directory_names.config_dovecot_base)/."
+        perms => system,
+        create => "true";
+
+      "$(this.root)$(directory_names.config_dovecot)/."
+        perms => system,
+        create => "true";
+
+      "$(this.root)$(file_names.dovecot_mail)"
+        perms => system,
+        edit_line => default:set_line_based("cryptoo:mail_server.mail", " = ", "\s*=\s*", ".*", "\s*#\s*");
+
+      "$(this.root)$(file_names.dovecot_imap)"
+        perms => system,
+        edit_line => default:set_line_based("cryptoo:mail_server.imap", " = ", "\s*=\s*", ".*", "\s*#\s*");
+
+      "$(this.root)$(file_names.dovecot_ssl)"
+        perms => system,
+        edit_line => default:set_line_based("cryptoo:mail_server.ssl", " = ", "\s*=\s*", ".*", "\s*#\s*");
 
   methods:
 

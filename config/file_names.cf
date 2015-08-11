@@ -120,6 +120,14 @@ bundle common file_names
         string => "$(directory_names.config_guest_outboxes)/freenet/port_info.json";
       "port_info_i2p"
         string => "$(directory_names.config_guest_outboxes)/i2p/port_info.json";
+      "dovecot_imap"
+        string => "$(directory_names.config_dovecot)/20-imap.conf";
+      "dovecot_master"
+        string => "$(directory_names.config_dovecot)/10-master.conf";
+      "dovecot_mail"
+        string => "$(directory_names.config_dovecot)/10-mail.conf";
+      "dovecot_ssl"
+        string => "$(directory_names.config_dovecot)/10-ssl.conf";
       "grub_defaults"
         string => "$(directory_names.config_default)/grub";
       "dracut_conf"
