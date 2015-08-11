@@ -77,6 +77,9 @@ bundle agent master(root)
       "set up SSL PKI"
         usebundle => easy_rsa;
 
+      "transfer certificates to guest inboxes"
+        usebundle => ssl_certs;
+
     have_master_ssh_key::
 
       "configure system as a host"

@@ -1,0 +1,50 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/file_names.cf"
+            };
+
+}
+
+bundle agent ssl_certs
+
+{
+
+  classes:
+
+    any::
+
+      "have_ca_crt"
+        expression => fileexists("/$(file_names.ca_crt)");
+
+      "have_mail_server_crt"
+        expression => fileexists("/$(file_names.mail_server_crt)");
+
+      "have_mail_server_key"
+        expression => fileexists("/$(file_names.mail_server_key)");
+
+  files:
+
+    have_ca_crt::
+
+      "/$(directory_names.config_guest_inboxes)/mail_server/$(site.config[ddns]).crt"
+        perms => root_qemu,
+        copy_from => default:local_cp("/$(cryptoo:file_names.ca_crt)");
+
+    have_mail_server_crt::
+
+      "/$(directory_names.config_guest_inboxes)/mail_server/mail_server.crt"
+        perms => root_qemu,
+        copy_from => default:local_cp("/$(cryptoo:file_names.mail_server_crt)");
+
+    have_mail_server_key::
+
+      "/$(directory_names.config_guest_inboxes)/mail_server/mail_server.key"
+        perms => root_qemu,
+        copy_from => default:local_cp("/$(cryptoo:file_names.mail_server_key)");
+
+}
