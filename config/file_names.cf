@@ -134,6 +134,8 @@ bundle common file_names
         string => "$(directory_names.config_guest_outboxes)/freenet/port_info.json";
       "port_info_i2p"
         string => "$(directory_names.config_guest_outboxes)/i2p/port_info.json";
+      "dovecot_conf"
+        string => "$(directory_names.config_dovecot_base)/dovecot.conf";
       "dovecot_auth"
         string => "$(directory_names.config_dovecot)/10-auth.conf";
       "dovecot_imap"

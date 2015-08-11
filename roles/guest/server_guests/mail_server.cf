@@ -25,6 +25,9 @@ bundle agent mail_server(root)
 
     any::
 
+      "dovecot[protocols]"
+        string => "imap sieve";
+
       "auth[disable_plaintext_auth]"
         string => "yes";
 
@@ -64,6 +67,10 @@ bundle agent mail_server(root)
       "$(this.root)$(directory_names.config_dovecot)/."
         perms => system,
         create => "true";
+
+      "$(this.root)$(file_names.dovecot_conf)"
+        perms => system,
+        edit_line => default:set_line_based("cryptoo:mail_server.dovecot", " = ", "\s*=\s*", ".*", "\s*#\s*");
 
       "$(this.root)$(file_names.dovecot_auth)"
         perms => system,
