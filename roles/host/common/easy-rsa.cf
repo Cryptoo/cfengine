@@ -39,18 +39,18 @@ bundle agent easy_rsa
     have_init::
 
       "need_ca_crt"
-        not => fileexists("/$(file_names.ca_crt)");
+        not => fileexists("/$(file_names.ca_crt_source)");
 
       "have_ca_crt"
-        expression => fileexists("/$(file_names.ca_crt)");
+        expression => fileexists("/$(file_names.ca_crt_source)");
 
       "need_mail_server_crt"
-        not => fileexists("/$(file_names.mail_server_crt)");
+        not => fileexists("/$(file_names.mail_server_crt_source)");
 
     have_ca_crt::
 
       "need_dh"
-        not => fileexists("/$(file_names.dh)");
+        not => fileexists("/$(file_names.dh_source)");
 
   files:
 

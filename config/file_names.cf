@@ -99,14 +99,24 @@ bundle common file_names
       "port_info_incoming"
         string => "$(directory_names.config_cryptoo_incoming)/port_info.json";
       "ca_crt"
-        string => "$(directory_names.easy_rsa_keys)/ca.crt";
+        string => "$(directory_names.config_cryptoo_incoming)/$(site.config[ddns]).crt";
       "ca_key"
-        string => "$(directory_names.easy_rsa_keys)/ca.key";
+        string => "$(directory_names.config_cryptoo_incoming)/ca.key";
       "dh"
-        string => "$(directory_names.easy_rsa_keys)/dh4096.pem";
+        string => "$(directory_names.config_cryptoo_incoming)/dh4096.pem";
       "mail_server_crt"
-        string => "$(directory_names.easy_rsa_keys)/mail_server.crt";
+        string => "$(directory_names.config_cryptoo_incoming)/mail_server.crt";
       "mail_server_key"
+        string => "$(directory_names.config_cryptoo_incoming)/mail_server.key";
+      "ca_crt_source"
+        string => "$(directory_names.easy_rsa_keys)/ca.crt";
+      "ca_key_source"
+        string => "$(directory_names.easy_rsa_keys)/ca.key";
+      "dh_source"
+        string => "$(directory_names.easy_rsa_keys)/dh4096.pem";
+      "mail_server_crt_source"
+        string => "$(directory_names.easy_rsa_keys)/mail_server.crt";
+      "mail_server_key_source"
         string => "$(directory_names.easy_rsa_keys)/mail_server.key";
       "bitcoin_rpc_outgoing"
         string => "$(directory_names.config_cryptoo_outgoing)/bitcoin_rpc.json";
@@ -124,6 +134,8 @@ bundle common file_names
         string => "$(directory_names.config_guest_outboxes)/freenet/port_info.json";
       "port_info_i2p"
         string => "$(directory_names.config_guest_outboxes)/i2p/port_info.json";
+      "dovecot_auth"
+        string => "$(directory_names.config_dovecot)/10-auth.conf";
       "dovecot_imap"
         string => "$(directory_names.config_dovecot)/20-imap.conf";
       "dovecot_master"
@@ -396,6 +408,9 @@ bundle common file_names
         meta => { "template" };
       "template_dnsmasq"
         string => "guest/dnsmasq_mustache.txt",
+        meta => { "template" };
+      "template_dovecot_master"
+        string => "guest/dovecot_master.txt",
         meta => { "template" };
       "template_polipo"
         string => "guest/polipo_mustache.txt",

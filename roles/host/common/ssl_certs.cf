@@ -19,13 +19,13 @@ bundle agent ssl_certs
     any::
 
       "have_ca_crt"
-        expression => fileexists("/$(file_names.ca_crt)");
+        expression => fileexists("/$(file_names.ca_crt_source)");
 
       "have_mail_server_crt"
-        expression => fileexists("/$(file_names.mail_server_crt)");
+        expression => fileexists("/$(file_names.mail_server_crt_source)");
 
       "have_mail_server_key"
-        expression => fileexists("/$(file_names.mail_server_key)");
+        expression => fileexists("/$(file_names.mail_server_key_source)");
 
   files:
 
@@ -33,18 +33,18 @@ bundle agent ssl_certs
 
       "/$(directory_names.config_guest_inboxes)/mail_server/$(site.config[ddns]).crt"
         perms => root_qemu,
-        copy_from => default:local_cp("/$(cryptoo:file_names.ca_crt)");
+        copy_from => default:local_cp("/$(cryptoo:file_names.ca_crt_source)");
 
     have_mail_server_crt::
 
       "/$(directory_names.config_guest_inboxes)/mail_server/mail_server.crt"
         perms => root_qemu,
-        copy_from => default:local_cp("/$(cryptoo:file_names.mail_server_crt)");
+        copy_from => default:local_cp("/$(cryptoo:file_names.mail_server_crt_source)");
 
     have_mail_server_key::
 
       "/$(directory_names.config_guest_inboxes)/mail_server/mail_server.key"
         perms => root_qemu,
-        copy_from => default:local_cp("/$(cryptoo:file_names.mail_server_key)");
+        copy_from => default:local_cp("/$(cryptoo:file_names.mail_server_key_source)");
 
 }
