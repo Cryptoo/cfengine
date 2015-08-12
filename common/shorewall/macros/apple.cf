@@ -1,0 +1,67 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/templates.cf",
+              "cryptoo/util/classes.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
+bundle agent shorewall_macro_apple(root, port_info)
+
+{
+
+  meta:
+
+    "tags" slist =>
+      {
+        "shorewall_macro",
+        "firewall_internal"
+      };
+
+  vars:
+
+    any::
+
+      "macro_name"
+        string => "apple";
+
+      "macro_json"
+        string => '
+          {
+            "name": "$(this.macro_name)",
+            "default": "DROP",
+            "rules":
+                 [
+                   {
+                     "action": "PARAM",
+                     "source": "-",
+                     "destination": "-",
+                     "protocol": "udp",
+                     "destination_port": "192",
+                     "source_port": ""
+                   }
+                 ]
+               }
+          }
+        ';
+
+  files:
+
+    any::
+
+      "$(root)$(directory_names.config_shorewall)/macro.$(this.macro_name)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[shorewall_macro])",
+        template_method => "mustache",
+        template_data => parsejson("$(macro_json)"),
+        classes => shorewall;
+
+}

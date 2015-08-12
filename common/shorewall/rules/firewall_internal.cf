@@ -55,6 +55,11 @@ bundle agent shorewall_rules_firewall_internal(root)
                      "source_port": ""
                    },
                    {
+                     "action": "apple(DROP)",
+                     "source": "lan",
+                     "destination": "fw"
+                   },
+                   {
                      "action": "DNS(ACCEPT)",
                      "source": "lan",
                      "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])",
