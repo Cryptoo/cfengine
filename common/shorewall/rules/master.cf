@@ -630,6 +630,11 @@ bundle agent shorewall_rules_master(root)
                      "destination": "l$(defined_numbers[firewall_internal])"
                    },
                    {
+                     "action": "ACCEPT",
+                     "source": "l$(defined_numbers[vpn_server])",
+                     "destination": "l0"
+                   },
+                   {
                      "action": "bitcoin_rpc(ACCEPT)",
                      "source": "l$(defined_numbers[vpn_server]):192.168.$(subnet_config[lan]).0/24",
                      "destination": "l$(defined_numbers[firewall_internal]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin])"
