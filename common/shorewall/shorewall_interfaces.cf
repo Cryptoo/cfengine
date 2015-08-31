@@ -17,7 +17,7 @@ bundle agent shorewall_interfaces(interface, type)
       "firewall"
         data => mergedata("cryptoo:config.firewall");
 
-      "options"
+      "normal_options"
         string => "$(firewall[interface_options][normal])";
 
 classes:
@@ -54,17 +54,17 @@ classes:
   
     relevant::
 
-      '{ "zone_full": "#", "zone": "-", "type": "-", "interface": "$(this.interface)", "interface_options": "$(options)" }'
+      '{ "zone_full": "#", "zone": "-", "type": "-", "interface": "$(this.interface)", "interface_options": "$(normal_options)" }'
         bundle_return_value_index => "$(interface)";
 
     vpn_tun_udp::
 
-      '{ "zone_full": "#", "zone": "vpntu", "type": "ipv4", "interface": "$(this.interface)", "interface_options": "$(options)" }'
+      '{ "zone_full": "#", "zone": "vpntu", "type": "ipv4", "interface": "$(this.interface)", "interface_options": "$(normal_options),routeback" }'
         bundle_return_value_index => "$(interface)";
 
     vpn_tun_tcp::
 
-      '{ "zone_full": "#", "zone": "vpntt", "type": "ipv4", "interface": "$(this.interface)", "interface_options": "$(options)" }'
+      '{ "zone_full": "#", "zone": "vpntt", "type": "ipv4", "interface": "$(this.interface)", "interface_options": "$(normal_options),routeback" }'
         bundle_return_value_index => "$(interface)";
 
 }
