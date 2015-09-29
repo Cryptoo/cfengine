@@ -43,6 +43,12 @@ bundle agent master(root)
       "have_default_key"
         expression => fileexists("$(this.root)$(file_names.default_key_public)");
 
+      "need_mail_json"
+        not => fileexists("$(this.root)$(file_names.mail_server_config)");
+
+      "have_mail_json"
+        expression => fileexists("$(this.root)$(file_names.mail_server_config)");
+
   files:
 
     any::
@@ -69,6 +75,19 @@ bundle agent master(root)
         perms => system,
         copy_from => default:local_cp("/$(cryptoo:file_names.default_key_public)");
 
+    need_mail_json::
+
+      "$(this.root)$(file_names.mail_server_config)"
+        perms => root,
+        create => "true",
+        edit_template => "/$(templates.template[mail_json])",
+        classes => default:if_ok("have_mail_json");
+
+    have_mail_json::
+
+      "$(this.root)$(file_names.mail_server_json)"
+        perms => root_qemu,
+        copy_from => default:local_cp("/$(cryptoo:file_names.mail_server_config)");
 
   methods:
 
@@ -83,7 +102,7 @@ bundle agent master(root)
     have_master_ssh_key::
 
       "configure system as a host"
-        usebundle => cryptoo:host("x86_64", "master");
+        usebundle => host("x86_64", "master");
 
       "configure systemd"
         usebundle => systemd("$(this.root)", "master");

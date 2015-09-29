@@ -108,6 +108,8 @@ bundle common file_names
         string => "$(directory_names.config_cryptoo_incoming)/mail_server.crt";
       "mail_server_key"
         string => "$(directory_names.config_cryptoo_incoming)/mail_server.key";
+      "mail_server_config"
+        string => "$(directory_names.config_cryptoo_incoming)/mail_server.json";
       "ca_crt_source"
         string => "$(directory_names.easy_rsa_keys)/ca.crt";
       "ca_key_source"
@@ -134,6 +136,8 @@ bundle common file_names
         string => "$(directory_names.config_guest_outboxes)/freenet/port_info.json";
       "port_info_i2p"
         string => "$(directory_names.config_guest_outboxes)/i2p/port_info.json";
+      "mail_server_json"
+        string => "$(directory_names.config_guest_inboxes)/mail_server/mail_config.json";
       "dovecot_conf"
         string => "$(directory_names.config_dovecot_base)/dovecot.conf";
       "dovecot_auth"
@@ -442,6 +446,9 @@ bundle common file_names
         meta => { "template" };
       "template_machine_names"
         string => "host/machine_names.txt",
+        meta => { "template" };
+      "template_mail_json"
+        string => "host/mail.txt",
         meta => { "template" };
       "template_site_config"
         string => "host/site_config.txt",

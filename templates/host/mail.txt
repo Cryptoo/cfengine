@@ -1,0 +1,28 @@
+{
+    "default":    {
+                   "address": "NOT_CONFIGURED",
+                   "login": "",
+                   "password": "",
+                   "receiving_proto": "",
+                   "receiving_port": "",
+                   "receiving_server": "",
+                   "sending_port": "",
+                   "sending_server": "",
+                   "fetchmail": "",
+                   "transport": "default",
+                  },
+    "i2p":        {
+                   "address": "NOT_CONFIGURED",
+                   "password": "",
+                  },
+    "freenet":    {
+                   "address": "NOT_CONFIGURED",
+                   "password": "",
+                  },
+    "bitmessage": {
+                   "address": "NOT_CONFIGURED"
+                  },
+    "extra":
+      [
+      ]
+}
