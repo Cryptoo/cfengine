@@ -176,6 +176,8 @@ bundle common file_names
         string => "$(directory_names.config_pm_upstream)/parent";
       "privoxy_config"
         string => "$(directory_names.config_privoxy)/config";
+      "postfix_main"
+        string => "$(directory_names.config_postfix)/main.cf";
       "mount_info"
         string => "/proc/self/mountstats";
       "shorewall_config"

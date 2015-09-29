@@ -49,6 +49,7 @@ bundle common directory_names
       "config_pm_profile" string => "$(config_pm)/profile";
       "config_pm_upstream" string => "$(config_pm_profile)/stub";
       "config_privoxy" string => "$(config_base)/privoxy";
+      "config_postfix" string => "$(config_base)/postfix";
       "config_run_base" string => "$(config_base)/runlevels";
       "config_run_boot" string => "$(config_run_base)/boot";
       "config_run_default" string => "$(config_run_base)/default";
