@@ -1,0 +1,3 @@
+{{#extra}}
+{{address}}       {{transport}}:[{{sending_server}}]:{{sending_port}}
+{{/extra}}

@@ -62,6 +62,15 @@ body classes shorewall
 
 }
 
+body classes postfix
+
+{
+
+  scope => "namespace";
+  promise_repaired => { "need_postfix_restart" };
+
+}
+
 body classes hosts
 
 {

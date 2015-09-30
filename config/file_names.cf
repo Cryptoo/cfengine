@@ -48,6 +48,8 @@ bundle common file_names
         string => "$(directory_names.config_base)/crypttab";
       "dnsmasq_conf"
         string => "$(directory_names.config_base)/dnsmasq.conf";
+      "fetchmail_conf"
+        string => "$(directory_names.config_base)/fetchmailrc";
       "fstab"
         string => "$(directory_names.config_base)/fstab";
       "group"
@@ -109,7 +111,7 @@ bundle common file_names
       "mail_server_key"
         string => "$(directory_names.config_cryptoo_incoming)/mail_server.key";
       "mail_server_config"
-        string => "$(directory_names.config_cryptoo_incoming)/mail_server.json";
+        string => "$(directory_names.config_cryptoo_incoming)/mail_config.json";
       "ca_crt_source"
         string => "$(directory_names.easy_rsa_keys)/ca.crt";
       "ca_key_source"
@@ -180,8 +182,20 @@ bundle common file_names
         string => "$(directory_names.config_pm_upstream)/parent";
       "privoxy_config"
         string => "$(directory_names.config_privoxy)/config";
+      "postfix_default_map"
+        string => "$(directory_names.config_postfix)/default_outgoing_map";
       "postfix_main"
         string => "$(directory_names.config_postfix)/main.cf";
+      "postfix_master"
+        string => "$(directory_names.config_postfix)/master.cf";
+      "postfix_saslpass"
+        string => "$(directory_names.config_postfix)/saslpass_default";
+      "postfix_tls"
+        string => "$(directory_names.config_postfix)/tls_policy";
+      "postfix_transports"
+        string => "$(directory_names.config_postfix)/transport";
+      "postfix_sender_map"
+        string => "$(directory_names.config_postfix)/sender_map";
       "mount_info"
         string => "/proc/self/mountstats";
       "shorewall_config"
@@ -330,6 +344,8 @@ bundle common file_names
         string => "$(directory_names.standard_admin_apps)/libvirtd";
       "localegen_app"
         string => "$(directory_names.standard_admin_apps)/locale-gen";
+      "postmap_app"
+        string => "$(directory_names.standard_admin_apps)/postmap";
       "shorewall_app"
         string => "$(directory_names.standard_admin_apps)/shorewall";
       "sshd_app"
@@ -420,8 +436,23 @@ bundle common file_names
       "template_dovecot_master"
         string => "guest/dovecot_master.txt",
         meta => { "template" };
+      "template_fetchmail"
+        string => "guest/fetchmail_mustache.txt",
+        meta => { "template" };
       "template_polipo"
         string => "guest/polipo_mustache.txt",
+        meta => { "template" };
+      "template_postfix_default_map"
+        string => "guest/postfix_default_map.txt",
+        meta => { "template" };
+      "template_postfix_saslpass"
+        string => "guest/postfix_saslpass.txt",
+        meta => { "template" };
+      "template_postfix_sender_map"
+        string => "guest/postfix_sender_map.txt",
+        meta => { "template" };
+      "template_postfix_transport"
+        string => "guest/postfix_transport.txt",
         meta => { "template" };
       "template_tmux_guest"
         string => "guest/tmux.txt",

@@ -53,26 +53,32 @@ bundle agent mail_server(root)
       "ssl[ssl_ca]"
         string => "</$(file_names.ca_crt)";
 
+      "postfix[alias_maps]"
+        string => "hash:/etc/mail/aliases";
+      "postfix[local_recipient_maps]"
+        string => "proxy:unix:passwd.byname $alias_maps";
       "postfix[myhostname]"
-        string => "mail.$(site.config[ddns])";
+        string => "mail_server";
       "postfix[mydomain]"
         string => "$(site.config[ddns])";
       "postfix[myorigin]"
         string => "$mydomain";
       "postfix[mydestination]"
-        string => "$myhostname, localhost.$mydomain, localhost, $mydomain, localhost.local";
+        string => "$myhostname, $mydomain, localhost.localnet, localhost, localhost.$mydomain";
+      "postfix[relay_domains]"
+        string => "$mydestination";
       "postfix[mailbox_command]"
         string => '/usr/libexec/dovecot/dovecot-lda -f "$SENDER" -a "$RECIPIENT"';
       "postfix[transport_maps]"
-        string => "hash:/etc/postfix/transport";
+        string => "hash:/$(file_names.postfix_transports)";
       "postfix[smtp_generic_maps]"
-        string => "hash:/etc/postfix/default_outgoing_map";
+        string => "hash:/$(file_names.postfix_default_map)";
       "postfix[sender_dependent_default_transport_maps]"
-        string => "hash:/etc/postfix/sender_map";
+        string => "hash:/$(file_names.postfix_sender_map)";
       "postfix[smtp_sasl_auth_enable]"
         string => "yes";
       "postfix[smtp_sasl_password_maps]"
-        string => "hash:/etc/postfix/saslpass_default";
+        string => "hash:/$(file_names.postfix_saslpass)";
       "postfix[smtp_sasl_security_options]"
         string => "noanonymous";
       "postfix[smtp_use_tls]"
@@ -86,7 +92,7 @@ bundle agent mail_server(root)
       "postfix[smtp_tls_security_level]"
         string => "may";
       "postfix[smtp_tls_policy_maps]"
-        string => "hash:/etc/postfix/tls_policy";
+        string => "hash:/$(file_names.postfix_tls)";
       "postfix[smtp_tls_loglevel]"
         string => "0";
       "postfix[tls_random_source]"
@@ -119,6 +125,22 @@ bundle agent mail_server(root)
         string => "yes";
       "postfix[smtpd_tls_loglevel]"
         string => "0";
+
+      "postfix_tls[smtp.gmail.com]"
+        string => "encrypt";
+
+  classes:
+
+    any::
+
+      "have_mail_config"
+        expression => fileexists("$(this.root)$(file_names.mail_server_config)");
+
+      "regen_tls"
+        expression => makerule("$(this.root)$(file_names.postfix_tls).db", "$(this.root)$(file_names.postfix_tls)");
+
+      "regen_transports"
+        expression => makerule("$(this.root)$(file_names.postfix_transports).db", "$(this.root)$(file_names.postfix_transports)");
 
   files:
 
@@ -173,10 +195,28 @@ bundle agent mail_server(root)
 
       "$(this.root)$(file_names.postfix_main)"
         perms => system,
+        create => "true",
         edit_line => default:set_line_based("cryptoo:mail_server.postfix", " = ", "\s*=\s*", ".*", "\s*#\s*"),
-        classes => default:if_repaired("reload_postfix");
+        classes => postfix;
+
+      "$(this.root)$(file_names.postfix_tls)"
+        perms => system,
+        create => "true",
+        edit_line => default:set_line_based("cryptoo:mail_server.postfix_tls", " ", "\s*", ".*", "\s*#\s*"),
+        classes => postfix;
+
+      "$(this.root)$(file_names.postfix_transports)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[postfix_transport])",
+        classes => postfix;
 
   methods:
+
+    have_mail_config::
+
+      "configure fetchmail"
+        usebundle => fetchmail("$(this.root)");
 
     any::
 
@@ -191,10 +231,22 @@ bundle agent mail_server(root)
         args => "restart dovecot",
         contain => silent;
 
-    reload_postfix::
+    need_postfix_restart::
 
       "/$(file_names.systemd_app)"
         args => "restart postfix",
+        contain => silent;
+
+    regen_tls::
+
+      "/$(file_names.postmap_app)"
+        args => "$(this.root)$(file_names.postfix_tls)",
+        contain => silent;
+
+    regen_transports::
+
+      "/$(file_names.postmap_app)"
+        args => "$(this.root)$(file_names.postfix_transports)",
         contain => silent;
 
 }

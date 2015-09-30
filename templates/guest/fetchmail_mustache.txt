@@ -1,0 +1,22 @@
+set syslog
+
+defaults
+        timeout 60
+        fetchall
+        nokeep
+
+{{#servers}}
+poll {{receiving_server}} protocol {{receiving_proto}} port {{receiving_port}}:
+        auth password username "{{login}}" password "{{password}}" is "{{local_user}}" here options {{fetchmail}};
+{{/servers}}
+
+{{#i2p}}
+poll i2p protocol pop3 port 110 interval 20:
+        auth password username "{{login}}" password "{{password}}" is "{{local_user}}" here options sslproto '';
+{{/i2p}}
+
+{{#extra}}
+poll {{receiving_server}} protocol {{receiving_proto}} port {{receiving_port}}:
+        auth password username "{{login}}" password "{{password}}" is "{{local_user}}" here options {{fetchmail}};
+{{/extra}}
+

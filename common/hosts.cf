@@ -149,6 +149,11 @@ bundle agent hosts(root)
                   "alias": "mail_server"
                 },
                 {
+                  "fqdn": "$(network.machine_names[20][name]).vpndmz",
+                  "ip": "192.168.$(subnet_config[vpndmz]).20",
+                  "alias": "$(network.machine_names[20][name])"
+                },
+                {
                   "fqdn": "$(network.machine_names[21][name]).vpndmz",
                   "ip": "192.168.$(subnet_config[vpndmz]).21",
                   "alias": "vpn_secondary"

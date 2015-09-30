@@ -10,17 +10,22 @@
                    "sending_server": "",
                    "fetchmail": "",
                    "transport": "default",
+                   "local_user": ""
                   },
     "i2p":        {
                    "address": "NOT_CONFIGURED",
+                   "login": "",
                    "password": "",
+                   "local_user": ""
                   },
     "freenet":    {
                    "address": "NOT_CONFIGURED",
                    "password": "",
+                   "local_user": ""
                   },
     "bitmessage": {
-                   "address": "NOT_CONFIGURED"
+                   "address": "NOT_CONFIGURED",
+                   "local_user": ""
                   },
     "extra":
       [

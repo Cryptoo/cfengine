@@ -56,6 +56,9 @@ bundle common control
       "desktop_guest_inputs"
         slist => lsdir("$(this.promise_dirname)/roles/guest/desktop_guests", ".*\.cf", "true");
 
+      "server_guest_common_inputs"
+        slist => lsdir("$(this.promise_dirname)/roles/guest/server_guests/common", ".*\.cf", "true");
+
       "server_guest_inputs"
         slist => lsdir("$(this.promise_dirname)/roles/guest/server_guests", ".*\.cf", "true");
 

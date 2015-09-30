@@ -1,0 +1,261 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/config.cf",
+              "cryptoo/config/file_names.cf"
+            };
+
+}
+
+bundle agent fetchmail(root)
+
+{
+
+  vars:
+
+    any::
+
+      "mail_config"
+        data => readjson("$(this.root)$(file_names.mail_server_config)", 1M);
+
+    !sections_checked::
+
+      "default_json"
+        string => "";
+
+      "i2p_json"
+        string => "";
+
+      "extra_json"
+        string => "";
+
+    default_configured::
+
+      "default_email"
+        data => mergedata("mail_config[default]");
+
+      "postfix[relayhost]"
+        string => "[$(default_email[sending_server])]:$(default_email[sending_port])";
+
+      "default_map"
+        string => '{ "user": "$(default_email[local_user])", "email": "$(default_email[address])"}';
+
+      "default_saslpass"
+        string => '{ "server": "$(default_email[sending_server])", "port": "$(default_email[sending_port])", "login": "$(default_email[login])", "password": "$(default_email[password])"}';
+
+      "default_account"
+        string => storejson("default_email");
+
+      "default_json"
+        string => "$(default_account), ",
+        classes => default:if_ok("default_parsed");
+
+    i2p_configured::
+
+      "i2p_json"
+        string => '
+          "i2p": [ {
+            "login": "$(mail_config[i2p][login])",
+            "password": "$(mail_config[i2p][password])",
+            "local_user": "$(mail_config[i2p][local_user])"
+          } ],';
+
+    have_extra_section::
+
+      "extra_email"
+        data => mergedata("mail_config[extra]");
+
+      "extra_account"
+        string => storejson("extra_email");
+
+      "extra_json"
+        string => '"extra": $(extra_account),';
+
+      "extra_json_full"
+        string => "{ $(extra_json) }";
+
+      "extra_index"
+        slist => getindices("extra_email");
+
+      "$(extra_email[$(extra_index)][transport])_saslpass"
+        string => '{ "server": "$(extra_email[$(extra_index)][sending_server])", "port": "$(extra_email[$(extra_index)][sending_port])", "login": "$(extra_email[$(extra_index)][login])", "password": "$(extra_email[$(extra_index)][password])"}';
+
+      "$(extra_email[$(extra_index)][transport])_map"
+        string => '{ "user": "$(extra_email[$(extra_index)][local_user])", "email": "$(extra_email[$(extra_index)][address])"}',
+        classes => default:if_ok("extra_parsed");
+
+      "transport[$(extra_email[$(extra_index)][transport])]"
+        string => "unix  -       -       n       -       1       smtp -o smtp_sasl_password_maps=hash:/$(directory_names.config_postfix)/saslpass_$(extra_email[$(extra_index)][transport]) -o smtp_generic_maps=hash:/$(directory_names.config_postfix)/$(extra_email[$(extra_index)][transport])_outgoing_map";
+
+    sections_checked::
+
+      "fetchmail_json"
+        string => '
+          {
+            "servers":
+              [
+                $(default_json)
+              ],
+            $(i2p_json)
+            $(extra_json)
+          }',
+        classes => default:if_ok("fetchmail_json_ready");
+
+  classes:
+
+    any::
+
+      "regen_default_map"
+        expression => makerule("$(this.root)$(file_names.postfix_default_map).db", "$(this.root)$(file_names.postfix_default_map)");
+
+      "regen_saslpass"
+        expression => makerule("$(this.root)$(file_names.postfix_saslpass).db", "$(this.root)$(file_names.postfix_saslpass)");
+
+      "regen_sender_map"
+        expression => makerule("$(this.root)$(file_names.postfix_sender_map).db", "$(this.root)$(file_names.postfix_sender_map)");
+
+      "regen_$(extra_email[$(extra_index)][transport])_map"
+        expression => makerule("$(this.root)$(directory_names.config_postfix)/$(extra_email[$(extra_index)][transport])_outgoing_map.db", "$(this.root)$(directory_names.config_postfix)/$(extra_email[$(extra_index)][transport])_outgoing_map");
+
+      "regen_saslpass_$(extra_email[$(extra_index)][transport])"
+        expression => makerule("$(this.root)$(directory_names.config_postfix)/saslpass_$(extra_email[$(extra_index)][transport]).db", "$(this.root)$(directory_names.config_postfix)/saslpass_$(extra_email[$(extra_index)][transport])");
+
+      "have_default_section"
+        expression => isvariable("mail_config[default]");
+
+      "have_i2p_section"
+        expression => isvariable("mail_config[i2p]");
+
+      "have_extra_section"
+        expression => isvariable("mail_config[extra]");
+
+    have_default_section::
+
+      "default_configured"
+        not => strcmp("$(mail_config[default][address])", "NOT_CONFIGURED");
+
+    have_i2p_section::
+
+      "i2p_configured"
+        not => strcmp("$(mail_config[i2p][address])", "NOT_CONFIGURED");
+
+    "sections_checked"
+        expression => "any";
+  files:
+
+    fetchmail_json_ready::
+
+      "$(this.root)$(file_names.fetchmail_conf)"
+        perms => fetchmail,
+        create => "true",
+        edit_template => "/$(templates.template[fetchmail])",
+        template_method => "mustache",
+        template_data => parsejson("$(fetchmail_json)");
+
+    default_parsed::
+
+      "$(this.root)$(file_names.postfix_main)"
+        perms => system,
+        edit_line => default:set_line_based("cryptoo:fetchmail.postfix", " = ", "\s*=\s*", ".*", "\s*#\s*"),
+        classes => postfix;
+
+      "$(this.root)$(file_names.postfix_default_map)"
+        perms => root,
+        create => "true",
+        edit_template => "/$(templates.template[postfix_default_map])",
+        template_method => "mustache",
+        template_data => parsejson("$(default_map)"),
+        classes => postfix;
+
+      "$(this.root)$(file_names.postfix_saslpass)"
+        perms => root,
+        create => "true",
+        edit_template => "/$(templates.template[postfix_saslpass])",
+        template_method => "mustache",
+        template_data => parsejson("$(default_saslpass)"),
+        classes => postfix;
+
+    extra_parsed::
+
+      "$(this.root)$(file_names.postfix_sender_map)"
+        perms => root,
+        create => "true",
+        edit_template => "/$(templates.template[postfix_sender_map])",
+        template_method => "mustache",
+        template_data => parsejson("$(extra_json_full)"),
+        classes => postfix;
+
+      "$(this.root)$(directory_names.config_postfix)/saslpass_$(extra_email[$(extra_index)][transport])"
+        perms => root,
+        create => "true",
+        edit_template => "/$(templates.template[postfix_saslpass])",
+        template_method => "mustache",
+        template_data => parsejson("$($(extra_email[$(extra_index)][transport])_saslpass)"),
+        classes => postfix;
+
+      "$(this.root)$(directory_names.config_postfix)/$(extra_email[$(extra_index)][transport])_outgoing_map"
+        perms => root,
+        create => "true",
+        edit_template => "/$(templates.template[postfix_default_map])",
+        template_method => "mustache",
+        template_data => parsejson("$($(extra_email[$(extra_index)][transport])_map)"),
+        classes => postfix;
+
+      "$(this.root)$(file_names.postfix_master)"
+        perms => system,
+        edit_line => default:set_line_based("cryptoo:fetchmail.transport", "    ", "\s*", ".*", "\s*#\s*"),
+        classes => postfix;
+
+  commands:
+
+    regen_default_map::
+
+      "/$(file_names.postmap_app)"
+        args => "$(this.root)$(file_names.postfix_default_map)",
+        contain => silent;
+
+    regen_saslpass::
+
+      "/$(file_names.postmap_app)"
+        args => "$(this.root)$(file_names.postfix_saslpass)",
+        contain => silent;
+
+    regen_sender_map::
+
+      "/$(file_names.postmap_app)"
+        args => "$(this.root)$(file_names.postfix_sender_map)",
+        contain => silent;
+
+    "regen_saslpass_$(extra_email[$(extra_index)][transport])"::
+
+      "/$(file_names.postmap_app)"
+        args => "$(this.root)$(directory_names.config_postfix)/saslpass_$(extra_email[$(extra_index)][transport])",
+        contain => silent;
+
+    "regen_$(extra_email[$(extra_index)][transport])_map"::
+
+      "/$(file_names.postmap_app)"
+        args => "$(this.root)$(directory_names.config_postfix)/$(extra_email[$(extra_index)][transport])_outgoing_map",
+        contain => silent;
+
+  reports:
+
+#    any::
+
+#      "configuring fetchmail";
+
+#    have_default_section:: "have default section in $(this.root)$(file_names.mail_server_config)";
+#    !have_default_section:: "missing default section in $(this.root)$(file_names.mail_server_config)";
+
+#    default_configured:: "address $(mail_config[default][address]) is configured";
+#    !default_configured:: "address $(mail_config[default][address]) is not configured";
+
+    extra_parsed::
+
+#      "$(extra_email[$(extra_index)][transport])_saslpass: $($(extra_email[$(extra_index)][transport])_saslpass)";
+
+}

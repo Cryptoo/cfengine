@@ -6,6 +6,7 @@ body file control
 
   inputs => {
               "cryptoo/common/common.cf",
+              "@(cryptoo:control.server_guest_common_inputs)",
               "@(cryptoo:control.server_guest_inputs)"
             };
 

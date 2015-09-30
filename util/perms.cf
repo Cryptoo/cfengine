@@ -149,3 +149,11 @@ body perms mail_spool
       owners  => { "root" };
       groups  => { "mail" };
 }
+
+body perms fetchmail
+
+{
+      mode  => "0600";
+      owners  => { "fetchmail" };
+      groups  => { "fetchmail" };
+}
