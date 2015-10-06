@@ -148,6 +148,7 @@ bundle common directory_names
       "bitcoin_base" string => "$(volatile_library)/bitcoin";
       "bitcoin_home" string => "$(bitcoin_base)/.bitcoin";
       "bitmessage_base" string => "$(volatile_library)/bitmessage";
+      "bitmessage_config" string => "$(bitmessage_base)/.config/PyBitmessage";
       "volatile_overlay" string => "$(volatile_library)/layman";
       "bitcoin_overlay" string => "$(volatile_overlay)/bitcoin";
       "volatile_libvirt" string => "$(volatile_library)/libvirt";

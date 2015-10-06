@@ -17,11 +17,54 @@ bundle agent bitmessage(root)
 
     "tags" slist => { "cryptoo_role" };
 
+  vars:
+
+    any::
+
+      "bitmessage[apiusername]"
+        string => "cryptoo";
+      "bitmessage[apipassword]"
+        string => "cryptoo";
+
+  classes:
+
+    any::
+
+      "bootstrap"
+        not => strcmp("$(this.root)", "/");
+
+      "have_bitmessage_config"
+        expression => fileexists("$(this.root)$(file_names.bitmessage_conf)");
+
+  files:
+
+    any::
+
+      "$(this.root)$(directory_names.bitmessage_base)/."
+        perms => bitmessage,
+        create => "true";
+
+    have_bitmessage_config::
+
+      "$(this.root)$(file_names.bitmessage_conf)"
+        perms => bitmessage,
+        create => "false",
+        edit_line => default:set_line_based("cryptoo:bitmessage.bitmessage", " = ", "\s*=\s*", ".*", "\s*#\s*"),
+        classes => default:if_repaired("reload_bitmessage");
+
   methods:
 
     any::
 
       "configure system as a bitmessage guest"
         usebundle => server_guest("$(this.root)", "bitmessage", "x86_64", "no_multilib");
+
+  commands:
+
+    reload_bitmessage&(!bootstrap)::
+
+      "/$(file_names.systemd_app)"
+        args => "restart bitmessage",
+        contain => silent;
 
 }

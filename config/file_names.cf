@@ -492,6 +492,8 @@ bundle common file_names
         meta => { "template" };
       "bitcoin_conf_link"
         string => "$(directory_names.bitcoin_home)/bitcoin.conf";
+      "bitmessage_conf"
+        string => "$(directory_names.bitmessage_config)/keys.dat";
       "overlay_conf"
         string => "$(directory_names.volatile_overlay)/make.conf";
       "bitcoin_overlay"

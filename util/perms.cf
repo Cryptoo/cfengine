@@ -157,3 +157,11 @@ body perms fetchmail
       owners  => { "fetchmail" };
       groups  => { "fetchmail" };
 }
+
+body perms bitmessage
+
+{
+      mode  => "0660";
+      owners  => { "bitmessage" };
+      groups  => { "bitmessage" };
+}
