@@ -161,7 +161,7 @@ body perms fetchmail
 body perms bitmessage
 
 {
-      mode  => "0660";
+      mode  => "0600";
       owners  => { "bitmessage" };
       groups  => { "bitmessage" };
 }
