@@ -1960,6 +1960,137 @@ bundle common file_groups
         string => "external";
 
 ################################################################################
+#                             bitmessage
+################################################################################
+
+      "make_profile[bitmessage]"
+        string => "$(make_profile[server_guest])";
+
+      "pm_env[bitmessage]"
+        slist => {
+                    "@(pm_env[server_guest])"
+                 };
+
+      "pm_environment[bitmessage]"
+        slist => {
+                    "@(pm_environment[server_guest])"
+                 };
+
+      "keywords[bitmessage]"
+        slist => {
+                    "@(keywords[server_guest])",
+                    "bitmessage"
+                 };
+
+      "mask[bitmessage]"
+        slist => {
+                    "@(mask[server_guest])"
+                 };
+
+      "unmask[bitmessage]"
+        slist => {
+                    "@(unmask[server_guest])"
+                 };
+
+      "use[bitmessage]"
+        slist => {
+                    "@(use[server_guest])",
+                    "bitmessage",
+                    "boost"
+                 };
+
+      "unuse[bitmessage]"
+        slist => {
+                    "@(unuse[server_guest])"
+                 };
+
+      "profile[bitmessage]"
+        slist => {
+                    "@(profile[server_guest])"
+                 };
+
+      "systemd_enabled[bitmessage]"
+        slist => {
+                    "@(systemd_enabled[server_guest])",
+                    "bitmessage",
+                    "bitmessage_log"
+                 };
+
+      "backup_dir[bitmessage]"
+        string => "/$(directory_names.bitmessage_base)";
+
+      "firewall_zones[bitmessage]"
+        slist => {
+                    "@(firewall_zones[server_guest])"
+                 };
+
+      "firewall_bridges[bitmessage]"
+        slist => {
+                    "@(firewall_bridges[server_guest])"
+                 };
+
+      "firewall[bitmessage]"
+        string => "$(firewall[server_guest])";
+
+      "network[bitmessage]"
+        string => '
+          {
+            "devices":
+               {
+                 "bridge":
+                   [
+                     "none"
+                   ],
+                 "veth":
+                   [
+                     "none"
+                   ],
+                 "tap":
+                   [
+                     "none"
+                   ],
+                 "tun":
+                   [
+                     "none"
+                   ]
+               },
+             "interfaces":
+               {
+                 "eth0":
+                   {
+                     "type": "gateway",
+                     "params":
+                       {
+                         "zone": "ispdmz",
+                         "gateway": "firewall_external",
+                         "ipforward": "no"
+                       }
+                   },
+                 "eth1":
+                   {
+                     "type": "simple",
+                     "params":
+                       {
+                         "zone": "vpndmz",
+                         "ipforward": "no",
+                         "routes":
+                           {
+                             "i2p": "firewall_internal",
+                             "eep": "firewall_internal",
+                             "tor": "firewall_internal",
+                             "onion": "firewall_internal",
+                             "lan": "firewall_internal"
+                           }
+                       }
+                   }
+               }
+          }
+        ';
+
+      "dns_type[bitmessage]"
+        string => "external";
+
+################################################################################
 #                             bitcoin
 ################################################################################
 

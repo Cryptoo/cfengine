@@ -27,6 +27,17 @@ bundle agent cryptoo_bootstrap
       "multilib"
         string => "no_multilib";
 
+    default:bootstrap_bitmessage::
+
+      "role"
+        string => "bitmessage";
+
+      "type"
+        string => "server";
+
+      "multilib"
+        string => "no_multilib";
+
     default:bootstrap_dns::
 
       "role"
@@ -222,6 +233,11 @@ bundle agent cryptoo_bootstrap
         expression => "any";
 
     default:bootstrap_bitcoin::
+
+      "bootstrap_guest"
+        expression => "any";
+
+    default:bootstrap_bitmessage::
 
       "bootstrap_guest"
         expression => "any";

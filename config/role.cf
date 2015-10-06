@@ -235,6 +235,38 @@ bundle common role
           }
         ';
 
+      "params[bitmessage]"
+        string => '
+          {
+            "number": "$(this.defined_numbers[bitmessage])",
+            "make_conf":
+              {
+                "makeopts": "guest",
+                "pkgdir": "server_guest",
+                "runtime": "guest",
+                "graphical": "headless"
+              },
+            "libvirt":
+              {
+                "name": "bitmesage",
+                "ram": "2621440",
+                "cpu": "4",
+                "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64_smp",
+                "interfaces":
+                   [
+                     {
+                       "bridge": "ispdmz",
+                       "device": "ispdmz$(this.defined_numbers[bitcoin])"
+                     },
+                     {
+                       "bridge": "vpndmz",
+                       "device": "vpndmz$(this.defined_numbers[bitcoin])"
+                     }
+                   ]
+              }
+          }
+        ';
+
       "params[vpn_primary]"
         string => '
           {

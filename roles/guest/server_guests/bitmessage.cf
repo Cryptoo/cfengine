@@ -1,0 +1,27 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+            };
+
+}
+
+bundle agent bitmessage(root)
+
+{
+
+  meta:
+
+    "tags" slist => { "cryptoo_role" };
+
+  methods:
+
+    any::
+
+      "configure system as a bitmessage guest"
+        usebundle => server_guest("$(this.root)", "bitmessage", "x86_64", "no_multilib");
+
+}

@@ -147,6 +147,7 @@ bundle common directory_names
       "volatile_library" string => "$(volatile_base)/lib";
       "bitcoin_base" string => "$(volatile_library)/bitcoin";
       "bitcoin_home" string => "$(bitcoin_base)/.bitcoin";
+      "bitmessage_base" string => "$(volatile_library)/bitmessage";
       "volatile_overlay" string => "$(volatile_library)/layman";
       "bitcoin_overlay" string => "$(volatile_overlay)/bitcoin";
       "volatile_libvirt" string => "$(volatile_library)/libvirt";
