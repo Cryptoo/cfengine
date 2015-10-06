@@ -248,7 +248,7 @@ bundle common role
               },
             "libvirt":
               {
-                "name": "bitmesage",
+                "name": "bitmessage",
                 "ram": "2621440",
                 "cpu": "4",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64_smp",
@@ -256,11 +256,11 @@ bundle common role
                    [
                      {
                        "bridge": "ispdmz",
-                       "device": "ispdmz$(this.defined_numbers[bitcoin])"
+                       "device": "ispdmz$(this.defined_numbers[bitmessage])"
                      },
                      {
                        "bridge": "vpndmz",
-                       "device": "vpndmz$(this.defined_numbers[bitcoin])"
+                       "device": "vpndmz$(this.defined_numbers[bitmessage])"
                      }
                    ]
               }
