@@ -39,6 +39,7 @@
       },
     "bitmessage":
       {
-          "external_port": "8444"
+          "external_port": "8444",
+          "rpc_port": "8445"
       }
 }

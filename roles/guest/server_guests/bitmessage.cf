@@ -30,6 +30,12 @@ bundle agent bitmessage(root)
         string => "cryptoo";
       "bitmessage[apipassword]"
         string => "cryptoo";
+      "bitmessage[apienabled]"
+        string => "true";
+      "bitmessage[apiport]"
+        string => "$(config.service_info[bitmessage][rpc_port])";
+      "bitmessage[apiinterface]"
+        string => "127.0.0.1";
 
   classes:
 
