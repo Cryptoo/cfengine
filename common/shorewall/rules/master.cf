@@ -266,6 +266,11 @@ bundle agent shorewall_rules_master(root)
                      "destination": "d$(defined_numbers[freenet]):192.168.$(subnet_config[ispdmz]).$(defined_numbers[freenet])"
                    },
                    {
+                     "action": "bitmessage(ACCEPT)",
+                     "source": "d$(defined_numbers[firewall_external]):!+private",
+                     "destination": "d$(defined_numbers[bitmessage]):192.168.$(subnet_config[ispdmz]).$(defined_numbers[bitmessage])"
+                   },
+                   {
                      "action": "bitcoin(ACCEPT)",
                      "source": "d$(defined_numbers[firewall_external]):!+private",
                      "destination": "d$(defined_numbers[bitcoin]):192.168.$(subnet_config[ispdmz]).$(defined_numbers[bitcoin])"

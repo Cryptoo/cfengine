@@ -40,6 +40,22 @@ bundle agent shorewall_rules_bitmessage(root)
               [
                 {
                   "action": "guest"
+                },
+                {
+                  "action": "ACCEPT",
+                  "source": "fw:192.168.$(subnet_config[ispdmz]).$(defined_numbers[bitmessage])",
+                  "destination": "net",
+                  "protocol": "tcp",
+                  "destination_port": "-",
+                  "source_port": "-",
+                  "original_destination": "-",
+                  "rate": "-",
+                  "user": "bitmessage:bitmessage"
+                },
+                {
+                  "action": "bitmessage(ACCEPT)",
+                  "source": "net",
+                  "destination": "fw:192.168.$(subnet_config[ispdmz]).$(defined_numbers[bitmessage])"
                 }
               ]
           }';
