@@ -222,6 +222,8 @@ bundle common file_names
         string => "$(directory_names.config_units)/tor.service";
       "xpra_service"
         string => "$(directory_names.config_units)/xpra@.service";
+      "bitmessage_service"
+        string => "$(directory_names.config_units)/bitmessage.service";
       "cf_execd_service"
         string => "$(directory_names.config_units)/cf-execd.service";
       "cf_monitord_service"

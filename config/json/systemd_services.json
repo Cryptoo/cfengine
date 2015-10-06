@@ -1,4 +1,34 @@
 {
+    "bitmessage":
+      {
+        "sections":
+          [
+             { "section": "Unit",
+               "values":
+                 [
+                   { "LHS": "Description", "RHS": "PyBitmessage" },
+                   { "LHS": "After", "RHS": "network.target" }
+                 ]
+             },
+             { "section": "Service",
+               "values":
+                 [
+                   { "LHS": "Type", "RHS": "simple" },
+                   { "LHS": "Restart", "RHS": "always" },
+                   { "LHS": "User", "RHS": "bitmessage" },
+                   { "LHS": "Group", "RHS": "bitmessage" },
+                   { "LHS": "ExecStart", "RHS": "/usr/bin/pybitmessage" },
+                   { "LHS": "RestartSec", "RHS": "5" }
+                 ]
+             },
+             { "section": "Install",
+               "values":
+                 [
+                   { "LHS": "WantedBy", "RHS": "multi-user.target" }
+                 ]
+             }
+          ]
+      },
     "cf_execd":
       {
         "sections":

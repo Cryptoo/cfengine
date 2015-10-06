@@ -5,6 +5,11 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
+              "cryptoo/config/config.cf",
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/templates.cf",
+              "cryptoo/util/perms.cf",
             };
 
 }
@@ -44,6 +49,14 @@ bundle agent bitmessage(root)
         perms => bitmessage,
         create => "true";
 
+      "$(this.root)$(file_names.bitmessage_service)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => mergedata("cryptoo:config.systemd_services[bitmessage]"),
+        classes => default:if_repaired("daemon_reload");
+
     have_bitmessage_config::
 
       "$(this.root)$(file_names.bitmessage_conf)"
@@ -60,6 +73,11 @@ bundle agent bitmessage(root)
         usebundle => server_guest("$(this.root)", "bitmessage", "x86_64", "no_multilib");
 
   commands:
+
+    daemon_reload&(!bootstrap)::
+
+      "$(this.root)$(file_names.systemd_app)"
+        args => "daemon-reload";
 
     reload_bitmessage&(!bootstrap)::
 
