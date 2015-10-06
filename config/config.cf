@@ -135,6 +135,18 @@ bundle common config
         string => "IKCONFIG_PROC",
         meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
+      "kconfig[MEMCG]"
+        string => "MEMCG",
+        meta => { "enabled", "host"};
+
+      "kconfig[MEMCG_SWAP]"
+        string => "MEMCG_SWAP",
+        meta => { "enabled", "host"};
+
+      "kconfig[MEMCG_KMEM]"
+        string => "MEMCG_KMEM",
+        meta => { "enabled", "host"};
+
       "kconfig[SCHED_AUTOGROUP]"
         string => "SCHED_AUTOGROUP",
         meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
