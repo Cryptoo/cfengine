@@ -224,16 +224,14 @@ bundle agent fetchmail(root)
         create => "true",
         edit_template => "/$(templates.template[postfix_default_map])",
         template_method => "mustache",
-        template_data => parsejson("$(bitmessage_map)"),
-        classes => postfix;
+        template_data => parsejson("$(bitmessage_map)");
 
       "$(this.root)$(file_names.postfix_bitmessage_saslpass)"
         perms => root,
         create => "true",
         edit_template => "/$(templates.template[postfix_saslpass])",
         template_method => "mustache",
-        template_data => parsejson("$(bitmessage_saslpass)"),
-        classes => postfix;
+        template_data => parsejson("$(bitmessage_saslpass)");
 
     extra_parsed::
 
