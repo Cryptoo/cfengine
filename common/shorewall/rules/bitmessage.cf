@@ -56,6 +56,16 @@ bundle agent shorewall_rules_bitmessage(root)
                   "action": "bitmessage(ACCEPT)",
                   "source": "net",
                   "destination": "fw:192.168.$(subnet_config[ispdmz]).$(defined_numbers[bitmessage])"
+                },
+                {
+                  "action": "POP3(ACCEPT)",
+                  "source": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])",
+                  "destination": "fw:192.168.$(subnet_config[ispdmz]).$(defined_numbers[bitmessage])"
+                },
+                {
+                  "action": "SMTP(ACCEPT)",
+                  "source": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])",
+                  "destination": "fw:192.168.$(subnet_config[ispdmz]).$(defined_numbers[bitmessage])"
                 }
               ]
           }';
