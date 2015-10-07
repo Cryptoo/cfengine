@@ -22,6 +22,83 @@ bundle agent fetchmail(root)
       "mail_config"
         data => readjson("$(this.root)$(file_names.mail_server_config)", 1M);
 
+      "postfix[alias_maps]"
+        string => "hash:/etc/mail/aliases";
+      "postfix[local_recipient_maps]"
+        string => "proxy:unix:passwd.byname $alias_maps";
+      "postfix[myhostname]"
+        string => "mail_server";
+      "postfix[mydomain]"
+        string => "$(site.config[ddns])";
+      "postfix[myorigin]"
+        string => "$mydomain";
+      "postfix[mydestination]"
+        string => "$myhostname, $mydomain, localhost.localnet, localhost, localhost.$mydomain";
+      "postfix[relay_domains]"
+        string => "$mydestination";
+      "postfix[mailbox_command]"
+        string => '/usr/libexec/dovecot/dovecot-lda -f "$SENDER" -a "$RECIPIENT"';
+      "postfix[transport_maps]"
+        string => "hash:/$(file_names.postfix_transports)";
+      "postfix[smtp_generic_maps]"
+        string => "hash:/$(file_names.postfix_default_map)";
+      "postfix[sender_dependent_default_transport_maps]"
+        string => "hash:/$(file_names.postfix_sender_map)";
+      "postfix[smtp_sasl_auth_enable]"
+        string => "yes";
+      "postfix[smtp_sasl_password_maps]"
+        string => "hash:/$(file_names.postfix_saslpass)";
+      "postfix[smtp_sasl_security_options]"
+        string => "noanonymous";
+      "postfix[smtp_use_tls]"
+        string => "yes";
+      "postfix[smtp_connect_timeout]"
+        string => "180s";
+      "postfix[smtp_tls_key_file]"
+        string => "/$(file_names.mail_server_key)";
+      "postfix[smtp_tls_cert_file]"
+        string => "/$(file_names.mail_server_crt)";
+      "postfix[smtp_tls_security_level]"
+        string => "may";
+      "postfix[smtp_tls_policy_maps]"
+        string => "hash:/$(file_names.postfix_tls)";
+      "postfix[smtp_tls_loglevel]"
+        string => "0";
+      "postfix[tls_random_source]"
+        string => "dev:/dev/urandom";
+      "postfix[message_size_limit]"
+        string => "1024000000";
+      "postfix[mailbox_size_limit]"
+        string => "102400000000";
+      "postfix[smtpd_sasl_auth_enable]"
+        string => "yes";
+      "postfix[smtpd_sasl_type]"
+        string => "dovecot";
+      "postfix[smtpd_sasl_path]"
+        string => "private/auth";
+      "postfix[smtpd_recipient_restrictions]"
+        string => "permit_mynetworks, permit_sasl_authenticated, reject_unauth_destination";
+      "postfix[smtpd_use_tls]"
+        string => "yes";
+      "postfix[smtpd_tls_key_file]"
+        string => "/$(file_names.mail_server_key)";
+      "postfix[smtpd_tls_cert_file]"
+        string => "/$(file_names.mail_server_crt)";
+      "postfix[smtpd_tls_loglevel]"
+        string => "1";
+      "postfix[smtpd_tls_received_header]"
+        string => "yes";
+      "postfix[smtpd_tls_session_cache_timeout]"
+        string => "3600";
+      "postfix[smtpd_tls_auth_only]"
+        string => "yes";
+      "postfix[smtpd_tls_loglevel]"
+        string => "0";
+      "postfix[mime_header_checks]"
+        string => "regexp:/$(file_names.postfix_header_checks)";
+      "postfix[header_checks]"
+        string => "regexp:/$(file_names.postfix_header_checks)";
+
     !sections_checked::
 
       "default_json"
