@@ -125,6 +125,10 @@ bundle agent mail_server(root)
         string => "yes";
       "postfix[smtpd_tls_loglevel]"
         string => "0";
+      "postfix[mime_header_checks]"
+        string => "regexp:/$(file_names.postfix_header_checks)";
+      "postfix[header_checks]"
+        string => "regexp:/$(file_names.postfix_header_checks)";
 
       "postfix_tls[smtp.gmail.com]"
         string => "encrypt";
@@ -144,6 +148,9 @@ bundle agent mail_server(root)
 
       "regen_transports"
         expression => makerule("$(this.root)$(file_names.postfix_transports).db", "$(this.root)$(file_names.postfix_transports)");
+
+      "regen_header_checks"
+        expression => makerule("$(this.root)$(file_names.postfix_header_checks).db", "$(this.root)$(file_names.postfix_header_checks)");
 
   files:
 
@@ -214,6 +221,12 @@ bundle agent mail_server(root)
         edit_template => "/$(templates.template[postfix_transport])",
         classes => postfix;
 
+      "$(this.root)$(file_names.postfix_header_checks)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[postfix_header])",
+        classes => postfix;
+
   methods:
 
     have_mail_config::
@@ -250,6 +263,12 @@ bundle agent mail_server(root)
 
       "/$(file_names.postmap_app)"
         args => "$(this.root)$(file_names.postfix_transports)",
+        contain => silent;
+
+    regen_header_checks&(!bootstrap)::
+
+      "/$(file_names.postmap_app)"
+        args => "$(this.root)$(file_names.postfix_header_checks)",
         contain => silent;
 
 }

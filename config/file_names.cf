@@ -188,6 +188,8 @@ bundle common file_names
         string => "$(directory_names.config_postfix)/default_outgoing_map";
       "postfix_bitmessage_map"
         string => "$(directory_names.config_postfix)/bitmessage_outgoing_map";
+      "postfix_header_checks"
+        string => "$(directory_names.config_postfix)/header_checks";
       "postfix_main"
         string => "$(directory_names.config_postfix)/main.cf";
       "postfix_master"
@@ -461,6 +463,9 @@ bundle common file_names
         meta => { "template" };
       "template_postfix_default_map"
         string => "guest/postfix_default_map.txt",
+        meta => { "template" };
+      "template_postfix_header"
+        string => "guest/postfix_header.txt",
         meta => { "template" };
       "template_postfix_saslpass"
         string => "guest/postfix_saslpass.txt",
