@@ -132,6 +132,9 @@ bundle agent fetchmail(root)
 
     any::
 
+      "bootstrap"
+        not => strcmp("$(this.root)", "/");
+
       "regen_default_map"
         expression => makerule("$(this.root)$(file_names.postfix_default_map).db", "$(this.root)$(file_names.postfix_default_map)");
 
@@ -266,43 +269,43 @@ bundle agent fetchmail(root)
 
   commands:
 
-    regen_default_map::
+    regen_default_map&(!bootstrap)::
 
       "/$(file_names.postmap_app)"
         args => "$(this.root)$(file_names.postfix_default_map)",
         contain => silent;
 
-    regen_saslpass::
+    regen_saslpass&(!bootstrap)::
 
       "/$(file_names.postmap_app)"
         args => "$(this.root)$(file_names.postfix_saslpass)",
         contain => silent;
 
-    regen_sender_map::
+    regen_sender_ma&(!bootstrap)p::
 
       "/$(file_names.postmap_app)"
         args => "$(this.root)$(file_names.postfix_sender_map)",
         contain => silent;
 
-    postfix_bitmessage_saslpass::
+    postfix_bitmessage_saslpass&(!bootstrap)::
 
       "/$(file_names.postmap_app)"
         args => "$(this.root)$(file_names.postfix_bitmessage_saslpass)",
         contain => silent;
 
-    regen_bitmessage_map::
+    regen_bitmessage_map&(!bootstrap)::
 
       "/$(file_names.postmap_app)"
         args => "$(this.root)$(file_names.postfix_bitmessage_map)",
         contain => silent;
 
-    "regen_saslpass_$(extra_email[$(extra_index)][transport])"::
+    "regen_saslpass_$(extra_email[$(extra_index)][transport])&(!bootstrap)"::
 
       "/$(file_names.postmap_app)"
         args => "$(this.root)$(directory_names.config_postfix)/saslpass_$(extra_email[$(extra_index)][transport])",
         contain => silent;
 
-    "regen_$(extra_email[$(extra_index)][transport])_map"::
+    "regen_$(extra_email[$(extra_index)][transport])_map&(!bootstrap)"::
 
       "/$(file_names.postmap_app)"
         args => "$(this.root)$(directory_names.config_postfix)/$(extra_email[$(extra_index)][transport])_outgoing_map",

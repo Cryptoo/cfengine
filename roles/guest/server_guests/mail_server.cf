@@ -133,6 +133,9 @@ bundle agent mail_server(root)
 
     any::
 
+      "bootstrap"
+        not => strcmp("$(this.root)", "/");
+
       "have_mail_config"
         expression => fileexists("$(this.root)$(file_names.mail_server_config)");
 
@@ -225,25 +228,25 @@ bundle agent mail_server(root)
 
   commands:
 
-    reload_dovecot::
+    reload_dovecot&(!bootstrap)::
 
       "/$(file_names.systemd_app)"
         args => "restart dovecot",
         contain => silent;
 
-    need_postfix_restart::
+    need_postfix_restart&(!bootstrap)::
 
       "/$(file_names.systemd_app)"
         args => "restart postfix",
         contain => silent;
 
-    regen_tls::
+    regen_tls&(!bootstrap)::
 
       "/$(file_names.postmap_app)"
         args => "$(this.root)$(file_names.postfix_tls)",
         contain => silent;
 
-    regen_transports::
+    regen_transports&(!bootstrap)::
 
       "/$(file_names.postmap_app)"
         args => "$(this.root)$(file_names.postfix_transports)",
