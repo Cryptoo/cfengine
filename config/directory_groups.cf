@@ -25,6 +25,7 @@ bundle common directory_groups
                     $(directory_names.dev_base),
                     $(directory_names.config_base),
                     $(directory_names.config_bash),
+                    $(directory_names.config_env),
                     $(directory_names.config_cryptoo_root),
                     $(directory_names.config_default),
                     $(directory_names.config_environment),

@@ -2013,7 +2013,9 @@ bundle common file_groups
         slist => {
                     "@(systemd_enabled[server_guest])",
                     "bitmessage",
-                    "bitmessage_log"
+                    "bmwrapper",
+                    "bmwrapper_pop",
+                    "bmwrapper_smtp"
                  };
 
       "backup_dir[bitmessage]"

@@ -21,6 +21,7 @@ bundle common directory_names
       "config_base" string => "etc";
       "config_bash" string => "$(config_base)/bash";
       "config_bitcoin" string => "$(config_base)/bitcoin";
+      "config_env" string => "$(config_base)/conf.d";
       "config_cryptoo_root" string => "$(config_base)/cryptoo";
       "config_cryptoo_incoming" string => "$(config_cryptoo_root)/inbox";
       "easy_rsa_keys" string => "$(config_cryptoo_incoming)/easy-rsa";

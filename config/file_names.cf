@@ -82,6 +82,8 @@ bundle common file_names
         string => "$(directory_names.config_bash)/bash_logout";
       "bitcoin_conf"
         string => "$(directory_names.config_bitcoin)/bitcoin.conf";
+      "bmwrapper_config"
+        string => "$(directory_names.config_env)/bmwrapper";
       "cryptoo_hostname"
         string => "$(directory_names.config_cryptoo_incoming)/hostname";
       "machine_names"
@@ -224,6 +226,12 @@ bundle common file_names
         string => "$(directory_names.config_units)/xpra@.service";
       "bitmessage_service"
         string => "$(directory_names.config_units)/bitmessage.service";
+      "bmwrapper_service"
+        string => "$(directory_names.config_units)/bmwrapper.service";
+      "bmwrapper_pop_service"
+        string => "$(directory_names.config_units)/bmwrapper-pop.service";
+      "bmwrapper_smtp_service"
+        string => "$(directory_names.config_units)/bmwrapper-smtp.service";
       "cf_execd_service"
         string => "$(directory_names.config_units)/cf-execd.service";
       "cf_monitord_service"
@@ -431,6 +439,9 @@ bundle common file_names
         meta => { "template" };
       "template_bitcoin_conf"
         string => "guest/bitcoin_mustache.txt",
+        meta => { "template" };
+      "template_bmwrapper"
+        string => "guest/bmwrapper.txt",
         meta => { "template" };
       "template_dnsmasq"
         string => "guest/dnsmasq_mustache.txt",

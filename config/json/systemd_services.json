@@ -29,6 +29,97 @@
              }
           ]
       },
+    "bmwrapper":
+      {
+        "sections":
+          [
+             { "section": "Unit",
+               "values":
+                 [
+                   { "LHS": "Description", "RHS": "PyBitmessage Wrapper" },
+                   { "LHS": "Requires", "RHS": "bitmessage.service" },
+                   { "LHS": "After", "RHS": "bitmessage.service" }
+                 ]
+             },
+             { "section": "Service",
+               "values":
+                 [
+                   { "LHS": "Type", "RHS": "simple" },
+                   { "LHS": "Restart", "RHS": "always" },
+                   { "LHS": "User", "RHS": "bitmessage" },
+                   { "LHS": "Group", "RHS": "bitmessage" },
+                   { "LHS": "ExecStartPre", "RHS": "/usr/bin/sleep 60" },
+                   { "LHS": "ExecStart", "RHS": "/usr/bin/bmwrapper" }
+                 ]
+             },
+             { "section": "Install",
+               "values":
+                 [
+                   { "LHS": "WantedBy", "RHS": "multi-user.target" }
+                 ]
+             }
+          ]
+      },
+    "bmwrapper_pop":
+      {
+        "sections":
+          [
+             { "section": "Unit",
+               "values":
+                 [
+                   { "LHS": "Description", "RHS": "socat tunnel for bmwrapper POP" },
+                   { "LHS": "Requires", "RHS": "bmwrapper.service" },
+                   { "LHS": "After", "RHS": "bmwrapper.service" }
+                 ]
+             },
+             { "section": "Service",
+               "values":
+                 [
+                   { "LHS": "Type", "RHS": "simple" },
+                   { "LHS": "Restart", "RHS": "always" },
+                   { "LHS": "User", "RHS": "root" },
+                   { "LHS": "EnvironmentFile", "RHS": "/etc/conf.d/bmwrapper" },
+                   { "LHS": "ExecStart", "RHS": "/usr/bin/socat TCP4-LISTEN:${POP_PORT},bind=${LISTEN_ADDRESS},su=nobody,fork,range=${ALLOWED_HOSTS},reuseaddr TCP4:127.0.0.1:12344,bind=127.0.0.1" }
+                 ]
+             },
+             { "section": "Install",
+               "values":
+                 [
+                   { "LHS": "WantedBy", "RHS": "multi-user.target" }
+                 ]
+             }
+          ]
+      },
+    "bmwrapper_smtp":
+      {
+        "sections":
+          [
+             { "section": "Unit",
+               "values":
+                 [
+                   { "LHS": "Description", "RHS": "socat tunnel for bmwrapper SMTP" },
+                   { "LHS": "Requires", "RHS": "bmwrapper.service" },
+                   { "LHS": "After", "RHS": "bmwrapper.service" }
+                 ]
+             },
+             { "section": "Service",
+               "values":
+                 [
+                   { "LHS": "Type", "RHS": "simple" },
+                   { "LHS": "Restart", "RHS": "always" },
+                   { "LHS": "User", "RHS": "root" },
+                   { "LHS": "EnvironmentFile", "RHS": "/etc/conf.d/bmwrapper" },
+                   { "LHS": "ExecStart", "RHS": "/usr/bin/socat TCP4-LISTEN:${SMTP_PORT},bind=${LISTEN_ADDRESS},su=nobody,fork,range=${ALLOWED_HOSTS},reuseaddr TCP4:127.0.0.1:12345,bind=127.0.0.1" }
+                 ]
+             },
+             { "section": "Install",
+               "values":
+                 [
+                   { "LHS": "WantedBy", "RHS": "multi-user.target" }
+                 ]
+             }
+          ]
+      },
     "cf_execd":
       {
         "sections":
