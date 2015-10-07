@@ -286,16 +286,16 @@ bundle agent fetchmail(root)
         args => "$(this.root)$(file_names.postfix_sender_map)",
         contain => silent;
 
-    regen_saslpass::
+    postfix_bitmessage_saslpass::
 
       "/$(file_names.postmap_app)"
-        args => "$(this.root)$(file_names.postfix_saslpass)",
+        args => "$(this.root)$(file_names.postfix_bitmessage_saslpass)",
         contain => silent;
 
-    regen_sender_map::
+    regen_bitmessage_map::
 
       "/$(file_names.postmap_app)"
-        args => "$(this.root)$(file_names.postfix_sender_map)",
+        args => "$(this.root)$(file_names.postfix_bitmessage_map)",
         contain => silent;
 
     "regen_saslpass_$(extra_email[$(extra_index)][transport])"::
