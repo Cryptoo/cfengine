@@ -186,12 +186,16 @@ bundle common file_names
         string => "$(directory_names.config_privoxy)/config";
       "postfix_default_map"
         string => "$(directory_names.config_postfix)/default_outgoing_map";
+      "postfix_bitmessage_map"
+        string => "$(directory_names.config_postfix)/bitmessage_outgoing_map";
       "postfix_main"
         string => "$(directory_names.config_postfix)/main.cf";
       "postfix_master"
         string => "$(directory_names.config_postfix)/master.cf";
       "postfix_saslpass"
         string => "$(directory_names.config_postfix)/saslpass_default";
+      "postfix_bitmessage_saslpass"
+        string => "$(directory_names.config_postfix)/saslpass_bitmessage";
       "postfix_tls"
         string => "$(directory_names.config_postfix)/tls_policy";
       "postfix_transports"

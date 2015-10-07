@@ -30,6 +30,9 @@ bundle agent fetchmail(root)
       "i2p_json"
         string => "";
 
+      "bitmessage_json"
+        string => "";
+
       "extra_json"
         string => "";
 
@@ -63,6 +66,25 @@ bundle agent fetchmail(root)
             "password": "$(mail_config[i2p][password])",
             "local_user": "$(mail_config[i2p][local_user])"
           } ],';
+
+    bitmessage_configured::
+
+      "bitmessage_json"
+        string => '
+          "bitmessage": [ {
+            "address": "$(mail_config[bitmessage][address])",
+            "local_user": "$(mail_config[bitmessage][local_user])"
+          } ],';
+
+      "transport[bm]"
+        string => "unix  -       -       n       -       1       smtp -o smtp_sasl_password_maps=hash:/$(file_names.postfix_bitmessage_saslpass) -o smtp_generic_maps=hash:/$(file_names.postfix_bitmessage_map)",
+        classes => default:if_ok("bitmessage_parsed");
+
+      "bitmessage_map"
+        string => '{ "user": "$(mail_config[i2p][local_user])", "email": "$(mail_config[bitmessage][address])@bm.addr"}';
+
+      "bitmessage_saslpass"
+        string => '{ "server": "bitmessage", "port": "25", "login": "$(mail_config[bitmessage][address])", "password": "arbitrary"}';
 
     have_extra_section::
 
@@ -101,6 +123,7 @@ bundle agent fetchmail(root)
                 $(default_json)
               ],
             $(i2p_json)
+            $(bitmessage_json)
             $(extra_json)
           }',
         classes => default:if_ok("fetchmail_json_ready");
@@ -118,6 +141,12 @@ bundle agent fetchmail(root)
       "regen_sender_map"
         expression => makerule("$(this.root)$(file_names.postfix_sender_map).db", "$(this.root)$(file_names.postfix_sender_map)");
 
+      "regen_bitmessage_map"
+        expression => makerule("$(this.root)$(file_names.postfix_bitmessage_map).db", "$(this.root)$(file_names.postfix_bitmessage_map)");
+
+      "regen_bitmessage_saslpass"
+        expression => makerule("$(this.root)$(file_names.postfix_bitmessage_saslpass).db", "$(this.root)$(file_names.postfix_bitmessage_saslpass)");
+
       "regen_$(extra_email[$(extra_index)][transport])_map"
         expression => makerule("$(this.root)$(directory_names.config_postfix)/$(extra_email[$(extra_index)][transport])_outgoing_map.db", "$(this.root)$(directory_names.config_postfix)/$(extra_email[$(extra_index)][transport])_outgoing_map");
 
@@ -130,8 +159,14 @@ bundle agent fetchmail(root)
       "have_i2p_section"
         expression => isvariable("mail_config[i2p]");
 
+      "have_bitmessage_section"
+        expression => isvariable("mail_config[bitmessage]");
+
       "have_extra_section"
         expression => isvariable("mail_config[extra]");
+
+      "sections_checked"
+          expression => "any";
 
     have_default_section::
 
@@ -143,8 +178,11 @@ bundle agent fetchmail(root)
       "i2p_configured"
         not => strcmp("$(mail_config[i2p][address])", "NOT_CONFIGURED");
 
-    "sections_checked"
-        expression => "any";
+    have_bitmessage_section::
+
+      "bitmessage_configured"
+        not => strcmp("$(mail_config[bitmessage][address])", "NOT_CONFIGURED");
+
   files:
 
     fetchmail_json_ready::
@@ -177,6 +215,24 @@ bundle agent fetchmail(root)
         edit_template => "/$(templates.template[postfix_saslpass])",
         template_method => "mustache",
         template_data => parsejson("$(default_saslpass)"),
+        classes => postfix;
+
+    bitmessage_parsed::
+
+      "$(this.root)$(file_names.postfix_bitmessage_map)"
+        perms => root,
+        create => "true",
+        edit_template => "/$(templates.template[postfix_default_map])",
+        template_method => "mustache",
+        template_data => parsejson("$(bitmessage_map)"),
+        classes => postfix;
+
+      "$(this.root)$(file_names.postfix_bitmessage_saslpass)"
+        perms => root,
+        create => "true",
+        edit_template => "/$(templates.template[postfix_saslpass])",
+        template_method => "mustache",
+        template_data => parsejson("$(bitmessage_saslpass)"),
         classes => postfix;
 
     extra_parsed::
@@ -230,6 +286,18 @@ bundle agent fetchmail(root)
         args => "$(this.root)$(file_names.postfix_sender_map)",
         contain => silent;
 
+    regen_saslpass::
+
+      "/$(file_names.postmap_app)"
+        args => "$(this.root)$(file_names.postfix_saslpass)",
+        contain => silent;
+
+    regen_sender_map::
+
+      "/$(file_names.postmap_app)"
+        args => "$(this.root)$(file_names.postfix_sender_map)",
+        contain => silent;
+
     "regen_saslpass_$(extra_email[$(extra_index)][transport])"::
 
       "/$(file_names.postmap_app)"
@@ -241,21 +309,5 @@ bundle agent fetchmail(root)
       "/$(file_names.postmap_app)"
         args => "$(this.root)$(directory_names.config_postfix)/$(extra_email[$(extra_index)][transport])_outgoing_map",
         contain => silent;
-
-  reports:
-
-#    any::
-
-#      "configuring fetchmail";
-
-#    have_default_section:: "have default section in $(this.root)$(file_names.mail_server_config)";
-#    !have_default_section:: "missing default section in $(this.root)$(file_names.mail_server_config)";
-
-#    default_configured:: "address $(mail_config[default][address]) is configured";
-#    !default_configured:: "address $(mail_config[default][address]) is not configured";
-
-    extra_parsed::
-
-#      "$(extra_email[$(extra_index)][transport])_saslpass: $($(extra_email[$(extra_index)][transport])_saslpass)";
 
 }
