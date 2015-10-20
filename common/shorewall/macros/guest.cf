@@ -30,8 +30,7 @@ bundle agent shorewall_macro_guest(root, port_info)
         "firewall_internal",
         "vpn_server",
         "irc_client",
-        "im",
-        "gitlab"
+        "im"
       };
 
   vars:

@@ -57,10 +57,10 @@ bundle common config
                    "bitmessage",
                    "mail_server",
                    "bitcoin",
+                   "bitcoin_testnet",
                    "namecoin",
                    "bittorrent",
-                   "samba",
-                   "gitlab"
+                   "samba"
                  };
 
       "core_systemd"

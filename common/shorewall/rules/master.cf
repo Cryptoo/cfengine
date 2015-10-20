@@ -276,6 +276,11 @@ bundle agent shorewall_rules_master(root)
                      "destination": "d$(defined_numbers[bitcoin]):192.168.$(subnet_config[ispdmz]).$(defined_numbers[bitcoin])"
                    },
                    {
+                     "action": "bitcoin_testnet(ACCEPT)",
+                     "source": "d$(defined_numbers[firewall_external]):!+private",
+                     "destination": "d$(defined_numbers[bitcoin_testnet]):192.168.$(subnet_config[ispdmz]).$(defined_numbers[bitcoin_testnet])"
+                   },
+                   {
                      "action": "vpn_client(ACCEPT)",
                      "source": "d$(defined_numbers[vpn_primary]):192.168.$(subnet_config[ispdmz]).$(defined_numbers[vpn_primary])",
                      "destination": "d$(defined_numbers[firewall_external]):!+private"
@@ -420,6 +425,26 @@ bundle agent shorewall_rules_master(root)
                      "action": "bitcoin_out(ACCEPT)",
                      "source": "d$(defined_numbers[bitcoin]):192.168.$(subnet_config[ispdmz]).$(defined_numbers[bitcoin])",
                      "destination": "d$(defined_numbers[firewall_external]):!+private"
+                   },
+                   {
+                     "action": "DNS(ACCEPT)",
+                     "source": "d$(defined_numbers[bitcoin_testnet]):192.168.$(subnet_config[ispdmz]).$(defined_numbers[bitcoin_testnet])",
+                     "destination": "d$(defined_numbers[firewall_external]):$(config.dns[primary])"
+                   },
+                   {
+                     "action": "DNS(ACCEPT)",
+                     "source": "d$(defined_numbers[bitcoin_testnet]):192.168.$(subnet_config[ispdmz]).$(defined_numbers[bitcoin_testnet])",
+                     "destination": "d$(defined_numbers[firewall_external]):$(config.dns[backup])"
+                   },
+                   {
+                     "action": "NTP(ACCEPT)",
+                     "source": "d$(defined_numbers[bitcoin_testnet]):192.168.$(subnet_config[ispdmz]).$(defined_numbers[bitcoin_testnet])",
+                     "destination": "d$(defined_numbers[firewall_external]):!+private"
+                   },
+                   {
+                     "action": "bitcoin_testnet_out(ACCEPT)",
+                     "source": "d$(defined_numbers[bitcoin_testnet]):192.168.$(subnet_config[ispdmz]).$(defined_numbers[bitcoin_testnet])",
+                     "destination": "d$(defined_numbers[firewall_external]):!+private"
                    }
                  ]
                }
@@ -471,6 +496,11 @@ bundle agent shorewall_rules_master(root)
                      "action": "bitcoin(ACCEPT)",
                      "source": "t$(defined_numbers[tor]):192.168.$(subnet_config[tor]).$(defined_numbers[tor])",
                      "destination": "t$(defined_numbers[firewall_internal]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin])"
+                   },
+                   {
+                     "action": "bitcoin_testnet(ACCEPT)",
+                     "source": "t$(defined_numbers[tor]):192.168.$(subnet_config[tor]).$(defined_numbers[tor])",
+                     "destination": "t$(defined_numbers[firewall_internal]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin_testnet])"
                    }
                  ]
                }
@@ -568,7 +598,7 @@ bundle agent shorewall_rules_master(root)
                      "action": "vdmz_bitcoin(ACCEPT)"
                    },
                    {
-                     "action": "vdmz_gitlab(ACCEPT)"
+                     "action": "vdmz_bitcoin_testnet(ACCEPT)"
                    }';
 
       "combined_rules_json_vpndmz"
@@ -599,6 +629,11 @@ bundle agent shorewall_rules_master(root)
                      "action": "bitcoin_rpc(ACCEPT)",
                      "source": "l0:192.168.$(subnet_config[lan]).0/24",
                      "destination": "l$(defined_numbers[firewall_internal]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin])"
+                   },
+                   {
+                     "action": "bitcoin_rpc(ACCEPT)",
+                     "source": "l0:192.168.$(subnet_config[lan]).0/24",
+                     "destination": "l$(defined_numbers[firewall_internal]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin_testnet])"
                    },
                    {
                      "action": "ACCEPT",
@@ -664,6 +699,11 @@ bundle agent shorewall_rules_master(root)
                      "action": "bitcoin_rpc(ACCEPT)",
                      "source": "l$(defined_numbers[vpn_server]):192.168.$(subnet_config[lan]).0/24",
                      "destination": "l$(defined_numbers[firewall_internal]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin])"
+                   },
+                   {
+                     "action": "bitcoin_rpc(ACCEPT)",
+                     "source": "l$(defined_numbers[vpn_server]):192.168.$(subnet_config[lan]).0/24",
+                     "destination": "l$(defined_numbers[firewall_internal]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin_testnet])"
                    }';
 
       "combined_rules_json_lan"

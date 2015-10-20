@@ -214,10 +214,10 @@ bundle agent cryptoo_bootstrap
       "multilib"
         string => "no_multilib";
 
-    default:bootstrap_gitlab::
+    default:bootstrap_bitcoin_testnet::
 
       "role"
-        string => "gitlab";
+        string => "bitcoin_testnet";
 
       "type"
         string => "server";
@@ -322,7 +322,7 @@ bundle agent cryptoo_bootstrap
       "bootstrap_guest"
         expression => "any";
 
-    default:bootstrap_gitlab::
+    default:bootstrap_bitcoin_testnet::
 
       "bootstrap_guest"
         expression => "any";

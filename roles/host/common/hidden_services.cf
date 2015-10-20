@@ -32,10 +32,16 @@ bundle agent hidden_services
       "have_bitcoin_file"
         expression => fileexists("/$(file_names.hidden_service_bitcoin)");
 
+      "have_bitcoin_testnet_file"
+        expression => fileexists("/$(file_names.hidden_service_bitcoin_testnet)");
+
     have_hidden_service_data::
 
       "have_bitcoin"
         expression => isvariable("hidden_service_data[bitcoin]");
+
+      "have_bitcoin_testnet"
+        expression => isvariable("hidden_service_data[bitcoin_testnet]");
 
       "hidden_service_data_evaluated"
         expression => "any";
@@ -48,11 +54,22 @@ bundle agent hidden_services
         perms => root_qemu,
         create => "false";
 
+    have_bitcoin_testnet_file::
+
+      "/$(file_names.hidden_service_bitcoin_testnet)"
+        perms => root_qemu,
+        create => "false";
+
   methods:
 
     have_bitcoin::
 
       "place Bitcoin hidden service in inbox"
         usebundle => default:file_make("/$(file_names.hidden_service_bitcoin)", '{ "bitcoin": "$(hidden_service_data[bitcoin])" }');
+
+    have_bitcoin_testnet::
+
+      "place Bitcoin hidden service in inbox"
+        usebundle => default:file_make("/$(file_names.hidden_service_bitcoin_testnet)", '{ "bitcoin_testnet": "$(hidden_service_data[bitcoin_testnet])" }');
 
 }

@@ -5,7 +5,10 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
+              "cryptoo/config/config.cf",
               "cryptoo/config/directory_names.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/network.cf",
               "cryptoo/config/templates.cf",
               "cryptoo/util/classes.cf",
               "cryptoo/util/perms.cf"
@@ -13,41 +16,26 @@ body file control
 
 }
 
-bundle agent shorewall_macro_cfengine(root, port_info)
+bundle agent shorewall_macro_bitcoin_testnet_out(root, port_info)
 
 {
 
   meta:
 
-    "tags"
-      slist =>
-        {
-          "shorewall_macro",
-          "firewall_external",
-          "vpn_server",
-          "tor",
-          "i2p",
-          "freenet",
-          "bitmessage",
-          "bitcoin",
-          "vpn_primary",
-          "dns",
-          "mail_server",
-          "vpn_secondary",
-          "irc_bouncer",
-          "firewall_internal",
-          "irc_client",
-          "im",
-          "master",
-          "bitcoin_testnet"
-        };
+    "tags" slist => { "shorewall_macro", "firewall_external", "bitcoin_testnet", "master" };
 
   vars:
 
     any::
 
       "macro_name"
-        string => "cfengine";
+        string => "bitcoin_testnet_out";
+
+      "defined_numbers"
+        data => mergedata("cryptoo:config.defined_numbers");
+
+      "subnet_config"
+        data => mergedata("cryptoo:network.subnet_config");
 
       "macro_json"
         string => '
@@ -61,10 +49,16 @@ bundle agent shorewall_macro_cfengine(root, port_info)
                      "source": "-",
                      "destination": "-",
                      "protocol": "tcp",
-                     "destination_port": "5308",
-                     "source_port": ""
+                     "destination_port": "-",
+                     "source_port": "$(config.service_info[bitcoin][testnet_port])"
+                   },
+                   {
+                     "action": "PARAM",
+                     "source": "-",
+                     "destination": "-",
+                     "protocol": "tcp"
                    }
-                 ],
+                 ]
                }
           }
         ';

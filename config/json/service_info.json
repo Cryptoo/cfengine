@@ -35,6 +35,7 @@
     "bitcoin":
       {
           "external_port": "8333",
+          "testnet_port": "18333",
           "rpc_port": "8332"
       },
     "bitmessage":

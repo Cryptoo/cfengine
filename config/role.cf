@@ -89,7 +89,7 @@ bundle common role
             "libvirt":
               {
                 "name": "firewall_external",
-                "ram": "16776192",
+                "ram": "1572864",
                 "cpu": "1",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64",
                 "interfaces":
@@ -121,7 +121,7 @@ bundle common role
             "libvirt":
               {
                 "name": "tor",
-                "ram": "16776192",
+                "ram": "1572864",
                 "cpu": "1",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64",
                 "interfaces":
@@ -153,7 +153,7 @@ bundle common role
             "libvirt":
               {
                 "name": "i2p",
-                "ram": "16776192",
+                "ram": "1572864",
                 "cpu": "1",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64",
                 "interfaces":
@@ -185,7 +185,7 @@ bundle common role
             "libvirt":
               {
                 "name": "freenet",
-                "ram": "16776192",
+                "ram": "1572864",
                 "cpu": "1",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64",
                 "interfaces":
@@ -235,6 +235,37 @@ bundle common role
           }
         ';
 
+      "params[bitcoin_testnet]"
+        string => '
+          {
+            "number": "$(this.defined_numbers[bitcoin_testnet])",
+            "make_conf":
+              {
+                "makeopts": "guest",
+                "pkgdir": "server_guest",
+                "runtime": "guest",
+                "graphical": "headless"
+              },
+            "libvirt":
+              {
+                "name": "bitcoin_testnet",
+                "ram": "2621440",
+                "cpu": "4",
+                "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64_smp",
+                "interfaces":
+                   [
+                     {
+                       "bridge": "ispdmz",
+                       "device": "ispdmz$(this.defined_numbers[bitcoin_testnet])"
+                     },
+                     {
+                       "bridge": "vpndmz",
+                       "device": "vpndmz$(this.defined_numbers[bitcoin_testnet])"
+                     }
+                   ]
+              }
+          }
+        ';
       "params[bitmessage]"
         string => '
           {
@@ -281,7 +312,7 @@ bundle common role
             "libvirt":
               {
                 "name": "vpn_primary",
-                "ram": "16776192",
+                "ram": "1572864",
                 "cpu": "1",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64",
                 "interfaces":
@@ -313,7 +344,7 @@ bundle common role
             "libvirt":
               {
                 "name": "vpn_secondary",
-                "ram": "16776192",
+                "ram": "1572864",
                 "cpu": "1",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64",
                 "interfaces":
@@ -345,7 +376,7 @@ bundle common role
             "libvirt":
               {
                 "name": "dns",
-                "ram": "16776192",
+                "ram": "1572864",
                 "cpu": "1",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64",
                 "interfaces":
@@ -373,7 +404,7 @@ bundle common role
             "libvirt":
               {
                 "name": "mail_server",
-                "ram": "16776192",
+                "ram": "1572864",
                 "cpu": "1",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64",
                 "interfaces":
@@ -401,7 +432,7 @@ bundle common role
             "libvirt":
               {
                 "name": "irc_bouncer",
-                "ram": "16776192",
+                "ram": "1572864",
                 "cpu": "1",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64",
                 "interfaces":
@@ -429,7 +460,7 @@ bundle common role
             "libvirt":
               {
                 "name": "firewall_internal",
-                "ram": "16776192",
+                "ram": "1572864",
                 "cpu": "1",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64",
                 "interfaces":
@@ -469,7 +500,7 @@ bundle common role
             "libvirt":
               {
                 "name": "vpn_server",
-                "ram": "16776192",
+                "ram": "1572864",
                 "cpu": "1",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64",
                 "interfaces":
@@ -500,7 +531,7 @@ bundle common role
             "libvirt":
               {
                 "name": "dynamic",
-                "ram": "16776192",
+                "ram": "1572864",
                 "cpu": "1",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64"
               }
@@ -520,7 +551,7 @@ bundle common role
             "libvirt":
               {
                 "name": "dynamic",
-                "ram": "16776192",
+                "ram": "1572864",
                 "cpu": "1",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64"
               }
@@ -540,7 +571,7 @@ bundle common role
             "libvirt":
               {
                 "name": "dynamic",
-                "ram": "16776192",
+                "ram": "1572864",
                 "cpu": "1",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64"
               }
@@ -560,7 +591,7 @@ bundle common role
             "libvirt":
               {
                 "name": "dynamic",
-                "ram": "16776192",
+                "ram": "1572864",
                 "cpu": "1",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64-multilib"
               }
@@ -581,7 +612,7 @@ bundle common role
             "libvirt":
               {
                 "name": "dns",
-                "ram": "16776192",
+                "ram": "1572864",
                 "cpu": "1",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64",
                 "interfaces":
@@ -589,34 +620,6 @@ bundle common role
                      {
                        "bridge": "vpndmz",
                        "device": "vpndmz$(this.defined_numbers[undefined])"
-                     }
-                   ]
-              }
-          }
-        ';
-
-      "params[gitlab]"
-        string => '
-          {
-            "number": "$(this.defined_numbers[gitlab])",
-            "make_conf":
-              {
-                "makeopts": "guest",
-                "pkgdir": "server_guest",
-                "runtime": "guest",
-                "graphical": "headless"
-              },
-            "libvirt":
-              {
-                "name": "dns",
-                "ram": "16776192",
-                "cpu": "1",
-                "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64",
-                "interfaces":
-                   [
-                     {
-                       "bridge": "vpndmz",
-                       "device": "vpndmz(this.defined_numbers[gitlab])"
                      }
                    ]
               }

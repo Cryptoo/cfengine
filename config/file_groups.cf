@@ -1348,7 +1348,6 @@ bundle common file_groups
                     "deluge",
                     "dns",
                     "freenet",
-                    "gitlab",
                     "i2p",
                     "java",
                     "mail_server",
@@ -1381,7 +1380,6 @@ bundle common file_groups
                     "deluge_server",
                     "dns",
                     "freenet",
-                    "gitlab",
                     "i2p",
                     "java",
                     "mail_server",
@@ -2146,8 +2144,7 @@ bundle common file_groups
       "systemd_enabled[bitcoin]"
         slist => {
                     "@(systemd_enabled[server_guest])",
-                    "bitcoind",
-                    "bitcoind_log"
+                    "bitcoind"
                  };
 
       "backup_dir[bitcoin]"
@@ -2222,6 +2219,137 @@ bundle common file_groups
         ';
 
       "dns_type[bitcoin]"
+        string => "external";
+
+################################################################################
+#                             bitcoin_testnet
+################################################################################
+
+      "make_profile[bitcoin_testnet]"
+        string => "$(make_profile[server_guest])";
+
+      "pm_env[bitcoin_testnet]"
+        slist => {
+                    "@(pm_env[server_guest])"
+                 };
+
+      "pm_environment[bitcoin_testnet]"
+        slist => {
+                    "@(pm_environment[server_guest])"
+                 };
+
+      "keywords[bitcoin_testnet]"
+        slist => {
+                    "@(keywords[server_guest])",
+                    "bitcoin"
+                 };
+
+      "mask[bitcoin_testnet]"
+        slist => {
+                    "@(mask[server_guest])"
+                 };
+
+      "unmask[bitcoin_testnet]"
+        slist => {
+                    "@(unmask[server_guest])"
+                 };
+
+      "use[bitcoin_testnet]"
+        slist => {
+                    "@(use[server_guest])",
+                    "bitcoin",
+                    "bitcoin_wallet",
+                    "boost"
+                 };
+
+      "unuse[bitcoin_testnet]"
+        slist => {
+                    "@(unuse[server_guest])"
+                 };
+
+      "profile[bitcoin_testnet]"
+        slist => {
+                    "@(profile[server_guest])"
+                 };
+
+      "systemd_enabled[bitcoin_testnet]"
+        slist => {
+                    "@(systemd_enabled[server_guest])",
+                    "bitcoind"
+                 };
+
+      "backup_dir[bitcoin_testnet]"
+        string => "/$(directory_names.bitcoin_base)";
+
+      "firewall_zones[bitcoin_testnet]"
+        slist => {
+                    "@(firewall_zones[server_guest])"
+                 };
+
+      "firewall_bridges[bitcoin_testnet]"
+        slist => {
+                    "@(firewall_bridges[server_guest])"
+                 };
+
+      "firewall[bitcoin_testnet]"
+        string => "$(firewall[server_guest])";
+
+      "network[bitcoin_testnet]"
+        string => '
+          {
+            "devices":
+               {
+                 "bridge":
+                   [
+                     "none"
+                   ],
+                 "veth":
+                   [
+                     "none"
+                   ],
+                 "tap":
+                   [
+                     "none"
+                   ],
+                 "tun":
+                   [
+                     "none"
+                   ]
+               },
+             "interfaces":
+               {
+                 "eth0":
+                   {
+                     "type": "gateway",
+                     "params":
+                       {
+                         "zone": "ispdmz",
+                         "gateway": "firewall_external",
+                         "ipforward": "no"
+                       }
+                   },
+                 "eth1":
+                   {
+                     "type": "simple",
+                     "params":
+                       {
+                         "zone": "vpndmz",
+                         "ipforward": "no",
+                         "routes":
+                           {
+                             "i2p": "firewall_internal",
+                             "eep": "firewall_internal",
+                             "tor": "firewall_internal",
+                             "onion": "firewall_internal",
+                             "lan": "firewall_internal"
+                           }
+                       }
+                   }
+               }
+          }
+        ';
+
+      "dns_type[bitcoin_testnet]"
         string => "external";
 
 ################################################################################
@@ -3050,124 +3178,6 @@ bundle common file_groups
         ';
 
       "dns_type[firewall_internal]"
-        string => "$(dns_type[server_guest])";
-
-################################################################################
-#                              gitlab
-################################################################################
-
-      "make_profile[gitlab]"
-        string => "$(make_profile[server_guest])";
-
-      "pm_env[gitlab]"
-        slist => {
-                    "@(pm_env[server_guest])"
-                 };
-
-      "pm_environment[gitlab]"
-        slist => {
-                    "@(pm_environment[server_guest])"
-                 };
-
-      "keywords[gitlab]"
-        slist => {
-                    "@(keywords[server_guest])",
-                    "gitlab"
-                 };
-
-      "mask[gitlab]"
-        slist => {
-                    "@(mask[server_guest])"
-                 };
-
-      "unmask[gitlab]"
-        slist => {
-                    "@(unmask[server_guest])"
-                 };
-
-      "use[gitlab]"
-        slist => {
-                    "@(use[server_guest])",
-                    "gitlab"
-                 };
-
-      "unuse[gitlab]"
-        slist => {
-                    "@(unuse[server_guest])"
-                 };
-
-      "profile[gitlab]"
-        slist => {
-                    "@(profile[server_guest])"
-                 };
-
-      "systemd_enabled[gitlab]"
-        slist => {
-                    "@(systemd_enabled[server_guest])"
-                 };
-
-      "backup_dir[gitlab]"
-        string => "$(backup_dir[server_guest])";
-
-      "firewall_zones[gitlab]"
-        slist => {
-                    "@(firewall_zones[server_guest])"
-                 };
-
-      "firewall_bridges[gitlab]"
-        slist => {
-                    "@(firewall_bridges[server_guest])"
-                 };
-
-      "firewall[gitlab]"
-        string => "$(firewall[server_guest])";
-
-      "network[gitlab]"
-        string => '
-          {
-            "devices":
-               {
-                 "bridge":
-                   [
-                     "none"
-                   ],
-                 "veth":
-                   [
-                     "none"
-                   ],
-                 "tap":
-                   [
-                     "none"
-                   ],
-                 "tun":
-                   [
-                     "none"
-                   ]
-               },
-             "interfaces":
-               {
-                 "eth0":
-                   {
-                     "type": "gateway",
-                     "params":
-                       {
-                         "zone": "vpndmz",
-                         "gateway": "vpn_primary",
-                         "ipforward": "no",
-                         "routes":
-                           {
-                             "onion": "firewall_internal",
-                             "eep": "firewall_internal",
-                             "tor": "firewall_internal",
-                             "i2p": "firewall_internal",
-                             "lan": "firewall_internal"
-                           }
-                       }
-                   }
-               }
-          }';
-
-      "dns_type[gitlab]"
         string => "$(dns_type[server_guest])";
 
 ################################################################################

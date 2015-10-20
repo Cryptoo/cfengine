@@ -30,7 +30,8 @@ bundle agent shorewall_macro_guest_ispdmz(root, port_info)
         "i2p",
         "freenet",
         "bitmessage",
-        "bitcoin"
+        "bitcoin",
+        "bitcoin_testnet"
       };
 
   vars:

@@ -159,6 +159,7 @@ bundle common directory_names
       "volatile_tor" string => "$(volatile_library)/tor";
       "hidden_services" string => "$(volatile_tor)/hs";
       "bitcoin_hs" string => "$(hidden_services)/bitcoin";
+      "bitcoin_testnet_hs" string => "$(hidden_services)/bitcoin_testnet";
       "volatile_znc" string => "$(volatile_library)/znc";
       "znc_config" string => "$(volatile_znc)/configs";
       "spool" string => "$(volatile_base)/spool";

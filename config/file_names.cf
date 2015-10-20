@@ -132,6 +132,8 @@ bundle common file_names
         string => "$(directory_names.config_cryptoo_outgoing)/port_info.json";
       "hidden_service_bitcoin"
         string => "$(directory_names.config_guest_inboxes)/bitcoin/hidden_service.json";
+      "hidden_service_bitcoin_testnet"
+        string => "$(directory_names.config_guest_inboxes)/bitcoin_testnet/hidden_service.json";
       "hidden_service_tor"
         string => "$(directory_names.config_guest_outboxes)/tor/hidden_service.json";
       "port_info_firewall_external"
@@ -446,6 +448,9 @@ bundle common file_names
       "template_bitcoin_conf"
         string => "guest/bitcoin_mustache.txt",
         meta => { "template" };
+      "template_bitcoin_conf_testnet"
+        string => "guest/bitcoin_testnet.txt",
+        meta => { "template" };
       "template_bmwrapper"
         string => "guest/bmwrapper.txt",
         meta => { "template" };
@@ -524,6 +529,8 @@ bundle common file_names
         string => "$(directory_names.volatile_systemd)/random-seed";
       "bitcoin_hs"
         string => "$(directory_names.bitcoin_hs)/hostname";
+      "bitcoin_testnet_hs"
+        string => "$(directory_names.bitcoin_testnet_hs)/hostname";
       "znc_ssl"
         string => "$(directory_names.volatile_znc)/znc.pem";
       "znc_config"

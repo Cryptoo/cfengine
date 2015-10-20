@@ -46,6 +46,10 @@ bundle agent tor(root)
                 {
                   "dir": "/$(directory_names.bitcoin_hs)",
                   "port": "$(config.service_info[bitcoin][external_port]) 192.168.$(network.subnet_config[vpndmz]).$(config.defined_numbers[bitcoin]):$(config.service_info[bitcoin][external_port])"
+                },
+                {
+                  "dir": "/$(directory_names.bitcoin_testnet_hs)",
+                  "port": "$(config.service_info[bitcoin][testnet_port]) 192.168.$(network.subnet_config[vpndmz]).$(config.defined_numbers[bitcoin_testnet]):$(config.service_info[bitcoin][testnet_port])"
                 }
               ]
           }
@@ -67,12 +71,37 @@ bundle agent tor(root)
         string => readfile("/$(file_names.bitcoin_hs)", "0"),
         classes => default:if_ok("have_bitcoin_hs_hostname");
 
+    have_bitcoin_testnet_hs_hostname_file::
+
+      "bitcoin_testnet_hs_hostname"
+        string => readfile("/$(file_names.bitcoin_testnet_hs)", "0"),
+        classes => default:if_ok("have_bitcoin_testnet_hs_hostname");
+
+    !hs_scan::
+
+      "hs_hostname_bitcoin"
+        string => "";
+
+      "hs_hostname_bitcoin_testnet"
+        string => "";
+
     have_bitcoin_hs_hostname::
+
+      "hs_hostname_bitcoin"
+        string => '"bitcoin": "$(this.bitcoin_hs_hostname)",';
+
+    have_bitcoin_testnet_hs_hostname::
+
+      "hs_hostname_bitcoin_testnet"
+        string => '"bitcoin_testnet": "$(this.bitcoin_testnet_hs_hostname)",';
+
+    hs_scan::
 
       "hs_hostname"
         string => '
           {
-            "bitcoin": "$(this.bitcoin_hs_hostname)"
+            $(hs_hostname_bitcoin)
+            $(hs_hostname_bitcoin_testnet)
           }',
         classes => default:if_ok("have_hs_json");
 
@@ -83,8 +112,14 @@ bundle agent tor(root)
       "have_bitcoin_hs_hostname_file"
         expression => fileexists("/$(file_names.bitcoin_hs)");
 
+      "have_bitcoin_testnet_hs_hostname_file"
+        expression => fileexists("/$(file_names.bitcoin_testnet_hs)");
+
       "have_hs_hostnames"
         expression => fileexists("/$(file_names.hidden_service_outgoing)");
+
+      "hs_scan"
+        expression => "any";
 
   files:
 
@@ -132,6 +167,10 @@ bundle agent tor(root)
         create => "true";
 
       "$(this.root)$(directory_names.bitcoin_hs)/."
+        perms => tor,
+        create => "true";
+
+      "$(this.root)$(directory_names.bitcoin_testnet_hs)/."
         perms => tor,
         create => "true";
 

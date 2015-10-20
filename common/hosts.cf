@@ -169,9 +169,9 @@ bundle agent hosts(root)
                   "alias": "bitcoin"
                 },
                 {
-                  "fqdn": "$(network.machine_names[49][name]).vpndmz",
-                  "ip": "192.168.$(subnet_config[vpndmz]).49",
-                  "alias": "gitlab"
+                  "fqdn": "$(network.machine_names[26][name]).vpndmz",
+                  "ip": "192.168.$(subnet_config[vpndmz]).26",
+                  "alias": "bitcoin_testnet"
                 },
                 {
                   "fqdn": "$(network.machine_names[12][name]).tornet",
