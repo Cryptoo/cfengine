@@ -89,7 +89,7 @@ bundle common role
             "libvirt":
               {
                 "name": "firewall_external",
-                "ram": "1572864",
+                "ram": "512",
                 "cpu": "1",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64",
                 "interfaces":
@@ -121,7 +121,7 @@ bundle common role
             "libvirt":
               {
                 "name": "tor",
-                "ram": "1572864",
+                "ram": "512",
                 "cpu": "1",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64",
                 "interfaces":
@@ -153,7 +153,7 @@ bundle common role
             "libvirt":
               {
                 "name": "i2p",
-                "ram": "1572864",
+                "ram": "768",
                 "cpu": "1",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64",
                 "interfaces":
@@ -185,7 +185,7 @@ bundle common role
             "libvirt":
               {
                 "name": "freenet",
-                "ram": "1572864",
+                "ram": "1024",
                 "cpu": "1",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64",
                 "interfaces":
@@ -217,7 +217,7 @@ bundle common role
             "libvirt":
               {
                 "name": "bitcoin",
-                "ram": "2621440",
+                "ram": "1536",
                 "cpu": "4",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64_smp",
                 "interfaces":
@@ -249,7 +249,7 @@ bundle common role
             "libvirt":
               {
                 "name": "bitcoin_testnet",
-                "ram": "2621440",
+                "ram": "1536",
                 "cpu": "4",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64_smp",
                 "interfaces":
@@ -280,7 +280,7 @@ bundle common role
             "libvirt":
               {
                 "name": "bitmessage",
-                "ram": "2621440",
+                "ram": "1024",
                 "cpu": "4",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64_smp",
                 "interfaces":
@@ -312,7 +312,7 @@ bundle common role
             "libvirt":
               {
                 "name": "vpn_primary",
-                "ram": "1572864",
+                "ram": "512",
                 "cpu": "1",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64",
                 "interfaces":
@@ -344,7 +344,7 @@ bundle common role
             "libvirt":
               {
                 "name": "vpn_secondary",
-                "ram": "1572864",
+                "ram": "512",
                 "cpu": "1",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64",
                 "interfaces":
@@ -376,7 +376,7 @@ bundle common role
             "libvirt":
               {
                 "name": "dns",
-                "ram": "1572864",
+                "ram": "512",
                 "cpu": "1",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64",
                 "interfaces":
@@ -404,7 +404,7 @@ bundle common role
             "libvirt":
               {
                 "name": "mail_server",
-                "ram": "1572864",
+                "ram": "768",
                 "cpu": "1",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64",
                 "interfaces":
@@ -432,7 +432,7 @@ bundle common role
             "libvirt":
               {
                 "name": "irc_bouncer",
-                "ram": "1572864",
+                "ram": "768",
                 "cpu": "1",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64",
                 "interfaces":
@@ -460,7 +460,7 @@ bundle common role
             "libvirt":
               {
                 "name": "firewall_internal",
-                "ram": "1572864",
+                "ram": "512",
                 "cpu": "1",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64",
                 "interfaces":
@@ -500,7 +500,7 @@ bundle common role
             "libvirt":
               {
                 "name": "vpn_server",
-                "ram": "1572864",
+                "ram": "512",
                 "cpu": "1",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64",
                 "interfaces":
@@ -531,7 +531,7 @@ bundle common role
             "libvirt":
               {
                 "name": "dynamic",
-                "ram": "1572864",
+                "ram": "2048",
                 "cpu": "1",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64"
               }
@@ -551,7 +551,7 @@ bundle common role
             "libvirt":
               {
                 "name": "dynamic",
-                "ram": "1572864",
+                "ram": "2048",
                 "cpu": "1",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64"
               }
@@ -571,7 +571,7 @@ bundle common role
             "libvirt":
               {
                 "name": "dynamic",
-                "ram": "1572864",
+                "ram": "1024",
                 "cpu": "1",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64"
               }
@@ -591,7 +591,7 @@ bundle common role
             "libvirt":
               {
                 "name": "dynamic",
-                "ram": "1572864",
+                "ram": "1024",
                 "cpu": "1",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64-multilib"
               }
@@ -612,7 +612,7 @@ bundle common role
             "libvirt":
               {
                 "name": "dns",
-                "ram": "1572864",
+                "ram": "512",
                 "cpu": "1",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64",
                 "interfaces":
