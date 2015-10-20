@@ -78,6 +78,7 @@ bundle agent bitcoin_testnet(root)
           {
             "password": "$(rpc_data[rpc_password])",
             "allow_ip": "192.168.$(subnet_config[lan]).0/24",
+            "rpc_bind": "192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin_testnet])",
             "rpc_port": "$(config.service_info[bitcoin][rpc_port])",
             "onion": "192.168.$(subnet_config[tor]).$(defined_numbers[tor]):$(config.service_info[tor][socks_port])",
             "listen":

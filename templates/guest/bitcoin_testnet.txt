@@ -9,8 +9,9 @@ server=1
 rpcuser=bitcoin
 rpcpassword={{password}}
 rpctimeout=30
+rpcbind=127.0.0.1:{{rpc_port}}
+rpcbind={{rpc_bind}}:{{rpc_port}}
 rpcallowip={{allow_ip}}
-rpcport={{rpc_port}}
 
 dbcache=1024
 
