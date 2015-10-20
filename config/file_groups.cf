@@ -2013,8 +2013,8 @@ bundle common file_groups
                     "@(systemd_enabled[server_guest])",
                     "bitmessage",
                     "bmwrapper",
-                    "bmwrapper_pop",
-                    "bmwrapper_smtp"
+                    "bmwrapper-pop",
+                    "bmwrapper-smtp"
                  };
 
       "backup_dir[bitmessage]"
