@@ -51,6 +51,12 @@ bundle agent host(arch, role)
         slist => getindices("desktop_guest"),
         classes => default:if_ok("have_desktop_guest_list");
 
+    have_server_guests::
+
+      "server_guest_list"
+        slist => getindices("server_guest"),
+        classes => default:if_ok("have_server_guest_list");
+
   classes:
 
     any::
@@ -270,6 +276,11 @@ bundle agent host(arch, role)
         useresult => "desktop_guest",
         classes => default:if_ok("have_desktop_guests");
 
+      "get a list of server guests"
+        usebundle => extra_server_guests("$(this.role)"),
+        useresult => "server_guest",
+        classes => default:if_ok("have_server_guests");
+
       "manage chroot guests"
         usebundle => cryptoo:cryptoo_filesystem("/$(cryptoo:directory_names.volatile_images)/$(chroot[$(chroot_list)][class])/$(chroot[$(chroot_list)][arch])/$(chroot[$(chroot_list)][multilib])/","chroot_$(chroot[$(chroot_list)][class])_$(chroot[$(chroot_list)][multilib])","$(chroot[$(chroot_list)][arch])","$(chroot[$(chroot_list)][multilib])");
 
@@ -326,6 +337,11 @@ bundle agent host(arch, role)
 
       "create inboxes and outboxes for desktop guests"
         usebundle => extra_guest_box("$(desktop_guest_list)");
+
+    have_server_guest_list::
+
+      "create inboxes and outboxes for server guests"
+        usebundle => extra_guest_box("$(server_guest_list)");
 
   commands:
 
