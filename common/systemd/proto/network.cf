@@ -252,6 +252,46 @@ bundle agent network_file(root, name, number, type, params)
         ',
         classes => default:if_ok("network_json_ready");
 
+    type_restricted_gateway&routes_ready::
+
+      "zone_$(this.name)"
+        string => "$(network_params_$(this.name)[zone])";
+
+      "gateway_$(this.name)"
+        string => "$(network_params_$(this.name)[gateway])";
+
+      "forward_$(this.name)"
+        string => "$(network_params_$(this.name)[ipforward])";
+
+      "file_name_$(this.name)"
+        string => "$(this.root)$(directory_names.config_network)/$(zone_$(this.name)).network";
+
+      "network_$(this.name)"
+        string => '
+          {
+            "sections":
+               [
+                 { "section": "Match",
+                   "values":
+                     [
+                       { "LHS": "Name", "RHS": "$(this.name)" }
+                     ]
+                 },
+                 { "section": "Network",
+                   "values":
+                     [
+                       { "LHS": "DHCP", "RHS": "false" },
+                       { "LHS": "Address", "RHS": "192.168.$(network.subnet_config[$(zone_$(this.name))]).$(this.number)/27" },
+                       { "LHS": "Gateway", "RHS": "192.168.$(network.subnet_config[$(zone_$(this.name))]).$(config.defined_numbers[$(gateway_$(this.name))])" },
+                       { "LHS": "IPForward", "RHS": "$(forward_$(this.name))" },
+                       { "LHS": "LinkLocalAddressing", "RHS": "No"}
+                     ]
+                 } $(routes_$(this.name))
+               ]
+          }
+        ',
+        classes => default:if_ok("network_json_ready");
+
     type_simple&routes_ready::
 
       "zone_$(this.name)"

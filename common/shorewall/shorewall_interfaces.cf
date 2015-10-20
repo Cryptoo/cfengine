@@ -30,7 +30,7 @@ classes:
       "interface_$(this.interface)"
         expression => "any";
 
-    type_gateway|type_simple|type_dhcp|type_virtual::
+    type_gateway|type_restricted_gateway|type_simple|type_dhcp|type_virtual::
 
       "relevant"
         expression => "any";

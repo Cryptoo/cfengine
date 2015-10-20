@@ -17,7 +17,7 @@ bundle agent gateway_interface(interface, type)
       "type_$(this.type)"
         expression => "any";
 
-    type_gateway|type_dhcp::
+    type_gateway|type_dhcp|type_restricted_gateway::
 
       "gateway"
         expression => "any";
