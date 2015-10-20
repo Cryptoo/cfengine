@@ -66,7 +66,7 @@ bundle agent hosts(root)
                 {
                   "fqdn": "$(network.machine_names[10][name]).ispdmz",
                   "ip": "192.168.$(subnet_config[ispdmz]).10",
-                  "alias": "firewall_external $(network.machine_names[10][name])"
+                  "alias": "firewall_external firewall_external.ispdmz $(network.machine_names[10][name])"
                 },
                 {
                   "fqdn": "$(network.machine_names[11][name]).ispdmz",
@@ -116,7 +116,7 @@ bundle agent hosts(root)
                 {
                   "fqdn": "$(network.machine_names[11][name]).vpndmz",
                   "ip": "192.168.$(subnet_config[vpndmz]).11",
-                  "alias": "vpn_primary $(network.machine_names[11][name])"
+                  "alias": "vpn_primary vpn_primary.vpndmz $(network.machine_names[11][name])"
                 },
                 {
                   "fqdn": "$(network.machine_names[12][name]).vpndmz",
@@ -126,47 +126,47 @@ bundle agent hosts(root)
                 {
                   "fqdn": "$(network.machine_names[16][name]).vpndmz",
                   "ip": "192.168.$(subnet_config[vpndmz]).16",
-                  "alias": "dns $(network.machine_names[16][name])"
+                  "alias": "dns dns.vpndmz $(network.machine_names[16][name])"
                 },
                 {
                   "fqdn": "$(network.machine_names[17][name]).vpndmz",
                   "ip": "192.168.$(subnet_config[vpndmz]).17",
-                  "alias": "freenet $(network.machine_names[17][name])"
+                  "alias": "freenet freenet.vpndmz $(network.machine_names[17][name])"
                 },
                 {
                   "fqdn": "$(network.machine_names[18][name]).vpndmz",
                   "ip": "192.168.$(subnet_config[vpndmz]).18",
-                  "alias": "namecoin $(network.machine_names[18][name])"
+                  "alias": "namecoin namecoin.vpndmz $(network.machine_names[18][name])"
                 },
                 {
                   "fqdn": "$(network.machine_names[19][name]).vpndmz",
                   "ip": "192.168.$(subnet_config[vpndmz]).19",
-                  "alias": "bitmessage $(network.machine_names[19][name])"
+                  "alias": "bitmessage bitmessage.vpndmz $(network.machine_names[19][name])"
                 },
                 {
                   "fqdn": "$(network.machine_names[20][name]).vpndmz",
                   "ip": "192.168.$(subnet_config[vpndmz]).20",
-                  "alias": "mail_server $(network.machine_names[20][name])"
+                  "alias": "mail_server mail_server.vpndmz $(network.machine_names[20][name])"
                 },
                 {
                   "fqdn": "$(network.machine_names[21][name]).vpndmz",
                   "ip": "192.168.$(subnet_config[vpndmz]).21",
-                  "alias": "vpn_secondary $(network.machine_names[21][name])"
+                  "alias": "vpn_secondary vpn_secondary.vpndmz $(network.machine_names[21][name])"
                 },
                 {
                   "fqdn": "$(network.machine_names[22][name]).vpndmz",
                   "ip": "192.168.$(subnet_config[vpndmz]).22",
-                  "alias": "irc_bouncer $(network.machine_names[22][name])"
+                  "alias": "irc_bouncer irc_bouncer.vpndmz $(network.machine_names[22][name])"
                 },
                 {
                   "fqdn": "$(network.machine_names[25][name]).vpndmz",
                   "ip": "192.168.$(subnet_config[vpndmz]).25",
-                  "alias": "bitcoin $(network.machine_names[25][name])"
+                  "alias": "bitcoin bitcoin.vpndmz $(network.machine_names[25][name])"
                 },
                 {
                   "fqdn": "$(network.machine_names[26][name]).vpndmz",
                   "ip": "192.168.$(subnet_config[vpndmz]).26",
-                  "alias": "bitcoin_testnet $(network.machine_names[26][name])"
+                  "alias": "bitcoin_testnet bitcoin_testnet.vpndmz $(network.machine_names[26][name])"
                 },
                 {
                   "fqdn": "$(network.machine_names[12][name]).tornet",
@@ -176,7 +176,7 @@ bundle agent hosts(root)
                 {
                   "fqdn": "$(network.machine_names[14][name]).tornet",
                   "ip": "192.168.$(subnet_config[tor]).14",
-                  "alias": "tor $(network.machine_names[14][name])"
+                  "alias": "tor tor.tornet $(network.machine_names[14][name])"
                 },
                 {
                   "fqdn": "$(network.machine_names[12][name]).i2pnet",
@@ -186,22 +186,22 @@ bundle agent hosts(root)
                 {
                   "fqdn": "$(network.machine_names[15][name]).i2pnet",
                   "ip": "192.168.$(subnet_config[i2p]).15",
-                  "alias": "i2p $(network.machine_names[15][name])"
+                  "alias": "i2p i2p.i2pnet $(network.machine_names[15][name])"
                 },
                 {
                   "fqdn": "$(network.machine_names[1][name]).localnet",
                   "ip": "192.168.$(subnet_config[lan]).1",
-                  "alias": "master $(network.machine_names[1][name])"
+                  "alias": "master master.localnet $(network.machine_names[1][name])"
                 },
                 {
                   "fqdn": "$(network.machine_names[12][name]).localnet",
                   "ip": "192.168.$(subnet_config[lan]).12",
-                  "alias": "firewall_internal $(network.machine_names[12][name])"
+                  "alias": "firewall_internal firewall_internal.localnet $(network.machine_names[12][name])"
                 },
                 {
                   "fqdn": "$(network.machine_names[13][name]).localnet",
                   "ip": "192.168.$(subnet_config[lan]).13",
-                  "alias": "vpn_server $(network.machine_names[13][name])"
+                  "alias": "vpn_server vpn_server.localnet $(network.machine_names[13][name])"
                 }
               ]
           }';
