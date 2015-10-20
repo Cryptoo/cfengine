@@ -12,6 +12,8 @@ rpctimeout=30
 rpcbind=127.0.0.1:{{rpc_port}}
 rpcbind={{rpc_bind}}:{{rpc_port}}
 rpcallowip={{allow_ip}}
+rpcconnect=127.0.0.1
+rpcport={{rpc_port}}
 
 dbcache=1024
 
