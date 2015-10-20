@@ -82,6 +82,7 @@ bundle common file_groups
                     "shorewall.service",
                     "sshd.service",
                     "systemd-networkd.service",
+                    "systemd-timesyncd.service",
                     "tmux@root.service",
                     "vixie-cron.service"
                  };
