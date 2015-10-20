@@ -8,8 +8,14 @@ rpctimeout=30
 rpcallowip={{allow_ip}}
 rpcport={{rpc_port}}
 
+dbcache=1024
+
+permitbaremultisig=1
+acceptnonstdtxn=1
+
 maxconnections=64
 onion={{onion}}
+proxyrandomize=1
 
 {{#listen}}
 bind={{bind}}
