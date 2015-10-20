@@ -121,6 +121,14 @@ bundle agent bitcoin_testnet(root)
         perms => bitcoin,
         create => "true";
 
+      "$(this.root)$(file_names.bitcoind_autorestart)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => mergedata("cryptoo:config.systemd_services[autorestart]"),
+        classes => default:if_repaired("daemon_reload");
+
     !bootstrap::
 
       "/$(directory_names.bitcoin_home)/."
@@ -154,6 +162,11 @@ bundle agent bitcoin_testnet(root)
         usebundle => default:file_make("$(this.root)$(file_names.bitcoin_rpc_outgoing)", "$(this.rpc_json)");
 
   commands:
+
+    daemon_reload&(!bootstrap)::
+
+      "$(this.root)$(file_names.systemd_app)"
+        args => "daemon-reload";
 
     restart_bitcoin&(!bootstrap)::
 

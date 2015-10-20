@@ -256,6 +256,8 @@ bundle common file_names
         string => "$(directory_names.config_units)/shorewall.service";
       "xpra_service"
         string => "$(directory_names.config_units)/xpra@.service";
+      "bitcoind_autorestart"
+        string => "$(directory_names.config_units)/bitcoind.service.d/auto-restart.conf";
       "console_autologin"
         string => "$(directory_names.config_units)/getty@tty1.service.d/autologin.conf";
       "serial_autologin"

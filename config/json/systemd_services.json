@@ -1,4 +1,16 @@
 {
+    "autorestart":
+      {
+        "sections":
+          [
+             { "section": "Service",
+               "values":
+                 [
+                   { "LHS": "Restart", "RHS": "always" }
+                 ]
+             }
+          ]
+      },
     "bitmessage":
       {
         "sections":
