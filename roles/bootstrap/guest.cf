@@ -114,6 +114,10 @@ bundle agent bootstrap_guest(role, type, multilib)
 
     any::
 
-      "Creating a $(this.role) guest named $(this.name)";
+      "Creating a $(this.role) guest";
+
+    have_json::
+
+      "Guest name: $(this.name)";
 
 }

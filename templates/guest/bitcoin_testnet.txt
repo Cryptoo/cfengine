@@ -21,8 +21,9 @@ permitbaremultisig=1
 acceptnonstdtxn=1
 
 maxconnections=64
-onion={{onion}}
+onion={{tor_node}}:{{tor_port}}
 proxyrandomize=1
+whitelist={{tor_node}}
 
 {{#listen}}
 bind={{bind}}

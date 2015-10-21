@@ -611,7 +611,7 @@ bundle common role
               },
             "libvirt":
               {
-                "name": "dns",
+                "name": "dynamic",
                 "ram": "512",
                 "cpu": "1",
                 "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64",

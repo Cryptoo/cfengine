@@ -80,7 +80,8 @@ bundle agent bitcoin(root)
             "allow_ip": "192.168.$(subnet_config[lan]).0/24",
             "rpc_bind": "192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin])",
             "rpc_port": "$(config.service_info[bitcoin][rpc_port])",
-            "onion": "192.168.$(subnet_config[tor]).$(defined_numbers[tor]):$(config.service_info[tor][socks_port])",
+            "tor_node": "192.168.$(subnet_config[tor]).$(defined_numbers[tor])",
+            "tor_port": "$(config.service_info[tor][socks_port])",
             "listen":
               [
                 { "bind": "192.168.$(subnet_config[ispdmz]).$(defined_numbers[bitcoin]):$(config.service_info[bitcoin][external_port])" },
