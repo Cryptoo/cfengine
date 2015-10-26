@@ -63,6 +63,16 @@ bundle agent shorewall_macro_vdmz_bitcoin_testnet(root, port_info)
                      "action": "cfengine(PARAM)",
                      "source": "u$(defined_numbers[bitcoin_testnet]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin_testnet])",
                      "destination": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])"
+                   },
+                   {
+                     "action": "bitcoin(PARAM)",
+                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[tor]).$(defined_numbers[tor])",
+                     "destination": "u$(defined_numbers[bitcoin_testnet]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin_testnet])"
+                   },
+                   {
+                     "action": "bitcoin_rpc(PARAM)",
+                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).0/24",
+                     "destination": "u$(defined_numbers[bitcoin_testnet]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin_testnet])"
                    }
                  ]
                }
