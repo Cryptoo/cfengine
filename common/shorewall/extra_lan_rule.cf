@@ -48,6 +48,11 @@ bundle agent shorewall_extra_lan_rule(guest_number)
                      "action": "ACCEPT",
                      "source": "l$(this.guest_number):192.168.$(subnet_config[lan]).$(this.guest_number)",
                      "destination": "l$(defined_numbers[firewall_internal])"
+                   },
+                   {
+                     "action": "ACCEPT",
+                     "source": "l$(this.guest_number):192.168.$(subnet_config[lan]).$(this.guest_number)",
+                     "destination": "l0"
                    }';
 
     extra_lan_role_irc_client::
