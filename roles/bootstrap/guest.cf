@@ -22,6 +22,9 @@ bundle agent bootstrap_guest(role, type, multilib)
 
     any::
 
+      "site_config"
+        data => mergedata("cryptoo:site.config");
+
       "params"
         string => "$(role.params[$(this.role)])";
 
@@ -31,10 +34,18 @@ bundle agent bootstrap_guest(role, type, multilib)
       "guest_name"
         slist => classesmatching("cryptoo_name_.*");
 
+      "custom_guests"
+        slist => getindices("site_config[extra_guests]");
+
     defined_name::
 
       "name"
-        string => "$(this.role)";
+        string => "$(this.role)",
+        classes => default:if_ok("have_name");
+
+      "number"
+        string => "$(config.defined_numbers[$(this.role)])",
+        classes => default:if_ok("have_number");
 
       "fixed_json"
         string => "$(params)";
@@ -46,7 +57,8 @@ bundle agent bootstrap_guest(role, type, multilib)
     named_guest&have_guest_name::
 
       "name"
-        string => "$(extracted_name[1])";
+        string => "$(extracted_name[1])",
+        classes => default:if_ok("have_name");
 
       "fixed_json"
         string => "$(extracted_json[1])$(this.name)$(extracted_json[3])";
@@ -54,6 +66,12 @@ bundle agent bootstrap_guest(role, type, multilib)
       "params_data"
         data => parsejson("$(fixed_json)"),
         classes => default:if_ok("have_json");
+
+    "number_is_$(custom_guests)"::
+
+      "number"
+        string => "$(custom_guests)",
+        classes => default:if_ok("have_number");
 
   classes:
 
@@ -73,6 +91,14 @@ bundle agent bootstrap_guest(role, type, multilib)
       "guest_name_found"
         expression => regextract('(?s)(.*"name": ")(.*?)(".*)', "$(this.params)", "extracted_json");
 
+      "custom_guests_defined"
+        expression => isgreaterthan(length("custom_guests"), "0");
+
+    custom_guests_defined&have_name::
+
+      "number_is_$(custom_guests)"
+        expression => strcmp("$(site_config[extra_guests][$(custom_guests)][name])", "$(name)");
+
   files:
 
     image_created&have_json::
@@ -87,7 +113,7 @@ bundle agent bootstrap_guest(role, type, multilib)
 
   methods:
 
-    any::
+    have_name::
 
       "create image file"
         usebundle => image_file($(this.role), $(this.name), $(this.type), $(this.multilib)),
@@ -119,5 +145,8 @@ bundle agent bootstrap_guest(role, type, multilib)
     have_json::
 
       "Guest name: $(this.name)";
+
+    have_number::
+      "Guest number: $(number)";
 
 }
