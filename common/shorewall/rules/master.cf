@@ -206,6 +206,11 @@ bundle agent shorewall_rules_master(root)
                      "action": "cfengine(ACCEPT)",
                      "source": "idmz",
                      "destination": "fw"
+                   },
+                   {
+                     "action": "ACCEPT",
+                     "source": "fw",
+                     "destination": "lan"
                    }
                  ]
                }
@@ -634,6 +639,11 @@ bundle agent shorewall_rules_master(root)
                      "action": "bitcoin_rpc(ACCEPT)",
                      "source": "l0:192.168.$(subnet_config[lan]).0/24",
                      "destination": "l$(defined_numbers[firewall_internal]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin_testnet])"
+                   },
+                   {
+                     "action": "ACCEPT",
+                     "source": "l1",
+                     "destination": "l0"
                    },
                    {
                      "action": "ACCEPT",
