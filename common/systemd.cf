@@ -124,10 +124,4 @@ bundle agent systemd(root, role)
         args => "daemon-reload",
         contain => basic_chroot($(root));
 
-  reports:
-
-    bootstrap::
-
-      "Bootstrapping systemd in $(this.root)";
-
 }
