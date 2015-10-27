@@ -24,6 +24,13 @@ bundle agent master(root)
 
     "tags" slist => { "cryptoo_role" };
 
+  vars:
+
+    any::
+
+      "arch"
+        string => "x86_64";
+
   classes:
 
     any::
@@ -98,6 +105,27 @@ bundle agent master(root)
 
       "transfer certificates to guest inboxes"
         usebundle => ssl_certs;
+
+      "transfer port info between guest boxes"
+        usebundle => port_info;
+
+      "transfer hidden service hostnames between guest boxes"
+        usebundle => hidden_services;
+
+      "configure host kernel"
+        usebundle => cryptoo:kconfig("host", "$(arch)"),
+        classes => default:if_ok("kernel_ok");
+
+      "configure smp guest kernel"
+        usebundle => cryptoo:kconfig("guest_smp", "$(arch)"),
+        classes => default:if_ok("kernel_ok");
+
+      "configure multilib guest kernel"
+        usebundle => cryptoo:kconfig("guest_multilib", "$(arch)"),
+        classes => default:if_ok("kernel_ok");
+
+      "manage guest inboxes and outboxes"
+        usebundle => cryptoo:guest_boxes;
 
     have_master_ssh_key::
 

@@ -287,15 +287,6 @@ bundle agent host(arch, role)
       "manage crypttab"
         usebundle => cryptoo:crypttab;
 
-      "manage guest inboxes and outboxes"
-        usebundle => cryptoo:guest_boxes;
-
-      "transfer port info between guest boxes"
-        usebundle => port_info;
-
-      "transfer hidden service hostnames between guest boxes"
-        usebundle => hidden_services;
-
       "configure /etc/fstab"
         usebundle => fstab("/", "host", "$(this.role)"),
         classes => default:if_repaired("fstab_repaired");
@@ -305,20 +296,8 @@ bundle agent host(arch, role)
       "manage common files"
         usebundle => cryptoo:cryptoo_filesystem("/","$(this.role)", "$(arch)", "no_multilib");
 
-      "configure host kernel"
-        usebundle => cryptoo:kconfig("host", "$(arch)"),
-        classes => default:if_ok("kernel_ok");
-
       "configure guest kernel"
         usebundle => cryptoo:kconfig("guest", "$(arch)"),
-        classes => default:if_ok("kernel_ok");
-
-      "configure smp guest kernel"
-        usebundle => cryptoo:kconfig("guest_smp", "$(arch)"),
-        classes => default:if_ok("kernel_ok");
-
-      "configure multilib guest kernel"
-        usebundle => cryptoo:kconfig("guest_multilib", "$(arch)"),
         classes => default:if_ok("kernel_ok");
 
     fstab_repaired::
