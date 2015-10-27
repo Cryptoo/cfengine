@@ -203,6 +203,9 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
       "configure /etc/resolv/conf"
         usebundle => resolv_conf($(this.root), $(this.role));
 
+      "configure systemd"
+        usebundle => systemd("$(this.root)", "$(this.role)");
+
     chroot::
 
       "manage chroot files"

@@ -124,9 +124,6 @@ bundle agent common_guest(root, type, role, arch)
 
     any::
 
-      "configure systemd"
-        usebundle => systemd($(this.root), $(this.role));
-
       "configure /etc/fstab"
         usebundle => fstab("$(this.root)", "guest", "$(this.role)"),
         classes => default:if_repaired("fstab_repaired");

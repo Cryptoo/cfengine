@@ -539,7 +539,8 @@ bundle common file_groups
 
       "systemd_enabled[desktop_host]"
         slist => {
-                    "@(systemd_enabled[host])"
+                    "@(systemd_enabled[host])",
+                    "kdm"
                  };
 
       "backup_dir[desktop_host]"

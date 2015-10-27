@@ -132,9 +132,6 @@ bundle agent master(root)
       "configure system as a host"
         usebundle => host("x86_64", "master");
 
-      "configure systemd"
-        usebundle => systemd("$(this.root)", "master");
-
   commands:
 
     daemon_reload&have_systemctl::
