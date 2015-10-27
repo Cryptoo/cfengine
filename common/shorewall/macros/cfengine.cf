@@ -39,7 +39,8 @@ bundle agent shorewall_macro_cfengine(root, port_info)
           "irc_client",
           "im",
           "master",
-          "bitcoin_testnet"
+          "bitcoin_testnet",
+          "desktop_host"
         };
 
   vars:
