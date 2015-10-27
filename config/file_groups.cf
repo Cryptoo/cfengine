@@ -56,7 +56,6 @@ bundle common file_groups
       "use[common]"
         slist => {
                     "basic_programs",
-                    "simplegit",
                     "systemd",
                     "virtualization"
                  };
@@ -329,6 +328,7 @@ bundle common file_groups
       "use[master]"
         slist => {
                     "@(use[host])",
+                    "simplegit",
                     "master"
                  };
 
@@ -529,7 +529,8 @@ bundle common file_groups
 
       "unuse[desktop_host]"
         slist => {
-                    "@(unuse[host])"
+                    "@(unuse[host])",
+                    "simplegit"
                  };
 
       "profile[desktop_host]"
@@ -600,6 +601,7 @@ bundle common file_groups
       "use[guest]"
         slist => {
                     "@(use[common])",
+                    "simplegit",
                     "guest"
                  };
 
