@@ -40,7 +40,8 @@ bundle agent shorewall_macro_cfengine(root, port_info)
           "im",
           "master",
           "bitcoin_testnet",
-          "desktop_host"
+          "desktop_host",
+          "mail_client"
         };
 
   vars:

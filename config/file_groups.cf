@@ -984,7 +984,42 @@ bundle common file_groups
         string => "$(firewall[desktop_guest])";
 
       "network[mail_client]"
-        string => "$(network[desktop_guest])";
+        string =>  '
+          {
+            "devices":
+               {
+                 "bridge":
+                   [
+                     "none"
+                   ],
+                 "veth":
+                   [
+                     "none"
+                   ],
+                 "tap":
+                   [
+                     "none"
+                   ],
+                 "tun":
+                   [
+                     "none"
+                   ]
+               },
+             "interfaces":
+               {
+                 "eth0":
+                   {
+                     "type": "gateway",
+                     "params":
+                       {
+                         "zone": "lan",
+                         "gateway": "firewall_internal",
+                         "ipforward": "no"
+                       }
+                   }
+               }
+          }
+        ';
 
       "dns_type[mail_client]"
         string => "$(dns_type[desktop_guest])";
