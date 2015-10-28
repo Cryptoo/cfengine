@@ -19,7 +19,14 @@ bundle agent shorewall_macro_mail_server(root, port_info)
 
   meta:
 
-    "tags" slist => { "shorewall_macro", "mail_server", "firewall_internal", "master" };
+    "tags" slist => {
+        "shorewall_macro",
+        "mail_server",
+        "firewall_internal",
+        "master",
+        "desktop_host",
+        "mail_client"
+        };
 
   vars:
 

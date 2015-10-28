@@ -40,6 +40,21 @@ bundle agent shorewall_rules_mail_client(root)
                  [
                    {
                      "action": "guest"
+                   },
+                   {
+                     "action": "SSH(ACCEPT)",
+                     "source": "lan",
+                     "destination": "fw"
+                   },
+                   {
+                     "action": "tor(ACCEPT)",
+                     "source": "fw",
+                     "destination": "tor:192.168.$(subnet_config[tor]).$(defined_numbers[tor])"
+                   },
+                   {
+                     "action": "mail_server(ACCEPT)",
+                     "source": "fw",
+                     "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])"
                    }
                  ]
                }
