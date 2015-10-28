@@ -176,6 +176,8 @@ bundle common file_names
         string => "$(directory_names.config_local_scripts)/firstrun.start";
       "ipset_private"
         string => "$(directory_names.config_local_scripts)/ipset-private.start";
+      "pango_modules"
+        string => "$(directory_names.config_pango)/pango.modules";
       "polipo_config"
         string => "$(directory_names.config_polipo)/tor";
       "pm_config"
@@ -318,6 +320,8 @@ bundle common file_names
         string => "$(directory_names.standard_apps)/git";
       "layman_app"
         string => "$(directory_names.standard_apps)/layman";
+      "pango_modules_app"
+        string => "$(directory_names.standard_apps)/pango-querymodules";
       "rsync_app"
         string => "$(directory_names.standard_apps)/rsync";
       "ssh_app"

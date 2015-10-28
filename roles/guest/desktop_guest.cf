@@ -71,12 +71,18 @@ bundle agent desktop_guest(root, role, arch, multilib)
             ".xpra"
           };
 
+      "pango_modules"
+        string => execresult("$(this.root)$(file_names.pango_modules_app)","noshell");
+
   classes:
 
     any::
 
       "have_xpra_config"
         expression => fileexists("$(this.root)$(file_names.xpra_config)");
+
+      "need_pango_modules"
+        not => fileexists("$(this.root)$(file_names.pango_modules)");
 
   files:
 
@@ -88,6 +94,10 @@ bundle agent desktop_guest(root, role, arch, multilib)
 
       "$(this.root)$(directory_names.cryptoo_home)/$(important_directories)/."
         perms => cryptoo,
+        create => "true";
+
+      "$(this.root)$(directory_names.config_pango)/."
+        perms => system,
         create => "true";
 
       "$(this.root)$(directory_names.config_xpra)/."
@@ -116,6 +126,11 @@ bundle agent desktop_guest(root, role, arch, multilib)
 
       "manage guest files"
         usebundle => common_guest("$(root)", "desktop", "$(role)", "$(arch)");
+
+    need_pango_modules::
+
+      "generate pango modules"
+        usebundle => default:file_make("$(this.root)$(file_names.pango_modules)", "$(this.pango_modules)");
 
   commands:
 

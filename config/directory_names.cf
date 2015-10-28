@@ -38,6 +38,7 @@ bundle common directory_names
       "config_libvirt" string => "$(config_base)/libvirt";
       "config_qemu" string => "$(config_libvirt)/qemu";
       "config_local_scripts" string => "$(config_base)/local.d";
+      "config_pango" string => "$(config_base)/pango";
       "config_polipo" string => "$(config_base)/polipo";
       "config_pm" string => "$(config_base)/$(pm)";
       "config_pm_env" string => "$(config_pm)/env";
@@ -130,7 +131,7 @@ bundle common directory_names
       "easy_rsa_base" string => "$(standard_share)/easy-rsa";
       "standard_timezones" string => "$(standard_share)/zoneinfo";
       "site_base" string => "$(standard_base)/site-local";
-      "site_apps" string => "$(site_base)/bin"; 
+      "site_apps" string => "$(site_base)/bin";
       "site_srcpkg" string => "$(site_base)/distfiles";
       "site_binpkg" string => "$(site_base)/packages";
       "site_pm" string => "$(site_base)/$(pm)";
