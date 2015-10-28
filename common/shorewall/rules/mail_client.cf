@@ -55,6 +55,11 @@ bundle agent shorewall_rules_mail_client(root)
                      "action": "mail_server(ACCEPT)",
                      "source": "fw",
                      "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])"
+                   },
+                   {
+                     "action": "HKP(ACCEPT)",
+                     "source": "fw",
+                     "destination": "net"
                    }
                  ]
                }
