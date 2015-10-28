@@ -68,7 +68,8 @@ bundle agent desktop_guest(root, role, arch, multilib)
             ".cache",
             ".config/pulse",
             ".dbus/session-bus",
-            ".xpra"
+            ".xpra",
+            ".ssh"
           };
 
       "pango_modules"
