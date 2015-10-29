@@ -300,7 +300,15 @@ bundle agent host(arch, role)
         usebundle => cryptoo:kconfig("guest", "$(arch)"),
         classes => default:if_ok("kernel_ok");
 
-    fstab_repaired::
+      "configure smp guest kernel"
+        usebundle => cryptoo:kconfig("guest_smp", "$(arch)"),
+        classes => default:if_ok("kernel_ok");
+
+      "configure multilib guest kernel"
+        usebundle => cryptoo:kconfig("guest_multilib", "$(arch)"),
+        classes => default:if_ok("kernel_ok");
+
+fstab_repaired::
 
       "activate all mountpoints"
         usebundle => cryptoo:mount_all,
