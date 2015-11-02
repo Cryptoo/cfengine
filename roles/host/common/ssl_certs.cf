@@ -21,6 +21,9 @@ bundle agent ssl_certs
       "have_ca_crt"
         expression => fileexists("/$(file_names.ca_crt_source)");
 
+      "have_dh"
+        expression => fileexists("/$(file_names.dh_source)");
+
       "have_mail_server_crt"
         expression => fileexists("/$(file_names.mail_server_crt_source)");
 
@@ -68,4 +71,10 @@ bundle agent ssl_certs
       "/$(directory_names.config_guest_inboxes)/vpn_server/vpn_server.key"
         perms => root_qemu,
         copy_from => default:local_cp("/$(cryptoo:file_names.vpn_server_key_source)");
+
+    have_dh::
+
+      "/$(directory_names.config_guest_inboxes)/vpn_server/dh4096.pem"
+        perms => root_qemu,
+        copy_from => default:local_cp("/$(cryptoo:file_names.dh_source)");
 }
