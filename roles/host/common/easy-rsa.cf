@@ -47,6 +47,9 @@ bundle agent easy_rsa
       "need_mail_server_crt"
         not => fileexists("/$(file_names.mail_server_crt_source)");
 
+      "need_vpn_server_crt"
+        not => fileexists("/$(file_names.vpn_server_crt_source)");
+
     have_ca_crt::
 
       "need_dh"
@@ -78,5 +81,10 @@ bundle agent easy_rsa
 
       "/$(file_names.easyrsa_server_app)"
         args => "mail_server";
+
+    need_vpn_server_crt::
+
+      "/$(file_names.easyrsa_server_app)"
+        args => "vpn_server";
 
 }

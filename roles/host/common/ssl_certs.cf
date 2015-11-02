@@ -27,11 +27,21 @@ bundle agent ssl_certs
       "have_mail_server_key"
         expression => fileexists("/$(file_names.mail_server_key_source)");
 
+      "have_vpn_server_crt"
+        expression => fileexists("/$(file_names.vpn_server_crt_source)");
+
+      "have_vpn_server_key"
+        expression => fileexists("/$(file_names.vpn_server_key_source)");
+
   files:
 
     have_ca_crt::
 
       "/$(directory_names.config_guest_inboxes)/mail_server/$(site.config[ddns]).crt"
+        perms => root_qemu,
+        copy_from => default:local_cp("/$(cryptoo:file_names.ca_crt_source)");
+
+      "/$(directory_names.config_guest_inboxes)/vpn_server/$(site.config[ddns]).crt"
         perms => root_qemu,
         copy_from => default:local_cp("/$(cryptoo:file_names.ca_crt_source)");
 
@@ -47,4 +57,15 @@ bundle agent ssl_certs
         perms => root_qemu,
         copy_from => default:local_cp("/$(cryptoo:file_names.mail_server_key_source)");
 
+    have_vpn_server_crt::
+
+      "/$(directory_names.config_guest_inboxes)/vpn_server/vpn_server.crt"
+        perms => root_qemu,
+        copy_from => default:local_cp("/$(cryptoo:file_names.vpn_server_crt_source)");
+
+    have_vpn_server_key::
+
+      "/$(directory_names.config_guest_inboxes)/vpn_server/vpn_server.key"
+        perms => root_qemu,
+        copy_from => default:local_cp("/$(cryptoo:file_names.vpn_server_key_source)");
 }

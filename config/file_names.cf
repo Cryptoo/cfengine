@@ -114,6 +114,10 @@ bundle common file_names
         string => "$(directory_names.config_cryptoo_incoming)/mail_server.key";
       "mail_server_config"
         string => "$(directory_names.config_cryptoo_incoming)/mail_config.json";
+      "vpn_server_crt"
+        string => "$(directory_names.config_cryptoo_incoming)/vpn_server.crt";
+      "vpn_server_key"
+        string => "$(directory_names.config_cryptoo_incoming)/vpn_server.key";
       "ca_crt_source"
         string => "$(directory_names.easy_rsa_keys)/ca.crt";
       "ca_key_source"
@@ -124,6 +128,10 @@ bundle common file_names
         string => "$(directory_names.easy_rsa_keys)/mail_server.crt";
       "mail_server_key_source"
         string => "$(directory_names.easy_rsa_keys)/mail_server.key";
+      "vpn_server_crt_source"
+        string => "$(directory_names.easy_rsa_keys)/vpn_server.crt";
+      "vpn_server_key_source"
+        string => "$(directory_names.easy_rsa_keys)/vpn_server.key";
       "bitcoin_rpc_outgoing"
         string => "$(directory_names.config_cryptoo_outgoing)/bitcoin_rpc.json";
       "hidden_service_outgoing"
