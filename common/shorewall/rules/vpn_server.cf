@@ -141,6 +141,11 @@ bundle agent shorewall_rules_vpn_server(root)
                    },
                    {
                      "action": "ACCEPT",
+                     "source": "vpntu",
+                     "destination": "i2p"
+                   },
+                   {
+                     "action": "ACCEPT",
                      "source": "vpntt",
                      "destination": "net"
                    },
@@ -163,6 +168,11 @@ bundle agent shorewall_rules_vpn_server(root)
                      "action": "ACCEPT",
                      "source": "vpntt",
                      "destination": "eep"
+                   },
+                   {
+                     "action": "ACCEPT",
+                     "source": "vpntt",
+                     "destination": "i2p"
                    }
                  ],
                }
