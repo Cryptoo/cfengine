@@ -169,6 +169,16 @@ bundle agent hosts(root)
                   "alias": "bitcoin_testnet bitcoin_testnet.vpndmz $(network.machine_names[26][name])"
                 },
                 {
+                  "fqdn": "$(network.machine_names[27][name]).vpndmz",
+                  "ip": "192.168.$(subnet_config[vpndmz]).27",
+                  "alias": "btcd btcd.vpndmz $(network.machine_names[25][name])"
+                },
+                {
+                  "fqdn": "$(network.machine_names[28][name]).vpndmz",
+                  "ip": "192.168.$(subnet_config[vpndmz]).28",
+                  "alias": "btcd_testnet btcd_testnet.vpndmz $(network.machine_names[26][name])"
+                },
+                {
                   "fqdn": "$(network.machine_names[12][name]).tornet",
                   "ip": "192.168.$(subnet_config[tor]).12",
                   "alias": ""

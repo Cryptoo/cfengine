@@ -134,6 +134,22 @@ body perms bitcoin_private
       groups  => { "bitcoin" };
 }
 
+body perms btcd
+
+{
+      mode  => "0664";
+      owners  => { "btcd" };
+      groups  => { "btcd" };
+}
+
+body perms btcd_private
+
+{
+      mode  => "0600";
+      owners  => { "btcd" };
+      groups  => { "btcd" };
+}
+
 body perms tor
 
 {

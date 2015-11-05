@@ -78,6 +78,30 @@ bundle agent shorewall_rules_tor(root)
 
                    },
                    {
+                     "action": "bitcoin(ACCEPT)",
+                     "source": "fw:192.168.$(subnet_config[ispdmz]).$(defined_numbers[tor])",
+                     "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[btcd])",
+                     "protocol": "-",
+                     "destination_port": "-",
+                     "source_port": "-",
+                     "original_destination": "-",
+                     "rate": "-",
+                     "user": "tor:tor"
+
+                   },
+                   {
+                     "action": "bitcoin_testnet(ACCEPT)",
+                     "source": "fw:192.168.$(subnet_config[ispdmz]).$(defined_numbers[tor])",
+                     "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[btcd_testnet])",
+                     "protocol": "-",
+                     "destination_port": "-",
+                     "source_port": "-",
+                     "original_destination": "-",
+                     "rate": "-",
+                     "user": "tor:tor"
+
+                   },
+                   {
                      "action": "tor",
                      "source": "tor"
                    },

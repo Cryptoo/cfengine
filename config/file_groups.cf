@@ -2392,6 +2392,262 @@ bundle common file_groups
         string => "external";
 
 ################################################################################
+#                             btcd
+################################################################################
+
+      "make_profile[btcd]"
+        string => "$(make_profile[server_guest])";
+
+      "pm_env[btcd]"
+        slist => {
+                    "@(pm_env[server_guest])"
+                 };
+
+      "pm_environment[btcd]"
+        slist => {
+                    "@(pm_environment[server_guest])"
+                 };
+
+      "keywords[btcd]"
+        slist => {
+                    "@(keywords[server_guest])",
+                    "btcd"
+                 };
+
+      "mask[btcd]"
+        slist => {
+                    "@(mask[server_guest])"
+                 };
+
+      "unmask[btcd]"
+        slist => {
+                    "@(unmask[server_guest])"
+                 };
+
+      "use[btcd]"
+        slist => {
+                    "@(use[server_guest])"
+                 };
+
+      "unuse[btcd]"
+        slist => {
+                    "@(unuse[server_guest])"
+                 };
+
+      "profile[btcd]"
+        slist => {
+                    "@(profile[server_guest])"
+                 };
+
+      "systemd_enabled[btcd]"
+        slist => {
+                    "@(systemd_enabled[server_guest])",
+                    "btcd"
+                 };
+
+      "backup_dir[btcd]"
+        string => "/$(directory_names.btcd_base)";
+
+      "firewall_zones[btcd]"
+        slist => {
+                    "@(firewall_zones[server_guest])"
+                 };
+
+      "firewall_bridges[btcd]"
+        slist => {
+                    "@(firewall_bridges[server_guest])"
+                 };
+
+      "firewall[btcd]"
+        string => "$(firewall[server_guest])";
+
+      "network[btcd]"
+        string => '
+          {
+            "devices":
+               {
+                 "bridge":
+                   [
+                     "none"
+                   ],
+                 "veth":
+                   [
+                     "none"
+                   ],
+                 "tap":
+                   [
+                     "none"
+                   ],
+                 "tun":
+                   [
+                     "none"
+                   ]
+               },
+             "interfaces":
+               {
+                 "eth0":
+                   {
+                     "type": "gateway",
+                     "params":
+                       {
+                         "zone": "ispdmz",
+                         "gateway": "firewall_external",
+                         "ipforward": "no"
+                       }
+                   },
+                 "eth1":
+                   {
+                     "type": "simple",
+                     "params":
+                       {
+                         "zone": "vpndmz",
+                         "ipforward": "no",
+                         "routes":
+                           {
+                             "i2p": "firewall_internal",
+                             "eep": "firewall_internal",
+                             "tor": "firewall_internal",
+                             "onion": "firewall_internal",
+                             "lan": "firewall_internal"
+                           }
+                       }
+                   }
+               }
+          }
+        ';
+
+      "dns_type[btcd]"
+        string => "external";
+
+################################################################################
+#                             btcd_testnet
+################################################################################
+
+      "make_profile[btcd_testnet]"
+        string => "$(make_profile[server_guest])";
+
+      "pm_env[btcd_testnet]"
+        slist => {
+                    "@(pm_env[server_guest])"
+                 };
+
+      "pm_environment[btcd_testnet]"
+        slist => {
+                    "@(pm_environment[server_guest])"
+                 };
+
+      "keywords[btcd_testnet]"
+        slist => {
+                    "@(keywords[server_guest])",
+                    "btcd"
+                 };
+
+      "mask[btcd_testnet]"
+        slist => {
+                    "@(mask[server_guest])"
+                 };
+
+      "unmask[btcd_testnet]"
+        slist => {
+                    "@(unmask[server_guest])"
+                 };
+
+      "use[btcd_testnet]"
+        slist => {
+                    "@(use[server_guest])"
+                 };
+
+      "unuse[btcd_testnet]"
+        slist => {
+                    "@(unuse[server_guest])"
+                 };
+
+      "profile[btcd_testnet]"
+        slist => {
+                    "@(profile[server_guest])"
+                 };
+
+      "systemd_enabled[btcd_testnet]"
+        slist => {
+                    "@(systemd_enabled[server_guest])",
+                    "btcd"
+                 };
+
+      "backup_dir[btcd_testnet]"
+        string => "/$(directory_names.btcd_base)";
+
+      "firewall_zones[btcd_testnet]"
+        slist => {
+                    "@(firewall_zones[server_guest])"
+                 };
+
+      "firewall_bridges[btcd_testnet]"
+        slist => {
+                    "@(firewall_bridges[server_guest])"
+                 };
+
+      "firewall[btcd_testnet]"
+        string => "$(firewall[server_guest])";
+
+      "network[btcd_testnet]"
+        string => '
+          {
+            "devices":
+               {
+                 "bridge":
+                   [
+                     "none"
+                   ],
+                 "veth":
+                   [
+                     "none"
+                   ],
+                 "tap":
+                   [
+                     "none"
+                   ],
+                 "tun":
+                   [
+                     "none"
+                   ]
+               },
+             "interfaces":
+               {
+                 "eth0":
+                   {
+                     "type": "gateway",
+                     "params":
+                       {
+                         "zone": "ispdmz",
+                         "gateway": "firewall_external",
+                         "ipforward": "no"
+                       }
+                   },
+                 "eth1":
+                   {
+                     "type": "simple",
+                     "params":
+                       {
+                         "zone": "vpndmz",
+                         "ipforward": "no",
+                         "routes":
+                           {
+                             "i2p": "firewall_internal",
+                             "eep": "firewall_internal",
+                             "tor": "firewall_internal",
+                             "onion": "firewall_internal",
+                             "lan": "firewall_internal"
+                           }
+                       }
+                   }
+               }
+          }
+        ';
+
+      "dns_type[btcd_testnet]"
+        string => "external";
+
+################################################################################
 #                             vpn_primary
 ################################################################################
 

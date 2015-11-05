@@ -26,6 +26,8 @@ bundle agent shorewall_macro_tor(root, port_info)
         "shorewall_macro",
         "bitcoin",
         "bitcoin_testnet",
+        "btcd",
+        "btcd_testnet",
         "firewall_internal",
         "im",
         "master",

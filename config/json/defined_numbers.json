@@ -19,4 +19,6 @@
     "file_server": "24",
     "bitcoin": "25",
     "bitcoin_testnet": "26"
+    "btcd": "27",
+    "btcd_testnet": "28"
 }

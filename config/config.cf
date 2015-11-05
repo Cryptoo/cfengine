@@ -58,6 +58,8 @@ bundle common config
                    "mail_server",
                    "bitcoin",
                    "bitcoin_testnet",
+                   "btcd",
+                   "btcd_testnet",
                    "namecoin",
                    "bittorrent",
                    "samba"
@@ -1610,7 +1612,7 @@ bundle common config
       "kconfig_string_guest_multilib[CONFIG_DEFAULT_HOSTNAME]"
         string => "$(kconfig_string_guest[CONFIG_DEFAULT_HOSTNAME])";
 
-      "grub[GRUB_CMDLINE_LINUX]" 
+      "grub[GRUB_CMDLINE_LINUX]"
         string => "rd.auto";
 
       "grub[GRUB_CMDLINE_LINUX_DEFAULT]"
@@ -1726,6 +1728,8 @@ bundle common config
 				int => "318";
 			"gid[bittorrent]"
 				int => "319";
+			"gid[btcd]"
+				int => "320";
 			"gid[cryptoo]"
 				int => "1000";
 

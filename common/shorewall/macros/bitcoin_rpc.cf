@@ -22,7 +22,15 @@ bundle agent shorewall_macro_bitcoin_rpc(root, port_info)
 
   meta:
 
-    "tags" slist => { "shorewall_macro", "bitcoin", "bitcoin_testnet", "firewall_internal", "master" };
+    "tags" slist => {
+        "shorewall_macro",
+        "bitcoin",
+        "bitcoin_testnet",
+        "btcd",
+        "btcd_testnet",
+        "firewall_internal",
+        "master"
+    };
 
   vars:
 

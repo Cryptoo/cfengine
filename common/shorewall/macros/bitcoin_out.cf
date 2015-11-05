@@ -22,7 +22,13 @@ bundle agent shorewall_macro_bitcoin_out(root, port_info)
 
   meta:
 
-    "tags" slist => { "shorewall_macro", "firewall_external", "bitcoin", "master" };
+    "tags" slist => {
+        "shorewall_macro",
+        "firewall_external",
+        "bitcoin",
+        "btcd",
+        "master"
+    };
 
   vars:
 

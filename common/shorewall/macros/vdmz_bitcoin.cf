@@ -22,7 +22,7 @@ bundle agent shorewall_macro_vdmz_bitcoin(root, port_info)
 
   meta:
 
-    "tags" slist => { "shorewall_macro", "master" };
+    "tags" slist => {"shorewall_macro", "master" };
 
   vars:
 
@@ -68,6 +68,31 @@ bundle agent shorewall_macro_vdmz_bitcoin(root, port_info)
                      "action": "bitcoin_rpc(PARAM)",
                      "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).0/24",
                      "destination": "u$(defined_numbers[bitcoin]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin])"
+                   },
+                   {
+                     "action": "SSH(PARAM)",
+                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])",
+                     "destination": "u$(defined_numbers[btcd]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[btcd])"
+                   },
+                   {
+                     "action": "cfengine(PARAM)",
+                     "source": "u$(defined_numbers[btcd]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[btcd])",
+                     "destination": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])"
+                   },
+                   {
+                     "action": "tor(PARAM)",
+                     "source": "u$(defined_numbers[btcd]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[btcd])",
+                     "destination": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[tor]).$(defined_numbers[tor])"
+                   },
+                   {
+                     "action": "bitcoin(PARAM)",
+                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[tor]).$(defined_numbers[tor])",
+                     "destination": "u$(defined_numbers[btcd]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[btcd])"
+                   },
+                   {
+                     "action": "bitcoin_rpc(PARAM)",
+                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).0/24",
+                     "destination": "u$(defined_numbers[btcd]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[btcd])"
                    }
                  ]
                }

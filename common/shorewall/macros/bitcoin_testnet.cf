@@ -28,6 +28,7 @@ bundle agent shorewall_macro_bitcoin_testnet(root, port_info)
         "firewall_external",
         "tor",
         "bitcoin_testnet",
+        "btcd_testnet",
         "firewall_internal",
         "master"
       };

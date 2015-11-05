@@ -38,6 +38,17 @@ bundle agent cryptoo_bootstrap
       "multilib"
         string => "no_multilib";
 
+    default:bootstrap_btcd::
+
+      "role"
+        string => "btcd";
+
+      "type"
+        string => "server";
+
+      "multilib"
+        string => "no_multilib";
+
     default:bootstrap_dns::
 
       "role"
@@ -225,6 +236,17 @@ bundle agent cryptoo_bootstrap
       "multilib"
         string => "no_multilib";
 
+    default:bootstrap_btcd_testnet::
+
+      "role"
+        string => "btcd_testnet";
+
+      "type"
+        string => "server";
+
+      "multilib"
+        string => "no_multilib";
+
   classes:
 
     default:bootstrap_master::
@@ -238,6 +260,11 @@ bundle agent cryptoo_bootstrap
         expression => "any";
 
     default:bootstrap_bitmessage::
+
+      "bootstrap_guest"
+        expression => "any";
+
+    default:bootstrap_btcd::
 
       "bootstrap_guest"
         expression => "any";
@@ -323,6 +350,11 @@ bundle agent cryptoo_bootstrap
         expression => "any";
 
     default:bootstrap_bitcoin_testnet::
+
+      "bootstrap_guest"
+        expression => "any";
+
+    default:bootstrap_btcd_testnet::
 
       "bootstrap_guest"
         expression => "any";

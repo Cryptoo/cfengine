@@ -155,6 +155,12 @@
                    "group": "bittorrent",
                    "shell": "/sbin/nologin"
                  },
+    "btcd": {
+                   "home": "/var/lib/btcd",
+                   "uid": "320",
+                   "group": "btcd",
+                   "shell": "/sbin/nologin"
+                 },
     "guest": {
                    "home": "/mnt/shared",
                    "uid": "405",

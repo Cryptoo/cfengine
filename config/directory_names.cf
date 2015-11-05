@@ -21,6 +21,7 @@ bundle common directory_names
       "config_base" string => "etc";
       "config_bash" string => "$(config_base)/bash";
       "config_bitcoin" string => "$(config_base)/bitcoin";
+      "config_btcd" string => "$(config_base)/btcd";
       "config_env" string => "$(config_base)/conf.d";
       "config_cryptoo_root" string => "$(config_base)/cryptoo";
       "config_cryptoo_incoming" string => "$(config_cryptoo_root)/inbox";
@@ -151,6 +152,8 @@ bundle common directory_names
       "bitcoin_home" string => "$(bitcoin_base)/.bitcoin";
       "bitmessage_base" string => "$(volatile_library)/bitmessage";
       "bitmessage_config" string => "$(bitmessage_base)/.config/PyBitmessage";
+      "btcd_base" string => "$(volatile_library)/btcd";
+      "btcd_home" string => "$(btcd_base)/.btcd";
       "volatile_overlay" string => "$(volatile_library)/layman";
       "bitcoin_overlay" string => "$(volatile_overlay)/bitcoin";
       "volatile_libvirt" string => "$(volatile_library)/libvirt";
@@ -161,6 +164,8 @@ bundle common directory_names
       "hidden_services" string => "$(volatile_tor)/hs";
       "bitcoin_hs" string => "$(hidden_services)/bitcoin";
       "bitcoin_testnet_hs" string => "$(hidden_services)/bitcoin_testnet";
+      "btcd_hs" string => "$(hidden_services)/btcd";
+      "btcd_testnet_hs" string => "$(hidden_services)/btcd_testnet";
       "volatile_znc" string => "$(volatile_library)/znc";
       "znc_config" string => "$(volatile_znc)/configs";
       "spool" string => "$(volatile_base)/spool";

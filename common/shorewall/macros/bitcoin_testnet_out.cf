@@ -22,7 +22,13 @@ bundle agent shorewall_macro_bitcoin_testnet_out(root, port_info)
 
   meta:
 
-    "tags" slist => { "shorewall_macro", "firewall_external", "bitcoin_testnet", "master" };
+    "tags" slist => {
+        "shorewall_macro",
+        "firewall_external",
+        "bitcoin_testnet",
+        "btcd_testnet",
+        "master"
+    };
 
   vars:
 

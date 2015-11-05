@@ -266,6 +266,71 @@ bundle common role
               }
           }
         ';
+
+      "params[btcd]"
+        string => '
+          {
+            "number": "$(this.defined_numbers[btcd])",
+            "make_conf":
+              {
+                "makeopts": "guest",
+                "pkgdir": "server_guest",
+                "runtime": "guest",
+                "graphical": "headless"
+              },
+            "libvirt":
+              {
+                "name": "btcd",
+                "ram": "2048",
+                "cpu": "4",
+                "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64_smp",
+                "interfaces":
+                   [
+                     {
+                       "bridge": "ispdmz",
+                       "device": "ispdmz$(this.defined_numbers[btcd])"
+                     },
+                     {
+                       "bridge": "vpndmz",
+                       "device": "vpndmz$(this.defined_numbers[btcd])"
+                     }
+                   ]
+              }
+          }
+        ';
+
+      "params[btcd_testnet]"
+        string => '
+          {
+            "number": "$(this.defined_numbers[btcd_testnet])",
+            "make_conf":
+              {
+                "makeopts": "guest",
+                "pkgdir": "server_guest",
+                "runtime": "guest",
+                "graphical": "headless"
+              },
+            "libvirt":
+              {
+                "name": "btcd_testnet",
+                "ram": "1536",
+                "cpu": "4",
+                "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64_smp",
+                "interfaces":
+                   [
+                     {
+                       "bridge": "ispdmz",
+                       "device": "ispdmz$(this.defined_numbers[btcd_testnet])"
+                     },
+                     {
+                       "bridge": "vpndmz",
+                       "device": "vpndmz$(this.defined_numbers[btcd_testnet])"
+                     }
+                   ]
+              }
+          }
+        ';
+
       "params[bitmessage]"
         string => '
           {

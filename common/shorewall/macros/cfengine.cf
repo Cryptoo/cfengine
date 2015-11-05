@@ -30,6 +30,9 @@ bundle agent shorewall_macro_cfengine(root, port_info)
           "freenet",
           "bitmessage",
           "bitcoin",
+          "bitcoin_testnet",
+          "btcd",
+          "btcd_testnet",
           "vpn_primary",
           "dns",
           "mail_server",
@@ -39,7 +42,6 @@ bundle agent shorewall_macro_cfengine(root, port_info)
           "irc_client",
           "im",
           "master",
-          "bitcoin_testnet",
           "desktop_host",
           "mail_client"
         };

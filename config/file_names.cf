@@ -84,6 +84,8 @@ bundle common file_names
         string => "$(directory_names.config_bitcoin)/bitcoin.conf";
       "bmwrapper_config"
         string => "$(directory_names.config_env)/bmwrapper";
+      "btcd_conf"
+        string => "$(directory_names.config_btcd)/btcd.conf";
       "cryptoo_hostname"
         string => "$(directory_names.config_cryptoo_incoming)/hostname";
       "machine_names"
@@ -134,6 +136,8 @@ bundle common file_names
         string => "$(directory_names.easy_rsa_keys)/vpn_server.key";
       "bitcoin_rpc_outgoing"
         string => "$(directory_names.config_cryptoo_outgoing)/bitcoin_rpc.json";
+      "btcd_rpc_outgoing"
+        string => "$(directory_names.config_cryptoo_outgoing)/btcd_rpc.json";
       "hidden_service_outgoing"
         string => "$(directory_names.config_cryptoo_outgoing)/hidden_service.json";
       "port_info_outgoing"
@@ -142,6 +146,10 @@ bundle common file_names
         string => "$(directory_names.config_guest_inboxes)/bitcoin/hidden_service.json";
       "hidden_service_bitcoin_testnet"
         string => "$(directory_names.config_guest_inboxes)/bitcoin_testnet/hidden_service.json";
+      "hidden_service_btcd"
+        string => "$(directory_names.config_guest_inboxes)/btcd/hidden_service.json";
+      "hidden_service_btcd_testnet"
+        string => "$(directory_names.config_guest_inboxes)/btcd_testnet/hidden_service.json";
       "hidden_service_tor"
         string => "$(directory_names.config_guest_outboxes)/tor/hidden_service.json";
       "port_info_firewall_external"
@@ -535,6 +543,8 @@ bundle common file_names
         string => "$(directory_names.bitcoin_home)/bitcoin.conf";
       "bitmessage_conf"
         string => "$(directory_names.bitmessage_config)/keys.dat";
+      "btcd_conf_link"
+        string => "$(directory_names.btcd_home)/btcd.conf";
       "overlay_conf"
         string => "$(directory_names.volatile_overlay)/make.conf";
       "bitcoin_overlay"
@@ -545,6 +555,10 @@ bundle common file_names
         string => "$(directory_names.bitcoin_hs)/hostname";
       "bitcoin_testnet_hs"
         string => "$(directory_names.bitcoin_testnet_hs)/hostname";
+      "btcd_hs"
+        string => "$(directory_names.btcd_hs)/hostname";
+      "btcd_testnet_hs"
+        string => "$(directory_names.btcd_testnet_hs)/hostname";
       "znc_ssl"
         string => "$(directory_names.volatile_znc)/znc.pem";
       "znc_config"

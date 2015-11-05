@@ -65,7 +65,7 @@ bundle agent shorewall_macro_vdmz_bitcoin_testnet(root, port_info)
                      "destination": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])"
                    },
                    {
-                     "action": "bitcoin(PARAM)",
+                     "action": "bitcoin_testnet(PARAM)",
                      "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[tor]).$(defined_numbers[tor])",
                      "destination": "u$(defined_numbers[bitcoin_testnet]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin_testnet])"
                    },
@@ -73,6 +73,36 @@ bundle agent shorewall_macro_vdmz_bitcoin_testnet(root, port_info)
                      "action": "bitcoin_rpc(PARAM)",
                      "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).0/24",
                      "destination": "u$(defined_numbers[bitcoin_testnet]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin_testnet])"
+                   },
+                   {
+                     "action": "SSH(PARAM)",
+                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])",
+                     "destination": "u$(defined_numbers[btcd_testnet]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[btcd_testnet])"
+                   },
+                   {
+                     "action": "NTP(PARAM)",
+                     "source": "u$(defined_numbers[btcd_testnet]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[btcd_testnet])",
+                     "destination": "u$(defined_numbers[vpn_primary]):!+private"
+                   },
+                   {
+                     "action": "DNS(PARAM)",
+                     "source": "u$(defined_numbers[btcd_testnet]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[btcd_testnet])",
+                     "destination": "u$(defined_numbers[dns]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])"
+                   },
+                   {
+                     "action": "cfengine(PARAM)",
+                     "source": "u$(defined_numbers[btcd_testnet]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[btcd_testnet])",
+                     "destination": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])"
+                   },
+                   {
+                     "action": "bitcoin_testnet(PARAM)",
+                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[tor]).$(defined_numbers[tor])",
+                     "destination": "u$(defined_numbers[btcd_testnet]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[btcd_testnet])"
+                   },
+                   {
+                     "action": "bitcoin_rpc(PARAM)",
+                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).0/24",
+                     "destination": "u$(defined_numbers[btcd_testnet]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[btcd_testnet])"
                    }
                  ]
                }

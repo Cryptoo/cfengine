@@ -139,6 +139,14 @@ body link_from bitcoin_conf
      source => "/$(file_names.bitcoin_conf)";
 }
 
+body link_from btcd_conf
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "/$(file_names.btcd_conf)";
+}
+
 body link_from debug_symbols
 
 {
