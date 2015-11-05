@@ -78,7 +78,6 @@
     <filesystem type='mount' accessmode='mapped'>
       <source dir='/srv/nfs/site-local/packages'/>
       <target dir='/packages'/>
-      <readonly/>
       <alias name='fs7'/>
     </filesystem>
     <filesystem type='mount' accessmode='passthrough'>
