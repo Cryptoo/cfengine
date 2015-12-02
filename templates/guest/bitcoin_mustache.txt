@@ -31,6 +31,7 @@ externalip={{name}}
 
 printtoconsole=1
 
+addnode=btcd.vpndmz:8333
 addnode=2fvnnvj2hiljjwck.onion:8333
 addnode=2xylerfjgat6kf3s.onion:8333
 addnode=2zdgmicx7obtivug.onion:8333

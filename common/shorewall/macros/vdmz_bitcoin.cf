@@ -61,6 +61,11 @@ bundle agent shorewall_macro_vdmz_bitcoin(root, port_info)
                    },
                    {
                      "action": "bitcoin(PARAM)",
+                     "source": "u$(defined_numbers[bitcoin]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin])",
+                     "destination": "u$(defined_numbers[btcd]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[btcd])"
+                   },
+                   {
+                     "action": "bitcoin(PARAM)",
                      "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[tor]).$(defined_numbers[tor])",
                      "destination": "u$(defined_numbers[bitcoin]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin])"
                    },
@@ -83,6 +88,11 @@ bundle agent shorewall_macro_vdmz_bitcoin(root, port_info)
                      "action": "tor(PARAM)",
                      "source": "u$(defined_numbers[btcd]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[btcd])",
                      "destination": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[tor]).$(defined_numbers[tor])"
+                   },
+                   {
+                     "action": "bitcoin(PARAM)",
+                     "source": "u$(defined_numbers[btcd]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[btcd])",
+                     "destination": "u$(defined_numbers[bitcoin]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin])"
                    },
                    {
                      "action": "bitcoin(PARAM)",

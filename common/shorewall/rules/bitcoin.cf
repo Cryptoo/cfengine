@@ -53,6 +53,17 @@ bundle agent shorewall_rules_bitcoin(root)
                   "user": "bitcoin:bitcoin"
                 },
                 {
+                  "action": "bitcoin_out(ACCEPT)",
+                  "source": "fw:192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin])",
+                  "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[btcd])",
+                  "protocol": "-",
+                  "destination_port": "-",
+                  "source_port": "-",
+                  "original_destination": "-",
+                  "rate": "-",
+                  "user": "bitcoin:bitcoin"
+                },
+                {
                   "action": "tor(ACCEPT)",
                   "source": "fw:192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin])",
                   "destination": "tor:192.168.$(subnet_config[tor]).$(defined_numbers[tor])",
@@ -76,6 +87,11 @@ bundle agent shorewall_rules_bitcoin(root)
                 {
                   "action": "bitcoin(ACCEPT)",
                   "source": "tor:192.168.$(subnet_config[tor]).$(defined_numbers[tor])",
+                  "destination": "fw:192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin])"
+                },
+                {
+                  "action": "bitcoin(ACCEPT)",
+                  "source": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[btcd])",
                   "destination": "fw:192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin])"
                 }
               ]
