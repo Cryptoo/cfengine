@@ -1413,8 +1413,8 @@ bundle common config
         string => "EXT4_FS",
         meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
-      "kconfig[EXT4_USE_FOR_EXT23]"
-        string => "EXT4_USE_FOR_EXT23",
+      "kconfig[EXT4_USE_FOR_EXT2]"
+        string => "EXT4_USE_FOR_EXT2",
         meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[DNOTIFY]"
