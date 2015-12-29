@@ -563,6 +563,8 @@ bundle common file_names
         string => "$(directory_names.volatile_znc)/znc.pem";
       "znc_config"
         string => "$(directory_names.znc_config)/znc.conf";
+      "znc_adminlog"
+        string => "$(directory_names.volatile_znc)/moddata/adminlog/.registry";
       "pm_installed_sets"
         string => "$(directory_names.volatile_pm)/world_sets";
 

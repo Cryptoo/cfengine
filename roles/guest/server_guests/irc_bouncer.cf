@@ -91,6 +91,13 @@ classes:
         template_data => parsejson($(this.znc_datadir)),
         classes => default:if_repaired("daemon_reload");
 
+      "$(this.root)$(file_names.znc_adminlog)"
+        perms => znc,
+        create => "true",
+        edit_template => "/$(templates.template[value])",
+        template_method => "mustache",
+        template_data => parsejson('{ "value": "target syslog" }');
+
     !bootstrap::
 
       "$(this.root)$(directory_names.znc_config)/."
