@@ -80,7 +80,7 @@ bundle agent btcd(root)
                       { "LHS": "onion", "RHS": "192.168.$(subnet_config[tor]).$(defined_numbers[tor]):$(config.service_info[tor][socks_port])"},
                       { "LHS": "torisolation", "RHS": "1"},
                       { "LHS": "upnp", "RHS": "0"},
-                      { "LHS": "maxpeers", "RHS": "64"},
+                      { "LHS": "maxpeers", "RHS": "256"},
                       { "LHS": "nodnsseed", "RHS": "0"},
                       { "LHS": "listen", "RHS": "192.168.$(subnet_config[ispdmz]).$(defined_numbers[btcd]):$(config.service_info[bitcoin][external_port])" },
                       { "LHS": "listen", "RHS": "192.168.$(subnet_config[vpndmz]).$(defined_numbers[btcd]):$(config.service_info[bitcoin][external_port])" },
