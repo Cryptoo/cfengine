@@ -35,6 +35,17 @@ bundle agent fstab_guest(role)
       "fstab_json[002]"
         string => '
           {
+            "source": "/dev/vdb",
+            "target": "none",
+            "type": "swap",
+            "options": "sw,nofail",
+            "dump": "0",
+            "pass": "0"
+          }';
+
+      "fstab_json[003]"
+        string => '
+          {
             "source": "/bin",
             "target": "/$(directory_names.site_apps)",
             "type": "9p",
@@ -43,7 +54,7 @@ bundle agent fstab_guest(role)
             "pass": "0"
           }';
 
-      "fstab_json[003]"
+      "fstab_json[004]"
         string => '
           {
             "source": "/backup",
@@ -54,7 +65,7 @@ bundle agent fstab_guest(role)
             "pass": "0"
           }';
 
-      "fstab_json[004]"
+      "fstab_json[005]"
         string => '
           {
             "source": "/cryptoo",
@@ -65,7 +76,7 @@ bundle agent fstab_guest(role)
             "pass": "0"
           }';
 
-      "fstab_json[005]"
+      "fstab_json[006]"
         string => '
           {
             "source": "/distfiles",
@@ -76,7 +87,7 @@ bundle agent fstab_guest(role)
             "pass": "0"
           }';
 
-      "fstab_json[006]"
+      "fstab_json[007]"
         string => '
           {
             "source": "/inbox",
@@ -87,7 +98,7 @@ bundle agent fstab_guest(role)
             "pass": "0"
           }';
 
-      "fstab_json[007]"
+      "fstab_json[008]"
         string => '
           {
             "source": "/layman",
@@ -98,7 +109,7 @@ bundle agent fstab_guest(role)
             "pass": "0"
           }';
 
-      "fstab_json[008]"
+      "fstab_json[009]"
         string => '
           {
             "source": "/outbox",
@@ -109,7 +120,7 @@ bundle agent fstab_guest(role)
             "pass": "0"
           }';
 
-      "fstab_json[009]"
+      "fstab_json[010]"
         string => '
           {
             "source": "/packages",
@@ -120,7 +131,7 @@ bundle agent fstab_guest(role)
             "pass": "0"
           }';
 
-      "fstab_json[010]"
+      "fstab_json[011]"
         string => '
           {
             "source": "/portage",
@@ -131,7 +142,7 @@ bundle agent fstab_guest(role)
             "pass": "0"
           }';
 
-      "fstab_json[011]"
+      "fstab_json[012]"
         string => '
           {
             "source": "/portage-local",
@@ -142,7 +153,7 @@ bundle agent fstab_guest(role)
             "pass": "0"
           }';
 
-      "fstab_json[012]"
+      "fstab_json[013]"
         string => '
           {
             "source": "/src",
@@ -153,7 +164,7 @@ bundle agent fstab_guest(role)
             "pass": "0"
           }';
 
-      "fstab_json[013]"
+      "fstab_json[014]"
         string => '
           {
             "source": "/storage",
@@ -164,7 +175,7 @@ bundle agent fstab_guest(role)
             "pass": "0"
           }';
 
-      "fstab_json[014]"
+      "fstab_json[015]"
         string => '
           {
             "source": "/temp",
@@ -175,7 +186,7 @@ bundle agent fstab_guest(role)
             "pass": "0"
           }';
 
-      "fstab_json[015]"
+      "fstab_json[016]"
         string => '
           {
             "source": "portage-tmp",
@@ -186,7 +197,7 @@ bundle agent fstab_guest(role)
             "pass": "0"
           }';
 
-      "fstab_json[016]"
+      "fstab_json[017]"
         string => '
           {
             "source": "/",

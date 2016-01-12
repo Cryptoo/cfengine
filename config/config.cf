@@ -87,7 +87,7 @@ bundle common config
 
       "kconfig[SWAP]"
         string => "SWAP",
-        meta => { "disabled", "guest", "guest_smp", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[FHANDLE]"
         string => "FHANDLE",
