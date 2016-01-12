@@ -268,7 +268,10 @@ bundle common file_groups
 
       "systemd_enabled[host]"
         slist => {
-                    "@(systemd_enabled[common])"
+                    "@(systemd_enabled[common])",
+                    "libvirtd.service",
+                    "libvirt-guests.service",
+                    "virtlogd.socket"
                  };
 
       "backup_dir[host]"
