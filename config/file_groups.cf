@@ -1319,7 +1319,8 @@ bundle common file_groups
 
       "unmask[server_guest]"
         slist => {
-                    "@(unmask[guest])"
+                    "@(unmask[guest])",
+                    "firewall_external"
                  };
 
       "use[server_guest]"
@@ -1499,7 +1500,8 @@ bundle common file_groups
 
       "unmask[firewall_external]"
         slist => {
-                    "@(unmask[server_guest])"
+                    "@(unmask[server_guest])",
+                    "firewall_external"
                  };
 
       "use[firewall_external]"
