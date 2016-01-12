@@ -1301,22 +1301,6 @@ bundle common config
         string => "DRM",
         meta => { "enabled", "host" };
 
-      "kconfig[DRM_I915]"
-        string => "DRM_I915",
-        meta => { "enabled", "host" };
-
-      "kconfig[DRM_I915_KMS]"
-        string => "DRM_I915_KMS",
-        meta => { "enabled", "host" };
-
-      "kconfig[DRM_I915_FBDEV]"
-        string => "DRM_I915_FBDEV",
-        meta => { "enabled", "host" };
-
-      "kconfig[DRM_I915_PRELIMINARY_HW_SUPPORT]"
-        string => "DRM_I915_PRELIMINARY_HW_SUPPORT",
-        meta => { "enabled", "host" };
-
       "kconfig[FB_VESA]"
         string => "FB_VESA",
         meta => { "enabled", "host" };
