@@ -2188,7 +2188,7 @@ bundle common file_groups
       "systemd_enabled[bitcoin]"
         slist => {
                     "@(systemd_enabled[server_guest])",
-                    "bitcoind"
+                    "bitcoinclassicd"
                  };
 
       "backup_dir[bitcoin]"
@@ -2319,7 +2319,7 @@ bundle common file_groups
       "systemd_enabled[bitcoin_testnet]"
         slist => {
                     "@(systemd_enabled[server_guest])",
-                    "bitcoind"
+                    "bitcoinclassicd"
                  };
 
       "backup_dir[bitcoin_testnet]"
