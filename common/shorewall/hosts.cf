@@ -22,8 +22,11 @@ bundle agent shorewall_hosts(root, role)
 
     any::
 
+      "network_config_string"
+        string => "$(file_groups.network[$(this.role)])";
+
       "network_config"
-        data => parsejson("$(file_groups.network[$(this.role)])");
+        data => parsejson("$(network_config_string)");
 
       "zone_names"
         data => mergedata("cryptoo:config.firewall[zone_names]");

@@ -32,8 +32,11 @@ bundle agent shorewall_zones(root, role)
       "bridge_zones_ipv4"
         slist => getvalues("file_groups.firewall_bridges[$(this.role)]");
 
+      "network_config_string"
+        string => "$(file_groups.network[$(this.role)])";
+
       "network_config"
-        data => parsejson("$(file_groups.network[$(this.role)])");
+        data => parsejson("$(network_config_string)");
 
       "interface_list"
         slist => getindices("network_config[interfaces]");
