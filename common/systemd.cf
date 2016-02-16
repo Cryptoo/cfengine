@@ -118,10 +118,11 @@ bundle agent systemd(root, role)
 
   commands:
 
-    daemon_reload&have_systemctl&(!bootstrap)::
-
-      "/$(file_names.systemd_app)"
-        args => "daemon-reload",
-        contain => basic_chroot($(root));
+# Something about this is causing log spam.
+#    daemon_reload&have_systemctl&(!bootstrap)::
+#
+#      "/$(file_names.systemd_app)"
+#        args => "daemon-reload",
+#        contain => basic_chroot($(root));
 
 }
