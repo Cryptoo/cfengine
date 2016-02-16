@@ -126,10 +126,11 @@ bundle agent master(root)
 
   commands:
 
-    daemon_reload&have_systemctl::
-
-      "$(this.root)$(file_names.systemd_app)"
-        args => "daemon-reload";
+# Something about this is causing log spam.
+#    daemon_reload&have_systemctl::
+#
+#      "$(this.root)$(file_names.systemd_app)"
+#        args => "daemon-reload";
 
     need_default_key::
 
