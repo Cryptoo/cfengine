@@ -429,10 +429,6 @@ bundle common config
         string => "NF_CT_NETLINK",
         meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
-      "kconfig[NETFILTER_NETLINK_QUEUE_CT]"
-        string => "NETFILTER_NETLINK_QUEUE_CT",
-        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
-
       "kconfig[NETFILTER_XT_SET]"
         string => "NETFILTER_XT_SET",
         meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
