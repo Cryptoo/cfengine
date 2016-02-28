@@ -44,6 +44,31 @@ bundle agent network_file(root, name, number, type, params)
         classes => default:if_ok("routes_ready"),
         ifvarclass => "routes_obtained_$(this.name)";
 
+      "subnet_config"
+        data => mergedata("cryptoo:network.subnet_config");
+
+      "supplemental_routes"
+        string => "";
+
+    network_firewall_external::
+
+      "supplemental_routes"
+        string => ',
+                 { "section": "Route",
+                   "values":
+                     [
+                       { "LHS": "Gateway", "RHS": "192.168.$(subnet_config[lan]).$(defined_numbers[desktop_host])" },
+                       { "LHS": "Destination", "RHS": "192.168.$(subnet_config[lan]).32/27" }
+                     ]
+                 },
+                 { "section": "Route",
+                   "values":
+                     [
+                       { "LHS": "Gateway", "RHS": "192.168.$(subnet_config[lan]).$(defined_numbers[desktop_host])" },
+                       { "LHS": "Destination", "RHS": "192.168.$(subnet_config[lan]).64/27" }
+                     ]
+                 }';
+
     type_no_address::
 
       "file_name_$(this.name)"
@@ -71,8 +96,7 @@ bundle agent network_file(root, name, number, type, params)
                        ]
                    }
                  ]
-            }
-          ',
+            }',
         classes => default:if_ok("network_json_ready");
 
     type_tun::
@@ -323,6 +347,7 @@ bundle agent network_file(root, name, number, type, params)
                        { "LHS": "LinkLocalAddressing", "RHS": "No"}
                      ]
                  } $(routes_$(this.name))
+                   $(supplemental_routes)
                ]
           }
         ',
@@ -369,6 +394,9 @@ bundle agent network_file(root, name, number, type, params)
 
       "skip"
         or => { strcmp("$(this.name)", "none"), strcmp("$(this.type)", "virtual") };
+
+      "network_$(name)"
+        expression => "any";
 
       "have_routes_$(this.name)"
         expression => regextract('(?s).*("routes":.*{.*?})', "$(this.params)", "route_regex");

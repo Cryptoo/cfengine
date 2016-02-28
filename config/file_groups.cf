@@ -1016,7 +1016,7 @@ bundle common file_groups
                      "params":
                        {
                          "zone": "lan",
-                         "gateway": "firewall_internal",
+                         "gateway": "desktop_host",
                          "ipforward": "no"
                        }
                    }
