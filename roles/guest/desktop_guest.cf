@@ -44,9 +44,9 @@ bundle agent desktop_guest(root, role, arch, multilib)
       "xpra_conf[sound-source]"
         string => "pulse";
       "xpra_conf[speaker-codec]"
-        string => "mp3";
+        string => "vorbis";
       "xpra_conf[microphone-codec]"
-        string => "mp3";
+        string => "vorbis";
       "xpra_conf[keyboard-sync]"
         string => "no";
       "xpra_conf[exit-with-children]"
