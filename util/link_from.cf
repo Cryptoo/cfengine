@@ -11,6 +11,14 @@ body file control
 
 }
 
+body link_from cryptoo_app(x)
+
+{
+     link_type => "symlink";
+     when_no_source => "force";
+     source => "/$(directory_names.cryptoo_apps)/$(x)";
+}
+
 body link_from cryptoo_portage_env(x)
 
 {

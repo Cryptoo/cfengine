@@ -110,6 +110,10 @@ bundle agent common_guest(root, type, role, arch)
         move_obstructions => "true",
         link_from => debug_sources;
 
+      "$(root)$(directory_names.config_cron_daily)/update_guest"
+        move_obstructions => "true",
+        link_from => cryptoo_app(update_guest);
+
     !bootstrap::
       "$(root)$(directory_groups.guest_system_private)/."
         perms => root,

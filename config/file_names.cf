@@ -362,6 +362,8 @@ bundle common file_names
         string => "$(directory_names.cryptoo_apps)/easy_rsa_server";
       "pkgdir_perms_app"
         string => "$(directory_names.cryptoo_apps)/pkgdir_perms";
+      "update_guest_app"
+        string => "$(directory_names.cryptoo_apps)/update_guest";
       "cryptoo_profile"
         string => "$(directory_names.cryptoo_profiles)/repo_name";
       "pm_machine_meta"

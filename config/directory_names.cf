@@ -30,6 +30,7 @@ bundle common directory_names
       "config_cryptoo_guests" string => "$(config_cryptoo_root)/guest";
       "config_guest_inboxes" string => "$(config_cryptoo_guests)/inbox";
       "config_guest_outboxes" string => "$(config_cryptoo_guests)/outbox";
+      "config_cron_daily" string => "$(config_base)/cron.daily";
       "config_default" string => "$(config_base)/default";
       "config_dovecot_base" string => "$(config_base)/dovecot";
       "config_dovecot" string => "$(config_dovecot_base)/conf.d";
