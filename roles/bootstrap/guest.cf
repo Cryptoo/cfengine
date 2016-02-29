@@ -29,7 +29,7 @@ bundle agent bootstrap_guest(role, type, multilib)
         string => "$(role.params[$(this.role)])";
 
       "definition"
-        string => "/$(directory_names.config_qemu)/$(this.role).xml";
+        string => "/$(directory_names.temp_base)/$(this.role).xml";
 
       "guest_name"
         slist => classesmatching("cryptoo_name_.*");
