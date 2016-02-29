@@ -30,7 +30,7 @@ body classes always_success
 
 {
 
-  kept_returncodes => { "0", "1" };
+  kept_returncodes => { "0", "1", "2" };
 
 }
 
