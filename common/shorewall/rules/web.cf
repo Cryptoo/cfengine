@@ -52,6 +52,21 @@ bundle agent shorewall_rules_web(root)
                      "destination": "tor:192.168.$(subnet_config[tor]).$(defined_numbers[tor])"
                    },
                    {
+                     "action": "IRC(ACCEPT)",
+                     "source": "fw",
+                     "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[irc_bouncer])"
+                   },
+                   {
+                     "action": "HTTP(ACCEPT)",
+                     "source": "fw",
+                     "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[freenet])"
+                   },
+                   {
+                     "action": "HTTP(ACCEPT)",
+                     "source": "fw",
+                     "destination": "i2p:192.168.$(subnet_config[i2p]).$(defined_numbers[i2p])"
+                   },
+                   {
                      "action": "ACCEPT",
                      "source": "fw",
                      "destination": "net"
