@@ -287,7 +287,8 @@ bundle agent network_file(root, role, name, number, type, params)
                        { "LHS": "IPForward", "RHS": "$(forward_$(this.name))" },
                        { "LHS": "LinkLocalAddressing", "RHS": "No"}
                      ]
-                 } $(routes_$(this.name))
+                 } $(desktop_routes_$(this.name))
+                   $(routes_$(this.name))
                ]
           }
         ',
@@ -434,6 +435,11 @@ bundle agent network_file(root, role, name, number, type, params)
         expression => "any";
 
     network_firewall_internal&routes_evaluated_eth3::
+
+      "desktop_routes_$(this.name)"
+        expression => "any";
+
+    network_master&routes_evaluated_lantap::
 
       "desktop_routes_$(this.name)"
         expression => "any";
