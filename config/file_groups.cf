@@ -1012,7 +1012,7 @@ bundle common file_groups
                {
                  "eth0":
                    {
-                     "type": "gateway",
+                     "type": "restricted_gateway",
                      "params":
                        {
                          "zone": "lan",
@@ -1098,7 +1098,42 @@ bundle common file_groups
         string => "$(firewall[desktop_guest])";
 
       "network[web]"
-        string => "$(network[desktop_guest])";
+        string =>  '
+          {
+            "devices":
+               {
+                 "bridge":
+                   [
+                     "none"
+                   ],
+                 "veth":
+                   [
+                     "none"
+                   ],
+                 "tap":
+                   [
+                     "none"
+                   ],
+                 "tun":
+                   [
+                     "none"
+                   ]
+               },
+             "interfaces":
+               {
+                 "eth0":
+                   {
+                     "type": "restricted_gateway",
+                     "params":
+                       {
+                         "zone": "lan",
+                         "gateway": "desktop_host",
+                         "ipforward": "no"
+                       }
+                   }
+               }
+          }
+        ';
 
       "dns_type[web]"
         string => "$(dns_type[desktop_guest])";
