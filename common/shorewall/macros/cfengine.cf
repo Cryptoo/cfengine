@@ -43,7 +43,8 @@ bundle agent shorewall_macro_cfengine(root, port_info)
           "im",
           "master",
           "desktop_host",
-          "mail_client"
+          "mail_client",
+          "web"
         };
 
   vars:

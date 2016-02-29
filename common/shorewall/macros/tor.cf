@@ -32,7 +32,8 @@ bundle agent shorewall_macro_tor(root, port_info)
         "im",
         "master",
         "desktop_host",
-        "mail_client"
+        "mail_client",
+        "web"
         };
 
   vars:

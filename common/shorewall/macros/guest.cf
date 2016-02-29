@@ -31,7 +31,8 @@ bundle agent shorewall_macro_guest(root, port_info)
         "vpn_server",
         "irc_client",
         "im",
-        "mail_client"
+        "mail_client",
+        "web"
       };
 
   vars:
