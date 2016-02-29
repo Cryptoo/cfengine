@@ -716,6 +716,11 @@ bundle agent shorewall_rules_master(root)
                      "destination": "l$(defined_numbers[vpn_server])"
                    },
                    {
+                     "action": "ACCEPT",
+                     "source": "l1",
+                     "destination": "l$(defined_numbers[vpn_server_interface])"
+                   },
+                   {
                      "action": "SSH(ACCEPT)",
                      "source": "l$(defined_numbers[firewall_internal])",
                      "destination": "l$(defined_numbers[master]):192.168.$(subnet_config[lan]).$(defined_numbers[master])"
@@ -766,24 +771,24 @@ bundle agent shorewall_rules_master(root)
                      "destination": "l0"
                    },
                    {
-                     "action": "bitcoin_rpc(ACCEPT)",
-                     "source": "l$(defined_numbers[vpn_server]):192.168.$(subnet_config[lan]).0/24",
-                     "destination": "l$(defined_numbers[firewall_internal]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin])"
+                     "action": "SSH(ACCEPT)",
+                     "source": "l$(defined_numbers[vpn_server_interface])",
+                     "destination": "l$(defined_numbers[master]):192.168.$(subnet_config[lan]).$(defined_numbers[master])"
                    },
                    {
-                     "action": "bitcoin_rpc(ACCEPT)",
-                     "source": "l$(defined_numbers[vpn_server]):192.168.$(subnet_config[lan]).0/24",
-                     "destination": "l$(defined_numbers[firewall_internal]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin_testnet])"
+                     "action": "cfengine(ACCEPT)",
+                     "source": "l$(defined_numbers[vpn_server_interface]):192.168.$(subnet_config[lan]).0/24",
+                     "destination": "l$(defined_numbers[master]):192.168.$(subnet_config[lan]).$(defined_numbers[master])"
                    },
                    {
-                     "action": "bitcoin_rpc(ACCEPT)",
-                     "source": "l$(defined_numbers[vpn_server]):192.168.$(subnet_config[lan]).0/24",
-                     "destination": "l$(defined_numbers[firewall_internal]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[btcd])"
+                     "action": "ACCEPT",
+                     "source": "l$(defined_numbers[vpn_server_interface])",
+                     "destination": "l$(defined_numbers[firewall_internal])"
                    },
                    {
-                     "action": "bitcoin_rpc(ACCEPT)",
-                     "source": "l$(defined_numbers[vpn_server]):192.168.$(subnet_config[lan]).0/24",
-                     "destination": "l$(defined_numbers[firewall_internal]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[btcd_testnet])"
+                     "action": "ACCEPT",
+                     "source": "l$(defined_numbers[vpn_server_interface])",
+                     "destination": "l0"
                    }';
 
       "combined_rules_json_lan"

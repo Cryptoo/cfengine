@@ -50,7 +50,7 @@ bundle agent bridge_child_interfaces(zone, child)
     zone_lan_bridge_vpn&child_0::
 
       "interface"
-        string => "$(device):eth1",
+        string => "$(device):eth2",
         classes => default:if_ok("done");
 
   classes:

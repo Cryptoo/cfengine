@@ -127,8 +127,12 @@ bundle agent shorewall_masq(root, role)
             "masq":
               [
                 {
-                  "interface": "lantap",
-                  "source": "192.168.$(subnet_config[lan]).0/24"
+                  "interface": "eth1",
+                  "source": "192.168.$(subnet_config[lan]).$(defined_numbers[tcp_tun_subnet])/27"
+                },
+                {
+                  "interface": "eth1",
+                  "source": "192.168.$(subnet_config[lan]).$(defined_numbers[udp_tun_subnet])/27"
                 }
               ]
           }';

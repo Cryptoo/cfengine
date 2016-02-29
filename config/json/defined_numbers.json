@@ -21,5 +21,10 @@
     "bitcoin_testnet": "26",
     "btcd": "27",
     "btcd_testnet": "28",
+    "desktop_host_subnet": "64",
     "desktop_host_gateway": "65",
+    "tcp_tun_subnet": "128",
+    "udp_tun_subnet": "160",
+    "lan_dhcp_subnet": "160",
+    "vpn_server_interface": "256",
 }

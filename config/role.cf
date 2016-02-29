@@ -577,6 +577,10 @@ bundle common role
                      {
                        "bridge": "lan",
                        "device": "lan$(this.defined_numbers[vpn_server])"
+                     },
+                     {
+                       "bridge": "lan",
+                       "device": "lan$(this.defined_numbers[vpn_server_interface])"
                      }
                    ]
               }

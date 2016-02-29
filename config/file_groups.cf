@@ -3615,7 +3615,7 @@ bundle common file_groups
                    ],
                  "veth":
                    [
-                     "lantap"
+                     "none"
                    ],
                  "tap":
                    [
@@ -3676,39 +3676,13 @@ bundle common file_groups
                          "device": "lan"
                        }
                    },
-                 "veth_pair":
-                   {
-                     "type": "bridge_member",
-                     "params":
-                       {
-                         "bridge": "lan"
-                       }
-                   },
                  "lan_physical":
                    {
                      "type": "physical",
                      "params":
                        {
                          "bridge": "lan",
-                         "device": "eth1"
-                       }
-                   },
-                 "lantap":
-                   {
-                     "type": "restricted_gateway",
-                     "params":
-                       {
-                         "zone": "lan",
-                         "gateway": "firewall_internal",
-                         "ipforward": "ipv4",
-                         "routes":
-                           {
-                             "onion": "firewall_internal",
-                             "eep": "firewall_internal",
-                             "tor": "firewall_internal",
-                             "i2p": "firewall_internal",
-                             "vpndmz": "firewall_internal"
-                           }
+                         "device": "eth2"
                        }
                    },
                  "eth0":
@@ -3718,6 +3692,16 @@ bundle common file_groups
                        {
                          "zone": "ispdmz",
                          "ipforward": "no"
+                       }
+                   },
+                 "eth1":
+                   {
+                     "type": "gateway",
+                     "params":
+                       {
+                         "zone": "lan",
+                         "gateway": "firewall_internal",
+                         "ipforward": "ipv4"
                        }
                    }
                }

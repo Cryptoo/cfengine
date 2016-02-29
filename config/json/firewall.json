@@ -55,7 +55,7 @@
                       "device": "lan",
                       "type": "ipv4",
                       "prefix": "l",
-                      "members": [ "0", "1", "12", "13", "24",]
+                      "members": [ "0", "1", "12", "13", "24", "256" ]
                      },
               "lan_bridge_vpn": {
                       "name": "brlan",
