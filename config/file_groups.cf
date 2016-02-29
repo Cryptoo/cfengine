@@ -1016,7 +1016,7 @@ bundle common file_groups
                      "params":
                        {
                          "zone": "lan",
-                         "gateway": "desktop_host",
+                         "gateway": "desktop_host_gateway",
                          "ipforward": "no"
                        }
                    }
@@ -1127,7 +1127,7 @@ bundle common file_groups
                      "params":
                        {
                          "zone": "lan",
-                         "gateway": "desktop_host",
+                         "gateway": "desktop_host_gateway",
                          "ipforward": "no"
                        }
                    }
