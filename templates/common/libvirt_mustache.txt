@@ -31,6 +31,12 @@
       <backingStore/>
       <target dev='vda' bus='virtio'/>
     </disk>
+    <disk type='file' device='disk'>
+      <driver name='qemu' type='raw' cache='writeback' io='threads'/>
+      <source file='/srv/qemu/{{name}}.img'/>
+      <backingStore/>
+      <target dev='vdb' bus='virtio'/>
+    </disk>
     <controller type='pci' index='0' model='pci-root'>
     </controller>
     <controller type='virtio-serial' index='0'>

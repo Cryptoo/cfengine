@@ -310,6 +310,8 @@ bundle common file_names
         string => "$(directory_names.admin_apps)/losetup";
       "mkfs_app"
         string => "$(directory_names.admin_apps)/mkfs";
+      "mkswap_app"
+        string => "$(directory_names.admin_apps)/mkswap";
       "rc_app"
         string => "$(directory_names.admin_apps)/rc";
       "storage_pm_site_meta"

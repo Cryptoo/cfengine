@@ -597,8 +597,8 @@ bundle common role
               {
                 "name": "dynamic",
                 "ram": "2048",
-                "cpu": "1",
-                "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64"
+                "cpu": "2",
+                "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64_smp"
               }
           }
         ';
@@ -617,8 +617,8 @@ bundle common role
               {
                 "name": "dynamic",
                 "ram": "2048",
-                "cpu": "1",
-                "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64"
+                "cpu": "2",
+                "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64_smp"
               }
           }
         ';

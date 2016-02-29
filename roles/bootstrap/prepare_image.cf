@@ -22,48 +22,76 @@ bundle agent prepare_image(name, multilib, mount_location)
 
     any::
 
-      "image_file"
+      "primary_image_file"
         string => "/$(directory_names.libvirt_images)/$(this.name).img";
 
-      "image_size_mb"
-        string => "8192";
+      "swap_image_file"
+        string => "/$(directory_names.storage_qemu)/$(this.name).img";
+
+      "primary_image_size_mb"
+        string => "4096";
+
+      "swap_image_size_mb"
+        string => "4096";
 
   classes:
 
     any::
 
       "need_image"
-        not => fileexists($(this.image_file));
+        not => fileexists($(this.primary_image_file));
 
   commands:
 
     need_image::
 
+      "/$(file_names.losetup_app)"
+        args => "-D",
+        handle => "loop_ready_first";
+
       "/$(file_names.dd_app)"
-        args => "if=/dev/zero of=$(this.image_file) bs=1M count=$(this.image_size_mb)",
+        args => "if=/dev/zero of=$(this.swap_image_file) bs=1M count=$(this.swap_image_size_mb)",
         contain => silent,
-        handle => "image_created";
+        depends_on => { "loop_ready_first" },
+        handle => "swap_image_created";
+
+      "/$(file_names.losetup_app)"
+        args => "/dev/loop0 $(this.swap_image_file)",
+        depends_on => { "swap_image_created" },
+        handle => "swap_loop_attached";
+
+      "/$(file_names.mkswap_app)"
+        args => "-f /dev/loop0",
+        contain => silent,
+        depends_on => { "swap_loop_attached" },
+        handle => "swap_created";
 
       "/$(file_names.losetup_app)"
         args => "-D",
-        depends_on => { "image_created" },
-        handle => "loop_ready";
+        depends_on => { "swap_created" },
+        handle => "loop_ready_second";
+
+      "/$(file_names.dd_app)"
+        args => "if=/dev/zero of=$(this.primary_image_file) bs=1M count=$(this.primary_image_size_mb)",
+        contain => silent,
+        depends_on => { "loop_ready_second" },
+        handle => "image_created";
 
       "/$(file_names.losetup_app)"
-        args => "/dev/loop0 $(this.image_file)",
-        depends_on => { "loop_ready" },
+        args => "/dev/loop0 $(this.primary_image_file)",
+        depends_on => { "image_created" },
         handle => "loop_attached";
 
       "/$(file_names.mkfs_app)"
         args => "-t $(site.config[guest_fs][filesystem]) -E nodiscard /dev/loop0",
-        depends_on => { "loop_attached" },
         contain => silent,
+        depends_on => { "loop_attached" },
         handle => "image_fs_created";
 
       "/$(file_names.mount_app)"
         args => "-o $(site.config[guest_fs][options]) /dev/loop0 /$(this.mount_location)",
-        depends_on => { "image_fs_created" },
         contain => silent,
+        depends_on => { "image_fs_created" },
         handle => "image_fs_mounted";
 
       "/$(file_names.tar_app)"
