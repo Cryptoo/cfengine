@@ -103,8 +103,8 @@ bundle agent shorewall_masq(root, role)
             "masq":
               [
                 {
-                  "interface": "openvpn:!+private",
-                  "source": "192.168.$(subnet_config[vpndmz]).0/24",
+                  "interface": "openvpn:!+vpn_secondary",
+                  "source": "192.168.$(subnet_config[lan]).0/24",
                   "address": "",
                   "protocol": "",
                   "port": ""

@@ -9,7 +9,7 @@ body file control
 body location after_unset
 
 {
-    select_line_matching => "unset.*use_color.*safe_term.*match_lhs.*";
+    select_line_matching => "unset.*use_color.*";
     before_after => "after";
 }
 

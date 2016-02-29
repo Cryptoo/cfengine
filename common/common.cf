@@ -7,6 +7,7 @@ body file control
   inputs => {
               "cryptoo/common/gcc.cf",
               "cryptoo/common/hosts.cf",
+              "cryptoo/common/ipset.cf",
               "cryptoo/common/portage.cf",
               "cryptoo/common/resolv_conf.cf",
               "cryptoo/common/shorewall.cf",
@@ -196,6 +197,9 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
 
       "set up ssh"
         usebundle => ssh($(root), $(role));
+
+      "set up ipsets"
+        usebundle => ipset($(this.root));
 
       "set up shorewall"
         usebundle => shorewall($(this.root), $(this.role));

@@ -65,6 +65,11 @@ bundle agent shorewall_macro_vdmz_firewall_internal(root, port_info)
                      "destination": "u$(defined_numbers[vpn_primary]):!+private"
                    },
                    {
+                     "action": "PARAM",
+                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).0/24",
+                     "destination": "u$(defined_numbers[vpn_secondary]):+vpn_secondary"
+                   },
+                   {
                      "action": "SSH(PARAM)",
                      "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])",
                      "destination": "u$(defined_numbers[vpn_primary]):192.168.$(subnet_config[ispdmz]).$(defined_numbers[firewall_external])"

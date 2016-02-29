@@ -374,8 +374,8 @@ bundle common file_names
         string => "$(directory_names.standard_admin_apps)/groupadd";
       "groupmems_app"
         string => "$(directory_names.standard_admin_apps)/groupmems";
-      "useradd_app"
-        string => "$(directory_names.standard_admin_apps)/useradd";
+      "ipset_app"
+        string => "$(directory_names.standard_admin_apps)/ipset";
       "libvirtd_app"
         string => "$(directory_names.standard_admin_apps)/libvirtd";
       "localegen_app"
@@ -386,6 +386,8 @@ bundle common file_names
         string => "$(directory_names.standard_admin_apps)/shorewall";
       "sshd_app"
         string => "$(directory_names.standard_admin_apps)/sshd";
+      "useradd_app"
+        string => "$(directory_names.standard_admin_apps)/useradd";
       "easy_rsa_vars"
         string => "$(directory_names.easy_rsa_base)/vars";
       "template_env_cryptoo"

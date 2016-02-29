@@ -15,11 +15,42 @@ body file control
 
 }
 
-bundle agent network_file(root, name, number, type, params)
+bundle agent network_file(root, role, name, number, type, params)
 
 {
 
   vars:
+
+    any::
+
+      "defined_numbers"
+        data => mergedata("cryptoo:config.defined_numbers");
+
+      "subnet_config"
+        data => mergedata("cryptoo:network.subnet_config");
+
+      "extra_route_list"
+        slist => {},
+        ifvarclass => "!extra_routes_obtained_$(this.name)";
+
+      "primary_route_list"
+        slist => {},
+        ifvarclass => "!routes_obtained_$(this.name)";
+
+      "desktop_routes_$(this.name)"
+        string => "",
+        ifvarclass => "routes_evaluated_$(this.name)&!desktop_routes_$(this.name)";
+
+      "desktop_routes_$(this.name)"
+        string => ',
+                 { "section": "Route",
+                   "values":
+                     [
+                       { "LHS": "Gateway", "RHS": "192.168.$(subnet_config[lan]).$(defined_numbers[desktop_host])" },
+                       { "LHS": "Destination", "RHS": "192.168.$(subnet_config[lan]).64/27" }
+                     ]
+                 }',
+        ifvarclass => "desktop_routes_$(this.name)";
 
     any::
 
@@ -28,46 +59,31 @@ bundle agent network_file(root, name, number, type, params)
 
       "routes_$(this.name)"
         string => "",
-        ifvarclass => "routes_evaluated_$(this.name)&!have_routes_$(this.name)",
+        ifvarclass => "routes_evaluated_$(this.name)&!have_routes_$(this.name)&!extra_routes_$(this.name)",
         classes => default:if_ok("routes_ready");
 
-      "route_list"
+      "primary_route_list"
         slist => getvalues("route_json_$(this.name)"),
         ifvarclass => "routes_obtained_$(this.name)";
 
+      "extra_route_list"
+        slist => getvalues("extra_route_json_$(this.name)"),
+        ifvarclass => "extra_routes_obtained_$(this.name)";
+
+      "route_list"
+        slist => { @(primary_route_list), @(extra_route_list) },
+        ifvarclass => "routes_obtained_$(this.name)|extra_routes_obtained_$(this.name)",
+        classes => default:if_ok("route_list_ready_$(this.name)");
+
       "route_list_joined"
         string => join(", ", "route_list"),
-        ifvarclass => "routes_obtained_$(this.name)";
+        ifvarclass => "route_list_ready_$(this.name)",
+        classes => default:if_ok("route_list_joined_$(this.name)");
 
       "routes_$(this.name)"
         string => ", $(route_list_joined)",
-        classes => default:if_ok("routes_ready"),
-        ifvarclass => "routes_obtained_$(this.name)";
-
-      "subnet_config"
-        data => mergedata("cryptoo:network.subnet_config");
-
-      "supplemental_routes"
-        string => "";
-
-    network_firewall_external::
-
-      "supplemental_routes"
-        string => ',
-                 { "section": "Route",
-                   "values":
-                     [
-                       { "LHS": "Gateway", "RHS": "192.168.$(subnet_config[lan]).$(defined_numbers[desktop_host])" },
-                       { "LHS": "Destination", "RHS": "192.168.$(subnet_config[lan]).32/27" }
-                     ]
-                 },
-                 { "section": "Route",
-                   "values":
-                     [
-                       { "LHS": "Gateway", "RHS": "192.168.$(subnet_config[lan]).$(defined_numbers[desktop_host])" },
-                       { "LHS": "Destination", "RHS": "192.168.$(subnet_config[lan]).64/27" }
-                     ]
-                 }';
+        ifvarclass => "route_list_joined_$(this.name)",
+        classes => default:if_ok("routes_ready");
 
     type_no_address::
 
@@ -125,6 +141,7 @@ bundle agent network_file(root, name, number, type, params)
                      "values":
                        [
                          { "LHS": "DHCP", "RHS": "false" },
+                         { "LHS": "Address", "RHS": "192.168.$(network.subnet_config[lan]).$(network_params_$(this.name)[number])/27" },
                          { "LHS": "IPForward", "RHS": "$(forward_$(this.name))" },
                          { "LHS": "LinkLocalAddressing", "RHS": "No"}
                        ]
@@ -346,8 +363,9 @@ bundle agent network_file(root, name, number, type, params)
                        { "LHS": "IPForward", "RHS": "$(forward_$(this.name))" },
                        { "LHS": "LinkLocalAddressing", "RHS": "No"}
                      ]
-                 } $(routes_$(this.name))
-                   $(supplemental_routes)
+                 } $(desktop_routes_$(this.name))
+                   $(routes_$(this.name))
+
                ]
           }
         ',
@@ -388,6 +406,12 @@ bundle agent network_file(root, name, number, type, params)
         ',
         classes => default:if_ok("network_json_ready");
 
+    !skip&network_json_ready::
+
+      "final_json"
+        string => "$(network_$(this.name))",
+        classes => default:if_ok("final_json");
+
   classes:
 
     any::
@@ -395,13 +419,23 @@ bundle agent network_file(root, name, number, type, params)
       "skip"
         or => { strcmp("$(this.name)", "none"), strcmp("$(this.type)", "virtual") };
 
-      "network_$(name)"
+      "network_$(role)"
         expression => "any";
 
       "have_routes_$(this.name)"
         expression => regextract('(?s).*("routes":.*{.*?})', "$(this.params)", "route_regex");
 
       "routes_evaluated_$(this.name)"
+        expression => "any";
+
+    network_firewall_internal&routes_evaluated_eth0::
+
+      "extra_routes_$(this.name)"
+        expression => "any";
+
+    network_firewall_internal&routes_evaluated_eth3::
+
+      "desktop_routes_$(this.name)"
         expression => "any";
 
     !skip::
@@ -411,22 +445,28 @@ bundle agent network_file(root, name, number, type, params)
 
   methods:
 
+    any::
+
       "generate json for routes"
         usebundle => networkd_routes("$(zone_$(this.name))", "{ $(this.route_regex[1]) }"),
         ifvarclass => "have_routes_$(this.name)",
         useresult => "route_json_$(this.name)",
         classes => default:if_ok("routes_obtained_$(this.name)");
 
+      "generate json for supplemental routes"
+        usebundle => vpn_secondary_routes(),
+        ifvarclass => "extra_routes_$(this.name)",
+        useresult => "extra_route_json_$(this.name)",
+        classes => default:if_ok("extra_routes_obtained_$(this.name)");
 
   files:
 
-    !skip&network_json_ready::
+    final_json&!skip::
 
       "$(file_name_$(this.name))"
         perms => system,
         create => "true",
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
-        template_data => parsejson("$(network_$(this.name))");
-
+        template_data => parsejson("$(final_json)");
 }

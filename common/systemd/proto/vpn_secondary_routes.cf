@@ -1,0 +1,38 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/network.cf",
+              "cryptoo/config/site.cf"
+            };
+}
+
+bundle agent vpn_secondary_routes()
+
+{
+
+  vars:
+
+    "defined_numbers"
+      data => mergedata("cryptoo:config.defined_numbers");
+
+    "subnet_config"
+      data => mergedata("cryptoo:network.subnet_config");
+
+    "route_data"
+      data => mergedata("cryptoo:site.config[vpn_secondary_routes]");
+
+    "route_list"
+      slist => getindices("route_data");
+
+  reports:
+
+    any::
+
+      '{ "section": "Route", "values": [ { "LHS": "Gateway", "RHS": "192.168.$(subnet_config[vpndmz]).$(defined_numbers[vpn_secondary])" }, { "LHS": "Destination", "RHS": "$(route_data[$(route_list)])" }, { "LHS": "Metric", "RHS": "0" } ] }'
+        bundle_return_value_index => "$(route_list)";
+
+}

@@ -69,6 +69,6 @@ bundle agent networkd(root, role)
         usebundle => netdev_tun("$(this.root)", "$(tun_list)", "openvpn", "openvpn");
 
       "manage .network files"
-        usebundle => network_file("$(this.root)", "$(interface_list)", "$(this.role_number)", "$(interface[$(interface_list)][type])", "$(interface[$(interface_list)][params])");
+        usebundle => network_file("$(this.root)", "$(this.role)", "$(interface_list)", "$(this.role_number)", "$(interface[$(interface_list)][type])", "$(interface[$(interface_list)][params])");
 
 }

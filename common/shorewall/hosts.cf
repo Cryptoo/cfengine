@@ -45,6 +45,16 @@ bundle agent shorewall_hosts(root, role)
       "owner[vpn]"
         string => "";
 
+    hosts_role_vpn_secondary::
+
+      "owner[lanx]"
+        string => "openvpn";
+
+    hosts_role_firewall_internal::
+
+      "owner[lanx]"
+        string => "eth0";
+
     gateway_interface_done::
 
       "gateway_interface_list"
@@ -118,6 +128,9 @@ bundle agent shorewall_hosts(root, role)
       "vpn_role"
         expression => strcmp("$(this.role)", "vpn_secondary");
 
+      "hosts_role_$(role)"
+        expression => "any";
+
     additional_interface_scan::
 
       "additional_interfaces"
@@ -160,5 +173,4 @@ bundle agent shorewall_hosts(root, role)
         usebundle => shorewall_routes("$(routable_interface_list)", "$(interface[$(routable_interface_list)][params])"),
         useresult => "owner",
         classes => default:if_ok("routes_assigned");
-
 }

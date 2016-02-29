@@ -62,6 +62,8 @@ bundle common network
         string => "$(config.transparent_proxy_net[i2p])";
       "subnet[backup_dns]"
         string => "$(config.dns[backup])";
+      "subnet[lanx]"
+        string => "+vpn_secondary";
 
   classes:
 

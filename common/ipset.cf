@@ -1,0 +1,50 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/network.cf",
+              "cryptoo/config/site.cf"
+            };
+}
+
+bundle agent ipset(root)
+
+{
+
+  vars:
+
+    "route_data"
+      data => mergedata("cryptoo:site.config[vpn_secondary_routes]");
+
+    "route_list"
+      slist => getvalues("route_data");
+
+  classes:
+
+    any::
+
+      "bootstrap"
+        not => strcmp("$(this.root)", "/");
+
+      "have_ipset_app"
+        expression => fileexists("$(this.root)$(file_names.ipset_app)");
+
+  commands:
+
+    have_ipset_app&(!bootstrap)&(!have_vpn_secondary)::
+
+      "/$(file_names.ipset_app)"
+        args => "-exist -quiet create vpn_secondary hash:net",
+        contain => silent,
+        classes => default:if_ok("have_vpn_secondary");
+
+    have_vpn_secondary::
+      "/$(file_names.ipset_app)"
+        args => "-exist -quiet add vpn_secondary $(route_list)",
+        contain => silent;
+
+
+}

@@ -67,12 +67,12 @@ bundle agent shorewall_macro_vdmz_irc_bouncer(root, port_info)
                    {
                      "action": "NTP(PARAM)",
                      "source": "u$(defined_numbers[irc_bouncer]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[irc_bouncer])",
-                     "destination": "u$(defined_numbers[vpn_secondary]):!+private"
+                     "destination": "u$(defined_numbers[vpn_primary]):!+private"
                    },
                    {
                      "action": "irc_out(PARAM)",
                      "source": "u$(defined_numbers[irc_bouncer]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[irc_bouncer])",
-                     "destination": "u$(defined_numbers[vpn_secondary]):!+private"
+                     "destination": "u$(defined_numbers[vpn_primary]):!+private"
                    },
                    {
                      "action": "irc_out(PARAM)",

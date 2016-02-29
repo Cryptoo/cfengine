@@ -2713,7 +2713,7 @@ bundle common file_groups
       "firewall_zones[vpn_primary]"
         slist => {
                     "@(firewall_zones[server_guest])",
-                    "vpn"
+                    "vpn",
                  };
 
       "firewall_bridges[vpn_primary]"
@@ -3110,7 +3110,8 @@ bundle common file_groups
       "firewall_zones[vpn_secondary]"
         slist => {
                     "@(firewall_zones[server_guest])",
-                    "vpn"
+                    "vpn",
+                    "lanx"
                  };
 
       "firewall_bridges[vpn_secondary]"
@@ -3126,6 +3127,7 @@ bundle common file_groups
                    { "source": "vdmz", "destination": "vpn", "policy": "ACCEPT", "log_level": "" },
                    { "source": "vdmz", "destination": "net", "policy": "DROP", "log_level": "" },
                    { "source": "lan", "destination": "vpn", "policy": "ACCEPT", "log_level": "" },
+                   { "source": "lan", "destination": "lanx", "policy": "ACCEPT", "log_level": "" },
                    { "source": "lan", "destination": "net", "policy": "DROP", "log_level": "" },
                    { "source": "vpn", "destination": "fw", "policy": "DROP", "log_level": "" }
                  ],
@@ -3167,7 +3169,7 @@ bundle common file_groups
                          "ipforward": "ipv4",
                          "routes":
                            {
-                             "backup_dns": "firewall_external"
+                             "backup_dns": "firewall_external",
                            }
                        }
                    },
@@ -3305,7 +3307,7 @@ bundle common file_groups
                      "params":
                        {
                          "zone": "vpndmz",
-                         "gateway": "vpn_secondary",
+                         "gateway": "vpn_primary",
                          "ipforward": "no",
                          "routes":
                            {
@@ -3381,7 +3383,8 @@ bundle common file_groups
 
       "firewall_zones[firewall_internal]"
         slist => {
-                    "@(firewall_zones[server_guest])"
+                    "@(firewall_zones[server_guest])",
+                    "lanx"
                  };
 
       "firewall_bridges[firewall_internal]"
@@ -3397,6 +3400,7 @@ bundle common file_groups
                    { "source": "lan", "destination": "net", "policy": "ACCEPT", "log_level": "" },
                    { "source": "lan", "destination": "onion", "policy": "ACCEPT", "log_level": "" },
                    { "source": "lan", "destination": "eep", "policy": "ACCEPT", "log_level": "" },
+                   { "source": "lan", "destination": "lanx", "policy": "ACCEPT", "log_level": "" },
                    { "source": "vdmz", "destination": "onion", "policy": "ACCEPT", "log_level": "" },
                    { "source": "vdmz", "destination": "eep", "policy": "ACCEPT", "log_level": "" }
                  ],
@@ -3615,7 +3619,8 @@ bundle common file_groups
                      "params":
                        {
                          "device": "openvpn_tun_udp",
-                         "ipforward": "ipv4"
+                         "ipforward": "ipv4",
+                         "number": "161"
                        }
                    },
                  "openvpn_tun_tcp":
@@ -3624,7 +3629,8 @@ bundle common file_groups
                      "params":
                        {
                          "device": "openvpn_tun_tcp",
-                         "ipforward": "ipv4"
+                         "ipforward": "ipv4",
+                         "number": "129"
                        }
                    },
                  "lan_bridge":
