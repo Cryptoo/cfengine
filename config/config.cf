@@ -1313,17 +1313,97 @@ bundle common config
         string => "THERMAL_HWMON",
         meta => { "enabled", "host" };
 
+      "kconfig[MEDIA_SUPPORT]"
+        string => "MEDIA_SUPPORT",
+        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[MEDIA_CAMERA_SUPPORT]"
+        string => "MEDIA_CAMERA_SUPPORT",
+        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[MEDIA_USB_SUPPORT]"
+        string => "MEDIA_USB_SUPPORT",
+        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[USB_VIDEO_CLASS]"
+        string => "USB_VIDEO_CLASS",
+        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[MEDIA_SUBDRV_AUTOSELECT]"
+        string => "MEDIA_SUBDRV_AUTOSELECT",
+        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[SOUND]"
+        string => "SOUND",
+        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[SND]"
+        string => "SND",
+        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[SND_SEQUENCER]"
+        string => "SND_SEQUENCER",
+        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[SND_MIXER_OSS]"
+        string => "SND_MIXER_OSS",
+        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[SND_PCM_OSS]"
+        string => "SND_PCM_OSS",
+        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[SND_PCM_OSS_PLUGINS]"
+        string => "SND_PCM_OSS_PLUGINS",
+        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[SND_SEQUENCER_OSS]"
+        string => "SND_SEQUENCER_OSS",
+        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[SND_HRTIMER]"
+        string => "SND_HRTIMER",
+        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[SND_SEQ_HRTIMER_DEFAULT]"
+        string => "SND_SEQ_HRTIMER_DEFAULT",
+        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[SND_SUPPORT_OLD_API]"
+        string => "SND_SUPPORT_OLD_API",
+        meta => { "disabled", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[SND_VERBOSE_PROCFS]"
+        string => "SND_VERBOSE_PROCFS",
+        meta => { "disabled", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[SND_DRIVERS]"
+        string => "SND_DRIVERS",
+        meta => { "disabled", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[SND_PCI]"
+        string => "SND_PCI",
+        meta => { "disabled", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[SND_USB]"
+        string => "SND_USB",
+        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[SND_USB_AUDIO]"
+        string => "SND_USB_AUDIO",
+        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
+
       "kconfig[USB_HIDDEV]"
         string => "USB_HIDDEV",
         meta => { "enabled", "host" };
 
       "kconfig[USB_SUPPORT]"
         string => "USB_SUPPORT",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[USB]"
         string => "USB",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[USB_DYNAMIC_MINORS]"
         string => "USB_DYNAMIC_MINORS",
@@ -1331,11 +1411,11 @@ bundle common config
 
       "kconfig[USB_XHCI_HCD]"
         string => "USB_XHCI_HCD",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[USB_EHCI_HCD]"
         string => "USB_EHCI_HCD",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[USB_EHCI_ROOT_HUB_TT]"
         string => "USB_EHCI_ROOT_HUB_TT",
