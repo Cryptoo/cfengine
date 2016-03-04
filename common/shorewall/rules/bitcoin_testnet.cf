@@ -64,11 +64,6 @@ bundle agent shorewall_rules_bitcoin_testnet(root)
                   "user": "bitcoin:bitcoin"
                 },
                 {
-                  "action": "bitcoin_testnet(ACCEPT)",
-                  "source": "net",
-                  "destination": "fw:192.168.$(subnet_config[ispdmz]).$(defined_numbers[bitcoin_testnet])"
-                },
-                {
                   "action": "bitcoin_rpc(ACCEPT)",
                   "source": "lan",
                   "destination": "fw:192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin_testnet])"

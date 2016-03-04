@@ -43,10 +43,10 @@ bundle agent bitcoin_testnet(root)
 
     !hidden_service_evaluated::
 
+#                { "name": "$(site.config[ddns]):$(config.service_info[bitcoin][testnet_port])" }
       "externalip"
         string => '"externalip":
               [
-                { "name": "$(site.config[ddns]):$(config.service_info[bitcoin][testnet_port])" }
               ]';
 
     have_bitcoin_hs::
@@ -54,7 +54,6 @@ bundle agent bitcoin_testnet(root)
       "externalip"
         string => '"externalip":
               [
-                { "name": "$(site.config[ddns]):$(config.service_info[bitcoin][testnet_port])" },
                 { "name": "$(hidden_service_data[bitcoin_testnet]):$(config.service_info[bitcoin][testnet_port])" }
               ]',
         classes => default:if_ok("have_onion_externalip");
