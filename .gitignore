@@ -1,3 +1,5 @@
 local/promises/*.cf
 local/templates/*.txt
-
+*.kate-swp
+*.orig
+*.rej
