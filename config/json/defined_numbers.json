@@ -16,7 +16,7 @@
     "vpn_secondary": "21",
     "irc_bouncer": "22",
     "bittorrent": "23",
-    "file_server": "24",
+    "samba": "24",
     "bitcoin": "25",
     "bitcoin_testnet": "26",
     "btcd": "27",

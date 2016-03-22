@@ -3711,4 +3711,123 @@ bundle common file_groups
       "dns_type[vpn_server]"
         string => "$(dns_type[server_guest])";
 
+################################################################################
+#                             samba
+################################################################################
+
+      "make_profile[samba]"
+        string => "$(make_profile[server_guest])";
+
+      "pm_env[samba]"
+        slist => {
+                    "@(pm_env[server_guest])"
+                 };
+
+      "pm_environment[samba]"
+        slist => {
+                    "@(pm_environment[server_guest])"
+                 };
+
+      "keywords[samba]"
+        slist => {
+                    "@(keywords[server_guest])",
+                    "samba"
+                 };
+
+      "mask[samba]"
+        slist => {
+                    "@(mask[server_guest])"
+                 };
+
+      "unmask[samba]"
+        slist => {
+                    "@(unmask[server_guest])"
+                 };
+
+      "use[samba]"
+        slist => {
+                    "@(use[server_guest])",
+                    "samba_server"
+                 };
+
+      "unuse[samba]"
+        slist => {
+                    "@(unuse[server_guest])"
+                 };
+
+      "profile[samba]"
+        slist => {
+                    "@(profile[server_guest])"
+                 };
+
+      "systemd_enabled[samba]"
+        slist => {
+                    "@(systemd_enabled[server_guest])",
+                    "smbd.service"
+                 };
+
+      "backup_dir[samba]"
+        string => "$(backup_dir[server_guest])";
+
+      "firewall_zones[samba]"
+        slist => {
+                    "@(firewall_zones[server_guest])"
+                 };
+
+      "firewall_bridges[samba]"
+        slist => {
+                    "@(firewall_bridges[server_guest])"
+                 };
+
+      "firewall[samba]"
+        string => "$(firewall[server_guest])";
+
+      "network[samba]"
+        string => '
+          {
+            "devices":
+               {
+                 "bridge":
+                   [
+                     "none"
+                   ],
+                 "veth":
+                   [
+                     "none"
+                   ],
+                 "tap":
+                   [
+                     "none"
+                   ],
+                 "tun":
+                   [
+                     "none"
+                   ]
+               },
+             "interfaces":
+               {
+                 "eth0":
+                   {
+                     "type": "gateway",
+                     "params":
+                       {
+                         "zone": "lan",
+                         "gateway": "firewall_internal",
+                         "ipforward": "no",
+                         "routes":
+                           {
+                             "onion": "firewall_internal",
+                             "eep": "firewall_internal",
+                             "tor": "firewall_internal",
+                             "i2p": "firewall_internal",
+                             "vpndmz": "firewall_internal"
+                           }
+                       }
+                   }
+               }
+          }
+        ';
+
+      "dns_type[samba]"
+        string => "$(dns_type[server_guest])";
 }

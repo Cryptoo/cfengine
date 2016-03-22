@@ -587,6 +587,34 @@ bundle common role
           }
         ';
 
+      "params[samba]"
+        string => '
+          {
+            "number": "$(this.defined_numbers[samba])",
+            "make_conf":
+              {
+                "makeopts": "guest",
+                "pkgdir": "server_guest",
+                "runtime": "guest",
+                "graphical": "headless"
+              },
+            "libvirt":
+              {
+                "name": "samba",
+                "ram": "512",
+                "cpu": "1",
+                "kernel": "/$(directory_names.libvirt_images)/guest-kernel-x86_64",
+                "interfaces":
+                   [
+                     {
+                       "bridge": "lan",
+                       "device": "lan$(this.defined_numbers[samba])"
+                     }
+                   ]
+              }
+          }
+        ';
+
       "params[web]"
         string => '
           {

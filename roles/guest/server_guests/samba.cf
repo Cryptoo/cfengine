@@ -1,0 +1,74 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/config.cf",
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/network.cf",
+              "cryptoo/util/perms.cf"
+            };
+}
+
+bundle agent samba(root)
+
+{
+
+  meta:
+
+    "tags" slist => { "cryptoo_role" };
+
+  vars:
+
+    any::
+
+      "subnet_config"
+        data => mergedata("cryptoo:network.subnet_config");
+
+      "samba_conf"
+        string => '
+          { "subnet": "$(subnet_config[lan])" }',
+          classes => default:if_ok("have_samba_conf");
+
+classes:
+
+    any::
+
+      "bootstrap"
+        not => strcmp("$(this.root)", "/");
+
+files:
+
+    any::
+
+      "$(this.root)$(directory_names.config_samba)/."
+        perms => system,
+        create => "true";
+
+    have_samba_conf::
+
+      "$(this.root)$(file_names.samba_config)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[samba])",
+        template_method => "mustache",
+        template_data => parsejson($(this.samba_conf)),
+          classes => default:if_repaired("restart_samba");
+
+methods:
+
+    any::
+
+      "configure system as a samba server"
+        usebundle => server_guest("$(this.root)", "samba", "x86_64", "no_multilib");
+
+  commands:
+
+    restart_samba&(!bootstrap)::
+
+      "/$(file_names.systemd_app)"
+        args => "restart smbd";
+}

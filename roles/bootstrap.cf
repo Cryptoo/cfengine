@@ -170,6 +170,17 @@ bundle agent cryptoo_bootstrap
       "multilib"
         string => "no_multilib";
 
+    default:bootstrap_samba::
+
+      "role"
+        string => "samba";
+
+      "type"
+        string => "server";
+
+      "multilib"
+        string => "no_multilib";
+
     default:bootstrap_irc_client::
 
       "role"
@@ -305,6 +316,11 @@ bundle agent cryptoo_bootstrap
         expression => "any";
 
     default:bootstrap_irc_bouncer::
+
+      "bootstrap_guest"
+        expression => "any";
+
+    default:bootstrap_samba::
 
       "bootstrap_guest"
         expression => "any";

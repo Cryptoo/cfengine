@@ -29,6 +29,7 @@ bundle agent shorewall_macro_guest(root, port_info)
         "irc_bouncer",
         "firewall_internal",
         "vpn_server",
+        "samba",
         "irc_client",
         "im",
         "mail_client",

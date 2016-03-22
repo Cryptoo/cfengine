@@ -212,6 +212,11 @@ bundle agent hosts(root)
                   "fqdn": "$(network.machine_names[13][name]).localnet",
                   "ip": "192.168.$(subnet_config[lan]).13",
                   "alias": "vpn_server vpn_server.localnet $(network.machine_names[13][name])"
+                },
+                {
+                  "fqdn": "$(network.machine_names[24][name]).localnet",
+                  "ip": "192.168.$(subnet_config[lan]).24",
+                  "alias": "samba samba.localnet $(network.machine_names[24][name])"
                 }
               ]
           }';
