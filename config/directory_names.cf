@@ -57,6 +57,7 @@ bundle common directory_names
       "config_run_boot" string => "$(config_run_base)/boot";
       "config_run_default" string => "$(config_run_base)/default";
       "config_run_sysinit" string => "$(config_run_base)/sysinit";
+      "config_samba" string => "$(config_base)/samba";
       "config_shorewall" string => "$(config_base)/shorewall";
       "config_ssh" string => "$(config_base)/ssh";
       "config_systemd" string => "$(config_base)/systemd";

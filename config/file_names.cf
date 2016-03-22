@@ -224,6 +224,8 @@ bundle common file_names
         string => "$(directory_names.config_postfix)/sender_map";
       "mount_info"
         string => "/proc/self/mountstats";
+      "samba_config"
+        string => "$(directory_names.config_samba)/smb.conf";
       "shorewall_config"
         string => "$(directory_names.config_shorewall)/shorewall.conf";
       "shorewall_hosts"
@@ -495,6 +497,9 @@ bundle common file_names
         meta => { "template" };
       "template_postfix_header"
         string => "guest/postfix_header.txt",
+        meta => { "template" };
+      "template_samba"
+        string => "guest/samba_mustache.txt",
         meta => { "template" };
       "template_postfix_saslpass"
         string => "guest/postfix_saslpass.txt",

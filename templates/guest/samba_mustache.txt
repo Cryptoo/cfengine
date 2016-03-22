@@ -1,0 +1,26 @@
+[global]
+  log level = 3
+  syslog = 3
+  syslog only = yes
+  workgroup = cryptoo
+  server string = Samba Server
+  security = user
+  passdb backend = tdbsam
+  hosts allow = 192.168.199.
+  load printers = no
+  guest account = guest
+  log file = /var/log/samba/log.%m
+  max log size = 1024
+
+[common]
+  comment = Shared Files
+  path = /mnt/shared
+  public = yes
+  writable = yes
+  printable = no
+  browsable = yes
+  guest ok = yes
+  force user = guest
+  force group = users
+  force create mode = 0664
+  force directory mode = 0664
