@@ -282,6 +282,10 @@ bundle common file_names
         string => "$(directory_names.config_units)/ipset.service";
       "shorewall_service"
         string => "$(directory_names.config_units)/shorewall.service";
+      "vpn_check_service"
+        string => "$(directory_names.config_units)/vpn-check.service";
+      "vpn_check_timer"
+        string => "$(directory_names.config_units)/vpn-check.timer";
       "xpra_service"
         string => "$(directory_names.config_units)/xpra@.service";
       "bitcoind_autorestart"

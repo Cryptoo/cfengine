@@ -467,5 +467,44 @@
                  ]
              }
            ]
+      },
+    "vpn_check":
+      {
+        "sections":
+           [
+             { "section": "Unit",
+               "values":
+                 [
+                   { "LHS": "Description", "RHS": "Check VPN connectivity" },
+                 ]
+             },
+             { "section": "Service",
+               "values":
+                 [
+                   { "LHS": "Type", "RHS": "simple" },
+                   { "LHS": "ExecStart", "RHS": "/usr/cryptoo/bin/vpn-check primary" }
+                 ]
+             }
+           ]
+      },
+    "vpn_check_timer":
+      {
+        "sections":
+           [
+             { "section": "Unit",
+               "values":
+                 [
+                   { "LHS": "Description", "RHS": "Periodically check VPN connectivity" },
+                 ]
+             },
+             { "section": "Timer",
+               "values":
+                 [
+                   { "LHS": "OnBootSec", "RHS": "2min" },
+                   { "LHS": "OnUnitActiveSec", "RHS": "3min" },
+                   { "LHS": "Unit", "RHS": "vpn-check.service" }
+                 ]
+             }
+           ]
       }
 }

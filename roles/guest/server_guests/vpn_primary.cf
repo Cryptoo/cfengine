@@ -14,11 +14,45 @@ bundle agent vpn_primary(root)
 
     "tags" slist => { "cryptoo_role" };
 
+  files:
+
+    any::
+
+      "$(this.root)$(file_names.vpn_check_service)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => mergedata("cryptoo:config.systemd_services[vpn_check]"),
+        classes => default:if_repaired("vpn_primary_daemon_reload");
+
+      "$(this.root)$(file_names.vpn_check_timer)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => mergedata("cryptoo:config.systemd_services[vpn_check_timer]"),
+        classes => default:if_repaired("vpn_primary_daemon_reload");
+
+  classes:
+
+    any::
+
+      "bootstrap"
+        not => strcmp("$(this.root)", "/");
+
   methods:
 
     any::
 
       "configure system as the primary VPN client router"
         usebundle => server_guest("$(this.root)", "vpn_primary", "x86_64", "no_multilib");
+
+  commands:
+
+    vpn_primary_daemon_reload&(!bootstrap)::
+
+      "$(this.root)$(file_names.systemd_app)"
+        args => "daemon-reload";
 
 }
