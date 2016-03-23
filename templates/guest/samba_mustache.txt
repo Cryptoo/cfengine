@@ -6,11 +6,12 @@
   server string = Samba Server
   security = user
   passdb backend = tdbsam
-  hosts allow = 192.168.199.
+  hosts allow = 192.168.{{subnet}}.
   load printers = no
   guest account = guest
   log file = /var/log/samba/log.%m
   max log size = 1024
+  map to guest = bad user
 
 [common]
   comment = Shared Files
