@@ -42,5 +42,9 @@
       {
           "external_port": "8444",
           "rpc_port": "8445"
+      },
+    "transmission":
+      {
+          "rpc_port": "9091"
       }
 }

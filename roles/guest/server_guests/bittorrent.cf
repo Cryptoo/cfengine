@@ -1,0 +1,163 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/config.cf",
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/network.cf",
+              "cryptoo/util/perms.cf"
+            };
+}
+
+bundle agent bittorrent(root)
+
+{
+
+  meta:
+
+    "tags" slist => { "cryptoo_role" };
+
+  vars:
+
+    any::
+
+      "defined_numbers"
+        data => mergedata("cryptoo:config.defined_numbers");
+
+      "subnet_config"
+        data => mergedata("cryptoo:network.subnet_config");
+
+      "site_config"
+        data => mergedata("cryptoo:site.config");
+
+      "transmission_dirs"
+        slist =>
+            {
+                "$(this.root)$(directory_names.bittorrent_base)/.",
+                "$(this.root)$(directory_names.transmission_config)/."
+            };
+
+      "torrent_dirs"
+        slist =>
+            {
+                "/$(directory_names.mount_shared)/Torrent/.",
+                "/$(directory_names.mount_shared)/Torrent/Complete/.",
+                "/$(directory_names.mount_shared)/Torrent/Partial/.",
+                "/$(directory_names.mount_shared)/Torrent/Watch/."
+            };
+
+    no_bittorrent_port_info::
+
+      "listen_port"
+        string => "0",
+        classes => default:if_ok("have_transmission_env");
+
+    have_bittorrent_port_info::
+
+      "listen_port"
+        string => "$(site_config[transmission_port])",
+        classes => default:if_ok("have_transmission_env");
+
+    have_transmission_env::
+
+      "config_json"
+        string => '
+            {
+                "peer-port" : $(this.listen_port),
+                "port-forwarding-enabled": false,
+                "rpc-enabled": true,
+                "rpc-authentication-required": false,
+                "rpc-port": 9091,
+                "rpc-whitelist": "127.0.0.1,192.168.$(subnet_config[lan]).*",
+                "rpc-whitelist-enabled": true,
+                "download-dir": "/$(directory_names.mount_shared)/Torrent/Complete",
+                "incomplete-dir": "/$(directory_names.mount_shared)/Torrent/Partial",
+                "incomplete-dir-enabled": true,
+                "watch-dir": "/$(directory_names.mount_shared)/Torrent/Watch",
+                "watch-dir-enabled": true
+            }';
+
+  classes:
+
+    have_transmission_env|no_bittorrent_port_info::
+
+      "done"
+        expression => "any";
+
+    bittorrent_port_info_evaluated|(!have_bittorrent_port_info)::
+
+      "no_bittorrent_port_info"
+        expression => "any";
+
+    any::
+
+      "bootstrap"
+        not => strcmp("$(this.root)", "/");
+
+      "have_bittorrent_port_info"
+        expression => isvariable("site_config[transmission_port]");
+
+      "bittorrent_port_info_evaluated"
+        expression => "any";
+
+    !bootstrap::
+
+      "need_transmission_config"
+        not => fileexists("$(this.root)$(file_names.transmission_config)");
+
+  files:
+
+    any::
+
+      "$(transmission_dirs)"
+        perms => bittorrent,
+        create => "true";
+
+      "$(torrent_dirs)"
+        perms => guest,
+        create => "true";
+
+      "$(this.root)$(file_names.transmission_unit_override)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => mergedata("cryptoo:config.systemd_services[transmission_override]"),
+        classes => default:if_repaired("daemon_reload");
+
+    done&(!need_transmission_config)::
+
+      "/$(file_names.transmission_config)"
+        perms => bittorrent,
+        create => "false";
+
+  methods:
+
+    any::
+
+      "configure system as a bittorrent client daemon"
+        usebundle => server_guest("$(this.root)", "bittorrent", "x86_64", "no_multilib");
+
+    done&need_transmission_config::
+
+      "create default config file"
+        usebundle => default:file_make("/$(file_names.transmission_config)", "$(this.config_json)"),
+        classes => default:if_ok("reload_transmission");
+
+  commands:
+
+    daemon_reload&(!bootstrap)::
+
+      "$(this.root)$(file_names.systemd_app)"
+        args => "daemon-reload",
+        classes => default:if_ok("reload_transmission");
+
+    reload_transmission&(!bootstrap)::
+
+      "/$(file_names.systemd_app)"
+        args => "restart transmission-daemon";
+}

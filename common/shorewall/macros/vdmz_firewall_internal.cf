@@ -93,6 +93,11 @@ bundle agent shorewall_macro_vdmz_firewall_internal(root, port_info)
                      "action": "znc(PARAM)",
                      "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).0/24",
                      "destination": "u$(defined_numbers[irc_bouncer]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[irc_bouncer])"
+                   },
+                   {
+                     "action": "bittorrent_rpc(PARAM)",
+                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).0/24",
+                     "destination": "u$(defined_numbers[bittorrent]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bittorrent])"
                    }
                  ]
                }

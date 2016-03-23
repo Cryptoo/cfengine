@@ -244,6 +244,8 @@ bundle common file_names
         string => "$(directory_names.config_ssh)/sshd_config";
       "ssh_config"
         string => "$(directory_names.config_ssh)/ssh_config";
+      "sysctl_cryptoo"
+        string => "$(directory_names.config_sysctl)/cryptoo.conf";
       "tmux_service"
         string => "$(directory_names.config_units)/tmux@.service";
       "tor_service"
@@ -276,6 +278,8 @@ bundle common file_names
         string => "$(directory_names.config_units)/xpra@.service";
       "bitcoind_autorestart"
         string => "$(directory_names.config_units)/bitcoind.service.d/auto-restart.conf";
+      "transmission_unit_override"
+        string => "$(directory_names.config_units)/transmission-daemon.service.d/cryptoo.conf";
       "console_autologin"
         string => "$(directory_names.config_units)/getty@tty1.service.d/autologin.conf";
       "serial_autologin"
@@ -465,6 +469,9 @@ bundle common file_names
       "template_shorewall_zone"
         string => "common/shorewall_zone_mustache.txt",
         meta => { "template" };
+      "template_sysctl_common"
+        string => "common/sysctl_common.txt",
+        meta => { "template" };
       "template_tmux"
         string => "common/tmux.txt",
         meta => { "template" };
@@ -552,6 +559,8 @@ bundle common file_names
         string => "$(directory_names.bitmessage_config)/keys.dat";
       "btcd_conf_link"
         string => "$(directory_names.btcd_home)/btcd.conf";
+      "transmission_config"
+        string => "$(directory_names.transmission_config)/settings.json";
       "overlay_conf"
         string => "$(directory_names.volatile_overlay)/make.conf";
       "bitcoin_overlay"

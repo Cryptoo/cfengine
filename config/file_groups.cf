@@ -1423,7 +1423,7 @@ bundle common file_groups
                     "bitcoin",
                     "bitmessage",
                     "btcd",
-                    "deluge",
+                    "transmission",
                     "dns",
                     "freenet",
                     "i2p",
@@ -1454,8 +1454,7 @@ bundle common file_groups
                     "bitcoin",
                     "bitcoin_wallet",
                     "boost",
-                    "deluge",
-                    "deluge_server",
+                    "transmission_server",
                     "dns",
                     "freenet",
                     "i2p",
@@ -3359,6 +3358,125 @@ bundle common file_groups
         ';
 
       "dns_type[irc_bouncer]"
+        string => "$(dns_type[server_guest])";
+
+################################################################################
+#                             bittorrent
+################################################################################
+
+      "make_profile[bittorrent]"
+        string => "$(make_profile[server_guest])";
+
+      "pm_env[bittorrent]"
+        slist => {
+                    "@(pm_env[server_guest])"
+                 };
+
+      "pm_environment[bittorrent]"
+        slist => {
+                    "@(pm_environment[server_guest])"
+                 };
+
+      "keywords[bittorrent]"
+        slist => {
+                    "@(keywords[server_guest])",
+                    "transmission"
+                 };
+
+      "mask[bittorrent]"
+        slist => {
+                    "@(mask[server_guest])"
+                 };
+
+      "unmask[bittorrent]"
+        slist => {
+                    "@(unmask[server_guest])"
+                 };
+
+      "use[bittorrent]"
+        slist => {
+                    "@(use[server_guest])",
+                    "transmission_server"
+                 };
+
+      "unuse[bittorrent]"
+        slist => {
+                    "@(unuse[server_guest])"
+                 };
+
+      "profile[bittorrent]"
+        slist => {
+                    "@(profile[server_guest])"
+                 };
+
+      "systemd_enabled[bittorrent]"
+        slist => {
+                    "@(systemd_enabled[server_guest])"
+                 };
+
+      "backup_dir[bittorrent]"
+        string => "/$(directory_names.bittorrent_base)";
+
+      "firewall_zones[bittorrent]"
+        slist => {
+                    "@(firewall_zones[server_guest])"
+                 };
+
+      "firewall_bridges[bittorrent]"
+        slist => {
+                    "@(firewall_bridges[server_guest])"
+                 };
+
+      "firewall[bittorrent]"
+        string => "$(firewall[server_guest])";
+
+      "network[bittorrent]"
+        string => '
+          {
+            "devices":
+               {
+                 "bridge":
+                   [
+                     "none"
+                   ],
+                 "veth":
+                   [
+                     "none"
+                   ],
+                 "tap":
+                   [
+                     "none"
+                   ],
+                 "tun":
+                   [
+                     "none"
+                   ]
+               },
+             "interfaces":
+               {
+                 "eth0":
+                   {
+                     "type": "gateway",
+                     "params":
+                       {
+                         "zone": "vpndmz",
+                         "gateway": "vpn_primary",
+                         "ipforward": "no",
+                         "routes":
+                           {
+                             "onion": "firewall_internal",
+                             "eep": "firewall_internal",
+                             "tor": "firewall_internal",
+                             "i2p": "firewall_internal",
+                             "lan": "firewall_internal"
+                           }
+                       }
+                   }
+               }
+          }
+        ';
+
+      "dns_type[bittorrent]"
         string => "$(dns_type[server_guest])";
 
 ################################################################################

@@ -152,6 +152,11 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
         create => "true",
         edit_template => "/$(templates.template[ipset_private])";
 
+      "$(this.root)$(file_names.sysctl_cryptoo)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[sysctl_common])";
+
       "$(root)$(file_names.tmux_conf)"
         perms => system,
         create => "true",

@@ -39,12 +39,7 @@ bundle agent shorewall_rules_vpn_primary(root)
             "new":
                  [
                    {
-                     "action": "guest",
-                     "source": "",
-                     "destination": "",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "action": "guest"
                    },
                    {
                      "action": "NTP(ACCEPT)",
@@ -53,27 +48,17 @@ bundle agent shorewall_rules_vpn_primary(root)
                    },
                    {
                      "action": "portmapping",
-                     "source": "vdmz",
-                     "destination": "",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "source": "vdmz"
                    },
                    {
                      "action": "vpn_client",
                      "source": "fw",
-                     "destination": "net",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "destination": "net"
                    },
                    {
                      "action": "vpn_client",
                      "source": "fw",
-                     "destination": "vpn",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "destination": "vpn"
                    },
                    {
                      "action": "Ping(ACCEPT)",
@@ -83,34 +68,27 @@ bundle agent shorewall_rules_vpn_primary(root)
                    {
                      "action": "cfengine(ACCEPT)",
                      "source": "idmz:192.168.$(subnet_config[ispdmz]).$(defined_numbers[firewall_external])",
-                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])"
                    },
                    {
                      "action": "SSH(DNAT)",
                      "source": "vpn",
-                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])"
                    },
                    {
                      "action": "SSH(ACCEPT)",
                      "source": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
-                     "destination": "idmz:192.168.$(subnet_config[ispdmz]).$(defined_numbers[firewall_external])",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "destination": "idmz:192.168.$(subnet_config[ispdmz]).$(defined_numbers[firewall_external])"
                    },
                    {
                      "action": "SSH(ACCEPT)",
                      "source": "idmz:192.168.$(subnet_config[ispdmz]).$(defined_numbers[firewall_external])",
-                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])"
+                   },
+                   {
+                     "action": "bittorrent(DNAT)",
+                     "source": "vpn",
+                     "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[bittorrent])"
                    }
                  ],
                }

@@ -159,6 +159,11 @@ bundle agent hosts(root)
                   "alias": "irc_bouncer irc_bouncer.vpndmz $(network.machine_names[22][name])"
                 },
                 {
+                  "fqdn": "$(network.machine_names[23][name]).vpndmz",
+                  "ip": "192.168.$(subnet_config[vpndmz]).23",
+                  "alias": "bittorrent bittorrent.vpndmz $(network.machine_names[23][name])"
+                },
+                {
                   "fqdn": "$(network.machine_names[25][name]).vpndmz",
                   "ip": "192.168.$(subnet_config[vpndmz]).25",
                   "alias": "bitcoin bitcoin.vpndmz $(network.machine_names[25][name])"

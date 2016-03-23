@@ -150,7 +150,7 @@
                    "shell": "/sbin/nologin"
                  },
     "bittorrent": {
-                   "home": "/var/lib/deluge",
+                   "home": "/var/lib/bittorrent",
                    "uid": "319",
                    "group": "bittorrent",
                    "shell": "/sbin/nologin"

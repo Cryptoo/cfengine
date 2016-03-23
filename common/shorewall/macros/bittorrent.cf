@@ -1,0 +1,116 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/config.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/network.cf",
+              "cryptoo/config/site.cf",
+              "cryptoo/config/templates.cf",
+              "cryptoo/util/classes.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
+bundle agent shorewall_macro_bittorrent(root, port_info)
+
+{
+
+  meta:
+
+    "tags" slist => { "shorewall_macro", "vpn_primary", "bittorrent", "master" };
+
+  vars:
+
+    any::
+
+      "macro_name"
+        string => "bittorrent";
+
+      "defined_numbers"
+        data => mergedata("cryptoo:config.defined_numbers");
+
+      "subnet_config"
+        data => mergedata("cryptoo:network.subnet_config");
+
+      "site_config"
+        data => mergedata("cryptoo:site.config");
+
+    no_bittorrent_port_info::
+
+      "macro_json"
+        string => '
+          {
+            "name": "$(this.macro_name)",
+            "default": "ACCEPT"
+          }';
+
+    have_bittorrent_port_info::
+
+      "macro_json"
+        string => '
+          {
+             "name": "$(this.macro_name)",
+             "default": "ACCEPT",
+             "rules":
+                  [
+                    {
+                      "action": "PARAM",
+                      "source": "-",
+                      "destination": "-",
+                      "protocol": "udp",
+                      "destination_port": "$(site_config[transmission_port])",
+                      "source_port": ""
+                    },
+                    {
+                      "action": "PARAM",
+                      "source": "-",
+                      "destination": "-",
+                      "protocol": "tcp",
+                      "destination_port": "$(site_config[transmission_port])",
+                      "source_port": ""
+                    }
+                  ]
+                }
+           }',
+        classes => default:if_ok("have_macro_json");
+
+  classes:
+
+    have_macro_json|no_bittorrent_port_info::
+
+      "done"
+        expression => "any";
+
+    bittorrent_port_info_evaluated|(!have_bittorrent_port_info)::
+
+      "no_bittorrent_port_info"
+        expression => "any";
+
+    any::
+
+      "have_bittorrent_port_info"
+        expression => isvariable("site_config[transmission_port]");
+
+      "bittorrent_port_info_evaluated"
+        expression => "any";
+
+  files:
+
+    done::
+
+      "$(root)$(directory_names.config_shorewall)/macro.$(this.macro_name)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[shorewall_macro])",
+        template_method => "mustache",
+        template_data => parsejson("$(macro_json)"),
+        classes => shorewall;
+
+}

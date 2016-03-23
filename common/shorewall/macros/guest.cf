@@ -33,7 +33,8 @@ bundle agent shorewall_macro_guest(root, port_info)
         "irc_client",
         "im",
         "mail_client",
-        "web"
+        "web",
+        "bittorrent"
       };
 
   vars:

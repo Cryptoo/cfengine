@@ -450,5 +450,22 @@
                  ]
              }
            ]
+      },
+    "transmission_override":
+      {
+        "sections":
+           [
+             { "section": "Service",
+               "values":
+                 [
+                   { "LHS": "Restart", "RHS": "always" },
+                   { "LHS": "User", "RHS": "bittorrent" },
+                   { "LHS": "Group", "RHS": "users" },
+                   { "LHS": "Environment", "RHS": "TRANSMISSION_HOME=/var/lib/bittorrent" },
+                   { "LHS": "ExecStart", "RHS": "" },
+                   { "LHS": "ExecStart", "RHS": "-/usr/bin/transmission-daemon -f --log-error -g /var/lib/bittorrent/config" }
+                 ]
+             }
+           ]
       }
 }

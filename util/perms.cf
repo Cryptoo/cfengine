@@ -181,3 +181,11 @@ body perms bitmessage
       owners  => { "bitmessage" };
       groups  => { "bitmessage" };
 }
+
+body perms bittorrent
+
+{
+      mode  => "0600";
+      owners  => { "bittorrent" };
+      groups  => { "bittorrent" };
+}

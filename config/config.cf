@@ -1797,8 +1797,6 @@ bundle common config
         string => "10.$(firewall[tproxy_subnet][i2p]).0.0/10";
       "transparent_proxy_net[tor]"
         string => "10.$(firewall[tproxy_subnet][tor]).0.0/10";
-      "transparent_proxy_net[i2p]"
-        string => "10.$(firewall[tproxy_subnet][i2p]).0.0/10";
       "transparent_proxy_dns[i2p]"
         string => "10.$(firewall[tproxy_subnet][i2p]).0.1";
 

@@ -60,6 +60,7 @@ bundle common directory_names
       "config_samba" string => "$(config_base)/samba";
       "config_shorewall" string => "$(config_base)/shorewall";
       "config_ssh" string => "$(config_base)/ssh";
+      "config_sysctl" string => "$(config_base)/sysctl.d";
       "config_systemd" string => "$(config_base)/systemd";
       "config_network" string => "$(config_systemd)/network";
       "config_units" string => "$(config_systemd)/system";
@@ -155,6 +156,8 @@ bundle common directory_names
       "bitmessage_config" string => "$(bitmessage_base)/.config/PyBitmessage";
       "btcd_base" string => "$(volatile_library)/btcd";
       "btcd_home" string => "$(btcd_base)/.btcd";
+      "bittorrent_base" string => "$(volatile_library)/bittorrent";
+      "transmission_config" string => "$(bittorrent_base)/config";
       "volatile_overlay" string => "$(volatile_library)/layman";
       "bitcoin_overlay" string => "$(volatile_overlay)/bitcoin";
       "volatile_libvirt" string => "$(volatile_library)/libvirt";
@@ -177,5 +180,4 @@ bundle common directory_names
       "volatile_debug_source" string => "$(volatile_debug)/src";
       "volatile_kernel" string => "$(volatile_temp)/kernel";
       "volatile_portage" string => "$(volatile_temp)/portage";
-
 }

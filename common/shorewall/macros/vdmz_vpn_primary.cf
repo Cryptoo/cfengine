@@ -68,6 +68,11 @@ bundle agent shorewall_macro_vdmz_vpn_primary(root, port_info)
                      "action": "SSH(ACCEPT)",
                      "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])",
                      "destination": "u$(defined_numbers[vpn_primary]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[vpn_primary])"
+                   },
+                   {
+                     "action": "bittorrent(ACCEPT)",
+                     "source": "u$(defined_numbers[vpn_primary]):!+private",
+                     "destination": "u$(defined_numbers[bittorrent]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bittorrent])"
                    }
                  ]
                }

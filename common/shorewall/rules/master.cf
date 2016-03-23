@@ -211,6 +211,11 @@ bundle agent shorewall_rules_master(root)
                      "action": "ACCEPT",
                      "source": "fw",
                      "destination": "lan"
+                   },
+                   {
+                     "action": "ACCEPT",
+                     "source": "fw",
+                     "destination": "vdmz"
                    }
                  ]
                }
@@ -654,6 +659,9 @@ bundle agent shorewall_rules_master(root)
                    },
                    {
                      "action": "vdmz_bitcoin_testnet(ACCEPT)"
+                   },
+                   {
+                     "action": "vdmz_bittorrent(ACCEPT)"
                    }';
 
       "combined_rules_json_vpndmz"

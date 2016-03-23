@@ -1,0 +1,81 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/config.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/network.cf",
+              "cryptoo/config/templates.cf",
+              "cryptoo/util/classes.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
+bundle agent shorewall_macro_bittorrent_out(root, port_info)
+
+{
+
+  meta:
+
+    "tags" slist => { "shorewall_macro", "bittorrent", "master" };
+
+  vars:
+
+    any::
+
+      "macro_name"
+        string => "bittorrent_out";
+
+      "defined_numbers"
+        data => mergedata("cryptoo:config.defined_numbers");
+
+      "subnet_config"
+        data => mergedata("cryptoo:network.subnet_config");
+
+      "macro_json"
+        string => '
+          {
+             "name": "$(this.macro_name)",
+             "default": "ACCEPT",
+             "rules":
+                  [
+                    {
+                      "action": "PARAM",
+                      "source": "-",
+                      "destination": "-",
+                      "protocol": "udp",
+                      "destination_port": "-",
+                      "source_port": "1024:65535"
+                    },
+                    {
+                      "action": "PARAM",
+                      "source": "-",
+                      "destination": "-",
+                      "protocol": "tcp",
+                      "destination_port": "-",
+                      "source_port": "1024:65535"
+                    }
+                  ]
+                }
+           }',
+        classes => default:if_ok("have_macro_json");
+
+  files:
+
+    have_macro_json::
+
+      "$(root)$(directory_names.config_shorewall)/macro.$(this.macro_name)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[shorewall_macro])",
+        template_method => "mustache",
+        template_data => parsejson("$(macro_json)"),
+        classes => shorewall;
+
+}

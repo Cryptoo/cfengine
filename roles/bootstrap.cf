@@ -38,6 +38,17 @@ bundle agent cryptoo_bootstrap
       "multilib"
         string => "no_multilib";
 
+    default:bootstrap_bittorrent::
+
+      "role"
+        string => "bittorrent";
+
+      "type"
+        string => "server";
+
+      "multilib"
+        string => "no_multilib";
+
     default:bootstrap_btcd::
 
       "role"
@@ -271,6 +282,11 @@ bundle agent cryptoo_bootstrap
         expression => "any";
 
     default:bootstrap_bitmessage::
+
+      "bootstrap_guest"
+        expression => "any";
+
+    default:bootstrap_bittorrent::
 
       "bootstrap_guest"
         expression => "any";
