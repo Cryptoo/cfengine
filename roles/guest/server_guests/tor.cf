@@ -204,6 +204,14 @@ bundle agent tor(root)
         template_method => "mustache",
         template_data => parsejson($(this.polipo));
 
+      "$(this.root)$(file_names.tor_autorestart)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => mergedata("cryptoo:config.systemd_services[autorestart]"),
+        classes => default:if_repaired("daemon_reload");
+
     !bootstrap::
 
       "$(this.root)$(directory_names.hidden_services)/."
