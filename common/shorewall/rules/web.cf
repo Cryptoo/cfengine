@@ -72,6 +72,16 @@ bundle agent shorewall_rules_web(root)
                      "destination": "net"
                    },
                    {
+                     "action": "ACCEPT",
+                     "source": "fw",
+                     "destination": "onion"
+                   },
+                   {
+                     "action": "ACCEPT",
+                     "source": "fw",
+                     "destination": "eep"
+                   },
+                   {
                      "action": "bittorrent_rpc(ACCEPT)",
                      "source": "fw",
                      "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[bittorrent])"
