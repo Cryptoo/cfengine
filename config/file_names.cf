@@ -48,6 +48,8 @@ bundle common file_names
         string => "$(directory_names.config_base)/crypttab";
       "dnsmasq_conf"
         string => "$(directory_names.config_base)/dnsmasq.conf";
+      "nfs_exports"
+        string => "$(directory_names.config_base)/exports";
       "fetchmail_conf"
         string => "$(directory_names.config_base)/fetchmailrc";
       "fstab"
@@ -58,6 +60,8 @@ bundle common file_names
         string => "$(directory_names.config_base)/hosts";
       "hostname_systemd"
         string => "$(directory_names.config_base)/hostname";
+      "idmapd_config"
+        string => "$(directory_names.config_base)/idmapd.conf";
       "locale"
         string => "$(directory_names.config_base)/locale.gen";
       "localtime"
@@ -84,6 +88,8 @@ bundle common file_names
         string => "$(directory_names.config_bitcoin)/bitcoin.conf";
       "bmwrapper_config"
         string => "$(directory_names.config_env)/bmwrapper";
+      "nfs_env"
+        string => "$(directory_names.config_env)/nfs";
       "btcd_conf"
         string => "$(directory_names.config_btcd)/btcd.conf";
       "cryptoo_hostname"
@@ -246,6 +252,8 @@ bundle common file_names
         string => "$(directory_names.config_ssh)/ssh_config";
       "sysctl_cryptoo"
         string => "$(directory_names.config_sysctl)/cryptoo.conf";
+      "sysctl_nfs"
+        string => "$(directory_names.config_sysctl)/nfs.conf";
       "tmux_service"
         string => "$(directory_names.config_units)/tmux@.service";
       "tor_service"
@@ -380,6 +388,8 @@ bundle common file_names
         string => "$(directory_names.standard_admin_apps)/env-update";
       "etcupdate_app"
         string => "$(directory_names.standard_admin_apps)/etc-update";
+      "exportfs_app"
+        string => "$(directory_names.standard_admin_apps)/exportfs";
       "groupadd_app"
         string => "$(directory_names.standard_admin_apps)/groupadd";
       "groupmems_app"
@@ -396,6 +406,8 @@ bundle common file_names
         string => "$(directory_names.standard_admin_apps)/shorewall";
       "sshd_app"
         string => "$(directory_names.standard_admin_apps)/sshd";
+      "sysctl_app"
+        string => "$(directory_names.standard_admin_apps)/sysctl";
       "useradd_app"
         string => "$(directory_names.standard_admin_apps)/useradd";
       "easy_rsa_vars"

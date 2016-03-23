@@ -45,6 +45,25 @@ bundle agent host(arch, role)
       "chroot_list"
         slist => getindices("chroot");
 
+      "idmapd[Domain]"
+        string => "cryptoo";
+
+      "nfs[RPCMOUNTDARGS]"
+        string => '"--port 32767"';
+      "nfs[RPCNFSDARGS]"
+        string => '"--port 2049"';
+      "nfs[SMNOTIFYARGS]"
+        string => '"--port 32766"';
+      "nfs[STATDARGS]"
+        string => '"--port 32765 --outgoing-port 32766"';
+
+      "nfs_sysctl[fs.nfs.nlm_tcpport]"
+        string => "4001";
+      "nfs_sysctl[fs.nfs.nlm_udpport]"
+        string => "4001";
+      "nfs_sysctl[fs.nfs.nfs_callback_tcpport]"
+        string => "2050";
+
     have_desktop_guests::
 
       "desktop_guest_list"
@@ -176,6 +195,24 @@ bundle agent host(arch, role)
         perms => system,
         create => "false",
         edit_line => default:set_line_based("cryptoo:config.libvirt[libvirt_guests]", "=", "\s*=\s*", ".*", "\s*#\s*");
+
+      "/$(file_names.idmapd_config)"
+        perms => system,
+        create => "false",
+        edit_line => default:set_line_based("cryptoo:host.idmapd", "=", "\s*=\s*", ".*", "\s*#\s*"),
+        classes => default:if_repaired("reload_nfs");
+
+      "/$(file_names.nfs_env)"
+        perms => system,
+        create => "true",
+        edit_line => default:set_line_based("cryptoo:host.nfs", "=", "\s*=\s*", ".*", "\s*#\s*"),
+        classes => default:if_repaired("daemon_reload_nfs");
+
+      "/$(file_names.sysctl_nfs)"
+        perms => system,
+        create => "true",
+        edit_line => default:set_line_based("cryptoo:host.nfs_sysctl", "=", "\s*=\s*", ".*", "\s*#\s*"),
+        classes => default:if_repaired("nfs_sysctl");
 
     have_grub::
 
@@ -358,4 +395,26 @@ fstab_repaired::
 
       "/$(cryptoo:file_names.pkgdir_perms_app)";
 
+    nfs_sysctl::
+
+      "/$(file_names.sysctl_app)"
+        args => "-p /$(file_names.sysctl_nfs)",
+        classes => default:if_ok("reload_nfs");
+
+    daemon_reload_nfs::
+
+      "/$(file_names.systemd_app)"
+        args => "daemon-reload",
+        classes => default:if_ok("reload_nfs");
+
+    reload_nfs::
+
+      "/$(file_names.systemd_app)"
+        args => "restart nfs-utils";
+
+  reports:
+
+    daemon_reload_nfs::
+
+      "Reloading systemd due to nfs unit file changes";
 }

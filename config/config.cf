@@ -1543,7 +1543,43 @@ bundle common config
 
       "kconfig[NETWORK_FILESYSTEMS]"
         string => "NETWORK_FILESYSTEMS",
-        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[NFS_FS]"
+        string => "NFS_FS",
+        meta => { "enabled", "host" };
+
+      "kconfig[NFS_V2]"
+        string => "NFS_V2",
+        meta => { "enabled", "host" };
+
+      "kconfig[NFS_V3]"
+        string => "NFS_V3",
+        meta => { "enabled", "host" };
+
+      "kconfig[NFS_V3_ACL]"
+        string => "NFS_V3_ACL",
+        meta => { "enabled", "host" };
+
+      "kconfig[NFS_V4]"
+        string => "NFS_V4",
+        meta => { "enabled", "host" };
+
+      "kconfig[NFSD]"
+        string => "NFSD",
+        meta => { "enabled", "host" };
+
+      "kconfig[NFSD_V3]"
+        string => "NFSD_V3",
+        meta => { "enabled", "host" };
+
+      "kconfig[NFSD_V3_ACL]"
+        string => "NFSD_V3_ACL",
+        meta => { "enabled", "host" };
+
+      "kconfig[NFSD_V4]"
+        string => "NFSD_V4",
+        meta => { "enabled", "host" };
 
       "kconfig[9P_FS]"
         string => "9P_FS",
