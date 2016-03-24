@@ -1632,7 +1632,7 @@ bundle common file_groups
                              "tor": "vpn_primary",
                              "i2p": "vpn_primary",
                              "vpndmz": "vpn_primary",
-                             "lan": "vpn_primary"
+                             "lan": "firewall_internal"
                            }
                        }
                    }
@@ -3538,7 +3538,8 @@ bundle common file_groups
       "firewall_zones[firewall_internal]"
         slist => {
                     "@(firewall_zones[server_guest])",
-                    "lanx"
+                    "lanx",
+                    "netc"
                  };
 
       "firewall_bridges[firewall_internal]"
@@ -3628,6 +3629,15 @@ bundle common file_groups
                      "params":
                        {
                          "zone": "lan",
+                         "ipforward": "ipv4"
+                       }
+                   },
+                 "eth4":
+                   {
+                     "type": "simple",
+                     "params":
+                       {
+                         "zone": "ispdmz",
                          "ipforward": "ipv4"
                        }
                    }

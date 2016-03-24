@@ -573,6 +573,10 @@ bundle common role
                      {
                        "bridge": "lan",
                        "device": "lan$(this.defined_numbers[firewall_internal])"
+                     },
+                     {
+                       "bridge": "ispdmz",
+                       "device": "ispdmz(this.defined_numbers[firewall_internal])"
                      }
                    ]
               }

@@ -44,6 +44,8 @@ bundle common network
 
       "subnet[net]"
         string => "!+private";
+      "subnet[netc]"
+        string => "!+private";
       "subnet[vpn]"
         string => "!+private";
       "subnet[ispdmz]"

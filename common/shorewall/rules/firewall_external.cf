@@ -86,6 +86,11 @@ bundle agent shorewall_rules_firewall_external(root)
                   "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master]):22",
                   "protocol": "tcp",
                   "destination_port": "$(site.config[firewall][external_ssh])",
+                },
+                {
+                  "action": "ACCEPT",
+                  "source": "lan:192.168.$(subnet_config[lan]).224/27",
+                  "destination": "net"
                 }
               ]
           }';

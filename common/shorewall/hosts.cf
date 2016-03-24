@@ -55,6 +55,9 @@ bundle agent shorewall_hosts(root, role)
       "owner[lanx]"
         string => "eth0";
 
+      "owner[netc]"
+        string => "eth4";
+
     gateway_interface_done::
 
       "gateway_interface_list"

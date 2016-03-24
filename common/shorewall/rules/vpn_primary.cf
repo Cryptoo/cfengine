@@ -76,16 +76,6 @@ bundle agent shorewall_rules_vpn_primary(root)
                      "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])"
                    },
                    {
-                     "action": "SSH(ACCEPT)",
-                     "source": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
-                     "destination": "idmz:192.168.$(subnet_config[ispdmz]).$(defined_numbers[firewall_external])"
-                   },
-                   {
-                     "action": "SSH(ACCEPT)",
-                     "source": "idmz:192.168.$(subnet_config[ispdmz]).$(defined_numbers[firewall_external])",
-                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])"
-                   },
-                   {
                      "action": "bittorrent(DNAT)",
                      "source": "vpn",
                      "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[bittorrent])"

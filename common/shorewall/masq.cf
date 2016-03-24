@@ -42,10 +42,11 @@ bundle agent shorewall_masq(root, role)
               [
                 {
                   "interface": "eth0:!+private",
-                  "source": "192.168.$(subnet_config[ispdmz]).0/24",
-                  "address": "",
-                  "protocol": "",
-                  "port": ""
+                  "source": "192.168.$(subnet_config[ispdmz]).0/24"
+                },
+                {
+                  "interface": "eth0:!+private",
+                  "source": "192.168.$(subnet_config[lan]).224/27"
                 },
                 {
                   "interface": "eth1",

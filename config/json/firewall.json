@@ -27,7 +27,7 @@
                       "device": "ispdmz",
                       "type": "ipv4",
                       "prefix": "d",
-                      "members": [ "10", "11", "13", "14", "15", "17", "18", "19", "21", "25", "26", "27", "28" ]
+                      "members": [ "10", "11", "12", "13", "14", "15", "17", "18", "19", "21", "25", "26", "27", "28" ]
                      },
               "vpndmz_bridge": {
                       "name": "brvmz",
@@ -68,6 +68,7 @@
     "zone_names":
             {
               "net": "net",
+              "netc": "netc",
               "vpn": "vpn",
               "vpntt": "vpntt",
               "vpntu": "vpntu",
