@@ -393,6 +393,22 @@ bundle common config
         string => "IPV6",
         meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
+      "kconfig[IP_ADVANCED_ROUTER]"
+        string => "IP_ADVANCED_ROUTER",
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[IP_MULTIPLE_TABLES]"
+        string => "IP_MULTIPLE_TABLES",
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[IP_ROUTE_MULTIPATH]"
+        string => "IP_ROUTE_MULTIPATH",
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[IP_ROUTE_VERBOSE]"
+        string => "IP_ROUTE_VERBOSE",
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
+
       "kconfig[NETFILTER]"
         string => "NETFILTER",
         meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };

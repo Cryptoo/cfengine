@@ -1,0 +1,18 @@
+#
+# Shorewall -- /etc/shorewall/rtrules
+#
+# For information about entries in this file, type "man shorewall-rtrules"
+#
+# For additional information, see http://www.shorewall.net/MultiISP.html
+#
+####################################################################################
+#SOURCE                        DEST                    PROVIDER        PRIORITY        MASK
+lo                             -                       VPN             1000
+eth3:192.168.{{lan_subnet}}.0/27         -                       VPN             1000
+eth3:192.168.{{lan_subnet}}.32/27        -                       VPN             1000
+eth3:192.168.{{lan_subnet}}.64/27        -                       VPN             1000
+eth3:192.168.{{lan_subnet}}.96/27        -                       VPN             1000
+eth3:192.168.{{lan_subnet}}.128/27       -                       VPN             1000
+eth3:192.168.{{lan_subnet}}.160/27       -                       VPN             1000
+eth3:192.168.{{lan_subnet}}.192/27       -                       VPN             1000
+eth3:192.168.{{lan_subnet}}.224/27       -                       CLEAR           1000

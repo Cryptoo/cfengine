@@ -5,7 +5,8 @@ body file control
   namespace => "cryptoo";
 
   inputs => {
-              "cryptoo/config/directory_names.cf"
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/network.cf"
             };
 
 }
@@ -17,6 +18,9 @@ bundle common file_groups
   vars:
 
     any::
+
+      "subnet_config"
+        data => mergedata("cryptoo:network.subnet_config");
 
 ################################################################################
 #                                   Common
@@ -3557,7 +3561,7 @@ bundle common file_groups
                    { "source": "lan", "destination": "eep", "policy": "ACCEPT", "log_level": "" },
                    { "source": "lan", "destination": "lanx", "policy": "ACCEPT", "log_level": "" },
                    { "source": "vdmz", "destination": "onion", "policy": "ACCEPT", "log_level": "" },
-                   { "source": "vdmz", "destination": "eep", "policy": "ACCEPT", "log_level": "" }
+                   { "source": "vdmz", "destination": "eep", "policy": "ACCEPT", "log_level": "" },
                  ],
                }
           }

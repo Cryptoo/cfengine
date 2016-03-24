@@ -13,6 +13,7 @@ body file control
               "cryptoo/config/config.cf",
               "cryptoo/config/file_groups.cf",
               "cryptoo/config/file_names.cf",
+              "cryptoo/config/network.cf",
               "cryptoo/util/classes.cf",
               "cryptoo/util/contain.cf"
             };
@@ -22,6 +23,19 @@ body file control
 bundle agent shorewall(root, role)
 
 {
+
+  vars:
+
+    any::
+
+      "subnet_config"
+        data => mergedata("cryptoo:network.subnet_config");
+
+      "providers_json"
+        string => '{"vpn_subnet": "$(subnet_config[vpndmz])", "isp_subnet": "$(subnet_config[ispdmz])"}';
+
+      "rtrules_json"
+        string => '{"lan_subnet": "$(subnet_config[lan])"}';
 
   classes:
 
@@ -36,6 +50,9 @@ bundle agent shorewall(root, role)
       "have_shorewall_conf"
         expression => fileexists("$(this.root)$(file_names.shorewall_config)");
 
+      "shorewall_role_$(role)"
+        expression => "any";
+
   files:
 
     have_shorewall_conf::
@@ -43,6 +60,24 @@ bundle agent shorewall(root, role)
        "$(root)$(file_names.shorewall_config)"
         create => "false",
         edit_line => default:set_line_based("cryptoo:config.firewall[shorewall_conf]", "=", "\s+", ".*", "\s*#\s*"),
+        classes => shorewall;
+
+    shorewall_role_firewall_internal::
+
+      "$(root)$(file_names.shorewall_providers)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[shorewall_providers])",
+        template_method => "mustache",
+        template_data => parsejson("$(providers_json)"),
+        classes => shorewall;
+
+      "$(root)$(file_names.shorewall_rtrules)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[shorewall_rtrules])",
+        template_method => "mustache",
+        template_data => parsejson("$(rtrules_json)"),
         classes => shorewall;
 
   methods:

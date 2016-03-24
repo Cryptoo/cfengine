@@ -1,0 +1,11 @@
+#
+# Shorewall -- /etc/shorewall/providers
+#
+# For information about entries in this file, type "man shorewall-providers"
+#
+# For additional information, see http://shorewall.net/MultiISP.html
+#
+############################################################################################
+#NAME   NUMBER  MARK    DUPLICATE       INTERFACE       GATEWAY         OPTIONS         COPY
+VPN     1       1       -               eth0            192.168.{{vpn_subnet}}.11  track,primary    -
+CLEAR   2       2       -               eth4            192.168.{{isp_subnet}}.10  track    -

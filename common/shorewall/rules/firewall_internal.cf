@@ -39,20 +39,11 @@ bundle agent shorewall_rules_firewall_internal(root)
             "new":
                  [
                    {
-                     "action": "guest",
-                     "source": "",
-                     "destination": "",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "action": "guest"
                    },
                    {
                      "action": "portmapping",
-                     "source": "lan",
-                     "destination": "",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "source": "lan"
                    },
                    {
                      "action": "apple(DROP)",
@@ -66,7 +57,7 @@ bundle agent shorewall_rules_firewall_internal(root)
                    },
                    {
                      "action": "DNS(ACCEPT)",
-                     "source": "lan",
+                     "source": "lan:!192.168.$(subnet_config[lan]).224/27",
                      "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])",
                      "protocol": "",
                      "destination_port": "",
@@ -75,130 +66,82 @@ bundle agent shorewall_rules_firewall_internal(root)
                    {
                      "action": "DNS(ACCEPT)",
                      "source": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])",
-                     "destination": "tor:192.168.$(subnet_config[tor]).$(defined_numbers[tor])",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "destination": "tor:192.168.$(subnet_config[tor]).$(defined_numbers[tor])"
                    },
                    {
                      "action": "DNS(ACCEPT)",
                      "source": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])",
-                     "destination": "i2p:192.168.$(subnet_config[i2p]).$(defined_numbers[i2p])",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "destination": "i2p:192.168.$(subnet_config[i2p]).$(defined_numbers[i2p])"
                    },
                    {
                      "action": "SSH(ACCEPT)",
                      "source": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
-                     "destination": "vdmz",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "destination": "vdmz"
                    },
                    {
                      "action": "SSH(ACCEPT)",
                      "source": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
-                     "destination": "idmz",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "destination": "idmz"
                    },
                    {
                      "action": "SSH(ACCEPT)",
                      "source": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
-                     "destination": "tor",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "destination": "tor"
                    },
                    {
                      "action": "SSH(ACCEPT)",
                      "source": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
-                     "destination": "i2p",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "destination": "i2p"
                    },
                    {
                      "action": "SSH(ACCEPT)",
                      "source": "net",
-                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])"
                    },
                    {
                      "action": "SSH(ACCEPT)",
                      "source": "idmz:192.168.$(subnet_config[ispdmz]).$(defined_numbers[firewall_external])",
-                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])"
                    },
                    {
                      "action": "cfengine(ACCEPT)",
                      "source": "idmz:192.168.$(subnet_config[ispdmz]).$(defined_numbers[firewall_external])",
-                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])"
                    },
                    {
                      "action": "cfengine(ACCEPT)",
                      "source": "vdmz",
-                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])"
                    },
                    {
                      "action": "cfengine(ACCEPT)",
                      "source": "tor",
-                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])"
                    },
                    {
                      "action": "cfengine(ACCEPT)",
                      "source": "i2p",
-                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])"
                    },
                    {
                      "action": "mail_server(ACCEPT)",
-                     "source": "lan",
-                     "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "source": "lan:!192.168.$(subnet_config[lan]).224/27",
+                     "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])"
                    },
                    {
                      "action": "znc(ACCEPT)",
-                     "source": "lan",
-                     "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[irc_bouncer])",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "source": "lan:!192.168.$(subnet_config[lan]).224/27",
+                     "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[irc_bouncer])"
                    },
                    {
                      "action": "tor(ACCEPT)",
-                     "source": "lan",
-                     "destination": "tor:192.168.$(subnet_config[tor]).$(defined_numbers[tor])",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "source": "lan:!192.168.$(subnet_config[lan]).224/27",
+                     "destination": "tor:192.168.$(subnet_config[tor]).$(defined_numbers[tor])"
                    },
                    {
                      "action": "tor(ACCEPT)",
                      "source": "vdmz",
-                     "destination": "tor:192.168.$(subnet_config[tor]).$(defined_numbers[tor])",
-                     "protocol": "",
-                     "destination_port": "",
-                     "source_port": ""
+                     "destination": "tor:192.168.$(subnet_config[tor]).$(defined_numbers[tor])"
                    },
                    {
                      "action": "bob(ACCEPT)",
@@ -222,17 +165,17 @@ bundle agent shorewall_rules_firewall_internal(root)
                    },
                    {
                      "action": "HTTP(ACCEPT)",
-                     "source": "lan",
+                     "source": "lan:!192.168.$(subnet_config[lan]).224/27",
                      "destination": "i2p:192.168.$(subnet_config[i2p]).$(defined_numbers[i2p])"
                    },
                    {
                      "action": "HTTP(ACCEPT)",
-                     "source": "lan:192.168.$(subnet_config[lan]).0/24",
+                     "source": "lan:!192.168.$(subnet_config[lan]).224/27",
                      "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[freenet])"
                    },
                    {
                      "action": "fcp(ACCEPT)",
-                     "source": "lan:192.168.$(subnet_config[lan]).0/24",
+                     "source": "lan:!192.168.$(subnet_config[lan]).224/27",
                      "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[freenet])"
                    },
                    {
@@ -247,12 +190,12 @@ bundle agent shorewall_rules_firewall_internal(root)
                    },
                    {
                      "action": "bitcoin_rpc(ACCEPT)",
-                     "source": "lan:192.168.$(subnet_config[lan]).0/24",
+                     "source": "lan:!192.168.$(subnet_config[lan]).224/27",
                      "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin])"
                    },
                    {
                      "action": "bitcoin_rpc(ACCEPT)",
-                     "source": "lan:192.168.$(subnet_config[lan]).0/24",
+                     "source": "lan:!192.168.$(subnet_config[lan]).224/27",
                      "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitcoin_testnet])"
                    },
                    {
@@ -267,20 +210,25 @@ bundle agent shorewall_rules_firewall_internal(root)
                    },
                    {
                      "action": "bitcoin_rpc(ACCEPT)",
-                     "source": "lan:192.168.$(subnet_config[lan]).0/24",
+                     "source": "lan:!192.168.$(subnet_config[lan]).224/27",
                      "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[btcd])"
                    },
                    {
                      "action": "bitcoin_rpc(ACCEPT)",
-                     "source": "lan:192.168.$(subnet_config[lan]).0/24",
+                     "source": "lan:!192.168.$(subnet_config[lan]).224/27",
                      "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[btcd_testnet])"
                    },
                    {
                      "action": "bittorrent_rpc(ACCEPT)",
-                     "source": "lan:192.168.$(subnet_config[lan]).0/24",
+                     "source": "lan:!192.168.$(subnet_config[lan]).224/27",
                      "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[bittorrent])"
+                   },
+                   {
+                     "action": "ACCEPT",
+                     "source": "lan:192.168.$(subnet_config[lan]).224/27",
+                     "destination": "netc"
                    }
-                 ],
+                 ]
                }
           }
         ';

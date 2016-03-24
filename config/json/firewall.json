@@ -7,7 +7,8 @@
                       "STARTUP_ENABLED": "Yes",
                       "DISABLE_IPV6": "Yes",
                       "IP_FORWARDING": "On",
-                      "SAVE_IPSETS": "Yes"
+                      "SAVE_IPSETS": "Yes",
+                      "USE_DEFAULT_RT": "Yes"
             },
     "interface_options": {
               "bridge": "dhcp,nosmurfs,bridge,tcpflags,optional",
