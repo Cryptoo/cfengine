@@ -1557,6 +1557,14 @@ bundle common config
         string => "TMPFS_XATTR",
         meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
+      "kconfig[FSCACHE]"
+        string => "FSCACHE",
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[CACHEFILES]"
+        string => "CACHEFILES",
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
+
       "kconfig[NETWORK_FILESYSTEMS]"
         string => "NETWORK_FILESYSTEMS",
         meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
@@ -1581,6 +1589,18 @@ bundle common config
         string => "NFS_V4",
         meta => { "enabled", "host" };
 
+      "kconfig[NFS_V4_1]"
+        string => "NFS_V4_1",
+        meta => { "enabled", "host" };
+
+      "kconfig[NFS_V4_2]"
+        string => "NFS_V4_2",
+        meta => { "enabled", "host" };
+
+      "kconfig[NFS_FSCACHE]"
+        string => "NFS_FSCACHE",
+        meta => { "enabled", "host" };
+
       "kconfig[NFSD]"
         string => "NFSD",
         meta => { "enabled", "host" };
@@ -1595,6 +1615,10 @@ bundle common config
 
       "kconfig[NFSD_V4]"
         string => "NFSD_V4",
+        meta => { "enabled", "host" };
+
+      "kconfig[NFSD_PNFS]"
+        string => "NFSD_PNFS",
         meta => { "enabled", "host" };
 
       "kconfig[9P_FS]"
