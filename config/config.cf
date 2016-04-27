@@ -145,10 +145,6 @@ bundle common config
         string => "MEMCG_SWAP",
         meta => { "enabled", "host"};
 
-      "kconfig[MEMCG_KMEM]"
-        string => "MEMCG_KMEM",
-        meta => { "enabled", "host"};
-
       "kconfig[SCHED_AUTOGROUP]"
         string => "SCHED_AUTOGROUP",
         meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
@@ -1503,6 +1499,14 @@ bundle common config
 
       "kconfig[EXT4_USE_FOR_EXT2]"
         string => "EXT4_USE_FOR_EXT2",
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[BTRFS_FS]"
+        string => "BTRFS_FS",
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[MANDATORY_FILE_LOCKING]"
+        string => "MANDATORY_FILE_LOCKING",
         meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[DNOTIFY]"
