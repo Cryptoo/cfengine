@@ -53,6 +53,16 @@ bundle agent shorewall_macro_vdmz_bitmessage(root, port_info)
                      "action": "cfengine(PARAM)",
                      "source": "u$(defined_numbers[bitmessage]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitmessage])",
                      "destination": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])"
+                   },
+                   {
+                     "action": "tor(PARAM)",
+                     "source": "u$(defined_numbers[bitmessage]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitmessage])",
+                     "destination": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[tor]).$(defined_numbers[tor])"
+                   },
+                   {
+                     "action": "bitmessage(PARAM)",
+                     "source": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[tor]).$(defined_numbers[tor])",
+                     "destination": "u$(defined_numbers[bitmessage]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitmessage])"
                    }
                  ]
                }

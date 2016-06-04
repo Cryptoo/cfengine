@@ -41,7 +41,9 @@
     "bitmessage":
       {
           "external_port": "8444",
-          "rpc_port": "8445"
+          "rpc_port": "8445",
+          "imap_port": "1143",
+          "smtp_port": "1025"
       },
     "transmission":
       {

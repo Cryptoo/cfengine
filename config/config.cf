@@ -1882,6 +1882,8 @@ bundle common config
 				int => "319";
 			"gid[btcd]"
 				int => "320";
+			"gid[bmd]"
+				int => "321";
 			"gid[cryptoo]"
 				int => "1000";
 

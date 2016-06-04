@@ -50,7 +50,18 @@ bundle agent shorewall_rules_bitmessage(root)
                   "source_port": "-",
                   "original_destination": "-",
                   "rate": "-",
-                  "user": "bitmessage:bitmessage"
+                  "user": "bmd:bmd"
+                },
+                {
+                  "action": "tor(ACCEPT)",
+                  "source": "fw:192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitmessage])",
+                  "destination": "tor:192.168.$(subnet_config[tor]).$(defined_numbers[tor])",
+                  "protocol": "-",
+                  "destination_port": "-",
+                  "source_port": "-",
+                  "original_destination": "-",
+                  "rate": "-",
+                  "user": "bmd:bmd"
                 },
                 {
                   "action": "bitmessage(ACCEPT)",
@@ -58,14 +69,19 @@ bundle agent shorewall_rules_bitmessage(root)
                   "destination": "fw:192.168.$(subnet_config[ispdmz]).$(defined_numbers[bitmessage])"
                 },
                 {
-                  "action": "POP3(ACCEPT)",
-                  "source": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])",
+                  "action": "bitmessage(ACCEPT)",
+                  "source": "tor:192.168.$(subnet_config[tor]).$(defined_numbers[tor])",
                   "destination": "fw:192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitmessage])"
                 },
                 {
-                  "action": "SMTP(ACCEPT)",
+                  "action": "IMAP(REDIRECT)",
                   "source": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])",
-                  "destination": "fw:192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitmessage])"
+                  "destination": "$(config.service_info[bitmessage][imap_port])"
+                },
+                {
+                  "action": "SMTP(REDIRECT)",
+                  "source": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])",
+                  "destination": "$(config.service_info[bitmessage][smtp_port])"
                 }
               ]
           }';

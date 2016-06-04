@@ -161,6 +161,12 @@
                    "group": "btcd",
                    "shell": "/sbin/nologin"
                  },
+    "bmd": {
+                   "home": "/var/lib/bmd",
+                   "uid": "321",
+                   "group": "bmd",
+                   "shell": "/sbin/nologin"
+                 },
     "guest": {
                    "home": "/mnt/shared",
                    "uid": "405",
