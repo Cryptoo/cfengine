@@ -168,6 +168,7 @@ bundle common directory_names
       "hidden_services" string => "$(volatile_tor)/hs";
       "bitcoin_hs" string => "$(hidden_services)/bitcoin";
       "bitcoin_testnet_hs" string => "$(hidden_services)/bitcoin_testnet";
+      "bitmessage_hs" string => "$(hidden_services)/bitmessage";
       "btcd_hs" string => "$(hidden_services)/btcd";
       "btcd_testnet_hs" string => "$(hidden_services)/btcd_testnet";
       "volatile_znc" string => "$(volatile_library)/znc";

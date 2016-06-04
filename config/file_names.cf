@@ -152,6 +152,8 @@ bundle common file_names
         string => "$(directory_names.config_guest_inboxes)/bitcoin/hidden_service.json";
       "hidden_service_bitcoin_testnet"
         string => "$(directory_names.config_guest_inboxes)/bitcoin_testnet/hidden_service.json";
+      "hidden_service_bitmessage"
+        string => "$(directory_names.config_guest_inboxes)/bitmessage/hidden_service.json";
       "hidden_service_btcd"
         string => "$(directory_names.config_guest_inboxes)/btcd/hidden_service.json";
       "hidden_service_btcd_testnet"

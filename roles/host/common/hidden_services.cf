@@ -35,6 +35,9 @@ bundle agent hidden_services
       "have_bitcoin_testnet_file"
         expression => fileexists("/$(file_names.hidden_service_bitcoin_testnet)");
 
+      "have_bitmessage_file"
+        expression => fileexists("/$(file_names.hidden_service_bitmessage)");
+
       "have_btcd_file"
         expression => fileexists("/$(file_names.hidden_service_btcd)");
 
@@ -48,6 +51,9 @@ bundle agent hidden_services
 
       "have_bitcoin_testnet"
         expression => isvariable("hidden_service_data[bitcoin_testnet]");
+
+      "have_bitmessage"
+        expression => isvariable("hidden_service_data[bitmessage]");
 
       "have_btcd"
         expression => isvariable("hidden_service_data[btcd]");
@@ -69,6 +75,12 @@ bundle agent hidden_services
     have_bitcoin_testnet_file::
 
       "/$(file_names.hidden_service_bitcoin_testnet)"
+        perms => root_qemu,
+        create => "false";
+
+    have_bitmessage_file::
+
+      "/$(file_names.hidden_service_bitmessage)"
         perms => root_qemu,
         create => "false";
 
@@ -95,6 +107,11 @@ bundle agent hidden_services
 
       "place Bitcoin hidden service in inbox"
         usebundle => default:file_make("/$(file_names.hidden_service_bitcoin_testnet)", '{ "bitcoin_testnet": "$(hidden_service_data[bitcoin_testnet])" }');
+
+    have_bitmessage::
+
+      "place Bitmessage hidden service in inbox"
+        usebundle => default:file_make("/$(file_names.hidden_service_bitmessage)", '{ "bitmessage": "$(hidden_service_data[bitmessage])" }');
 
     have_btcd::
 

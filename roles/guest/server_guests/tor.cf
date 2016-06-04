@@ -52,6 +52,10 @@ bundle agent tor(root)
                   "port": "$(config.service_info[bitcoin][testnet_port]) 192.168.$(network.subnet_config[vpndmz]).$(config.defined_numbers[bitcoin_testnet]):$(config.service_info[bitcoin][testnet_port])"
                 },
                 {
+                  "dir": "/$(directory_names.bitmessage_hs)",
+                  "port": "$(config.service_info[bitmessage][external_port]) 192.168.$(network.subnet_config[vpndmz]).$(config.defined_numbers[bitmessage]):$(config.service_info[bitmessage][external_port])"
+                },
+                {
                   "dir": "/$(directory_names.btcd_hs)",
                   "port": "$(config.service_info[bitcoin][external_port]) 192.168.$(network.subnet_config[vpndmz]).$(config.defined_numbers[btcd]):$(config.service_info[bitcoin][external_port])"
                 },
@@ -85,6 +89,12 @@ bundle agent tor(root)
         string => readfile("/$(file_names.bitcoin_testnet_hs)", "0"),
         classes => default:if_ok("have_bitcoin_testnet_hs_hostname");
 
+    have_bitmessage_hs_hostname_file::
+
+      "bitmessage_hs_hostname"
+        string => readfile("/$(file_names.bitmessage_hs)", "0"),
+        classes => default:if_ok("have_bitmessage_hs_hostname");
+
     have_btcd_hs_hostname_file::
 
       "btcd_hs_hostname"
@@ -105,6 +115,9 @@ bundle agent tor(root)
       "hs_hostname_bitcoin_testnet"
         string => "";
 
+      "hs_hostname_bitmessage"
+        string => "";
+
       "hs_hostname_btcd"
         string => "";
 
@@ -120,6 +133,11 @@ bundle agent tor(root)
 
       "hs_hostname_bitcoin_testnet"
         string => '"bitcoin_testnet": "$(this.bitcoin_testnet_hs_hostname)",';
+
+    have_bitmessage_hs_hostname::
+
+      "hs_hostname_bitmessage"
+        string => '"bitmessage": "$(this.bitmessage_hs_hostname)",';
 
     have_btcd_hs_hostname::
 
@@ -138,6 +156,7 @@ bundle agent tor(root)
           {
             $(hs_hostname_bitcoin)
             $(hs_hostname_bitcoin_testnet)
+            $(hs_hostname_bitmessage)
             $(hs_hostname_btcd)
             $(hs_hostname_btcd_testnet)
           }',
@@ -152,6 +171,9 @@ bundle agent tor(root)
 
       "have_bitcoin_testnet_hs_hostname_file"
         expression => fileexists("/$(file_names.bitcoin_testnet_hs)");
+
+      "have_bitmessage_hs_hostname_file"
+        expression => fileexists("/$(file_names.bitmessage_hs)");
 
       "have_btcd_hs_hostname_file"
         expression => fileexists("/$(file_names.btcd_hs)");
@@ -223,6 +245,10 @@ bundle agent tor(root)
         create => "true";
 
       "$(this.root)$(directory_names.bitcoin_testnet_hs)/."
+        perms => tor,
+        create => "true";
+
+      "$(this.root)$(directory_names.bitmessage_hs)/."
         perms => tor,
         create => "true";
 
