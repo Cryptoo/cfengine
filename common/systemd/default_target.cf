@@ -50,8 +50,8 @@ bundle agent default_target(root, role)
 
     guest_type_headless|guest_type_graphical::
 
-      "/$(file_names.systemd_app)"
-        args => "--root=$(this.root) set-default $(this.default_target_desired)",
-        contain => silent;
+#      "/$(file_names.systemd_app)"
+#        args => "--root=$(this.root) set-default $(this.default_target_desired)",
+#        contain => silent;
 
 }

@@ -1813,6 +1813,7 @@ bundle common file_groups
       "use[i2p]"
         slist => {
                     "@(use[server_guest])",
+                    "boost",
                     "i2p",
                     "java"
                  };
