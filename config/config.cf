@@ -1029,10 +1029,6 @@ bundle common config
         string => "NET_SCH_FQ_CODEL",
         meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
-      "kconfig[NETLINK_MMAP]"
-        string => "NETLINK_MMAP",
-        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
-
       "kconfig[NETLINK_DIAG]"
         string => "NETLINK_DIAG",
         meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
