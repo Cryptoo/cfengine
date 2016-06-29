@@ -115,19 +115,19 @@ bundle common config
 
       "kconfig[IPC_NS]"
         string => "IPC_NS",
-        meta => { "disabled", "host", "guest", "guest_smp", "guest_multilib" };
+        meta => { "disabled", "host", "guest", "guest_multilib" };
 
       "kconfig[USER_NS]"
         string => "USER_NS",
-        meta => { "enabled", "guest" };
+        meta => { "enabled", "guest", "guest_smp" };
 
       "kconfig[PID_NS_disabled]"
         string => "PID_NS",
-        meta => { "disabled", "host", "guest_smp", "guest_multilib" };
+        meta => { "disabled", "host", "guest_multilib" };
 
       "kconfig[PID_NS]"
         string => "PID_NS",
-        meta => { "enabled", "guest" };
+        meta => { "enabled", "guest", "guest_smp" };
 
       "kconfig[IKCONFIG]"
         string => "IKCONFIG",
