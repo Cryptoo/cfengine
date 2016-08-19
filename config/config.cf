@@ -117,16 +117,12 @@ bundle common config
         string => "IPC_NS",
         meta => { "disabled", "host", "guest", "guest_multilib" };
 
-      "kconfig[USER_NS]"
-        string => "USER_NS",
-        meta => { "enabled", "guest", "guest_smp" };
-
-      "kconfig[PID_NS_disabled]"
-        string => "PID_NS",
-        meta => { "disabled", "host", "guest_multilib" };
-
       "kconfig[PID_NS]"
         string => "PID_NS",
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
+
+      "kconfig[USER_NS]"
+        string => "USER_NS",
         meta => { "enabled", "guest", "guest_smp" };
 
       "kconfig[IKCONFIG]"
@@ -189,6 +185,14 @@ bundle common config
         string => "SMP",
         meta => { "enabled", "host", "guest_smp" };
 
+      "option[X86_MPPARSE]"
+        string => "X86_MPPARSE",
+        meta => { "disabled", "host", "guest", "guest_smp", "guest_multilib" };
+
+      "option[SCHED_OMIT_FRAME_POINTER]"
+        string => "SCHED_OMIT_FRAME_POINTER",
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
+
       "kconfig[HYPERVISOR_GUEST]"
         string => "HYPERVISOR_GUEST",
         meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
@@ -205,25 +209,29 @@ bundle common config
         string => "PARAVIRT_TIME_ACCOUNTING",
         meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
 
-      "kconfig[NO_GENERIC_CPU]"
+      "kconfig[GENERIC_CPU on]"
         string => "GENERIC_CPU",
-        meta => { "disabled", "host" };
+        meta => { "enabled", "guest", "guest_multilib" };
 
-      "kconfig[GENERIC_CPU]"
+      "kconfig[GENERIC_CPU off]"
         string => "GENERIC_CPU",
-        meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
+        meta => { "disabled", "host", "guest_smp" };
 
       "kconfig[MCORE2]"
         string => "MCORE2",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest_smp" };
 
       "kconfig[SCHED_SMT]"
         string => "SCHED_SMT",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest_smp"};
+
+      "option[PREEMPT]"
+        string => "PREEMPT",
+        meta => { "enabled", "host", "guest_smp" };
 
       "kconfig[SCHED_MC]"
         string => "SCHED_MC",
-        meta => { "enabled", "host" };
+        meta => { "enabled", "host", "guest_smp" };
 
       "kconfig[X86_MCE]"
         string => "X86_MCE",
@@ -255,7 +263,7 @@ bundle common config
 
       "kconfig[KSM]"
         string => "KSM",
-        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
+        meta => { "disabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[MEMORY_FAILURE]"
         string => "MEMORY_FAILURE",
@@ -263,6 +271,18 @@ bundle common config
 
       "kconfig[TRANSPARENT_HUGEPAGE]"
         string => "TRANSPARENT_HUGEPAGE",
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
+
+      "option[X86_INTEL_MPX]"
+        string => "X86_INTEL_MPX",
+        meta => { "enabled", "host" };
+
+      "option[EFI on]"
+        string => "EFI",
+        meta => { "enabled" };
+
+      "option[EFI off]"
+        string => "EFI",
         meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[SECCOMP]"
@@ -651,7 +671,7 @@ bundle common config
 
       "kconfig[NETFILTER_XT_MATCH_PHYSDEV]"
         string => "NETFILTER_XT_MATCH_PHYSDEV",
-        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
+        meta => { "enabled", "host" };
 
       "kconfig[NETFILTER_XT_MATCH_PKTTYPE]"
         string => "NETFILTER_XT_MATCH_PKTTYPE",
@@ -767,7 +787,7 @@ bundle common config
 
       "kconfig[IP_SET_LIST_SET]"
         string => "IP_SET_LIST_SET",
-        meta => { "enabled", "host" , "guest", "guest_smp"};
+        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[NF_CONNTRACK_IPV4]"
         string => "NF_CONNTRACK_IPV4",
@@ -861,6 +881,10 @@ bundle common config
         string => "NF_NAT_IPV6",
         meta => { "diabled", "host", "guest", "guest_smp", "guest_multilib" };
 
+      "option[NF_NAT_MASQUERADE_IPV6]"
+        string => "NF_NAT_MASQUERADE_IPV6",
+        meta => { "enabled", "host", "guest" };
+
       "kconfig[IP6_NF_IPTABLES]"
         string => "IP6_NF_IPTABLES",
         meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
@@ -928,6 +952,14 @@ bundle common config
       "kconfig[IP6_NF_NAT]"
         string => "IP6_NF_NAT",
         meta => { "disabled", "host", "guest", "guest_smp", "guest_multilib" };
+
+      "option[IP6_NF_TARGET_MASQUERADE]"
+        string => "IP6_NF_TARGET_MASQUERADE",
+        meta => { "enabled", "host", "guest" };
+
+      "option[IP6_NF_TARGET_NPT]"
+        string => "IP6_NF_TARGET_NPT",
+        meta => { "enabled", "host", "guest" };
 
       "kconfig[BRIDGE_NF_EBTABLES]"
         string => "BRIDGE_NF_EBTABLES",
@@ -1065,11 +1097,11 @@ bundle common config
         string => "VIRTIO_BLK",
         meta => { "enabled", "guest", "guest_smp", "guest_multilib" };
 
-      "kconfig[SCSI-ON]"
+      "kconfig[SCSI on]"
         string => "SCSI",
         meta => { "enabled", "host" };
 
-      "kconfig[SCSI-OFF]"
+      "kconfig[SCSI off]"
         string => "SCSI",
         meta => { "disabled", "guest", "guest_smp", "guest_multilib" };
 
@@ -1252,10 +1284,6 @@ bundle common config
       "kconfig[INPUT_MOUSE]"
         string => "INPUT_MOUSE",
         meta => { "disabled", "guest", "guest_smp", "guest_multilib" };
-
-      "kconfig[DEVPTS_MULTIPLE_INSTANCES]"
-        string => "DEVPTS_MULTIPLE_INSTANCES",
-        meta => { "enabled", "host", "guest", "guest_smp", "guest_multilib" };
 
       "kconfig[SERIAL_8250]"
         string => "SERIAL_8250",
