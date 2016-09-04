@@ -209,7 +209,7 @@ bundle agent tor(root)
         edit_template => "/$(templates.template[torrc])",
         template_method => "mustache",
         template_data => parsejson($(this.torrc)),
-        classes => default:if_repaired("reload_tor");
+        classes => restart_if_repaired("tor");
 
       "$(this.root)$(file_names.tor_service)"
         perms => system,
@@ -217,22 +217,15 @@ bundle agent tor(root)
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
         template_data => mergedata("cryptoo:config.systemd_services[tor]"),
-        classes => default:if_repaired("daemon_reload");
+        classes => daemon_reload("tor");
 
       "$(this.root)$(file_names.polipo_config)"
         perms => system,
         create => "true",
         edit_template => "/$(templates.template[polipo])",
         template_method => "mustache",
-        template_data => parsejson($(this.polipo));
-
-      "$(this.root)$(file_names.tor_autorestart)"
-        perms => system,
-        create => "true",
-        edit_template => "/$(templates.template[ini])",
-        template_method => "mustache",
-        template_data => mergedata("cryptoo:config.systemd_services[autorestart]"),
-        classes => default:if_repaired("daemon_reload");
+        template_data => parsejson($(this.polipo)),
+        classes => restart_if_repaired("polipo");
 
     !bootstrap::
 
@@ -277,18 +270,4 @@ bundle agent tor(root)
 
       "generate random rpc password"
         usebundle => default:file_make("/$(file_names.hidden_service_outgoing)", "$(this.hs_hostname)");
-
-  commands:
-
-    daemon_reload&(!bootstrap)::
-
-      "/$(file_names.systemd_app)"
-        args => "daemon-reload",
-        classes => default:if_repaired("reload_tor");
-
-    reload_tor&(!bootstrap)::
-
-      "/$(file_names.systemd_app)"
-        args => "restart tor";
-
 }

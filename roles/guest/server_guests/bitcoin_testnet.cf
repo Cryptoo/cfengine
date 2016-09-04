@@ -43,10 +43,10 @@ bundle agent bitcoin_testnet(root)
 
     !hidden_service_evaluated::
 
-#                { "name": "$(site.config[ddns]):$(config.service_info[bitcoin][testnet_port])" }
       "externalip"
         string => '"externalip":
               [
+                { "name": "$(site.config[ddns]):$(config.service_info[bitcoin][testnet_port])" }
               ]';
 
     have_bitcoin_hs::
@@ -128,7 +128,7 @@ bundle agent bitcoin_testnet(root)
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
         template_data => mergedata("cryptoo:config.systemd_services[autorestart]"),
-        classes => default:if_repaired("daemon_reload");
+        classes => daemon_reload("bitcoind");
 
     !bootstrap::
 
@@ -148,7 +148,7 @@ bundle agent bitcoin_testnet(root)
         edit_template => "/$(templates.template[bitcoin_conf_testnet])",
         template_method => "mustache",
         template_data => parsejson($(this.bitcoin_conf)),
-          classes => default:if_repaired("restart_bitcoin");
+        classes => restart_if_repaired("bitcoind");
 
   methods:
 
@@ -161,17 +161,4 @@ bundle agent bitcoin_testnet(root)
 
       "generate random rpc password"
         usebundle => default:file_make("$(this.root)$(file_names.bitcoin_rpc_outgoing)", "$(this.rpc_json)");
-
-  commands:
-
-    daemon_reload&(!bootstrap)::
-
-      "$(this.root)$(file_names.systemd_app)"
-        args => "daemon-reload";
-
-    restart_bitcoin&(!bootstrap)::
-
-      "/$(file_names.systemd_app)"
-        args => "restart bitcoind";
-
 }

@@ -272,14 +272,15 @@ bundle agent fetchmail(root)
         create => "true",
         edit_template => "/$(templates.template[fetchmail])",
         template_method => "mustache",
-        template_data => parsejson("$(fetchmail_json)");
+        template_data => parsejson("$(fetchmail_json)"),
+        classes => restart_if_repaired("fetchmail");
 
     default_parsed::
 
       "$(this.root)$(file_names.postfix_main)"
         perms => system,
         edit_line => default:set_line_based("cryptoo:fetchmail.postfix", " = ", "\s*=\s*", ".*", "\s*#\s*"),
-        classes => postfix;
+        classes => restart_if_repaired("postfix");
 
       "$(this.root)$(file_names.postfix_default_map)"
         perms => root,
@@ -287,7 +288,7 @@ bundle agent fetchmail(root)
         edit_template => "/$(templates.template[postfix_default_map])",
         template_method => "mustache",
         template_data => parsejson("$(default_map)"),
-        classes => postfix;
+        classes => restart_if_repaired("postfix");
 
       "$(this.root)$(file_names.postfix_saslpass)"
         perms => root,
@@ -295,7 +296,7 @@ bundle agent fetchmail(root)
         edit_template => "/$(templates.template[postfix_saslpass])",
         template_method => "mustache",
         template_data => parsejson("$(default_saslpass)"),
-        classes => postfix;
+        classes => restart_if_repaired("postfix");
 
     bitmessage_parsed::
 
@@ -304,14 +305,16 @@ bundle agent fetchmail(root)
         create => "true",
         edit_template => "/$(templates.template[postfix_default_map])",
         template_method => "mustache",
-        template_data => parsejson("$(bitmessage_map)");
+        template_data => parsejson("$(bitmessage_map)"),
+        classes => restart_if_repaired("postfix");
 
       "$(this.root)$(file_names.postfix_bitmessage_saslpass)"
         perms => root,
         create => "true",
         edit_template => "/$(templates.template[postfix_saslpass])",
         template_method => "mustache",
-        template_data => parsejson("$(bitmessage_saslpass)");
+        template_data => parsejson("$(bitmessage_saslpass)"),
+        classes => restart_if_repaired("postfix");
 
     extra_parsed::
 
@@ -321,7 +324,7 @@ bundle agent fetchmail(root)
         edit_template => "/$(templates.template[postfix_sender_map])",
         template_method => "mustache",
         template_data => parsejson("$(extra_json_full)"),
-        classes => postfix;
+        classes => restart_if_repaired("postfix");
 
       "$(this.root)$(directory_names.config_postfix)/saslpass_$(extra_email[$(extra_index)][transport])"
         perms => root,
@@ -329,7 +332,7 @@ bundle agent fetchmail(root)
         edit_template => "/$(templates.template[postfix_saslpass])",
         template_method => "mustache",
         template_data => parsejson("$($(extra_email[$(extra_index)][transport])_saslpass)"),
-        classes => postfix;
+        classes => restart_if_repaired("postfix");
 
       "$(this.root)$(directory_names.config_postfix)/$(extra_email[$(extra_index)][transport])_outgoing_map"
         perms => root,
@@ -337,12 +340,12 @@ bundle agent fetchmail(root)
         edit_template => "/$(templates.template[postfix_default_map])",
         template_method => "mustache",
         template_data => parsejson("$($(extra_email[$(extra_index)][transport])_map)"),
-        classes => postfix;
+        classes => restart_if_repaired("postfix");
 
       "$(this.root)$(file_names.postfix_master)"
         perms => system,
         edit_line => default:set_line_based("cryptoo:fetchmail.transport", "    ", "\s*", ".*", "\s*#\s*"),
-        classes => postfix;
+        classes => restart_if_repaired("postfix");
 
   commands:
 
@@ -358,7 +361,7 @@ bundle agent fetchmail(root)
         args => "$(this.root)$(file_names.postfix_saslpass)",
         contain => silent;
 
-    regen_sender_ma&(!bootstrap)p::
+    regen_sender_map&(!bootstrap)::
 
       "/$(file_names.postmap_app)"
         args => "$(this.root)$(file_names.postfix_sender_map)",

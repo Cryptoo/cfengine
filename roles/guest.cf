@@ -54,9 +54,6 @@ bundle agent common_guest(root, type, role, arch)
 
     any::
 
-      "have_systemctl"
-        expression => fileexists("$(root)$(file_names.systemd_app)");
-
       "bootstrap"
         not => strcmp("$(this.root)", "/");
 
@@ -91,7 +88,7 @@ bundle agent common_guest(root, type, role, arch)
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
         template_data => mergedata("cryptoo:config.systemd_services[serial_autologin]"),
-        classes => default:if_repaired("daemon_reload");
+        classes => daemon_reload("getty_serial");
 
       "$(root)$(file_names.authorized_keys)"
         perms => root,
@@ -143,14 +140,6 @@ bundle agent common_guest(root, type, role, arch)
 
       "generate authorized_keys"
         usebundle => default:file_make("$(this.root)$(file_names.authorized_keys)", "$(this.authorized_keys)");
-
-  commands:
-
-    daemon_reload&have_systemctl&(!bootstrap)::
-
-      "/$(file_names.systemd_app)"
-        args => "daemon-reload",
-        contain => basic_chroot($(root));
 
   reports:
 

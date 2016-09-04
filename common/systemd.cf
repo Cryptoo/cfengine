@@ -59,7 +59,7 @@ bundle agent systemd(root, role)
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
         template_data => mergedata("cryptoo:config.systemd_services[cf_execd]"),
-        classes => default:if_repaired("daemon_reload");
+        classes => daemon_reload("cf_execd");
 
       "$(root)$(file_names.cf_monitord_service)"
         perms => system,
@@ -67,7 +67,7 @@ bundle agent systemd(root, role)
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
         template_data => mergedata("cryptoo:config.systemd_services[cf_monitord]"),
-        classes => default:if_repaired("daemon_reload");
+        classes => daemon_reload("cf_monitord");
 
       "$(root)$(file_names.cf_serverd_service)"
         perms => system,
@@ -75,7 +75,7 @@ bundle agent systemd(root, role)
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
         template_data => mergedata("cryptoo:config.systemd_services[cf_serverd]"),
-        classes => default:if_repaired("daemon_reload");
+        classes => daemon_reload("cf_serverd");
 
       "$(root)$(file_names.ipset_service)"
         perms => system,
@@ -83,7 +83,7 @@ bundle agent systemd(root, role)
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
         template_data => mergedata("cryptoo:config.systemd_services[ipset]"),
-        classes => default:if_repaired("daemon_reload");
+        classes => daemon_reload("ipset");
 
       "$(root)$(file_names.shorewall_service)"
         perms => system,
@@ -91,7 +91,7 @@ bundle agent systemd(root, role)
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
         template_data => mergedata("cryptoo:config.systemd_services[shorewall]"),
-        classes => default:if_repaired("daemon_reload");
+        classes => daemon_reload("shorewall");
 
       "$(root)$(directory_names.config_units_multi_user)/$(config.core_systemd)"
         move_obstructions => "true",
@@ -111,18 +111,4 @@ bundle agent systemd(root, role)
 
       "enable services"
         usebundle => systemd_enable($(root), $(systemd_services));
-
-# This bundle always attempts to start systemd-networkd even though it's already running.
-#      "start systemd services"
-#        usebundle => default:standard_services($(systemd_services), "start");
-
-  commands:
-
-# Something about this is causing log spam.
-#    daemon_reload&have_systemctl&(!bootstrap)::
-#
-#      "/$(file_names.systemd_app)"
-#        args => "daemon-reload",
-#        contain => basic_chroot($(root));
-
 }

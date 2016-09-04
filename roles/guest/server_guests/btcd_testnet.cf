@@ -211,7 +211,7 @@ bundle agent btcd_testnet(root)
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
         template_data => parsejson($(this.btcd_conf)),
-          classes => default:if_repaired("restart_btcd");
+        classes => restart_if_repaired("btcd");
 
   methods:
 
@@ -224,17 +224,4 @@ bundle agent btcd_testnet(root)
 
       "generate random rpc password"
         usebundle => default:file_make("$(this.root)$(file_names.btcd_rpc_outgoing)", "$(this.rpc_json)");
-
-  commands:
-
-    daemon_reload&(!bootstrap)::
-
-      "$(this.root)$(file_names.systemd_app)"
-        args => "daemon-reload";
-
-    restart_btcd&(!bootstrap)::
-
-      "/$(file_names.systemd_app)"
-        args => "restart btcd";
-
 }

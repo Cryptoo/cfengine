@@ -94,33 +94,33 @@ bundle agent mail_server(root)
       "$(this.root)$(file_names.dovecot_conf)"
         perms => system,
         edit_line => default:set_line_based("cryptoo:mail_server.dovecot", " = ", "\s*=\s*", ".*", "\s*#\s*"),
-        classes => default:if_repaired("reload_dovecot");
+        classes => restart_if_repaired("dovecot");
 
       "$(this.root)$(file_names.dovecot_auth)"
         perms => system,
         edit_line => default:set_line_based("cryptoo:mail_server.auth", " = ", "\s*=\s*", ".*", "\s*#\s*"),
-        classes => default:if_repaired("reload_dovecot");
+        classes => restart_if_repaired("dovecot");
 
       "$(this.root)$(file_names.dovecot_mail)"
         perms => system,
         edit_line => default:set_line_based("cryptoo:mail_server.mail", " = ", "\s*=\s*", ".*", "\s*#\s*"),
-        classes => default:if_repaired("reload_dovecot");
+        classes => restart_if_repaired("dovecot");
 
       "$(this.root)$(file_names.dovecot_imap)"
         perms => system,
         edit_line => default:set_line_based("cryptoo:mail_server.imap", " = ", "\s*=\s*", ".*", "\s*#\s*"),
-        classes => default:if_repaired("reload_dovecot");
+        classes => restart_if_repaired("dovecot");
 
       "$(this.root)$(file_names.dovecot_ssl)"
         perms => system,
         edit_line => default:set_line_based("cryptoo:mail_server.ssl", " = ", "\s*=\s*", ".*", "\s*#\s*"),
-        classes => default:if_repaired("reload_dovecot");
+        classes => restart_if_repaired("dovecot");
 
       "$(this.root)$(file_names.dovecot_master)"
         perms => system,
         create => "true",
         edit_template => "/$(templates.template[dovecot_master])",
-        classes => default:if_repaired("reload_dovecot");
+        classes => restart_if_repaired("dovecot");
 
       "$(this.root)$(directory_names.config_postfix)/."
         perms => system,
@@ -130,19 +130,19 @@ bundle agent mail_server(root)
         perms => system,
         create => "true",
         edit_line => default:set_line_based("cryptoo:mail_server.postfix_tls", " ", "\s*", ".*", "\s*#\s*"),
-        classes => postfix;
+        classes => restart_if_repaired("postfix");
 
       "$(this.root)$(file_names.postfix_transports)"
         perms => system,
         create => "true",
         edit_template => "/$(templates.template[postfix_transport])",
-        classes => postfix;
+        classes => restart_if_repaired("postfix");
 
       "$(this.root)$(file_names.postfix_header_checks)"
         perms => system,
         create => "true",
         edit_template => "/$(templates.template[postfix_header])",
-        classes => postfix;
+        classes => restart_if_repaired("postfix");
 
   methods:
 
@@ -157,18 +157,6 @@ bundle agent mail_server(root)
         usebundle => server_guest("$(this.root)", "mail_server", "x86_64", "no_multilib");
 
   commands:
-
-    reload_dovecot&(!bootstrap)::
-
-      "/$(file_names.systemd_app)"
-        args => "restart dovecot",
-        contain => silent;
-
-    need_postfix_restart&(!bootstrap)::
-
-      "/$(file_names.systemd_app)"
-        args => "restart postfix",
-        contain => silent;
 
     regen_tls&(!bootstrap)::
 

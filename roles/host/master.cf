@@ -38,9 +38,6 @@ bundle agent master(root)
 
     any::
 
-      "have_systemctl"
-        expression => fileexists("$(this.root)$(file_names.systemd_app)");
-
       "need_master_ssh_key"
         not => fileexists("$(this.root)$(file_names.master_ssh_key)");
 
@@ -77,7 +74,7 @@ bundle agent master(root)
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
         template_data => mergedata("cryptoo:config.systemd_services[console_autologin]"),
-        classes => default:if_repaired("daemon_reload");
+        classes => daemon_reload("getty");
 
       "$(this.root)$(file_names.nfs_exports)"
         perms => system,
@@ -134,12 +131,6 @@ bundle agent master(root)
         usebundle => host("x86_64", "master");
 
   commands:
-
-# Something about this is causing log spam.
-#    daemon_reload&have_systemctl::
-#
-#      "$(this.root)$(file_names.systemd_app)"
-#        args => "daemon-reload";
 
     need_default_key::
 

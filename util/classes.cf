@@ -1,24 +1,18 @@
 body file control
-
 {
-
   namespace => "cryptoo";
 
 }
 
 body classes srv
-
 {
-
   promise_repaired => { "srv_created", "srv_ok"};
   promise_kept => { "srv_ok" };
 
 }
 
 body classes srv_ready
-
 {
-
   promise_repaired => { "srv_started" };
   promise_kept => { "srv_started" };
   repair_failed => { "srv_failed" };
@@ -27,26 +21,20 @@ body classes srv_ready
 }
 
 body classes always_success
-
 {
-
   kept_returncodes => { "0", "1", "2" };
 
 }
 
 body classes groupmems
-
 {
-
   kept_returncodes => { "0", "7" };
   repaired_returncodes => { "0" };
 
 }
 
 body classes systemd_enabled
-
 {
-
   kept_returncodes => { "0" };
   repaired_returncodes => { "1" };
   promise_repaired => { "service_needs_enable" };
@@ -54,28 +42,28 @@ body classes systemd_enabled
 }
 
 body classes shorewall
-
 {
-
   scope => "namespace";
   promise_repaired => { "need_shorewall_restart" };
-
-}
-
-body classes postfix
-
-{
-
-  scope => "namespace";
-  promise_repaired => { "need_postfix_restart" };
 
 }
 
 body classes hosts
 
 {
-
   scope => "namespace";
   promise_repaired => { "hosts_file_updated" };
 
+}
+
+body classes daemon_reload(service)
+{
+  scope => "namespace";
+  promise_repaired => { "daemon_reload", "$(service)_needs_restart"};
+}
+
+body classes restart_if_repaired(service)
+{
+  scope => "namespace";
+  promise_repaired => { "$(service)_needs_restart" };
 }

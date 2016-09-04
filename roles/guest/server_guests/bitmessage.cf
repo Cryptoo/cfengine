@@ -71,7 +71,7 @@ bundle agent bitmessage(root)
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
         template_data => mergedata("cryptoo:config.systemd_services[bitmessage]"),
-        classes => default:if_repaired("daemon_reload");
+        classes => daemon_reload("bitmessage");
 
       "$(this.root)$(file_names.bmwrapper_service)"
         perms => system,
@@ -79,7 +79,7 @@ bundle agent bitmessage(root)
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
         template_data => mergedata("cryptoo:config.systemd_services[bmwrapper]"),
-        classes => default:if_repaired("daemon_reload");
+        classes => daemon_reload("bmwrapper");
 
       "$(this.root)$(file_names.bmwrapper_config)"
         perms => system,
@@ -87,7 +87,7 @@ bundle agent bitmessage(root)
         edit_template => "/$(templates.template[bmwrapper])",
         template_method => "mustache",
         template_data => parsejson("$(bmwrapper)"),
-        classes => default:if_repaired("daemon_reload");
+        classes => restart_if_repaired("bmwrapper");
 
       "$(this.root)$(file_names.bmwrapper_pop_service)"
         perms => system,
@@ -95,7 +95,7 @@ bundle agent bitmessage(root)
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
         template_data => mergedata("cryptoo:config.systemd_services[bmwrapper_pop]"),
-        classes => default:if_repaired("daemon_reload");
+        classes => daemon_reload("bmwrapper_pop");
 
       "$(this.root)$(file_names.bmwrapper_smtp_service)"
         perms => system,
@@ -103,7 +103,7 @@ bundle agent bitmessage(root)
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
         template_data => mergedata("cryptoo:config.systemd_services[bmwrapper_smtp]"),
-        classes => default:if_repaired("daemon_reload");
+        classes => daemon_reload("bmwrapper_smtp");
 
     have_bitmessage_config::
 
@@ -111,7 +111,7 @@ bundle agent bitmessage(root)
         perms => bitmessage,
         create => "false",
         edit_line => default:set_line_based("cryptoo:bitmessage.bitmessage", " = ", "\s*=\s*", ".*", "\s*#\s*"),
-        classes => default:if_repaired("reload_bitmessage");
+        classes => restart_if_repaired("bitmessage");
 
   methods:
 
@@ -119,18 +119,4 @@ bundle agent bitmessage(root)
 
       "configure system as a bitmessage guest"
         usebundle => server_guest("$(this.root)", "bitmessage", "x86_64", "no_multilib");
-
-  commands:
-
-    daemon_reload&(!bootstrap)::
-
-      "$(this.root)$(file_names.systemd_app)"
-        args => "daemon-reload";
-
-    reload_bitmessage&(!bootstrap)::
-
-      "/$(file_names.systemd_app)"
-        args => "restart bitmessage",
-        contain => silent;
-
 }

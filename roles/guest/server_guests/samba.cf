@@ -56,7 +56,7 @@ files:
         edit_template => "/$(templates.template[samba])",
         template_method => "mustache",
         template_data => parsejson($(this.samba_conf)),
-          classes => default:if_repaired("restart_samba");
+        classes => restart_if_repaired("samba");
 
 methods:
 
@@ -64,11 +64,4 @@ methods:
 
       "configure system as a samba server"
         usebundle => server_guest("$(this.root)", "samba", "x86_64", "no_multilib");
-
-  commands:
-
-    restart_samba&(!bootstrap)::
-
-      "/$(file_names.systemd_app)"
-        args => "restart smbd";
 }

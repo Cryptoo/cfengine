@@ -127,7 +127,7 @@ bundle agent bittorrent(root)
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
         template_data => mergedata("cryptoo:config.systemd_services[transmission_override]"),
-        classes => default:if_repaired("daemon_reload");
+        classes => daemon_reload("bittorrent");
 
     done&(!need_transmission_config)::
 
@@ -146,18 +146,5 @@ bundle agent bittorrent(root)
 
       "create default config file"
         usebundle => default:file_make("/$(file_names.transmission_config)", "$(this.config_json)"),
-        classes => default:if_ok("reload_transmission");
-
-  commands:
-
-    daemon_reload&(!bootstrap)::
-
-      "$(this.root)$(file_names.systemd_app)"
-        args => "daemon-reload",
-        classes => default:if_ok("reload_transmission");
-
-    reload_transmission&(!bootstrap)::
-
-      "/$(file_names.systemd_app)"
-        args => "restart transmission-daemon";
+        classes => restart_if_repaired("bittorrent");
 }

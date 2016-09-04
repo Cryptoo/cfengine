@@ -206,7 +206,7 @@ bundle agent host(arch, role)
         perms => system,
         create => "true",
         edit_line => default:set_line_based("cryptoo:host.nfs", "=", "\s*=\s*", ".*", "\s*#\s*"),
-        classes => default:if_repaired("daemon_reload_nfs");
+        classes => restart_if_repaired("nfs_utils");
 
       "/$(file_names.sysctl_nfs)"
         perms => system,
@@ -399,22 +399,11 @@ fstab_repaired::
 
       "/$(file_names.sysctl_app)"
         args => "-p /$(file_names.sysctl_nfs)",
-        classes => default:if_ok("reload_nfs");
-
-    daemon_reload_nfs::
-
-      "/$(file_names.systemd_app)"
-        args => "daemon-reload",
-        classes => default:if_ok("reload_nfs");
-
-    reload_nfs::
-
-      "/$(file_names.systemd_app)"
-        args => "restart nfs-utils";
+        classes => restart_if_repaired("nfs_utils");
 
   reports:
 
-    daemon_reload_nfs::
+    nfs_utils_needs_restart::
 
-      "Reloading systemd due to nfs unit file changes";
+      "Restarting nfs-utils";
 }

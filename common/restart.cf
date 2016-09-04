@@ -1,0 +1,160 @@
+body file control
+
+{
+  namespace => "cryptoo";
+  inputs => {
+              "cryptoo/config/file_names.cf",
+              "cryptoo/util/classes.cf"
+            };
+
+}
+
+bundle agent restart
+
+{
+  classes:
+
+    any::
+
+      "have_systemctl"
+        expression => fileexists("/$(file_names.systemd_app)");
+
+    !daemon_reload::
+
+      "systemd_refreshed"
+        expression => "any";
+
+  commands:
+
+    (!systemd_refreshed)&have_systemd::
+
+      "/$(file_names.systemd_app)"
+        args => "daemon-reload",
+        classes => default:if_ok("systemd_refreshed");
+
+    systemd_refreshed&bitcoind_needs_restart::
+
+      "/$(file_names.systemd_app)"
+        args => "restart bitcoind.service";
+
+    systemd_refreshed&bitmessage_needs_restart::
+
+      "/$(file_names.systemd_app)"
+        args => "restart bitmessage.service";
+
+    systemd_refreshed&bittorrent_needs_restart::
+
+      "/$(file_names.systemd_app)"
+        args => "restart transmission-daemon.service";
+
+    systemd_refreshed&bmwrapper_needs_restart::
+
+      "/$(file_names.systemd_app)"
+        args => "restart bitcoind.service";
+
+    systemd_refreshed&bmwrapper_pop_needs_restart::
+
+      "/$(file_names.systemd_app)"
+        args => "restart bmwrapper-pop.service";
+
+    systemd_refreshed&bmwrapper_smtp_needs_restart::
+
+      "/$(file_names.systemd_app)"
+        args => "restart bmwrapper-smtp.service";
+
+    systemd_refreshed&btcd_needs_restart::
+
+      "/$(file_names.systemd_app)"
+        args => "restart btcd.service";
+
+    systemd_refreshed&cf_execd_needs_restart::
+
+      "/$(file_names.systemd_app)"
+        args => "restart cf-execd.service";
+
+    systemd_refreshed&cf_monitord_needs_restart::
+
+      "/$(file_names.systemd_app)"
+        args => "restart cf-monitord.service";
+
+    systemd_refreshed&cf_serverd_needs_restart::
+
+      "/$(file_names.systemd_app)"
+        args => "restart cf-serverd.service";
+
+    systemd_refreshed&dnsmasq_needs_restart::
+
+      "/$(file_names.systemd_app)"
+        args => "restart dnsmasq.service";
+
+    systemd_refreshed&dovecot_needs_restart::
+
+      "/$(file_names.systemd_app)"
+        args => "restart dovecot.service";
+
+    systemd_refreshed&fetchmail_needs_restart::
+
+      "/$(file_names.systemd_app)"
+        args => "restart fetchmail.service";
+
+    systemd_refreshed&getty_needs_restart::
+
+      "/$(file_names.systemd_app)"
+        args => "restart getty@tty1.service";
+
+    systemd_refreshed&getty_serial_needs_restart::
+
+      "/$(file_names.systemd_app)"
+        args => "restart serial-getty@ttyS0.service";
+
+    systemd_refreshed&ipset_needs_restart::
+
+      "/$(file_names.systemd_app)"
+        args => "restart ipset.service";
+
+    systemd_refreshed&nfs_utils_needs_restart::
+
+      "/$(file_names.systemd_app)"
+        args => "restart nfs-utils.service";
+
+    systemd_refreshed&polipo_needs_restart::
+
+      "/$(file_names.systemd_app)"
+        args => "restart polipo.service";
+
+    systemd_refreshed&postfix_needs_restart::
+
+      "/$(file_names.systemd_app)"
+        args => "restart postfix.service";
+
+    systemd_refreshed&samba_needs_restart::
+
+      "/$(file_names.systemd_app)"
+        args => "restart smbd.service";
+
+    systemd_refreshed&shorewall_needs_restart::
+
+      "/$(file_names.systemd_app)"
+        args => "restart shorewall.service";
+
+    systemd_refreshed&tor_needs_restart::
+
+      "/$(file_names.systemd_app)"
+        args => "restart tor.service";
+
+    systemd_refreshed&vpn_check_needs_restart::
+
+      "/$(file_names.systemd_app)"
+        args => "restart vpn-check.timer";
+
+    systemd_refreshed&znc_needs_restart::
+
+      "/$(file_names.systemd_app)"
+        args => "restart znc.service";
+
+    systemd_refreshed::
+
+      "/$(file_names.systemd_app)"
+        args => "isolate default.target",
+        classes => default:if_ok("systemd_refreshed");
+}

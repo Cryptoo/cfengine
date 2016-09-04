@@ -72,9 +72,6 @@ classes:
       "need_znc_ssl"
         not => fileexists("$(this.root)$(file_names.znc_ssl)");
 
-      "have_systemctl"
-        expression => fileexists("$(this.root)$(file_names.systemd_app)");
-
   files:
 
     any::
@@ -89,14 +86,15 @@ classes:
         edit_template => "/$(templates.template[ini])",
         template_method => "mustache",
         template_data => parsejson($(this.znc_datadir)),
-        classes => default:if_repaired("daemon_reload");
+        classes => restart_if_repaired("znc");
 
       "$(this.root)$(file_names.znc_adminlog)"
         perms => znc,
         create => "true",
         edit_template => "/$(templates.template[value])",
         template_method => "mustache",
-        template_data => parsejson('{ "value": "target syslog" }');
+        template_data => parsejson('{ "value": "target syslog" }'),
+        classes => restart_if_repaired("znc");
 
     !bootstrap::
 
@@ -111,7 +109,8 @@ classes:
         create => "true",
         edit_template => "/$(templates.template[znc])",
         template_method => "mustache",
-        template_data => parsejson($(this.znc_json));
+        template_data => parsejson($(this.znc_json)),
+        classes => restart_if_repaired("znc");
 
   methods:
 
@@ -121,11 +120,6 @@ classes:
         usebundle => server_guest("$(this.root)", "irc_bouncer", "x86_64", "no_multilib");
 
   commands:
-
-    daemon_reload&have_systemctl::
-
-      "$(this.root)$(file_names.systemd_app)"
-        args => "daemon-reload";
 
     need_znc_ssl&have_znc_app::
 

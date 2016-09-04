@@ -49,13 +49,11 @@ bundle agent dns(root)
 
   classes:
 
-    any::
+    hosts_file_updated::
 
-      "have_systemctl"
-        expression => fileexists("$(root)$(file_names.systemd_app)");
-
-      "bootstrap"
-        not => strcmp("$(this.root)", "/");
+      "dnsmasq_needs_restart"
+        scope => "namespace",
+        expression => "any";
 
   files:
 
@@ -66,21 +64,16 @@ bundle agent dns(root)
         create => "true",
         edit_template => "/$(templates.template[dnsmasq])",
         template_method => "mustache",
-        template_data => parsejson($(this.dnsmasq));
+        template_data => parsejson($(this.dnsmasq)),
+        classes => restart_if_repaired("dnsmasq");
 
       "$(this.root)$(file_names.dns_config_dnsmasq)"
         perms => system,
         create => "true",
         edit_template => "/$(templates.template[resolv])",
         template_method => "mustache",
-        template_data => parsejson($(this.dns_external));
-
-  commands:
-
-    hosts_file_updated&have_systemctl&(!bootstrap)::
-
-      "/$(file_names.systemd_app)"
-        args => "restart dnsmasq";
+        template_data => parsejson($(this.dns_external)),
+        classes => restart_if_repaired("dnsmasq");
 
   methods:
 

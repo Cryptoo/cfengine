@@ -6,6 +6,7 @@ body file control
 
   inputs => {
               "cryptoo/control.cf",
+              "cryptoo/common/restart.cf",
               "@(cryptoo:control.role_inputs)"
             };
 
@@ -28,6 +29,9 @@ bundle agent cryptoo
 
       "configure system"
         usebundle => $(role_bundle)("/");
+
+      "restart daemons"
+        usebundle => restart;
 
     default:cryptoo_bootstrap::
 
