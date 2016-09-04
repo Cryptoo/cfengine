@@ -64,6 +64,28 @@ bundle agent shorewall_rules_bitmessage(root)
                   "user": "bmd:bmd"
                 },
                 {
+                  "action": "ACCEPT",
+                  "source": "fw:192.168.$(subnet_config[ispdmz]).$(defined_numbers[bitmessage])",
+                  "destination": "net",
+                  "protocol": "tcp",
+                  "destination_port": "-",
+                  "source_port": "-",
+                  "original_destination": "-",
+                  "rate": "-",
+                  "user": "bitmessage:bitmessage"
+                },
+                {
+                  "action": "tor(ACCEPT)",
+                  "source": "fw:192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitmessage])",
+                  "destination": "tor:192.168.$(subnet_config[tor]).$(defined_numbers[tor])",
+                  "protocol": "-",
+                  "destination_port": "-",
+                  "source_port": "-",
+                  "original_destination": "-",
+                  "rate": "-",
+                  "user": "bitmessage:bitmessage"
+                },
+                {
                   "action": "bitmessage(ACCEPT)",
                   "source": "net",
                   "destination": "fw:192.168.$(subnet_config[ispdmz]).$(defined_numbers[bitmessage])"
