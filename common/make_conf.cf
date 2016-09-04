@@ -81,7 +81,8 @@ bundle agent make_conf(root, role, multilib)
     have_cpu2use_app::
 
       "cpu_flags_output"
-        string => execresult("/$(cryptoo:file_names.cpu2use_app)","noshell");
+        string => execresult("/$(cryptoo:file_names.cpu2use_app)","noshell"),
+        classes => default:if_ok("have_cpu2use_output");
 
     !layman_evaluated::
 
@@ -140,10 +141,10 @@ bundle agent make_conf(root, role, multilib)
       "make_conf_$(this.role)"
         expression => "any";
 
-    have_cpu2use_app::
+    have_cpu2use_output::
 
       "have_cpu2use_regex"
-        expression => regextract('CPU_FLAGS_X86="(.*)"', "$(cpu_flags_output)", "cpu_flags_regex");
+        expression => regextract('CPU_FLAGS_X86: (.*)', "$(cpu_flags_output)", "cpu_flags_regex");
 
   files:
 
