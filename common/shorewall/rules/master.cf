@@ -576,6 +576,11 @@ bundle agent shorewall_rules_master(root)
                      "action": "bitcoin_testnet(ACCEPT)",
                      "source": "t$(defined_numbers[tor]):192.168.$(subnet_config[tor]).$(defined_numbers[tor])",
                      "destination": "t$(defined_numbers[firewall_internal]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[btcd_testnet])"
+                   },
+                   {
+                     "action": "bitmessage(ACCEPT)",
+                     "source": "t$(defined_numbers[tor]):192.168.$(subnet_config[tor]).$(defined_numbers[tor])",
+                     "destination": "t$(defined_numbers[firewall_internal]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[bitmessage])"
                    }
                  ]
                }
