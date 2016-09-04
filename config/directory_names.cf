@@ -39,6 +39,8 @@ bundle common directory_names
       "config_gcc_environment" string => "$(config_environment)/gcc";
       "config_libvirt" string => "$(config_base)/libvirt";
       "config_qemu" string => "$(config_libvirt)/qemu";
+      "config_layman" string => "$(config_base)/layman";
+      "config_layman_overlays" string => "$(config_layman)/overlays";
       "config_local_scripts" string => "$(config_base)/local.d";
       "config_polipo" string => "$(config_base)/polipo";
       "config_pm" string => "$(config_base)/$(pm)";
@@ -51,6 +53,7 @@ bundle common directory_names
       "config_pm_patches" string => "$(config_pm)/patches";
       "config_pm_profile" string => "$(config_pm)/profile";
       "config_pm_upstream" string => "$(config_pm_profile)/stub";
+      "config_pm_repos" string => "$(config_pm)/repos.conf";
       "config_privoxy" string => "$(config_base)/privoxy";
       "config_postfix" string => "$(config_base)/postfix";
       "config_run_base" string => "$(config_base)/runlevels";
@@ -160,8 +163,10 @@ bundle common directory_names
       "transmission_config" string => "$(bittorrent_base)/config";
       "volatile_overlay" string => "$(volatile_library)/layman";
       "bitcoin_overlay" string => "$(volatile_overlay)/bitcoin";
+      "stash_overlay" string => "$(volatile_overlay)/stash_crypto";
       "volatile_libvirt" string => "$(volatile_library)/libvirt";
       "libvirt_images" string => "$(volatile_libvirt)/images";
+      "volatile_pm_overlay" string => "$(volatile_library)/overlay";
       "volatile_pm" string => "$(volatile_library)/$(pm)";
       "volatile_systemd" string => "$(volatile_library)/systemd";
       "volatile_tor" string => "$(volatile_library)/tor";

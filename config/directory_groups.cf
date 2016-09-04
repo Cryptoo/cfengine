@@ -41,6 +41,7 @@ bundle common directory_groups
                     $(directory_names.config_pm_use),
                     $(directory_names.config_pm_patches),
                     $(directory_names.config_pm_profile),
+                    $(directory_names.config_pm_repos),
                     $(directory_names.config_pm_upstream),
                     $(directory_names.config_run_base),
                     $(directory_names.config_run_boot),
@@ -106,6 +107,7 @@ bundle common directory_groups
                     $(directory_names.machine_pm_tmpdir),
                     $(directory_names.standard_pm),
                     $(directory_names.site_pm),
+                    $(directory_names.volatile_pm_overlay),
                     $(directory_names.volatile_pm),
                     $(directory_names.volatile_overlay)
                  };
@@ -123,6 +125,8 @@ bundle common directory_groups
       "host_system"
         slist => {
                     $(directory_names.config_dracut),
+                    $(directory_names.config_layman),
+                    $(directory_names.config_layman_overlays),
                     $(directory_names.mount_cryptoo),
                     $(directory_names.volatile_kernel),
                     $(directory_names.volatile_libvirt)
@@ -153,6 +157,7 @@ bundle common directory_groups
                     $(directory_names.storage_pm_site_meta),
                     $(directory_names.storage_pm_site_profile),
                     $(directory_names.bitcoin_overlay),
+                    $(directory_names.stash_overlay)
                  };
 
       "host_pm_open"

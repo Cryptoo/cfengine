@@ -194,6 +194,8 @@ bundle common file_names
         string => "$(directory_names.config_gcc_environment)/.NATIVE";
       "env_gcc_x86_64"
         string => "$(directory_names.config_gcc_environment)/config-x86_64-pc-linux-gnu";
+      "stash_repo_xml"
+        string => "$(directory_names.config_layman_overlays)/stash.xml";
       "libvirt_guests_conf"
         string => "$(directory_names.config_libvirt)/libvirt-guests.conf";
       "firstrun"
@@ -580,6 +582,9 @@ bundle common file_names
       "template_site_repo_name"
         string => "host/site_repo_name.txt",
         meta => { "template" };
+      "template_stash_overlay"
+        string => "host/stash_overlay.txt",
+        meta => { "template" };
       "template_subnets"
         string => "host/subnets.txt",
         meta => { "template" };
@@ -595,6 +600,8 @@ bundle common file_names
         string => "$(directory_names.volatile_overlay)/make.conf";
       "bitcoin_overlay"
         string => "$(directory_names.bitcoin_overlay)/profiles/repo_name";
+      "stash_overlay"
+        string => "$(directory_names.stash_overlay)/profiles/repo_name";
       "random_seed"
         string => "$(directory_names.volatile_systemd)/random-seed";
       "bitcoin_hs"

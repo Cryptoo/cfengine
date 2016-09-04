@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+
+<repositories version="1.0">
+        <repo priority="50" quality="experimental" status="unofficial">
+                <name>stash_crypto</name>
+                <description>Stash OS</description>
+                <homepage>http://gcbwpqlsmuvskwlw.onion/stash/overlay</homepage>
+                <owner>
+                        <email>contact@stashcrypto.com</email>
+                </owner>
+                <source type="git">git://gcbwpqlsmuvskwlw.onion/stash/overlay.git</source>
+        </repo>
+</repositories>

@@ -130,6 +130,9 @@ bundle agent host(arch, role)
       "need_bitcoin_overlay"
         not => fileexists("/$(cryptoo:file_names.bitcoin_overlay)");
 
+      "need_stash_overlay"
+        not => fileexists("/$(cryptoo:file_names.stash_overlay)");
+
       "have_libvirtd_app"
         expression => fileexists("/$(cryptoo:file_names.libvirtd_app)");
 
@@ -213,6 +216,12 @@ bundle agent host(arch, role)
         create => "true",
         edit_line => default:set_line_based("cryptoo:host.nfs_sysctl", "=", "\s*=\s*", ".*", "\s*#\s*"),
         classes => default:if_repaired("nfs_sysctl");
+
+      "/$(cryptoo:file_names.stash_repo_xml)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(cryptoo:templates.template[stash_overlay])",
+        classes => default:if_ok("have_stash_xml");
 
     have_grub::
 
@@ -388,6 +397,10 @@ fstab_repaired::
     need_bitcoin_overlay&have_layman_cache::
 
       "/$(cryptoo:file_names.layman_app) -a bitcoin";
+
+    need_stash_overlay&have_layman_cache&have_stash_xml::
+
+      "/$(cryptoo:file_names.layman_app) -o file:///etc/layman/overlays/stash.xml -f -a stash_crypto";
 
     srv_mounted&have_cryptoo::
 
