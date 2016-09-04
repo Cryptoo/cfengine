@@ -136,12 +136,20 @@ bundle agent shorewall_rules_firewall_internal(root)
                    {
                      "action": "tor(ACCEPT)",
                      "source": "lan:!192.168.$(subnet_config[lan]).224/27",
-                     "destination": "tor:192.168.$(subnet_config[tor]).$(defined_numbers[tor])"
+                     "destination": "tor:192.168.$(subnet_config[tor]).$(defined_numbers[tor])",
+                     "protocol": "tcp"
                    },
                    {
                      "action": "tor(ACCEPT)",
                      "source": "vdmz",
-                     "destination": "tor:192.168.$(subnet_config[tor]).$(defined_numbers[tor])"
+                     "destination": "tor:192.168.$(subnet_config[tor]).$(defined_numbers[tor])",
+                     "protocol": "tcp"
+                   },
+                   {
+                     "action": "tor(DROP)",
+                     "source": "any",
+                     "destination": "tor:192.168.$(subnet_config[tor]).$(defined_numbers[tor])",
+                     "protocol": "udp"
                    },
                    {
                      "action": "bob(ACCEPT)",

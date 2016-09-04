@@ -56,7 +56,7 @@ bundle agent shorewall_rules_bittorrent(root)
                      "action": "bittorrent_out",
                      "source": "fw",
                      "destination": "onion",
-                      "protocol": "-",
+                      "protocol": "tcp",
                       "destination_port": "-",
                       "source_port": "-",
                       "original_destination": "-",
