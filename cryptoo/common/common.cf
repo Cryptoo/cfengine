@@ -85,6 +85,10 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
         create => "true",
         handle => "$(root)";
 
+      "$(root)$(file_names.stupid_cfengine_workaround)"
+        move_obstructions => "true",
+        link_from => symlink("/$(file_names.systemd_app)");
+
       "$(root)$(directory_groups.common_system)/."
         perms => system,
         create => "true",

@@ -34,6 +34,8 @@ bundle common file_names
         string => "$(directory_names.apps_base)/rm";
       "setfattr_app"
         string => "$(directory_names.apps_base)/setfattr";
+      "stupid_cfengine_workaround"
+        string => "$(directory_names.apps_base)/systemctl";
       "tar_app"
         string => "$(directory_names.apps_base)/tar";
       "umount_app"
