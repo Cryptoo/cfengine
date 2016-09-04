@@ -163,6 +163,7 @@ bundle common directory_names
       "transmission_config" string => "$(bittorrent_base)/config";
       "volatile_overlay" string => "$(volatile_library)/layman";
       "bitcoin_overlay" string => "$(volatile_overlay)/bitcoin";
+      "emery_overlay" string => "$(volatile_overlay)/emery";
       "stash_overlay" string => "$(volatile_overlay)/stash_crypto";
       "volatile_libvirt" string => "$(volatile_library)/libvirt";
       "libvirt_images" string => "$(volatile_libvirt)/images";

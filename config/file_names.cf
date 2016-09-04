@@ -600,6 +600,8 @@ bundle common file_names
         string => "$(directory_names.volatile_overlay)/make.conf";
       "bitcoin_overlay"
         string => "$(directory_names.bitcoin_overlay)/profiles/repo_name";
+      "emery_overlay"
+        string => "$(directory_names.emery_overlay)/profiles/repo_name";
       "stash_overlay"
         string => "$(directory_names.stash_overlay)/profiles/repo_name";
       "random_seed"

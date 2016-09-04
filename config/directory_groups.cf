@@ -157,6 +157,7 @@ bundle common directory_groups
                     $(directory_names.storage_pm_site_meta),
                     $(directory_names.storage_pm_site_profile),
                     $(directory_names.bitcoin_overlay),
+                    $(directory_names.emery_overlay),
                     $(directory_names.stash_overlay)
                  };
 

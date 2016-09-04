@@ -130,6 +130,9 @@ bundle agent host(arch, role)
       "need_bitcoin_overlay"
         not => fileexists("/$(cryptoo:file_names.bitcoin_overlay)");
 
+      "need_emery_overlay"
+        not => fileexists("/$(cryptoo:file_names.emery_overlay)");
+
       "need_stash_overlay"
         not => fileexists("/$(cryptoo:file_names.stash_overlay)");
 
@@ -397,6 +400,10 @@ fstab_repaired::
     need_bitcoin_overlay&have_layman_cache::
 
       "/$(cryptoo:file_names.layman_app) -a bitcoin";
+
+    need_emery_overlay&have_layman_cache::
+
+      "/$(cryptoo:file_names.layman_app) -a emery";
 
     need_stash_overlay&have_layman_cache&have_stash_xml::
 
