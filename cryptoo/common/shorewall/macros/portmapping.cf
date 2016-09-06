@@ -82,5 +82,5 @@ bundle agent shorewall_macro_portmap(root, port_info)
         edit_template => "/$(templates.template[shorewall_macro])",
         template_method => "mustache",
         template_data => parsejson("$(macro_json)"),
-        classes => shorewall;
+        classes => restart_if_repaired("shorewall6");
 }
