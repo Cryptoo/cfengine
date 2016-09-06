@@ -78,6 +78,12 @@ bundle agent shorewall_macro_vdmz_dns(root, port_info)
                      "action": "cfengine(PARAM)",
                      "source": "u$(defined_numbers[dns]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])",
                      "destination": "u$(defined_numbers[firewall_internal]):192.168.$(subnet_config[lan]).$(defined_numbers[master])"
+                   },
+                   {
+                     "action": "ACCEPT",
+                     "source": "u$(defined_numbers[dns]):192.168.$(subnet_config[vpndmz]).$(defined_numbers[dns])",
+                     "destination": "u$(defined_numbers[vpn_primary]):!+private",
+                     "protocol": "udp"
                    }
                  ]
                }
