@@ -1,0 +1,95 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/directory_names.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/config/templates.cf",
+              "cryptoo/util/classes.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
+bundle agent shorewall_macro_cjdns_in(root, port_info)
+
+{
+
+  meta:
+
+    "tags" slist => { "shorewall_macro", "firewall_external" };
+
+  vars:
+
+    any::
+
+      "macro_name"
+        string => "cjdns_in";
+
+    no_port_info::
+
+      "macro_json"
+        string => '
+          {
+            "name": "$(this.macro_name)",
+            "default": "ACCEPT"
+          }',
+        classes => default:if_ok("have_macro_json");
+
+    have_port_info::
+
+      "port_info"
+        data => readjson("/$(file_names.cjdns_public)", 0);
+
+      "macro_json"
+        string => '
+          {
+             "name": "$(this.macro_name)",
+             "default": "ACCEPT",
+             "rules":
+                  [
+                    {
+                      "action": "PARAM",
+                      "source": "-",
+                      "destination": "-",
+                      "protocol": "udp",
+                      "destination_port": "$(port_info[port])"
+                    }
+                  ]
+                }
+           }',
+        classes => default:if_ok("have_macro_json");
+
+  classes:
+
+    any::
+
+      "have_port_info"
+        expression => fileexists("/$(file_names.cjdns_public)");
+
+      "no_port_info"
+        not => "have_port_info";
+
+  files:
+
+    have_macro_json::
+
+      "$(root)$(directory_names.config_shorewall)/macro.$(this.macro_name)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[shorewall_macro])",
+        template_method => "mustache",
+        template_data => parsejson("$(macro_json)"),
+        classes => shorewall;
+
+      "$(root)$(directory_names.config_shorewall6)/macro.$(this.macro_name)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[shorewall_macro])",
+        template_method => "mustache",
+        template_data => parsejson("$(macro_json)"),
+        classes => restart_if_repaired("shorewall6");
+}
