@@ -121,4 +121,11 @@ bundle agent shorewall_macro_vdmz_bitcoin(root, port_info)
         template_data => parsejson("$(macro_json)"),
         classes => shorewall;
 
+      "$(root)$(directory_names.config_shorewall6)/macro.$(this.macro_name)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[shorewall_macro])",
+        template_method => "mustache",
+        template_data => parsejson("$(macro_json)"),
+        classes => shorewall;
 }
