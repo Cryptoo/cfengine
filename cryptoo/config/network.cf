@@ -67,6 +67,31 @@ bundle common network
       "subnet[lanx]"
         string => "+vpn_secondary";
 
+      "subnet6[net]"
+        string => "!+private6";
+      "subnet6[netc]"
+        string => "!+private6";
+      "subnet6[vpn]"
+        string => "!+private6";
+      "subnet6[ispdmz]"
+        string => "[2001:db8:$(this.subnet_config[ispdmz])::]/48";
+      "subnet6[tor]"
+        string => "[2001:db8:$(this.subnet_config[tor])::]/48";
+      "subnet6[i2p]"
+        string => "[2001:db8:$(this.subnet_config[i2p])::]/48";
+      "subnet6[vpndmz]"
+        string => "[2001:db8:$(this.subnet_config[vpndmz])::]/48";
+      "subnet6[lan]"
+        string => "[2001:db8:$(this.subnet_config[lan])::]/48";
+      "subnet6[onion]"
+        string => "[0100:0:0:0:1::]/80";
+      "subnet6[eep]"
+        string => "[0100:0:0:0:2::]/80";
+      "subnet6[backup_dns]"
+        string => "[0100:0:0:0:3::]";
+      "subnet6[lanx]"
+        string => "[0100:0:0:0:4::]/80";
+
   classes:
 
     any::

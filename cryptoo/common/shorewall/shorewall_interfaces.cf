@@ -51,7 +51,7 @@ classes:
         expression => "any";
 
   reports:
-  
+
     relevant::
 
       '{ "zone_full": "#", "zone": "-", "type": "-", "interface": "$(this.interface)", "interface_options": "$(normal_options)" }'

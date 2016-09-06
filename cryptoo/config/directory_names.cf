@@ -62,6 +62,7 @@ bundle common directory_names
       "config_run_sysinit" string => "$(config_run_base)/sysinit";
       "config_samba" string => "$(config_base)/samba";
       "config_shorewall" string => "$(config_base)/shorewall";
+      "config_shorewall6" string => "$(config_base)/shorewall6";
       "config_ssh" string => "$(config_base)/ssh";
       "config_sysctl" string => "$(config_base)/sysctl.d";
       "config_systemd" string => "$(config_base)/systemd";

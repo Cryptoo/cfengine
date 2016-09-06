@@ -48,6 +48,7 @@ bundle common directory_groups
                     $(directory_names.config_run_default),
                     $(directory_names.config_run_sysinit),
                     $(directory_names.config_shorewall),
+                    $(directory_names.config_shorewall6),
                     $(directory_names.config_ssh),
                     $(directory_names.config_sysctl),
                     $(directory_names.config_systemd),

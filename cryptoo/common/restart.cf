@@ -112,6 +112,11 @@ bundle agent restart
       "/$(file_names.systemd_app)"
         args => "restart ipset.service";
 
+    systemd_refreshed&ipset_private_needs_restart::
+
+      "/$(file_names.systemd_app)"
+        args => "restart gentoo-local-ipset-private.service";
+
     systemd_refreshed&nfs_utils_needs_restart::
 
       "/$(file_names.systemd_app)"
@@ -136,6 +141,11 @@ bundle agent restart
 
       "/$(file_names.systemd_app)"
         args => "restart shorewall.service";
+
+    systemd_refreshed&shorewall6_needs_restart::
+
+      "/$(file_names.systemd_app)"
+        args => "restart shorewall6.service";
 
     systemd_refreshed&tor_needs_restart::
 

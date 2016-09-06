@@ -240,14 +240,22 @@ bundle common file_names
         string => "$(directory_names.config_samba)/smb.conf";
       "shorewall_config"
         string => "$(directory_names.config_shorewall)/shorewall.conf";
+      "shorewall6_config"
+        string => "$(directory_names.config_shorewall6)/shorewall6.conf";
       "shorewall_hosts"
         string => "$(directory_names.config_shorewall)/hosts";
+      "shorewall6_hosts"
+        string => "$(directory_names.config_shorewall6)/hosts";
       "shorewall_interfaces"
         string => "$(directory_names.config_shorewall)/interfaces";
+      "shorewall6_interfaces"
+        string => "$(directory_names.config_shorewall6)/interfaces";
       "shorewall_masq"
         string => "$(directory_names.config_shorewall)/masq";
       "shorewall_policy"
         string => "$(directory_names.config_shorewall)/policy";
+      "shorewall6_policy"
+        string => "$(directory_names.config_shorewall6)/policy";
       "shorewall_rtrules"
         string => "$(directory_names.config_shorewall)/rtrules";
       "shorewall_rules"
@@ -256,6 +264,8 @@ bundle common file_names
         string => "$(directory_names.config_shorewall)/providers";
       "shorewall_zones"
         string => "$(directory_names.config_shorewall)/zones";
+      "shorewall6_zones"
+        string => "$(directory_names.config_shorewall6)/zones";
       "sshd_config"
         string => "$(directory_names.config_ssh)/sshd_config";
       "ssh_config"
@@ -482,6 +492,9 @@ bundle common file_names
       "template_shorewall_masq"
         string => "common/shorewall_masq_mustache.txt",
         meta => { "template" };
+      "template_shorewall6_interface"
+        string => "common/shorewall6_interfaces_mustache.txt",
+        meta => { "template" };
       "template_shorewall_interface"
         string => "common/shorewall_interfaces_mustache.txt",
         meta => { "template" };
@@ -502,6 +515,9 @@ bundle common file_names
         meta => { "template" };
       "template_shorewall_zone"
         string => "common/shorewall_zone_mustache.txt",
+        meta => { "template" };
+      "template_shorewall6_zone"
+        string => "common/shorewall6_zone_mustache.txt",
         meta => { "template" };
       "template_sysctl_common"
         string => "common/sysctl_common.txt",

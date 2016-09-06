@@ -10,3 +10,20 @@
 
 /usr/sbin/ipset swap temp-private private
 /usr/sbin/ipset destroy temp-private
+
+/usr/sbin/ipset -quiet destroy temp-private6
+/usr/sbin/ipset create temp-private6 hash:net family inet6
+/usr/sbin/ipset -quiet create private6 hash:net family inet6
+
+/usr/sbin/ipset add temp-private6 fe80::/10
+/usr/sbin/ipset add temp-private6 fc00::/7
+/usr/sbin/ipset add temp-private6 ::ffff:0:0/96
+/usr/sbin/ipset add temp-private6 ::ffff:0:0:0/96
+/usr/sbin/ipset add temp-private6 64:ff9b::/96
+/usr/sbin/ipset add temp-private6 2002::/16
+/usr/sbin/ipset add temp-private6 2001::/32
+/usr/sbin/ipset add temp-private6 2001:2::/48
+/usr/sbin/ipset add temp-private6 2001:20::/28
+
+/usr/sbin/ipset swap temp-private6 private6
+/usr/sbin/ipset destroy temp-private6

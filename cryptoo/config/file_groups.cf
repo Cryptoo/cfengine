@@ -83,6 +83,7 @@ bundle common file_groups
                     "cf-serverd.service",
                     "ipset.service",
                     "shorewall.service",
+                    "shorewall6.service",
                     "sshd.service",
                     "systemd-networkd.service",
                     "systemd-timesyncd.service",

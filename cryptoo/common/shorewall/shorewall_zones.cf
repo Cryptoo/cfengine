@@ -13,6 +13,7 @@ body file control
               "cryptoo/config/file_names.cf",
               "cryptoo/config/templates.cf",
               "cryptoo/util/classes.cf",
+              "cryptoo/util/edit_line.cf",
               "cryptoo/util/perms.cf"
             };
 
@@ -26,10 +27,10 @@ bundle agent shorewall_zones(root, role)
 
     any::
 
-      "basic_zones_ipv4"
+      "basic_zones"
         slist => getvalues("file_groups.firewall_zones[$(this.role)]");
 
-      "bridge_zones_ipv4"
+      "bridge_zone_list"
         slist => getvalues("file_groups.firewall_bridges[$(this.role)]");
 
       "network_config_string"
@@ -41,22 +42,37 @@ bundle agent shorewall_zones(root, role)
       "interface_list"
         slist => getindices("network_config[interfaces]");
 
-    bridge_ipv4_evaluated::
+    bridge_evaluated::
 
-      "zone[$(basic_zones_ipv4)][name]"
-        string => '"zone_full": "$(basic_zones_ipv4)"';
+      "zone4[$(basic_zones)][name]"
+        string => '"zone_full": "$(basic_zones)"';
 
-      "zone[$(basic_zones_ipv4)][type]"
+      "zone4[$(basic_zones)][type]"
         string => '"type": "ipv4"';
 
-      "zone_basic_ipv4_json[$(basic_zones_ipv4)]"
-        string => '{ $(zone[$(basic_zones_ipv4)][name]), $(zone[$(basic_zones_ipv4)][type]) }';
+      "zone_basic_ipv4_json[$(basic_zones)]"
+        string => '{ $(zone4[$(basic_zones)][name]), $(zone4[$(basic_zones)][type]) }';
 
       "zone_basic_ipv4_json_list"
         slist => getvalues("zone_basic_ipv4_json");
 
       "zone_basic_ipv4_json"
         string => join(", ", "zone_basic_ipv4_json_list");
+
+      "zone6[$(basic_zones)][name]"
+        string => '"zone_full": "$(basic_zones)"';
+
+      "zone6[$(basic_zones)][type]"
+        string => '"type": "ipv6"';
+
+      "zone_basic_ipv6_json[$(basic_zones)]"
+        string => '{ $(zone6[$(basic_zones)][name]), $(zone6[$(basic_zones)][type]) }';
+
+      "zone_basic_ipv6_json_list"
+        slist => getvalues("zone_basic_ipv6_json");
+
+      "zone_basic_ipv6_json"
+        string => join(", ", "zone_basic_ipv6_json_list");
 
     interfaces_done::
 
@@ -80,39 +96,47 @@ bundle agent shorewall_zones(root, role)
       "bridge_children_json"
         string => join(", ", "bridge_children");
 
-      "zone_json"
+      "zone4_json"
         string => '{ "zones": [ $(interface_zone_json), $(zone_basic_ipv4_json), $(bridge_zone_json), $(bridge_children_json) ] }',
-        classes => default:if_ok("zone_json_ready");
+        classes => default:if_ok("zone4_json_ready");
 
-    no_bridge_ipv4&interfaces_done::
+      "zone6_json"
+        string => '{ "zones": [ $(interface_zone_json), $(zone_basic_ipv6_json), $(bridge_zone_json), $(bridge_children_json) ] }',
+        classes => default:if_ok("zone6_json_ready");
 
-      "zone_json"
+    no_bridge&interfaces_done::
+
+      "zone4_json"
         string => '{ "zones": [ $(interface_zone_json), $(zone_basic_ipv4_json) ] }',
-        classes => default:if_ok("zone_json_ready");
+        classes => default:if_ok("zone4_json_ready");
+
+      "zone6_json"
+        string => '{ "zones": [ $(interface_zone_json), $(zone_basic_ipv6_json) ] }',
+        classes => default:if_ok("zone6_json_ready");
 
   classes:
 
     any::
 
-      "no_bridge_ipv4"
-        not => isgreaterthan(length("bridge_zones_ipv4"), "0");
+      "no_bridge"
+        not => isgreaterthan(length("bridge_zone_list"), "0");
 
-      "bridge_ipv4"
-        expression => isgreaterthan(length("bridge_zones_ipv4"), "0");
+      "have_bridge"
+        expression => isgreaterthan(length("bridge_zone_list"), "0");
 
-      "bridge_ipv4_evaluated"
+      "bridge_evaluated"
         expression => "any";
 
   files:
 
-    zone_json_ready::
+    zone4_json_ready::
 
       "$(root)$(file_names.shorewall_zones)"
         perms => system,
         create => "true",
         edit_template => "/$(templates.template[shorewall_zone])",
         template_method => "mustache",
-        template_data => parsejson("$(zone_json)"),
+        template_data => parsejson("$(zone4_json)"),
         classes => shorewall;
 
       "$(root)$(file_names.shorewall_interfaces)"
@@ -120,8 +144,30 @@ bundle agent shorewall_zones(root, role)
         create => "true",
         edit_template => "/$(templates.template[shorewall_interface])",
         template_method => "mustache",
-        template_data => parsejson("$(zone_json)"),
+        template_data => parsejson("$(zone4_json)"),
         classes => shorewall;
+
+    zone6_json_ready::
+
+      "$(root)$(file_names.shorewall6_zones)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[shorewall6_zone])",
+        template_method => "mustache",
+        template_data => parsejson("$(zone6_json)"),
+        classes => restart_if_repaired("shorewall6");
+
+      "$(root)$(file_names.shorewall6_zones)"
+        edit_line => shorewall6_zones,
+        classes => restart_if_repaired("shorewall6");
+
+      "$(root)$(file_names.shorewall6_interfaces)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[shorewall6_interface])",
+        template_method => "mustache",
+        template_data => parsejson("$(zone6_json)"),
+        classes => restart_if_repaired("shorewall6");
 
   methods:
 
@@ -132,17 +178,16 @@ bundle agent shorewall_zones(root, role)
         useresult => "interfaces",
         classes => default:if_ok("interfaces_done");
 
-    bridge_ipv4::
+    have_bridge::
 
       "get list of bridge zones"
-        usebundle => bridge("$(bridge_zones_ipv4)"),
+        usebundle => bridge("$(bridge_zone_list)"),
         useresult => "bridges",
         handle => "have_bridges";
 
       "get list of children for bridge zones"
-        usebundle => bridge_children("$(this.role)", "$(bridge_zones_ipv4)"),
+        usebundle => bridge_children("$(this.role)", "$(bridge_zone_list)"),
         useresult => "bridge_zone_child",
         depends_on => { "have_bridges" },
         classes => default:if_ok("bridge_children_done");
-
 }

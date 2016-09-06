@@ -10,6 +10,7 @@
 #ZONE   TYPE            OPTIONS         IN                      OUT
 #                                       OPTIONS                 OPTIONS
 fw             firewall
+cjd            ipv6
 {{#zones}}
 {{zone_full}}       {{type}}
 {{/zones}}

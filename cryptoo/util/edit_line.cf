@@ -1,18 +1,14 @@
 body file control
 
 {
-
   namespace => "cryptoo";
-
   inputs => {
               "cryptoo/util/location.cf",
               "cryptoo/util/replace_with.cf"
             };
-
 }
 
 bundle edit_line bashrc
-
 {
     replace_patterns:
 
@@ -26,7 +22,6 @@ bundle edit_line bashrc
 }
 
 bundle edit_line enable_kconfig(symbol, file)
-
 {
      classes:
 
@@ -35,7 +30,7 @@ bundle edit_line enable_kconfig(symbol, file)
 
        "missing_from_file"
          not => "exists_disabled";
- 
+
      replace_patterns:
 
       exists_disabled::
@@ -57,7 +52,6 @@ bundle edit_line enable_kconfig(symbol, file)
 }
 
 bundle edit_line disable_kconfig(symbol,file)
-
 {
      classes:
 
@@ -66,7 +60,7 @@ bundle edit_line disable_kconfig(symbol,file)
 
        "missing_from_file"
          not => "exists_enabled";
- 
+
      replace_patterns:
 
       exists_enabled::
@@ -91,4 +85,11 @@ bundle edit_line disable_kconfig(symbol,file)
 
         "($(this.file)) added CONFIG_$(symbol)";
 
+}
+
+bundle edit_line shorewall6_zones
+{
+    replace_patterns:
+
+      "ipv4" replace_with => default:value("ipv6");
 }

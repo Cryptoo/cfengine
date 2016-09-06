@@ -154,7 +154,8 @@ bundle agent cryptoo_filesystem(root, role, arch, multilib)
       "$(root)$(file_names.ipset_private)"
         perms => system_exec,
         create => "true",
-        edit_template => "/$(templates.template[ipset_private])";
+        edit_template => "/$(templates.template[ipset_private])",
+        classes => restart_if_repaired("ipset_private");
 
       "$(this.root)$(file_names.sysctl_cryptoo)"
         perms => system,

@@ -50,6 +50,9 @@ bundle agent shorewall(root, role)
       "have_shorewall_conf"
         expression => fileexists("$(this.root)$(file_names.shorewall_config)");
 
+      "have_shorewall6_conf"
+        expression => fileexists("$(this.root)$(file_names.shorewall6_config)");
+
       "shorewall_role_$(role)"
         expression => "any";
 
@@ -61,6 +64,13 @@ bundle agent shorewall(root, role)
         create => "false",
         edit_line => default:set_line_based("cryptoo:config.firewall[shorewall_conf]", "=", "\s+", ".*", "\s*#\s*"),
         classes => shorewall;
+
+    have_shorewall6_conf::
+
+       "$(root)$(file_names.shorewall6_config)"
+        create => "false",
+        edit_line => default:set_line_based("cryptoo:config.firewall[shorewall_conf]", "=", "\s+", ".*", "\s*#\s*"),
+        classes => restart_if_repaired("shorewall6");
 
     shorewall_role_firewall_internal::
 
