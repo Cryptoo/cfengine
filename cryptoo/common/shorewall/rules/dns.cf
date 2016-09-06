@@ -63,6 +63,17 @@ bundle agent shorewall_rules_dns(root)
                      "source_port": ""
                    },
                    {
+                     "action": "ACCEPT",
+                     "source": "fw",
+                     "destination": "net",
+                     "protocol": "udp",
+                     "destination_port": "-",
+                     "source_port": "-",
+                     "original_destination": "-",
+                     "rate": "-",
+                     "user": "root"
+                   },
+                   {
                      "action": "DNS(ACCEPT)",
                      "source": "vdmz",
                      "destination": "fw",

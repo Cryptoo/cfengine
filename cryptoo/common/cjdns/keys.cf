@@ -1,0 +1,132 @@
+body file control
+{
+  namespace => "cryptoo";
+  inputs => {
+              "cryptoo/config/file_names.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
+bundle agent cjdns_keys
+{
+  vars:
+
+    need_regen&!have_bind::
+
+       "cjdroute"
+         string => "/usr/sbin/cjdroute --genconf";
+
+       "grep"
+         string => '/bin/grep -v "//"';
+
+       "sed"
+         string => "/bin/sed -r ':a; s%(.*)/\*.*\*/%\1%; ta; /\/\*/ !b; N; ba'";
+
+       "command"
+         string => "$(cjdroute) | $(grep) | $(sed)";
+
+      "key_json_raw"
+        string => execresult("$(command)", "useshell");
+
+      "key_data"
+        data => parsejson("$(key_json_raw)");
+
+      "private"
+        string => "$(key_data[privateKey])";
+
+      "public"
+        string => "$(key_data[publicKey])";
+
+      "ipv6"
+        string => "$(key_data[ipv6])";
+
+      "password"
+        string => "$(key_data[authorizedPasswords][0][password])";
+
+      "bind"
+        string => "$(key_data[interfaces][UDPInterface][0][bind])",
+        classes => default:if_ok("have_bind");
+
+    have_port::
+
+      "key_json_clean"
+        string => '{
+          "privateKey": "$(private)",
+          "publicKey": "$(public)",
+          "ipv6": "$(ipv6)",
+          "password": "$(password)",
+          "port": "$(port[1])"
+        }';
+
+      "public_json_clean"
+        string => '{
+          "ipv6": "$(ipv6)",
+          "password": "$(password)",
+          "port": "$(port[1])"
+        }';
+
+      "key_data_clean"
+        data => parsejson("$(key_json_clean)");
+
+      "public_data_clean"
+        data => parsejson("$(public_json_clean)");
+
+      "json_output_key"
+        string => storejson("key_data_clean"),
+        classes => default:if_ok("have_json_output_key");
+
+      "json_output_public"
+        string => storejson("public_data_clean"),
+        classes => default:if_ok("have_json_output_public");
+
+  classes:
+
+    any::
+
+      "have_keys"
+        expression => fileexists("/$(file_names.cjdns_keys)");
+
+      "need_keys"
+        not => "have_keys";
+
+      "have_public"
+        expression => fileexists("/$(file_names.cjdns_public)");
+
+      "need_public"
+        not => "have_public";
+
+      "need_regen"
+        or => { "need_keys", "need_public" };
+
+    have_bind::
+
+      "have_port"
+        expression => regextract("0\.0\.0\.0:([0-9]*)", "$(bind)", "port");
+
+  files:
+
+    have_keys::
+
+      "/$(file_names.cjdns_keys)"
+        create => "false",
+        perms => root;
+
+    have_public::
+
+      "/$(file_names.cjdns_public)"
+        create => "false",
+        perms => system;
+
+  methods:
+
+    have_json_output_key::
+
+      "Store cjdns key file"
+        usebundle => default:file_make("/$(file_names.cjdns_keys)", "$(json_output_key)");
+
+    have_json_output_public::
+
+      "Store cjdns public file"
+        usebundle => default:file_make("/$(file_names.cjdns_public)", "$(json_output_public)");
+}

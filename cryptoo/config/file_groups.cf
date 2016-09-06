@@ -148,6 +148,11 @@ bundle common file_groups
       "dns_type[common]"
         string => "internal";
 
+      "cjdns_interfaces[common]"
+        slist => {
+                    "eth0"
+                 };
+
 ################################################################################
 #                                 Undefined
 ################################################################################
@@ -221,6 +226,11 @@ bundle common file_groups
 
       "dns_type[undefined]"
         string => "$(dns_type[common])";
+
+      "cjdns_interfaces[undefined]"
+        slist => {
+                    "@(cjdns_interfaces[common])"
+                 };
 
 ################################################################################
 #                                    host
@@ -300,6 +310,11 @@ bundle common file_groups
 
       "dns_type[host]"
         string => "$(dns_type[common])";
+
+      "cjdns_interfaces[host]"
+        slist => {
+                    "lantap"
+                 };
 
 ################################################################################
 #                                   master
@@ -497,6 +512,11 @@ bundle common file_groups
       "dns_type[master]"
         string => "$(dns_type[host])";
 
+      "cjdns_interfaces[master]"
+        slist => {
+                    "@(cjdns_interfaces[host])"
+                 };
+
 ################################################################################
 #                                desktop_host
 ################################################################################
@@ -574,6 +594,12 @@ bundle common file_groups
       "dns_type[desktop_host]"
         string => "$(dns_type[host])";
 
+      "cjdns_interfaces[undefined]"
+        slist => {
+                    "@(cjdns_interfaces[common])",
+                    "@(cjdns_interfaces[host])"
+                 };
+
 ################################################################################
 #                                    guest
 ################################################################################
@@ -649,6 +675,11 @@ bundle common file_groups
 
       "dns_type[guest]"
         string => "$(dns_type[common])";
+
+      "cjdns_interfaces[guest]"
+        slist => {
+                    "@(cjdns_interfaces[common])"
+                 };
 
 ################################################################################
 #                              desktop_guest
@@ -732,6 +763,11 @@ bundle common file_groups
       "dns_type[desktop_guest]"
         string => "$(dns_type[guest])";
 
+      "cjdns_interfaces[desktop_guest]"
+        slist => {
+                    "@(cjdns_interfaces[guest])"
+                 };
+
 ################################################################################
 #                              chroot_desktop_no_multilib
 ################################################################################
@@ -810,6 +846,11 @@ bundle common file_groups
 
       "dns_type[chroot_desktop_no_multilib]"
         string => "$(dns_type[desktop_guest])";
+
+      "cjdns_interfaces[chroot_desktop_no_multilib]"
+        slist => {
+                    "@(cjdns_interfaces[desktop_guest])"
+                 };
 
 ################################################################################
 #                                 irc_client
@@ -920,6 +961,11 @@ bundle common file_groups
 
       "dns_type[irc_client]"
         string => "$(dns_type[desktop_guest])";
+
+      "cjdns_interfaces[irc_client]"
+        slist => {
+                    "@(cjdns_interfaces[desktop_guest])"
+                 };
 
 ################################################################################
 #                                 mail_client
@@ -1032,6 +1078,11 @@ bundle common file_groups
       "dns_type[mail_client]"
         string => "$(dns_type[desktop_guest])";
 
+      "cjdns_interfaces[mail_client]"
+        slist => {
+                    "@(cjdns_interfaces[desktop_guest])"
+                 };
+
 ################################################################################
 #                                     web
 ################################################################################
@@ -1143,6 +1194,11 @@ bundle common file_groups
       "dns_type[web]"
         string => "$(dns_type[desktop_guest])";
 
+      "cjdns_interfaces[web]"
+        slist => {
+                    "@(cjdns_interfaces[desktop_guest])"
+                 };
+
 ################################################################################
 #                              chroot_desktop_multilib
 ################################################################################
@@ -1218,6 +1274,11 @@ bundle common file_groups
 
       "dns_type[chroot_desktop_multilib]"
         string => "$(dns_type[desktop_guest])";
+
+      "cjdns_interfaces[chroot_desktop_multilib]"
+        slist => {
+                    "@(cjdns_interfaces[desktop_guest])"
+                 };
 
 ################################################################################
 #                                      im
@@ -1330,6 +1391,11 @@ bundle common file_groups
       "dns_type[im]"
         string => "$(dns_type[desktop_guest])";
 
+      "cjdns_interfaces[im]"
+        slist => {
+                    "@(cjdns_interfaces[desktop_guest])"
+                 };
+
 ################################################################################
 #                              server_guest
 ################################################################################
@@ -1404,6 +1470,11 @@ bundle common file_groups
 
       "dns_type[server_guest]"
         string => "$(dns_type[guest])";
+
+      "cjdns_interfaces[server_guest]"
+        slist => {
+                    "@(cjdns_interfaces[desktop_guest])"
+                 };
 
 ################################################################################
 #                              chroot_server_no_multilib
@@ -1508,6 +1579,11 @@ bundle common file_groups
 
       "dns_type[chroot_server_no_multilib]"
         string => "$(dns_type[server_guest])";
+
+      "cjdns_interfaces[chroot_server_no_multilib]"
+        slist => {
+                    "@(cjdns_interfaces[server_guest])"
+                 };
 
 ################################################################################
 #                             firewall_external
@@ -1648,6 +1724,12 @@ bundle common file_groups
       "dns_type[firewall_external]"
         string => "external";
 
+      "cjdns_interfaces[firewall_external]"
+        slist => {
+                    "@(cjdns_interfaces[server_guest])",
+                    "eth1"
+                 };
+
 ################################################################################
 #                             tor
 ################################################################################
@@ -1776,6 +1858,12 @@ bundle common file_groups
 
       "dns_type[tor]"
         string => "external";
+
+      "cjdns_interfaces[tor]"
+        slist => {
+                    "@(cjdns_interfaces[server_guest])",
+                    "eth1"
+                 };
 
 ################################################################################
 #                             i2p
@@ -1910,6 +1998,12 @@ bundle common file_groups
       "dns_type[i2p]"
         string => "external";
 
+      "cjdns_interfaces[i2p]"
+        slist => {
+                    "@(cjdns_interfaces[server_guest])",
+                    "eth1"
+                 };
+
 ################################################################################
 #                             freenet
 ################################################################################
@@ -2040,6 +2134,12 @@ bundle common file_groups
 
       "dns_type[freenet]"
         string => "external";
+
+      "cjdns_interfaces[freenet]"
+        slist => {
+                    "@(cjdns_interfaces[server_guest])",
+                    "eth1"
+                 };
 
 ################################################################################
 #                             bitmessage
@@ -2174,6 +2274,12 @@ bundle common file_groups
       "dns_type[bitmessage]"
         string => "external";
 
+      "cjdns_interfaces[bitmessage]"
+        slist => {
+                    "@(cjdns_interfaces[server_guest])",
+                    "eth1"
+                 };
+
 ################################################################################
 #                             bitcoin
 ################################################################################
@@ -2304,6 +2410,12 @@ bundle common file_groups
 
       "dns_type[bitcoin]"
         string => "external";
+
+      "cjdns_interfaces[bitcoin]"
+        slist => {
+                    "@(cjdns_interfaces[server_guest])",
+                    "eth1"
+                 };
 
 ################################################################################
 #                             bitcoin_testnet
@@ -2436,6 +2548,12 @@ bundle common file_groups
       "dns_type[bitcoin_testnet]"
         string => "external";
 
+      "cjdns_interfaces[bitcoin_testnet]"
+        slist => {
+                    "@(cjdns_interfaces[server_guest])",
+                    "eth1"
+                 };
+
 ################################################################################
 #                             btcd
 ################################################################################
@@ -2564,6 +2682,12 @@ bundle common file_groups
       "dns_type[btcd]"
         string => "external";
 
+      "cjdns_interfaces[btcd]"
+        slist => {
+                    "@(cjdns_interfaces[server_guest])",
+                    "eth1"
+                 };
+
 ################################################################################
 #                             btcd_testnet
 ################################################################################
@@ -2691,6 +2815,12 @@ bundle common file_groups
 
       "dns_type[btcd_testnet]"
         string => "external";
+
+      "cjdns_interfaces[btcd_testnet]"
+        slist => {
+                    "@(cjdns_interfaces[server_guest])",
+                    "eth1"
+                 };
 
 ################################################################################
 #                             vpn_primary
@@ -2848,6 +2978,12 @@ bundle common file_groups
       "dns_type[vpn_primary]"
         string => "alternate";
 
+      "cjdns_interfaces[vpn_primary]"
+        slist => {
+                    "@(cjdns_interfaces[server_guest])",
+                    "eth1"
+                 };
+
 ################################################################################
 #                             dns
 ################################################################################
@@ -2967,6 +3103,11 @@ bundle common file_groups
 
       "dns_type[dns]"
         string => "$(dns_type[server_guest])";
+
+      "cjdns_interfaces[dns]"
+        slist => {
+                    "@(cjdns_interfaces[server_guest])"
+                 };
 
 ################################################################################
 #                             mail_server
@@ -3089,6 +3230,11 @@ bundle common file_groups
 
       "dns_type[mail_server]"
         string => "$(dns_type[server_guest])";
+
+      "cjdns_interfaces[mail_server]"
+        slist => {
+                    "@(cjdns_interfaces[server_guest])"
+                 };
 
 ################################################################################
 #                             vpn_secondary
@@ -3247,6 +3393,12 @@ bundle common file_groups
       "dns_type[vpn_secondary]"
         string => "alternate";
 
+      "cjdns_interfaces[vpn_secondary]"
+        slist => {
+                    "@(cjdns_interfaces[server_guest])",
+                    "eth1"
+                 };
+
 ################################################################################
 #                             irc_bouncer
 ################################################################################
@@ -3367,6 +3519,11 @@ bundle common file_groups
       "dns_type[irc_bouncer]"
         string => "$(dns_type[server_guest])";
 
+      "cjdns_interfaces[irc_bouncer]"
+        slist => {
+                    "@(cjdns_interfaces[server_guest])"
+                 };
+
 ################################################################################
 #                             bittorrent
 ################################################################################
@@ -3485,6 +3642,11 @@ bundle common file_groups
 
       "dns_type[bittorrent]"
         string => "$(dns_type[server_guest])";
+
+      "cjdns_interfaces[bittorrent]"
+        slist => {
+                    "@(cjdns_interfaces[server_guest])"
+                 };
 
 ################################################################################
 #                              firewall_internal
@@ -3653,6 +3815,15 @@ bundle common file_groups
 
       "dns_type[firewall_internal]"
         string => "$(dns_type[server_guest])";
+
+      "cjdns_interfaces[firewall_internal]"
+        slist => {
+                    "@(cjdns_interfaces[server_guest])",
+                    "eth1",
+                    "eth2",
+                    "eth3",
+                    "eth4"
+                 };
 
 ################################################################################
 #                              vpn_server
@@ -3846,6 +4017,12 @@ bundle common file_groups
       "dns_type[vpn_server]"
         string => "$(dns_type[server_guest])";
 
+      "cjdns_interfaces[vpn_server]"
+        slist => {
+                    "@(cjdns_interfaces[server_guest])",
+                    "eth1"
+                 };
+
 ################################################################################
 #                             samba
 ################################################################################
@@ -3965,4 +4142,9 @@ bundle common file_groups
 
       "dns_type[samba]"
         string => "$(dns_type[server_guest])";
+
+      "cjdns_interfaces[samba]"
+        slist => {
+                    "@(cjdns_interfaces[server_guest])"
+                 };
 }

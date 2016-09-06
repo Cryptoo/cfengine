@@ -1,0 +1,32 @@
+body file control
+{
+  namespace => "cryptoo";
+  inputs => {
+              "cryptoo/common/cjdns/config.cf",
+              "cryptoo/common/cjdns/keys.cf",
+              "cryptoo/common/systemd/service.cf"
+            };
+
+}
+
+bundle agent cjdns(role)
+{
+  methods:
+
+    any::
+
+      "verify keys"
+        usebundle => cjdns_keys,
+        classes => default:if_ok("keys_ready");
+
+    keys_ready::
+
+      "verify config file"
+        usebundle => cjdns_config("$(role)"),
+        classes => default:if_ok("config_ready");
+
+    config_ready::
+
+      "enable service"
+        usebundle => systemd_enable("/", "cjdns.service");
+}

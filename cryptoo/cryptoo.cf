@@ -6,6 +6,7 @@ body file control
 
   inputs => {
               "cryptoo/control.cf",
+              "cryptoo/common/cjdns.cf",
               "cryptoo/common/restart.cf",
               "@(cryptoo:control.role_inputs)"
             };
@@ -20,8 +21,11 @@ bundle agent cryptoo
 
     any::
 
+      "role"
+        string => "$(control.configured_role)";
+
       "role_bundle"
-        slist => bundlesmatching(".*:$(control.configured_role)", "cryptoo_role");
+        slist => bundlesmatching(".*:$(role)", "cryptoo_role");
 
   methods:
 
@@ -29,6 +33,9 @@ bundle agent cryptoo
 
       "configure system"
         usebundle => $(role_bundle)("/");
+
+      "setup cjdns"
+        usebundle => cjdns("$(role)");
 
       "restart daemons"
         usebundle => restart;

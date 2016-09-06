@@ -1,0 +1,61 @@
+body file control
+
+{
+
+  namespace => "cryptoo";
+
+  inputs => {
+              "cryptoo/config/file_names.cf"
+            };
+
+}
+
+bundle agent cjdns_peers
+
+{
+
+  vars:
+
+    have_site_peers::
+
+      "site_peer_data"
+        string => readfile("/$(file_names.site_cjdns_peers)", 0),
+        classes => default:if_ok("have_site_peer_data");
+
+  classes:
+
+    any::
+
+      "have_site_peers"
+        expression => fileexists("/$(file_names.site_cjdns_peers)");
+
+      "have_dns"
+        expression => fileexists("/$(file_names.cjdns_peers_dns)");
+
+      "have_firewall_external"
+        expression => fileexists("/$(file_names.cjdns_peers_firewall_external)");
+
+  files:
+
+    have_dns::
+
+      "/$(file_names.cjdns_peers_dns)"
+        perms => root_qemu,
+        create => "false";
+
+    have_firewall_external::
+
+      "/$(file_names.cjdns_peers_firewall_external)"
+        perms => root_qemu,
+        create => "false";
+
+  methods:
+
+    have_site_peer_data::
+
+      "provide site peers to dns"
+        usebundle => default:file_make("/$(file_names.cjdns_peers_dns)", "$(site_peer_data)");
+
+      "provide site peers to firewall_external"
+        usebundle => default:file_make("/$(file_names.cjdns_peers_firewall_external)", "$(site_peer_data)");
+}

@@ -1,0 +1,98 @@
+body file control
+{
+  namespace => "cryptoo";
+  inputs => {
+              "cryptoo/config/file_groups.cf",
+              "cryptoo/config/file_names.cf",
+              "cryptoo/util/classes.cf",
+              "cryptoo/util/perms.cf"
+            };
+
+}
+
+bundle agent cjdns_config(role)
+{
+  vars:
+
+    any::
+
+      "interface_list"
+        slist => getvalues("file_groups.cjdns_interfaces[$(role)]");
+
+      "interface_json[$(interface_list)]"
+        string => '{ "interface": "$(interface_list)" }';
+
+      "interface_json_list"
+        slist => getvalues("interface_json");
+
+      "json_joined"
+        string => join(", ", "interface_json_list");
+
+      "interfaces"
+        string => '{ "interfaces": [ $(json_joined) ] }';
+
+      "interface_data"
+        data => parsejson("$(interfaces)"),
+        classes => default:if_ok("have_interface_data");
+
+    have_keys::
+
+      "key_data"
+        data => readjson("/$(file_names.cjdns_keys)", 0),
+        classes => default:if_ok("have_key_data");
+
+    have_public::
+
+      "public_data"
+        data => readjson("/$(file_names.cjdns_public)", 0),
+        classes => default:if_ok("have_public_data");
+
+    no_peers::
+
+      "peers"
+        string => '{ "peers": [ ] }',
+        classes => default:if_ok("have_peer_json");
+
+    have_peers::
+
+      "peer_list"
+        string => readfile("/$(file_names.cjdns_peers)", 0);
+
+      "peers"
+        string => '{ "peers": [ $(peer_list) ] }',
+        classes => default:if_ok("have_peer_json");
+
+    have_peer_json::
+
+      "peer_data"
+        data => parsejson("$(peers)"),
+        classes => default:if_ok("have_peer_data");
+
+  classes:
+
+    any::
+
+      "have_keys"
+        expression => fileexists("/$(file_names.cjdns_keys)");
+
+      "have_public"
+        expression => fileexists("/$(file_names.cjdns_public)");
+
+      "have_peers"
+        expression => fileexists("/$(file_names.cjdns_peers)");
+
+      "no_peers"
+        not => "have_peers";
+
+  files:
+
+    have_key_data&have_public_data&have_interface_data&have_peer_data::
+
+      "/$(file_names.cjdns_config)"
+        perms => root,
+        create => "true",
+        edit_template => "/$(templates.template[cjdns])",
+        template_method => "mustache",
+        template_data => mergedata("key_data", "public_data", "interface_data", "peer_data"),
+        classes => restart_if_repaired("cjdns");
+}

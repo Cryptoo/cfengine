@@ -82,6 +82,11 @@ bundle agent restart
       "/$(file_names.systemd_app)"
         args => "restart cf-serverd.service";
 
+    systemd_refreshed&cjdns_needs_restart::
+
+      "/$(file_names.systemd_app)"
+        args => "restart cjdns.service";
+
     systemd_refreshed&dnsmasq_needs_restart::
 
       "/$(file_names.systemd_app)"

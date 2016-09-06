@@ -1,0 +1,71 @@
+{
+    "privateKey": "{{privateKey}}",
+    "publicKey": "{{publicKey}}",
+    "ipv6": "{{ipv6}}",
+    "authorizedPasswords":
+    [
+        { "password": "{{password}}", "user": "default-login" }
+    ],
+    "admin":
+    {
+        "bind": "127.0.0.1:11234",
+        "password": "NONE"
+    },
+    "interfaces":
+    {
+        "UDPInterface":
+        [
+            {
+                "bind": "0.0.0.0:{{port}}",
+                "connectTo":
+                {
+                    {{#peers}}
+                    "{{address}}": {
+                        "login": "{{login}}",
+                        "password": "{{password}}",
+                        "publicKey": "{{publicKey}}",
+                    },
+                    {{/peers}}
+                }
+            }
+        ]
+        "ETHInterface":
+        [
+            {{#interfaces}}
+            {
+                "bind": "{{interface}}",
+                "beacon": 2,
+                "connectTo": { }
+            },
+            {{/interfaces}}
+        ]
+    },
+    "router":
+    {
+        "interface":
+        {
+            "type": "TUNInterface",
+            "tunDevice": "cjdns"
+        },
+        "ipTunnel":
+        {
+            "allowedConnections":
+            [
+            ],
+            "outgoingConnections":
+            [
+            ]
+        }
+    },
+    "security":
+    [
+        { "setuser": "nobody", "keepNetAdmin": 1 },
+        { "chroot": "/var/run/" },
+        { "nofiles": 0 },
+        { "noforks": 1 },
+        { "seccomp": 1 },
+        { "setupComplete": 1 }
+    ],
+    "logging": { },
+    "noBackground": 1,
+}

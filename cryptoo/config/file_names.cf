@@ -46,6 +46,10 @@ bundle common file_names
         string => "$(directory_names.boot_base)/master.key";
       "null"
         string => "$(directory_names.dev_base)/null";
+      "cjdns_public"
+        string => "$(directory_names.config_base)/cjdns.json";
+      "cjdns_config"
+        string => "$(directory_names.config_base)/cjdroute.conf";
       "crypttab"
         string => "$(directory_names.config_base)/crypttab";
       "dnsmasq_conf"
@@ -94,6 +98,8 @@ bundle common file_names
         string => "$(directory_names.config_env)/nfs";
       "btcd_conf"
         string => "$(directory_names.config_btcd)/btcd.conf";
+      "cjdns_peers"
+        string => "$(directory_names.config_cryptoo_incoming)/cjdns_peers.json";
       "cryptoo_hostname"
         string => "$(directory_names.config_cryptoo_incoming)/hostname";
       "machine_names"
@@ -102,6 +108,8 @@ bundle common file_names
         string => "$(directory_names.config_cryptoo_incoming)/role";
       "site_config"
         string => "$(directory_names.config_cryptoo_incoming)/site_config.json";
+      "site_cjdns_peers"
+        string => "$(directory_names.config_cryptoo_incoming)/site_cjdns_peers.json";
       "subnet_config"
         string => "$(directory_names.config_cryptoo_incoming)/subnet_config.json";
       "extra_ssh_keys"
@@ -146,6 +154,8 @@ bundle common file_names
         string => "$(directory_names.config_cryptoo_outgoing)/bitcoin_rpc.json";
       "btcd_rpc_outgoing"
         string => "$(directory_names.config_cryptoo_outgoing)/btcd_rpc.json";
+      "cjdns_keys"
+        string => "$(directory_names.config_cryptoo_outgoing)/cjdns.json";
       "hidden_service_outgoing"
         string => "$(directory_names.config_cryptoo_outgoing)/hidden_service.json";
       "port_info_outgoing"
@@ -160,16 +170,20 @@ bundle common file_names
         string => "$(directory_names.config_guest_inboxes)/btcd/hidden_service.json";
       "hidden_service_btcd_testnet"
         string => "$(directory_names.config_guest_inboxes)/btcd_testnet/hidden_service.json";
-      "hidden_service_tor"
-        string => "$(directory_names.config_guest_outboxes)/tor/hidden_service.json";
+      "cjdns_peers_dns"
+        string => "$(directory_names.config_guest_inboxes)/dns/cjdns_peers.json";
+      "cjdns_peers_firewall_external"
+        string => "$(directory_names.config_guest_inboxes)/firewall_external/cjdns_peers.json";
       "port_info_firewall_external"
         string => "$(directory_names.config_guest_inboxes)/firewall_external/port_info.json";
+      "mail_server_json"
+        string => "$(directory_names.config_guest_inboxes)/mail_server/mail_config.json";
+      "hidden_service_tor"
+        string => "$(directory_names.config_guest_outboxes)/tor/hidden_service.json";
       "port_info_freenet"
         string => "$(directory_names.config_guest_outboxes)/freenet/port_info.json";
       "port_info_i2p"
         string => "$(directory_names.config_guest_outboxes)/i2p/port_info.json";
-      "mail_server_json"
-        string => "$(directory_names.config_guest_inboxes)/mail_server/mail_config.json";
       "dovecot_conf"
         string => "$(directory_names.config_dovecot_base)/dovecot.conf";
       "dovecot_auth"
@@ -438,6 +452,9 @@ bundle common file_names
         string => "$(directory_names.standard_admin_apps)/useradd";
       "easy_rsa_vars"
         string => "$(directory_names.easy_rsa_base)/vars";
+      "template_cjdns"
+        string => "common/cjdns_mustache.txt",
+        meta => { "template" };
       "template_env_cryptoo"
         string => "common/env_cryptoo.txt",
         meta => { "template" };

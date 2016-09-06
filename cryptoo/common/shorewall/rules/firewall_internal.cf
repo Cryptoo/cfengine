@@ -124,6 +124,11 @@ bundle agent shorewall_rules_firewall_internal(root)
                      "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])"
                    },
                    {
+                     "action": "cfengine(ACCEPT)",
+                     "source": "netc",
+                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[master])"
+                   },
+                   {
                      "action": "mail_server(ACCEPT)",
                      "source": "lan:!192.168.$(subnet_config[lan]).224/27",
                      "destination": "vdmz:192.168.$(subnet_config[vpndmz]).$(defined_numbers[mail_server])"
