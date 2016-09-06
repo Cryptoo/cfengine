@@ -274,6 +274,8 @@ bundle common file_names
         string => "$(directory_names.config_shorewall)/rtrules";
       "shorewall_rules"
         string => "$(directory_names.config_shorewall)/rules";
+      "shorewall6_rules"
+        string => "$(directory_names.config_shorewall6)/rules";
       "shorewall_providers"
         string => "$(directory_names.config_shorewall)/providers";
       "shorewall_zones"
