@@ -40,6 +40,8 @@ bundle agent common_guest(root, type, role, arch)
         string => readfile("/$(file_names.master_ssh_key)", "0"),
         classes => default:if_ok("master_ssh_key_read");
 
+    have_extra_ssh_keys::
+
       "extra_ssh_keys"
         string => readfile("/$(file_names.extra_ssh_keys)", "0"),
         classes => default:if_ok("extra_ssh_keys_read");
