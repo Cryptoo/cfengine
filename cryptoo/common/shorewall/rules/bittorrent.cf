@@ -39,12 +39,12 @@ bundle agent shorewall_rules_bittorrent(root)
             "new":
                  [
                    {
-                     "action": "guest"
+                      "action": "guest"
                    },
                    {
-                     "action": "bittorrent_out",
-                     "source": "fw",
-                     "destination": "net",
+                      "action": "bittorrent_out",
+                      "source": "fw",
+                      "destination": "net",
                       "protocol": "-",
                       "destination_port": "-",
                       "source_port": "-",
@@ -53,9 +53,9 @@ bundle agent shorewall_rules_bittorrent(root)
                       "user": "bittorrent:users"
                    },
                    {
-                     "action": "bittorrent_out",
-                     "source": "fw",
-                     "destination": "onion",
+                      "action": "bittorrent_out",
+                      "source": "fw",
+                      "destination": "onion",
                       "protocol": "tcp",
                       "destination_port": "-",
                       "source_port": "-",
@@ -64,9 +64,9 @@ bundle agent shorewall_rules_bittorrent(root)
                       "user": "bittorrent:users"
                    },
                    {
-                     "action": "bittorrent_out",
-                     "source": "fw",
-                     "destination": "eep",
+                      "action": "bittorrent_out",
+                      "source": "fw",
+                      "destination": "eep",
                       "protocol": "-",
                       "destination_port": "-",
                       "source_port": "-",
@@ -75,14 +75,20 @@ bundle agent shorewall_rules_bittorrent(root)
                       "user": "bittorrent:users"
                    },
                    {
-                     "action": "bittorrent(ACCEPT)",
-                     "source": "net",
-                     "destination": "fw"
+                      "action": "bittorrent(ACCEPT)",
+                      "source": "net",
+                      "destination": "fw"
                    },
                    {
-                     "action": "bittorrent_rpc(ACCEPT)",
-                     "source": "lan",
-                     "destination": "fw"
+                      "action": "bittorrent_rpc(ACCEPT)",
+                      "source": "lan",
+                      "destination": "fw"
+                   },
+                   {
+                      "action": "DROP",
+                      "source": "fw",
+                      "destination": "onion",
+                      "protocol": "udp"
                    }
                  ]
                }
