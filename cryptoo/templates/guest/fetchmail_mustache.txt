@@ -17,7 +17,7 @@ poll i2p protocol pop3 port 110 interval 20:
 
 {{#bitmessage}}
 poll bitmessage protocol pop3 port 110:
-        auth password username "{{address}}" password "arbitrary" is "{{local_user}}" here;
+        auth password username "all" password "arbitrary" is "{{local_user}}" here;
 {{/bitmessage}}
 
 {{#extra}}
