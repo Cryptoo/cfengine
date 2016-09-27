@@ -290,6 +290,8 @@ bundle common file_names
         string => "$(directory_names.config_sysctl)/cryptoo.conf";
       "sysctl_nfs"
         string => "$(directory_names.config_sysctl)/nfs.conf";
+      "cfengine_service"
+        string => "$(directory_names.config_units)/cfengine3.service";
       "tmux_service"
         string => "$(directory_names.config_units)/tmux@.service";
       "tor_service"

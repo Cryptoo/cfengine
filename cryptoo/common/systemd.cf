@@ -77,6 +77,14 @@ bundle agent systemd(root, role)
         template_data => mergedata("cryptoo:config.systemd_services[cf_serverd]"),
         classes => daemon_reload("cf_serverd");
 
+      "$(root)$(file_names.cfengine_service)"
+        perms => system,
+        create => "true",
+        edit_template => "/$(templates.template[ini])",
+        template_method => "mustache",
+        template_data => mergedata("cryptoo:config.systemd_services[cfengine3]"),
+        classes => daemon_reload("cfengine3");
+
       "$(root)$(file_names.ipset_service)"
         perms => system,
         create => "true",

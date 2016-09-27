@@ -218,6 +218,37 @@
              }
           ]
       },
+    "cfengine3":
+      {
+        "sections":
+          [
+            { "section": "Unit",
+                "values":
+                [
+                    { "LHS": "Description", "RHS": "CFEngine target" },
+                    { "LHS": "After", "RHS": "cf-execd.service" },
+                    { "LHS": "After", "RHS": "cf-monitord.service" },
+                    { "LHS": "After", "RHS": "cf-serverd.service" },
+                    { "LHS": "Requires", "RHS": "cf-execd.service" },
+                    { "LHS": "Requires", "RHS": "cf-monitord.service" }
+                ]
+            },
+            { "section": "Service",
+                "values":
+                [
+                    { "LHS": "Type", "RHS": "simple" },
+                    { "LHS": "ExecStart", "RHS": "/bin/true" },
+                    { "LHS": "RemainAfterExit", "RHS": "true" }
+                ]
+            },
+            { "section": "Install",
+                "values":
+                [
+                    { "LHS": "WantedBy", "RHS": "multi-user.target" }
+                ]
+            }
+        ]
+      },
     "console_autologin":
       {
         "sections":
