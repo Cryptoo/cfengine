@@ -26,6 +26,7 @@ bundle agent shorewall_macro_bitmessage(root, port_info)
       {
         "shorewall_macro",
         "firewall_external",
+        "firewall_internal",
         "bitmessage",
         "tor",
         "master"
