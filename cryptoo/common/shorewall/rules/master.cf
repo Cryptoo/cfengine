@@ -225,11 +225,11 @@ bundle agent shorewall_rules_master(root)
                    {
                      "action": "nfs(ACCEPT)",
                      "source": "fw",
-                     "destination": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[desktop_host])"
+                     "destination": "lan:192.168.$(subnet_config[lan]).0/24"
                    },
                    {
                      "action": "nfs(ACCEPT)",
-                     "source": "lan:192.168.$(subnet_config[lan]).$(defined_numbers[desktop_host])",
+                     "source": "lan:192.168.$(subnet_config[lan]).0/24",
                      "destination": "fw"
                    }
                  ]
