@@ -20,7 +20,7 @@ bundle agent shorewall_macro_cjdns_in(root, port_info)
 
   meta:
 
-    "tags" slist => { "shorewall_macro", "firewall_external" };
+    "tags" slist => { "shorewall_macro", "firewall_external", "master" };
 
   vars:
 
