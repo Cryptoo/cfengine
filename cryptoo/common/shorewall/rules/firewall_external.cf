@@ -62,6 +62,21 @@ bundle agent shorewall_rules_firewall_external(root)
                   "user": "root"
                 },
                 {
+                  "action": "SSH(ACCEPT)",
+                  "source": "fw",
+                  "destination": "net"
+                },
+                {
+                  "action": "HTTP(ACCEPT)",
+                  "source": "fw",
+                  "destination": "net"
+                },
+                {
+                  "action": "HTTPS(ACCEPT)",
+                  "source": "fw",
+                  "destination": "net"
+                },
+                {
                   "action": "cjdns_in(ACCEPT)",
                   "source": "net",
                   "destination": "fw:192.168.$(subnet_config[ispdmz]).$(defined_numbers[firewall_external])"
